@@ -314,8 +314,7 @@ button {
 }
 
 .btn-nav-outline {
-  background: rgba(255, 255, 255, 1);
-  border: none;
+  background: white;
   color: #111 !important;
   padding: 0.7rem 1.8rem;
   border-radius: 50px;
@@ -329,22 +328,22 @@ button {
 }
 
 .btn-nav-outline:hover {
-  background: #f8f8f8;
+  background: #f0f0f0;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .btn-nav-gold {
-  background: linear-gradient(135deg, #fcebb6 0%, #d2ac67 50%, #b38c4d 100%);
-  color: #000 !important;
+  background: #111;
+  color: white !important;
   padding: 0.7rem 1.8rem;
   border-radius: 50px;
-  font-weight: 800 !important;
+  font-weight: 700 !important;
   font-size: 0.85rem;
   text-decoration: none;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   transition: all 0.4s var(--ease-out);
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
   position: relative;
   overflow: hidden;
 }
@@ -371,9 +370,10 @@ button {
 }
 
 .btn-nav-gold:hover {
+  background: #000;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(179, 140, 77, 0.4);
-  filter: brightness(1.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.2);
 }
 
 /* Hero (New Editorial Layout) */
