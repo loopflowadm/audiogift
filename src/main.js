@@ -18,7 +18,7 @@ const AnnouncementBar = () => `
     <div class="container announcement-content">
       <div class="announcement-badge">
         <i data-lucide="shield-check"></i>
-        <span>100% SATISFAÇÃO GARANTIDA</span>
+        <span>100% satisfação garantida</span>
       </div>
       <p class="announcement-text">
         Seu dinheiro de volta se não se emocionar.
@@ -145,8 +145,8 @@ const Hero = () => `
         </div>
         
         <div class="hero-text-content text-center">
-          <p class="tagline reveal" data-delay="2">A PLATAFORMA #1 DE MÚSICAS PERSONALIZADAS</p>
-          <h1 class="main-title reveal" data-delay="3">Tudo Que Você Nunca Conseguiu Dizer... <em>Agora Em Uma Canção.</em></h1>
+        <p class="tagline reveal" data-delay="2">A plataforma #1 de músicas personalizadas</p>
+          <h1 class="main-title reveal" data-delay="3">Tudo que você nunca conseguiu dizer... <em>Agora em uma canção.</em></h1>
           <p class="hero-subtitle reveal" data-delay="4">A homenagem definitiva para quem você ama. Uma composição exclusiva, feita sob medida para a sua história.</p>
           <div class="hero-cta-wrapper reveal" data-delay="5">
             <a href="#create" class="btn-primary-new btn-magnetic">
@@ -204,8 +204,8 @@ const WhyChooseUs = () => `
 const Reactions = () => `
     <section id="reviews" class="reactions py-large bg-soft">
       <div class="container text-center">
-        <div class="tag-badge-small reveal">REAÇÕES REAIS</div>
-        <h2 class="section-title-serif reveal" data-delay="1">Veja as Reações de Quem Recebeu Uma Canção</h2>
+        <div class="tag-badge-small reveal">Reações reais</div>
+        <h2 class="section-title-serif reveal" data-delay="1">Veja as reações de quem recebeu uma canção</h2>
         <p class="section-subtitle reveal" data-delay="2">Mais de 10.000 homenagens entregues. Assista os bastidores e as reações reais de quem foi surpreendido.</p>
         
         <div class="reactions-cta-group mt-4 reveal" data-delay="3">
@@ -223,24 +223,24 @@ const Reactions = () => `
 
 const Categories = () => {
   const cats = [
-    { title: 'Pro Amor da Sua Vida', img: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pro Seu Filho(a)', img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pro Pedido Perfeito', img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pra Celebrar a União', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pra Um Aniversário Inesquecível', img: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pro Seu Pai ou Sua Mãe', img: 'https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pros Seus Avós', img: 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pra Aquele Amigo Especial', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pra Você Mesmo(a)', img: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=600' },
-    { title: 'Pro Batizado do Seu Bebê', img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=600' }
+    { title: 'Pro amor da sua vida', img: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro seu filho(a)', img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro pedido perfeito', img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra celebrar a união', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra um aniversário inesquecível', img: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro seu pai ou sua mãe', img: 'https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pros seus avós', img: 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra aquele amigo especial', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra você mesmo(a)', img: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro batizado do seu bebê', img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=600' }
   ]
   
   return `
     <section class="categories-section py-large bg-black text-white">
       <div class="container-full">
         <div class="text-center mb-4">
-          <h2 class="section-title-serif text-white reveal">Pra Quem É Essa Canção?</h2>
-          <p class="scroll-hint reveal" data-delay="1">ARRASTE PARA EXPLORAR →</p>
+          <h2 class="section-title-serif text-white reveal">Pra quem é essa canção?</h2>
+          <p class="scroll-hint reveal" data-delay="1">Arraste para explorar →</p>
         </div>
         
         <div class="categories-carousel reveal" data-delay="2">
@@ -271,7 +271,7 @@ const Experience = () => {
   return `
     <section class="experience-section py-large bg-light">
       <div class="container text-center">
-        <h2 class="section-title-serif reveal">Muito Mais Que Uma Música. <br><span class="text-orange">Uma Experiência Completa.</span></h2>
+        <h2 class="section-title-serif reveal">Muito mais que uma música. <br><span class="text-orange">Uma experiência completa.</span></h2>
         <p class="section-subtitle reveal" data-delay="1">O presente ideal para emocionar e ser lembrado para sempre.</p>
         
         <div class="player-scene reveal" data-delay="2">
@@ -288,7 +288,7 @@ const Experience = () => {
 
             <div class="player-info">
               <p class="track-label">AUDIOGIFT PLAYER</p>
-              <h3 class="track-title" id="playerTitle">Uma Canção pra Você</h3>
+              <h3 class="track-title" id="playerTitle">Uma canção pra você</h3>
               <p class="track-artist" id="playerArtist">Canção personalizada · 2025</p>
               
               <div class="player-tags" id="playerTags">
@@ -331,22 +331,22 @@ const Experience = () => {
         <div class="experience-grid mt-5">
           <div class="exp-card reveal" data-delay="1">
             <div class="exp-icon"><i data-lucide="music"></i></div>
-            <h4>Som Profissional</h4>
+            <h4>Som profissional</h4>
             <p>Produzida por artistas de verdade, com qualidade que impressiona no primeiro acorde.</p>
           </div>
           <div class="exp-card reveal" data-delay="2">
             <div class="exp-icon"><i data-lucide="file-text"></i></div>
-            <h4>Letra Sob Medida</h4>
+            <h4>Letra sob medida</h4>
             <p>Cada verso conta a história de vocês — com os detalhes que só vocês conhecem.</p>
           </div>
           <div class="exp-card reveal" data-delay="3">
             <div class="exp-icon"><i data-lucide="disc"></i></div>
-            <h4>Você Escolhe a Melhor</h4>
+            <h4>Você escolhe a melhor</h4>
             <p>Receba 2 versões com melodias diferentes e a mesma letra; escolha a que mais emociona.</p>
           </div>
           <div class="exp-card reveal" data-delay="4">
             <div class="exp-icon"><i data-lucide="calendar-clock"></i></div>
-            <h4>Entrega Rápida</h4>
+            <h4>Entrega rápida</h4>
             <p>Precisa pra ontem? Turbo em até 6h, Express em 24h ou até 7 dias no plano essencial.</p>
           </div>
           <div class="exp-card reveal" data-delay="5">
@@ -368,7 +368,7 @@ const Experience = () => {
 
 const initVinylPlayer = () => {
   const songs = [
-    { title: "Uma Canção pra Você", artist: "Canção personalizada · 2025", tags: ["Romance", "Alma"], dur: 222, color: "#222", color2: "#FC7301" },
+    { title: "Uma canção pra você", artist: "Canção personalizada · 2025", tags: ["Romance", "Alma"], dur: 222, color: "#222", color2: "#FC7301" },
     { title: "Pro Amor da Minha Vida", artist: "Dedicada com carinho · 2025", tags: ["Amor", "Eterno"], dur: 198, color: "#1A2E5C", color2: "#4A7FCC" },
     { title: "Feliz Aniversário, Meu Bem", artist: "Canção especial · 2025", tags: ["Festa", "Alegria"], dur: 175, color: "#1A4A2A", color2: "#4AC47A" },
     { title: "Pra Minha Mãe", artist: "Com amor infinito · 2025", tags: ["Família", "Saudade"], dur: 210, color: "#4A1A3A", color2: "#CC4A9A" },
@@ -749,7 +749,7 @@ const HowItWorks = () => `
 const Security = () => `
   <section class="security py-medium bg-soft">
     <div class="container text-center">
-      <p class="subtitle-small">PAGAMENTO 100% SEGURO VIA MERCADO PAGO E STRIPE</p>
+      <p class="subtitle-small">Pagamento 100% seguro via Mercado Pago e Stripe</p>
       <div class="security-logos mt-2">
         <img src="https://logodownload.org/wp-content/uploads/2019/06/mercado-pago-logo.png" alt="Mercado Pago" class="grayscale h-30">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/1200px-Stripe_Logo%2C_revised_2016.svg.png" alt="Stripe" class="grayscale h-30">
@@ -761,7 +761,7 @@ const Security = () => `
 const FAQ = () => `
   <section id="faq" class="faq py-large">
     <div class="container">
-      <h2 class="text-center section-title-serif">Perguntas Frequentes</h2>
+      <h2 class="text-center section-title-serif">Perguntas frequentes</h2>
       <div class="faq-list mt-4">
         ${[
           { q: 'Como recebo minha música?', a: 'Você recebe um link exclusivo via WhatsApp e E-mail com sua música em alta qualidade (MP3/WAV), pronta para compartilhar.' },
@@ -782,7 +782,7 @@ const FAQ = () => `
       </div>
       <div class="text-center mt-4 mb-4">
         <a href="https://wa.me/5511999999999" class="btn-primary-new btn-magnetic">
-          <i data-lucide="message-circle"></i> FALAR COM ESPECIALISTA AGORA
+          <i data-lucide="message-circle"></i> Falar com especialista agora
         </a>
       </div>
     </div>
@@ -805,11 +805,11 @@ const FloatingButtons = () => `
 const FooterCTA = () => `
   <section class="footer-cta py-large bg-dark text-white">
     <div class="container text-center">
-      <h2 class="text-white section-title-serif reveal">Uma Canção Que Só <em>Existe Pra Vocês.</em></h2>
-      <h3 class="text-orange section-title-serif reveal" data-delay="1">Feita Do Zero, Com A Sua História.</h3>
+      <h2 class="text-white section-title-serif reveal">Uma canção que só <em>existe pra vocês.</em></h2>
+      <h3 class="text-orange section-title-serif reveal" data-delay="1">Feita do zero, com a sua história.</h3>
       <p class="mt-2 text-muted reveal" data-delay="2">A maior plataforma de homenagens musicais do Brasil.</p>
       <div class="mt-4 reveal" data-delay="3">
-        <a href="#create" class="btn-primary-new btn-magnetic">COMEÇAR AGORA</a>
+        <a href="#create" class="btn-primary-new btn-magnetic">Começar agora</a>
       </div>
     </div>
   </section>
