@@ -192,103 +192,25 @@ const WhyChooseUs = () => `
             <h4>A trilha sonora da <em>sua alma</em></h4>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-`
-
-const Reactions = () => {
-  const reviews = [
-    { type: 'video', img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=600', text: '"Nunca vi minha mãe chorar tanto de felicidade."', name: 'Três Apertos', delay: 1 },
-    { type: 'whatsapp', name: 'Rosely', audio: '0:23', avatar: 'https://i.pravatar.cc/100?u=rosely', delay: 2 },
-    { type: 'text', stars: 5, author: 'Vera Lúcia S.', text: 'Oh glória a Deus! Isso é absolutamente de tirar o fôlego. Eu não consigo acreditar no resultado.', date: '2 dias atrás', delay: 3 },
-    { type: 'video', img: 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=600', text: '"O presente mais emocionante que já dei."', name: 'Meu Coração é Seu', delay: 4 },
-    { type: 'whatsapp', name: 'Marcos', audio: '1:12', avatar: 'https://i.pravatar.cc/100?u=marcos', delay: 5 },
-    { type: 'text', stars: 5, author: 'Sérgio T.', text: 'Ficou idêntico ao que eu imaginei. A voz do cantor é espetacular e a letra capturou tudo.', date: '1 semana atrás', delay: 6 },
-    { type: 'video', img: 'https://images.unsplash.com/photo-1516589174468-4719f02ec447?auto=format&fit=crop&q=80&w=600', text: '"Meus avós ficaram sem palavras."', name: 'Amor de Mãe', delay: 7 },
-    { type: 'whatsapp', name: 'Carla', audio: '0:45', avatar: 'https://i.pravatar.cc/100?u=carla', delay: 8 },
-    { type: 'text', stars: 5, author: 'Juliana P.', text: 'Superou todas as expectativas. O processo foi muito rápido e o resultado é pura arte.', date: '3 dias atrás', delay: 9 }
-  ]
-
-  return `
-    <section id="reviews" class="reactions py-large bg-white overflow-hidden">
-      <div class="container">
-        <div class="text-center mb-4">
-          <div class="tag-badge reveal"><i data-lucide="heart"></i> HISTÓRIAS REAIS</div>
-          <h2 class="section-title-serif reveal">Por que mais de <em>10.000 famílias</em> amam a AUDIOGIFT</h2>
-          <p class="section-subtitle reveal" data-delay="1">Momentos reais de quem transformou sentimentos em canções eternas.</p>
-        </div>
+const Reactions = () => `
+    <section id="reviews" class="reactions py-large bg-soft">
+      <div class="container text-center">
+        <div class="tag-badge-small reveal">REAÇÕES REAIS</div>
+        <h2 class="section-title-serif reveal" data-delay="1">Veja as Reações de Quem Recebeu Uma Canção</h2>
+        <p class="section-subtitle reveal" data-delay="2">Mais de 10.000 homenagens entregues. Assista os bastidores e as reações reais de quem foi surpreendido.</p>
         
-        <div class="carousel-wrapper reveal" data-delay="2">
-          <div class="reactions-carousel">
-            ${reviews.map(item => `
-              <div class="reaction-card-premium">
-                ${item.type === 'video' ? `
-                  <div class="card-inner video-type">
-                    <div class="video-preview">
-                      <img src="${item.img}" alt="Reação">
-                      <div class="video-overlay"></div>
-                      <button class="btn-play-center"><i data-lucide="play"></i></button>
-                    </div>
-                    <div class="card-content">
-                      <p class="review-quote">${item.text}</p>
-                      <div class="card-footer">
-                        <strong>${item.name}</strong>
-                        <span>Cliente Audiogift</span>
-                      </div>
-                    </div>
-                  </div>
-                ` : item.type === 'whatsapp' ? `
-                  <div class="card-inner wa-type">
-                    <div class="wa-premium-header">
-                      <img src="${item.avatar}" alt="${item.name}">
-                      <div>
-                        <strong>${item.name}</strong>
-                        <span>Via WhatsApp</span>
-                      </div>
-                      <i data-lucide="message-circle" class="wa-icon-top"></i>
-                    </div>
-                    <div class="wa-premium-body">
-                      <div class="wa-voice-bubble">
-                        <button class="wa-play-btn"><i data-lucide="play"></i></button>
-                        <div class="wa-voice-info">
-                          <div class="wa-wave-visual">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                          </div>
-                          <span class="wa-duration">${item.audio}</span>
-                        </div>
-                      </div>
-                      <p class="wa-status-text">"Gente, eu tô sem palavras! Ficou perfeito demais..."</p>
-                    </div>
-                  </div>
-                ` : `
-                  <div class="card-inner text-type">
-                    <div class="card-top">
-                      <div class="stars-gold">
-                        ${'<i data-lucide="star"></i>'.repeat(item.stars)}
-                      </div>
-                      <span class="verified-badge"><i data-lucide="check-circle"></i> Verificado</span>
-                    </div>
-                    <p class="review-body">${item.text}</p>
-                    <div class="reviewer-info">
-                      <img src="https://i.pravatar.cc/100?u=${item.author}" alt="${item.author}">
-                      <div>
-                        <strong>${item.author}</strong>
-                        <span>${item.date}</span>
-                      </div>
-                    </div>
-                  </div>
-                `}
-              </div>
-            `).join('')}
-          </div>
-          
-          <div class="carousel-nav-premium mt-4">
-            <button class="nav-arrow prev" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
-            <div class="nav-pagination">
-              ${reviews.map((_, i) => `<span class="page-dot ${i === 0 ? 'active' : ''}"></span>`).join('')}
-            </div>
-            <button class="nav-arrow next" aria-label="Próximo"><i data-lucide="chevron-right"></i></button>
+        <div class="reactions-cta-group mt-4 reveal" data-delay="3">
+          <a href="https://instagram.com/audiogift" target="_blank" class="btn-social-ig">
+            <i data-lucide="instagram"></i> Assistir no Instagram
+          </a>
+          <a href="https://tiktok.com/@audiogift" target="_blank" class="btn-social-tk">
+            <i data-lucide="video"></i> Assistir no TikTok
+          </a>
+        </div>
+      </div>
+    </section>
+  `
+n>
           </div>
         </div>
       </div>
@@ -730,29 +652,52 @@ const initVinylPlayer = () => {
 const Artists = () => `
   <section class="artists py-large bg-white">
     <div class="container text-center">
-      <h2 class="section-title-serif reveal">Nossos <em>Talentos</em></h2>
+      <h2 class="section-title-serif-new reveal">Nossos <span class="text-orange italic">Talentos</span></h2>
       <p class="section-subtitle reveal" data-delay="1">Sua música será produzida por profissionais de elite.</p>
-      <div class="artists-grid mt-4">
-        <div class="artist-card-new reveal" data-delay="1">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300" alt="Artista 1">
-          <div class="artist-info">
-            <h4>Lucas Mendes</h4>
-            <p>Especialista em Sertanejo e Pop</p>
+      
+      <div class="artists-grid-modern mt-5">
+        <div class="artist-card-modern reveal" data-delay="1">
+          <div class="artist-img-box">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800" alt="Lucas Mendes">
+            <div class="artist-overlay-info">
+              <h4>Lucas Mendes</h4>
+              <p>Especialista em Sertanejo e Pop</p>
+            </div>
           </div>
         </div>
-        <div class="artist-card-new reveal" data-delay="2">
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300" alt="Artista 2">
-          <div class="artist-info">
-            <h4>Juliana Costa</h4>
-            <p>Voz Feminina Premium</p>
+        <div class="artist-card-modern reveal" data-delay="2">
+          <div class="artist-img-box">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800" alt="Juliana Costa">
+            <div class="artist-overlay-info">
+              <h4>Juliana Costa</h4>
+              <p>Voz Feminina Premium</p>
+            </div>
           </div>
         </div>
-        <div class="artist-card-new reveal" data-delay="3">
-          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300" alt="Artista 3">
-          <div class="artist-info">
-            <h4>Ricardo Lima</h4>
-            <p>Mestre em MPB e Samba</p>
+        <div class="artist-card-modern reveal" data-delay="3">
+          <div class="artist-img-box">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800" alt="Ricardo Lima">
+            <div class="artist-overlay-info">
+              <h4>Ricardo Lima</h4>
+              <p>Mestre em MPB e Samba</p>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+`
+
+const Warranty = () => `
+  <section class="warranty-section py-medium">
+    <div class="container">
+      <div class="warranty-card-premium reveal">
+        <div class="warranty-icon-circle">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <div class="warranty-text-content">
+          <h3>Garantia de devolução em 7 dias</h3>
+          <p>Se sua Canção Divina não tocar seu coração ou não captar sua história perfeitamente, é só nos avisar. Reescrevemos ou reembolsamos integralmente. Sem risco, só fé.</p>
         </div>
       </div>
     </div>
@@ -1154,9 +1099,10 @@ app.innerHTML = `
     ${Hero()}
     ${HowItWorks()}
     ${MusicStyles()}
-    ${Reactions()}
     ${Experience()}
     ${Artists()}
+    ${Warranty()}
+    ${Reactions()}
     ${FAQ()}
     ${FooterCTA()}
   </main>
