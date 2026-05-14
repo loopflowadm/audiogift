@@ -1,74 +1,294 @@
 import './style.css'
 
+const Logo = (color = 'var(--black)') => `
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="48" viewBox="0 0 4070910 1075080" fill="${color}" style="display: block;">
+ <g id="Camada_x0020_1">
+  <g id="_2105988202176">
+   <path d="M110700 853680c1650,0 3290,40 4930,110l0 -267560c0,-38180 14550,-56590 44700,-79580l399000 -304250 0 692060c0,61140 -49570,110700 -110700,110700 -61140,0 -110700,-49560 -110700,-110700 0,-63000 52460,-113330 115630,-110580l0 -89980 -232160 0 0 270410c390,60550 -49340,110770 -110700,110770 -61140,0 -110700,-49560 -110700,-110700 0,-61140 49560,-110700 110700,-110700zm342860 -260590l0 -177020 -232160 177020 232160 0zm1622330 57080c0,68360 -26880,115110 -82970,115110 -56090,0 -82970,-46750 -82970,-115110 0,-68360 26880,-115100 82970,-115100 56090,0 82970,46740 82970,115100zm-300320 0c0,152500 104590,220270 217350,220270 112760,0 217350,-67770 217350,-220270 0,-147230 -105750,-220270 -217350,-220270 -111600,0 -217350,73040 -217350,220270zm-200590 145490c0,44990 25710,72450 67190,72450 41480,0 67190,-27460 67190,-72450l0 -290970c0,-44990 -25710,-72450 -67190,-72450 -41480,0 -67190,27460 -67190,72450l0 290970zm-454750 -15190c0,56090 24540,80040 76530,80040l113940 0c139640,0 201570,-93480 201570,-210340 0,-116850 -61930,-210330 -201570,-210330l-113940 0c-51990,0 -76530,23950 -76530,80040l0 260590zm130870 -25130l0 -210330 29800 0c77710,0 96990,38560 96990,105160 0,66610 -19280,105170 -96990,105170l-29800 0zm-340820 -59010c0,43820 -20450,72450 -67770,72450 -47330,0 -67780,-28630 -67780,-72450l0 -191640c0,-44990 -25710,-72450 -67190,-72450 -41480,0 -67190,27460 -67190,72450l0 192810c0,127370 86470,172940 202160,172940 115680,0 202160,-45570 202160,-172940l0 -192810c0,-44990 -25710,-72450 -67200,-72450 -41480,0 -67190,27460 -67190,72450l0 191640z"/>
+   <path d="M2716940 718530c-9350,32140 -32720,50250 -74200,50250 -67780,0 -87060,-44990 -87060,-116270 0,-84130 36810,-117440 81800,-117440 59010,0 60180,54340 103410,54340 42070,0 64270,-32130 64270,-59010 0,-32720 -36810,-100500 -172360,-100500 -94650,0 -211500,61350 -211500,220270 0,169440 111010,220270 205080,220270 46150,0 99320,-18690 120360,-53160l1160 0 0 11680c0,22200 16950,41480 44410,41480 37390,0 46740,-28630 46740,-55500l0 -120360c0,-35640 -23370,-63690 -63100,-63690l-86470 0c-29220,0 -44990,18120 -44990,46160 0,25120 19280,41480 39730,41480l32720 0zm201180 77130c0,44990 25710,72450 67190,72450 41480,0 67190,-27460 67190,-72450l0 -290970c0,-44990 -25710,-72450 -67190,-72450 -41480,0 -67190,27460 -67190,72450l0 290970zm357180 -184630l0 -66020 135550 0c50250,0 63680,-25710 63680,-52590 0,-26880 -13430,-52580 -63680,-52580l-193400 0c-52000,0 -76540,23950 -76540,80040l0 275780c0,44990 25710,72450 67200,72450 41480,0 67190,-27460 67190,-72450l0 -82970 121520 0c32140,0 48500,-24540 48500,-50830 0,-26290 -16360,-50830 -48500,-50830l-121520 0zm398420 -62520l0 247150c0,44990 25710,72450 67190,72450 41490,0 67190,-27460 67190,-72450l0 -247150 81220 0c37980,0 54920,-22200 54920,-54340 0,-32130 -16940,-54330 -59590,-54330l-287470 0c-42650,0 -59590,22200 -59590,54330 0,32140 16940,54340 54920,54340l81210 0zm-277630 -234090l560590 0c62870,0 114230,51360 114230,114220l0 451690c0,62870 -51360,114230 -114230,114230l-1547820 0c-62870,0 -114230,-51360 -114230,-114230l0 -451690c0,-62860 51360,-114220 114230,-114220 211170,0 422340,0 633520,0 18840,12400 38170,23210 57090,32090 7760,3650 15340,7050 22770,10210 -237800,0 -475590,0 -713380,0 -39520,0 -71920,32410 -71920,71920l0 451690c0,39520 32400,71920 71920,71920l1547820 0c39510,0 71920,-32400 71920,-71920l0 -451690c0,-39510 -32410,-71920 -71920,-71920l-558060 0c-111810,0 -177530,-1130 -280670,-49570 -57360,-26940 -126610,-77830 -159100,-138680 -17120,-32070 -20990,-61990 -15560,-87540 19260,-90580 125390,-99800 193220,-53980 35240,23810 65460,64320 83410,103360 34500,-56000 121760,-103980 179670,-54430 26050,22290 35840,54010 32530,85460 -7160,67980 -73540,105860 -123470,111970 28560,-16680 66000,-56280 77590,-96470 17620,-61090 -31790,-96990 -87960,-62920 -49080,29770 -65320,86330 -82350,137040 -11190,-57730 -52300,-154690 -103050,-188970 -41910,-28320 -115490,-32420 -128270,27700 -9590,45080 31410,93520 66250,124070 28560,25050 60390,43690 84940,55220 96720,45410 156220,45440 260290,45440z"/>
+  </g>
+ </g>
+</svg>
+`
+
 const app = document.querySelector('#app')
 
+const AnnouncementBar = () => `
+  <div class="announcement-bar">
+    <div class="container announcement-content">
+      <div class="announcement-badge">
+        <i data-lucide="shield-check"></i>
+        <span>100% SATISFAÇÃO GARANTIDA</span>
+      </div>
+      <p class="announcement-text">
+        Seu dinheiro de volta se não se emocionar.
+      </p>
+      <a href="#create" class="announcement-link">
+        Crie sua canção <i data-lucide="arrow-right"></i>
+      </a>
+    </div>
+  </div>
+`
+
 const Header = () => `
+  ${AnnouncementBar()}
   <header class="header">
     <div class="container header-content">
-      <div class="logo">
-        <span class="logo-text">AUDIOGIFT</span>
-        <span class="logo-subtext">Homenagens Musicais</span>
-      </div>
+      <a href="#" class="logo">
+        ${Logo('white')}
+      </a>
       <nav class="nav">
-        <div class="nav-links">
-          <a href="#how">Como Funciona</a>
-          <a href="#pricing">Preços</a>
-          <a href="#reviews">Avaliações</a>
+        <a href="#how">Como Funciona</a>
+        <a href="#styles">Estilos</a>
+        <a href="#reviews">Avaliações</a>
+        <a href="#faq">Dúvidas</a>
+        <div class="nav-actions">
+          <a href="#track" class="btn-nav-outline">Acompanhar pedido</a>
+          <a href="#create" class="btn-nav-gold">Criar sua canção</a>
         </div>
-        <div class="lang-selector">
-          <span>🇧🇷 PT</span>
-        </div>
-        <a href="#create" class="btn-nav">Criar Homenagem</a>
       </nav>
     </div>
   </header>
 `
 
-const MediaProof = () => `
-  <section class="media-proof">
+const MusicStyles = () => {
+  const genresTags = [
+    'Arrocha / Brega', 'Axé', 'Black Music', 'Blues Americano', 'Bolero', 'Capoeira', 'Forró', 'Funk',
+    'Gospel', 'Infantil', 'Jazz', 'Jovem Guarda', 'MPB', 'Música Clássica', 'Música Eletrônica', 'Música Latina',
+    'Pagode', 'Pop', 'Rap', 'Reggae', 'Rock', 'Samba', 'Sertanejo', 'Tango', 'Valsa'
+  ]
+  
+  const featuredGenres = [
+    { name: 'Sertanejo', voice: 'Masculina' },
+    { name: 'Pop', voice: 'Feminina' },
+    { name: 'Gospel', voice: 'Feminina' },
+    { name: 'MPB', voice: 'Masculina' },
+    { name: 'Samba/Pagode', voice: 'Masculina' },
+    { name: 'Rock', voice: 'Masculina' },
+    { name: 'Forró', voice: 'Feminina' },
+    { name: 'Jazz', voice: 'Instrumental' },
+    { name: 'Infantil', voice: 'Feminina' },
+    { name: 'Rap/Trap', voice: 'Masculina' },
+    { name: 'Bossa Nova', voice: 'Feminina' },
+    { name: 'Reggae', voice: 'Masculina' }
+  ]
+  
+  return `
+    <section id="styles" class="music-styles py-large">
+      <div class="container text-center">
+        <div class="tag-badge reveal"><i data-lucide="sparkles"></i> NOSSOS ESTILOS</div>
+        <h2 class="section-title-serif reveal" data-delay="1">Ouça nossas homenagens por <em>Gênero Musical</em></h2>
+        <p class="section-subtitle reveal" data-delay="2">Explore nossa biblioteca de estilos musicais, do clássico ao moderno.</p>
+        
+        <div class="styles-controls reveal" data-delay="3">
+          <div class="search-wrapper">
+            <span class="search-icon"><i data-lucide="search"></i></span>
+            <input type="text" placeholder="Buscar gênero musical..." class="search-input">
+          </div>
+          
+          <div class="voice-toggle-wrapper">
+            <span>Quero ouvir os exemplos com voz:</span>
+            <div class="voice-toggle">
+              <button class="toggle-btn active">Masculina</button>
+              <button class="toggle-btn">Feminina</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="genre-tags mb-4 reveal" data-delay="4">
+          <button class="tag-btn active">Todos</button>
+          ${genresTags.map(genre => `<button class="tag-btn">${genre}</button>`).join('')}
+        </div>
+        
+        <div class="genre-grid-players">
+          ${featuredGenres.map((genre, i) => `
+            <div class="style-player-card reveal" data-delay="${(i % 4) + 1}">
+              <div class="wa-bubble-small">
+                <button class="wa-play-small"><i data-lucide="play"></i></button>
+                <div class="wa-info-small">
+                  <span class="wa-name-small">${genre.name}</span>
+                  <div class="wa-wave-small"></div>
+                  <span class="wa-time-small">0:30</span>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div class="mt-4 reveal" data-delay="1">
+          <button class="btn-outline">VER TODOS OS ESTILOS</button>
+        </div>
+      </div>
+    </section>
+  `
+}
+
+
+const Hero = () => `
+  <section class="hero">
     <div class="container">
-      <p class="text-center proof-title">VISTO EM:</p>
-      <div class="logo-grid">
-        <img src="https://logodownload.org/wp-content/uploads/2014/04/g1-globo-logo.png" alt="G1" class="grayscale">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Logo_CNN_Brasil.svg/1200px-Logo_CNN_Brasil.svg.png" alt="CNN" class="grayscale">
-        <img src="https://logodownload.org/wp-content/uploads/2014/04/sbt-logo.png" alt="SBT" class="grayscale">
-        <img src="https://logodownload.org/wp-content/uploads/2016/09/forbes-logo.png" alt="Forbes" class="grayscale">
+      <div class="hero-new-layout">
+        <div class="hero-visual-wrapper reveal" data-delay="1">
+          <div class="hero-video-container">
+            <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=1200">
+              <source src="https://assets.mixkit.co/videos/preview/mixkit-recording-studio-with-microphones-and-equipment-4609-large.mp4" type="video/mp4">
+            </video>
+            <button class="btn-play-example">
+              <i data-lucide="play"></i>
+              Ouvir Exemplo
+            </button>
+          </div>
+        </div>
+        
+        <div class="hero-text-content text-center">
+          <p class="tagline reveal" data-delay="2">A PLATAFORMA #1 DE MÚSICAS PERSONALIZADAS</p>
+          <h1 class="main-title reveal" data-delay="3">Tudo Que Você Nunca Conseguiu Dizer... <em>Agora Em Uma Canção.</em></h1>
+          <p class="hero-subtitle reveal" data-delay="4">A homenagem definitiva para quem você ama. Uma composição exclusiva, feita sob medida para a sua história.</p>
+          <div class="hero-cta-wrapper reveal" data-delay="5">
+            <a href="#create" class="btn-primary-new btn-magnetic">
+              <i data-lucide="gift"></i>
+              HOMENAGEAR ALGUÉM AGORA
+            </a>
+            <div class="hero-trust">
+              <div class="stars">
+                <i data-lucide="star"></i>
+                <i data-lucide="star"></i>
+                <i data-lucide="star"></i>
+                <i data-lucide="star"></i>
+                <i data-lucide="star"></i>
+              </div>
+              <p>Mais de <strong>2.000 pessoas</strong> já se emocionaram</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 `
 
-const Categories = () => {
-  const cats = [
-    { title: 'Pro Amor da Sua Vida', img: 'https://images.unsplash.com/photo-1518199266791-739d6ffec522?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pro Seu Filho(a)', img: 'https://images.unsplash.com/photo-1536640712247-c4547476f827?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pro Pedido Perfeito', img: 'https://images.unsplash.com/photo-1511733849024-88137bb893fd?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pra Celebrar a União', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pra Um Aniversário Inesquecível', img: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pro Seu Pai ou Sua Mãe', img: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pros Seus Avós', img: 'https://images.unsplash.com/photo-1522067821987-4322384e9086?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pra Aquele Amigo Especial', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pra Você Mesmo(a)', img: 'https://images.unsplash.com/photo-1494137319847-a9592a0e73ed?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pro Batizado do Seu Bebê', img: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pro Chá Revelação', img: 'https://images.unsplash.com/photo-1558244402-286dd748c593?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pra Uma Formatura Especial', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=400' },
-    { title: 'Pra Celebrar as Bodas', img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=400' }
+const WhyChooseUs = () => `
+  <section class="why-choose py-large bg-soft">
+    <div class="container text-center">
+      <h2 class="section-title-serif reveal">Por que mais de 2.000 famílias amam o AUDIOGIFT</h2>
+      <div class="why-grid mt-4">
+        <div class="why-card reveal" data-delay="1">
+          <img src="https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800" alt="Mãe e Bebê">
+          <div class="why-overlay">
+            <span>Para Mães</span>
+            <h4>Eternize o <em>primeiro amor</em></h4>
+          </div>
+        </div>
+        <div class="why-card reveal" data-delay="2">
+          <img src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=800" alt="Casal Idoso">
+          <div class="why-overlay">
+            <span>Para Avós</span>
+            <h4>Um legado de <em>uma vida inteira</em></h4>
+          </div>
+        </div>
+        <div class="why-card reveal" data-delay="3">
+          <img src="https://images.unsplash.com/photo-1516589174468-4719f02ec447?auto=format&fit=crop&q=80&w=800" alt="Emoção">
+          <div class="why-overlay">
+            <span>Histórias Reais</span>
+            <h4>A trilha sonora da <em>sua alma</em></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+`
+
+const Reactions = () => {
+  const reviews = [
+    { type: 'video', img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=600', text: '"Nunca vi minha mãe chorar tanto de felicidade."', name: 'Três Apertos', delay: 1 },
+    { type: 'whatsapp', name: 'Rosely', audio: '0:23', avatar: 'https://i.pravatar.cc/100?u=rosely', delay: 2 },
+    { type: 'text', stars: 5, author: 'Vera Lúcia S.', text: 'Oh glória a Deus! Isso é absolutamente de tirar o fôlego. Eu não consigo acreditar no resultado.', date: '2 dias atrás', delay: 3 },
+    { type: 'video', img: 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=600', text: '"O presente mais emocionante que já dei."', name: 'Meu Coração é Seu', delay: 4 },
+    { type: 'whatsapp', name: 'Marcos', audio: '1:12', avatar: 'https://i.pravatar.cc/100?u=marcos', delay: 5 },
+    { type: 'text', stars: 5, author: 'Sérgio T.', text: 'Ficou idêntico ao que eu imaginei. A voz do cantor é espetacular e a letra capturou tudo.', date: '1 semana atrás', delay: 6 },
+    { type: 'video', img: 'https://images.unsplash.com/photo-1516589174468-4719f02ec447?auto=format&fit=crop&q=80&w=600', text: '"Meus avós ficaram sem palavras."', name: 'Amor de Mãe', delay: 7 },
+    { type: 'whatsapp', name: 'Carla', audio: '0:45', avatar: 'https://i.pravatar.cc/100?u=carla', delay: 8 },
+    { type: 'text', stars: 5, author: 'Juliana P.', text: 'Superou todas as expectativas. O processo foi muito rápido e o resultado é pura arte.', date: '3 dias atrás', delay: 9 }
   ]
-  
+
   return `
-    <section class="categories py-large">
+    <section id="reviews" class="reactions py-large bg-white overflow-hidden">
       <div class="container">
-        <h2 class="text-center">Pra quem é essa canção?</h2>
-        <div class="carousel-container">
-          <div class="category-carousel">
-            ${cats.map(cat => `
-              <div class="category-card">
-                <img src="${cat.img}" alt="${cat.title}">
-                <div class="category-overlay">
-                  <h3>${cat.title}</h3>
-                </div>
+        <div class="text-center mb-4">
+          <div class="tag-badge reveal"><i data-lucide="heart"></i> HISTÓRIAS REAIS</div>
+          <h2 class="section-title-serif reveal">Por que mais de <em>10.000 famílias</em> amam a AUDIOGIFT</h2>
+          <p class="section-subtitle reveal" data-delay="1">Momentos reais de quem transformou sentimentos em canções eternas.</p>
+        </div>
+        
+        <div class="carousel-wrapper reveal" data-delay="2">
+          <div class="reactions-carousel">
+            ${reviews.map(item => `
+              <div class="reaction-card-premium">
+                ${item.type === 'video' ? `
+                  <div class="card-inner video-type">
+                    <div class="video-preview">
+                      <img src="${item.img}" alt="Reação">
+                      <div class="video-overlay"></div>
+                      <button class="btn-play-center"><i data-lucide="play"></i></button>
+                    </div>
+                    <div class="card-content">
+                      <p class="review-quote">${item.text}</p>
+                      <div class="card-footer">
+                        <strong>${item.name}</strong>
+                        <span>Cliente Audiogift</span>
+                      </div>
+                    </div>
+                  </div>
+                ` : item.type === 'whatsapp' ? `
+                  <div class="card-inner wa-type">
+                    <div class="wa-premium-header">
+                      <img src="${item.avatar}" alt="${item.name}">
+                      <div>
+                        <strong>${item.name}</strong>
+                        <span>Via WhatsApp</span>
+                      </div>
+                      <i data-lucide="message-circle" class="wa-icon-top"></i>
+                    </div>
+                    <div class="wa-premium-body">
+                      <div class="wa-voice-bubble">
+                        <button class="wa-play-btn"><i data-lucide="play"></i></button>
+                        <div class="wa-voice-info">
+                          <div class="wa-wave-visual">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                          </div>
+                          <span class="wa-duration">${item.audio}</span>
+                        </div>
+                      </div>
+                      <p class="wa-status-text">"Gente, eu tô sem palavras! Ficou perfeito demais..."</p>
+                    </div>
+                  </div>
+                ` : `
+                  <div class="card-inner text-type">
+                    <div class="card-top">
+                      <div class="stars-gold">
+                        ${'<i data-lucide="star"></i>'.repeat(item.stars)}
+                      </div>
+                      <span class="verified-badge"><i data-lucide="check-circle"></i> Verificado</span>
+                    </div>
+                    <p class="review-body">${item.text}</p>
+                    <div class="reviewer-info">
+                      <img src="https://i.pravatar.cc/100?u=${item.author}" alt="${item.author}">
+                      <div>
+                        <strong>${item.author}</strong>
+                        <span>${item.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                `}
               </div>
             `).join('')}
+          </div>
+          
+          <div class="carousel-nav-premium mt-4">
+            <button class="nav-arrow prev" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
+            <div class="nav-pagination">
+              ${reviews.map((_, i) => `<span class="page-dot ${i === 0 ? 'active' : ''}"></span>`).join('')}
+            </div>
+            <button class="nav-arrow next" aria-label="Próximo"><i data-lucide="chevron-right"></i></button>
           </div>
         </div>
       </div>
@@ -76,28 +296,462 @@ const Categories = () => {
   `
 }
 
-const SpotifySection = () => `
-  <section class="spotify-section py-large bg-dark">
-    <div class="container">
-      <div class="spotify-content">
-        <div class="spotify-text">
-          <h2 class="text-gold">Muito mais que uma música</h2>
-          <p>Eternize sua história nas maiores plataformas do mundo.</p>
-          <div class="spotify-feature">
-            <div class="spotify-icon">💿</div>
-            <div>
-              <h4>Eternize no Spotify</h4>
-              <p>Serviço vendido separadamente: publique a canção no Spotify, Apple Music, Deezer e mais.</p>
+const Categories = () => {
+  const cats = [
+    { title: 'Pro Amor da Sua Vida', img: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro Seu Filho(a)', img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro Pedido Perfeito', img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra Celebrar a União', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra Um Aniversário Inesquecível', img: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro Seu Pai ou Sua Mãe', img: 'https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pros Seus Avós', img: 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra Aquele Amigo Especial', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pra Você Mesmo(a)', img: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=600' },
+    { title: 'Pro Batizado do Seu Bebê', img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=600' }
+  ]
+  
+  return `
+    <section class="categories-section py-large bg-black text-white">
+      <div class="container-full">
+        <div class="text-center mb-4">
+          <h2 class="section-title-serif text-white reveal">Pra Quem É Essa Canção?</h2>
+          <p class="scroll-hint reveal" data-delay="1">ARRASTE PARA EXPLORAR →</p>
+        </div>
+        
+        <div class="categories-carousel reveal" data-delay="2">
+          <div class="cat-track">
+            ${[...cats, ...cats].map((cat, i) => `
+              <div class="cat-story-card">
+                <img src="${cat.img}" alt="${cat.title}">
+                <div class="cat-story-overlay">
+                  <h4>${cat.title}</h4>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div class="text-center mt-5 reveal" data-delay="1">
+          <a href="#create" class="btn-primary-new btn-magnetic">
+            <i data-lucide="gift"></i>
+            Começar a Criar Sua Canção
+          </a>
+        </div>
+      </div>
+    </section>
+  `
+}
+
+const Experience = () => {
+  return `
+    <section class="experience-section py-large bg-light">
+      <div class="container text-center">
+        <h2 class="section-title-serif reveal">Muito Mais Que Uma Música. <br><span class="text-orange">Uma Experiência Completa.</span></h2>
+        <p class="section-subtitle reveal" data-delay="1">O presente ideal para emocionar e ser lembrado para sempre.</p>
+        
+        <div class="player-scene reveal" data-delay="2">
+          <div class="player-top">
+            <div class="vinyl-wrap">
+              <canvas id="vinylCanvas" width="280" height="280"></canvas>
+              <svg class="arm-svg" id="tonearm" width="100" height="130" viewBox="0 0 100 130">
+                <line x1="88" y1="14" x2="55" y2="110" stroke="#888" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="88" cy="14" r="8" fill="#333" stroke="#555" stroke-width="1"/>
+                <ellipse cx="55" cy="112" rx="5" ry="3" fill="#FC7301" transform="rotate(-20,55,112)"/>
+                <line x1="88" y1="14" x2="100" y2="8" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <div class="player-info">
+              <p class="track-label">AUDIOGIFT PLAYER</p>
+              <h3 class="track-title" id="playerTitle">Uma Canção pra Você</h3>
+              <p class="track-artist" id="playerArtist">Canção personalizada · 2025</p>
+              
+              <div class="player-tags" id="playerTags">
+                <span class="tag">Romance</span>
+                <span class="tag">Alma</span>
+              </div>
+
+              <div class="prog-wrapper">
+                <div class="prog-bar-container" id="progBar">
+                  <div class="prog-fill" id="progFill"></div>
+                </div>
+                <div class="prog-times">
+                  <span id="timeCur">0:00</span>
+                  <span id="timeDur">3:42</span>
+                </div>
+              </div>
+
+              <div class="player-controls">
+                <button class="ctrl-btn" id="prevBtn"><i data-lucide="skip-back"></i></button>
+                <button class="play-btn-large" id="playBtn">
+                  <i data-lucide="play" id="playIcon"></i>
+                </button>
+                <button class="ctrl-btn" id="nextBtn"><i data-lucide="skip-forward"></i></button>
+                
+                <div class="vol-control">
+                  <i data-lucide="volume-2" class="vol-icon"></i>
+                  <div class="vol-bar-container" id="volBar">
+                    <div class="vol-fill" id="volFill"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <a href="#create" class="btn-primary">Homenagear Agora</a>
+
+          <div class="player-footer" id="playerPlaylist">
+            <!-- Playlist pills generated by JS -->
+          </div>
         </div>
-        <div class="spotify-visual">
-          <div class="vinyl-record">
-            <div class="vinyl-disc"></div>
-            <div class="vinyl-cover">
-              <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=400" alt="Cover">
-            </div>
+
+        <div class="experience-grid mt-5">
+          <div class="exp-card reveal" data-delay="1">
+            <div class="exp-icon"><i data-lucide="music"></i></div>
+            <h4>Som Profissional</h4>
+            <p>Produzida por artistas de verdade, com qualidade que impressiona no primeiro acorde.</p>
+          </div>
+          <div class="exp-card reveal" data-delay="2">
+            <div class="exp-icon"><i data-lucide="file-text"></i></div>
+            <h4>Letra Sob Medida</h4>
+            <p>Cada verso conta a história de vocês — com os detalhes que só vocês conhecem.</p>
+          </div>
+          <div class="exp-card reveal" data-delay="3">
+            <div class="exp-icon"><i data-lucide="disc"></i></div>
+            <h4>Você Escolhe a Melhor</h4>
+            <p>Receba 2 versões com melodias diferentes e a mesma letra; escolha a que mais emociona.</p>
+          </div>
+          <div class="exp-card reveal" data-delay="4">
+            <div class="exp-icon"><i data-lucide="calendar-clock"></i></div>
+            <h4>Entrega Rápida</h4>
+            <p>Precisa pra ontem? Turbo em até 6h, Express em 24h ou até 7 dias no plano essencial.</p>
+          </div>
+          <div class="exp-card reveal" data-delay="5">
+            <div class="exp-icon"><i data-lucide="podcast"></i></div>
+            <h4>Eternize no Spotify</h4>
+            <p>Serviço vendido separadamente: publique a canção no Spotify e outras plataformas.</p>
+          </div>
+        </div>
+
+        <div class="experience-cta mt-5 reveal" data-delay="6">
+          <a href="#create" class="btn-primary-new btn-magnetic">
+            Criar Minha Canção
+          </a>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+const initVinylPlayer = () => {
+  const songs = [
+    { title: "Uma Canção pra Você", artist: "Canção personalizada · 2025", tags: ["Romance", "Alma"], dur: 222, color: "#222", color2: "#FC7301" },
+    { title: "Pro Amor da Minha Vida", artist: "Dedicada com carinho · 2025", tags: ["Amor", "Eterno"], dur: 198, color: "#1A2E5C", color2: "#4A7FCC" },
+    { title: "Feliz Aniversário, Meu Bem", artist: "Canção especial · 2025", tags: ["Festa", "Alegria"], dur: 175, color: "#1A4A2A", color2: "#4AC47A" },
+    { title: "Pra Minha Mãe", artist: "Com amor infinito · 2025", tags: ["Família", "Saudade"], dur: 210, color: "#4A1A3A", color2: "#CC4A9A" },
+  ];
+
+  let currentIdx = 0;
+  let isPlaying = false;
+  let elapsed = 0;
+  let raf = null;
+  let lastTime = null;
+  let angle = 0;
+  let volume = 0.7;
+
+  const canvas = document.getElementById('vinylCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const tonearm = document.getElementById('tonearm');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const progFill = document.getElementById('progFill');
+  const timeCur = document.getElementById('timeCur');
+  const timeDur = document.getElementById('timeDur');
+  const volFill = document.getElementById('volFill');
+  const playlist = document.getElementById('playerPlaylist');
+
+  const fmtTime = (s) => {
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60);
+  };
+
+  const drawVinyl = (ang, song) => {
+    const W = 280, R = W / 2;
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, W);
+    
+    // 1. Static Shadow Base
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(R, R, R - 6, 0, Math.PI * 2);
+    ctx.shadowBlur = 45;
+    ctx.shadowColor = 'rgba(0,0,0,0.3)';
+    ctx.fillStyle = '#080808';
+    ctx.fill();
+    ctx.restore();
+
+    // 2. Main Disc Layer
+    ctx.save();
+    ctx.translate(R, R);
+    
+    // ROTATING CONTENT
+    ctx.save();
+    ctx.rotate(ang);
+    
+    // Base Disc
+    ctx.beginPath();
+    ctx.arc(0, 0, R - 10, 0, Math.PI * 2);
+    const discGrad = ctx.createRadialGradient(0,0,0, 0,0,R-10);
+    discGrad.addColorStop(0, '#111');
+    discGrad.addColorStop(0.9, '#080808');
+    discGrad.addColorStop(1, '#1a1a1a');
+    ctx.fillStyle = discGrad;
+    ctx.fill();
+
+    // Procedural Grooves (with rotation flicker)
+    for (let i = 0; i < 140; i++) {
+      const r = 56 + (i * 0.9);
+      if (r > R - 12) break;
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      // Flicker effect: opacity changes slightly based on rotation + index
+      const flicker = Math.sin(ang * 2 + i * 0.5) * 0.01;
+      ctx.strokeStyle = `rgba(255,255,255,${0.01 + flicker})`;
+      ctx.lineWidth = 0.4;
+      ctx.stroke();
+    }
+
+    // Rotating Imperfections (Tiny scratches/dust that follow rotation)
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < 15; i++) {
+      const seed = (i * 137) % 360;
+      const rStart = 60 + (i * 5) % (R - 70);
+      ctx.beginPath();
+      ctx.arc(0, 0, rStart, seed, seed + 0.1);
+      ctx.stroke();
+    }
+
+    // 3. Center Label
+    const labelR = 54;
+    ctx.beginPath();
+    ctx.arc(0, 0, labelR, 0, Math.PI * 2);
+    const lGrad = ctx.createRadialGradient(0,0,0, 0,0,labelR);
+    lGrad.addColorStop(0, song.color2);
+    lGrad.addColorStop(0.95, song.color);
+    lGrad.addColorStop(1, 'rgba(0,0,0,0.3)');
+    ctx.fillStyle = lGrad;
+    ctx.fill();
+
+    // Label Text
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.font = 'bold 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText("AUDIOGIFT", 0, -22);
+    ctx.font = '700 6px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillText("MASTER EDITION", 0, 26);
+
+    // Spindle Detail
+    ctx.beginPath();
+    ctx.arc(0, 0, 7, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    
+    ctx.restore(); // END ROTATING CONTENT
+
+    // 4. STATIC LIGHTING (The V Gloss)
+    const drawConic = (rot, op, size = 0.15) => {
+      if (!ctx.createConicGradient) return;
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      const g = ctx.createConicGradient(rot, 0, 0);
+      g.addColorStop(0, 'transparent');
+      g.addColorStop(size, `rgba(255,255,255,${op})`);
+      g.addColorStop(size * 2, 'transparent');
+      ctx.beginPath();
+      ctx.arc(0, 0, R - 11, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.restore();
+    };
+
+    // Main static highlights
+    drawConic(Math.PI * 0.2, 0.12);
+    drawConic(Math.PI * 1.2, 0.12);
+
+    // 5. DYNAMIC ROTATING GLIMMER
+    // This moves WITH the disc but much more subtly
+    ctx.save();
+    ctx.rotate(ang * 0.5); // Moves slower for a parallax effect
+    drawConic(0, 0.05, 0.05);
+    drawConic(Math.PI, 0.05, 0.05);
+    ctx.restore();
+
+    // 6. SURFACE GRAIN (Static)
+    for (let i = 0; i < 400; i++) {
+      const rx = (Math.random() - 0.5) * W;
+      const ry = (Math.random() - 0.5) * W;
+      if (Math.sqrt(rx*rx + ry*ry) < R - 12) {
+        ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
+        ctx.fillRect(rx, ry, 1, 1);
+      }
+    }
+
+    ctx.restore(); // END Main Disc Layer
+  };
+
+  const loadTrack = (idx) => {
+    const s = songs[idx];
+    document.getElementById('playerTitle').textContent = s.title;
+    document.getElementById('playerArtist').textContent = s.artist;
+    document.getElementById('playerTags').innerHTML = s.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    timeDur.textContent = fmtTime(s.dur);
+    timeCur.textContent = '0:00';
+    progFill.style.width = '0%';
+    
+    document.querySelectorAll('.song-pill').forEach((p, i) => {
+      p.classList.toggle('active', i === idx);
+    });
+    
+    drawVinyl(angle, s);
+  };
+
+  const updateLoop = (ts) => {
+    if (!isPlaying) {
+      lastTime = null;
+      return;
+    }
+    if (lastTime !== null) {
+      const dt = (ts - lastTime) / 1000;
+      elapsed += dt;
+      angle += dt * Math.PI * 1.5;
+      const s = songs[currentIdx];
+      if (elapsed >= s.dur) {
+        elapsed = 0;
+        angle = 0;
+      }
+      const pct = (elapsed / s.dur) * 100;
+      progFill.style.width = pct + '%';
+      timeCur.textContent = fmtTime(elapsed);
+      drawVinyl(angle, s);
+    }
+    lastTime = ts;
+    raf = requestAnimationFrame(updateLoop);
+  };
+
+  const togglePlayback = () => {
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+      playIcon.setAttribute('data-lucide', 'pause');
+      tonearm.classList.add('playing');
+      lastTime = null;
+      raf = requestAnimationFrame(updateLoop);
+    } else {
+      playIcon.setAttribute('data-lucide', 'play');
+      tonearm.classList.remove('playing');
+      cancelAnimationFrame(raf);
+    }
+    lucide.createIcons();
+  };
+
+  playBtn.addEventListener('click', togglePlayback);
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    cancelAnimationFrame(raf);
+    isPlaying = false;
+    elapsed = 0;
+    angle = 0;
+    currentIdx = (currentIdx - 1 + songs.length) % songs.length;
+    loadTrack(currentIdx);
+    tonearm.classList.remove('playing');
+    playIcon.setAttribute('data-lucide', 'play');
+    lucide.createIcons();
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    cancelAnimationFrame(raf);
+    isPlaying = false;
+    elapsed = 0;
+    angle = 0;
+    currentIdx = (currentIdx + 1) % songs.length;
+    loadTrack(currentIdx);
+    tonearm.classList.remove('playing');
+    playIcon.setAttribute('data-lucide', 'play');
+    lucide.createIcons();
+  });
+
+  // Progress Bar Interaction
+  document.getElementById('progBar').addEventListener('click', e => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    elapsed = pct * songs[currentIdx].dur;
+    angle = elapsed * Math.PI * 1.5;
+    progFill.style.width = (pct * 100) + '%';
+    timeCur.textContent = fmtTime(elapsed);
+    drawVinyl(angle, songs[currentIdx]);
+  });
+
+  // Volume Interaction
+  document.getElementById('volBar').addEventListener('click', e => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    volume = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    volFill.style.width = (volume * 100) + '%';
+  });
+
+  // Build Playlist
+  playlist.innerHTML = '';
+  songs.forEach((s, i) => {
+    const pill = document.createElement('div');
+    pill.className = 'song-pill' + (i === 0 ? ' active' : '');
+    pill.innerHTML = `<span class="pill-dot"></span><span class="pill-text">${s.title}</span>`;
+    pill.addEventListener('click', () => {
+      if (currentIdx === i) return;
+      cancelAnimationFrame(raf);
+      isPlaying = false;
+      elapsed = 0;
+      angle = 0;
+      currentIdx = i;
+      loadTrack(i);
+      tonearm.classList.remove('playing');
+      playIcon.setAttribute('data-lucide', 'play');
+      lucide.createIcons();
+    });
+    playlist.appendChild(pill);
+  });
+
+  loadTrack(0);
+};
+
+
+const Artists = () => `
+  <section class="artists py-large bg-white">
+    <div class="container text-center">
+      <h2 class="section-title-serif reveal">Nossos <em>Talentos</em></h2>
+      <p class="section-subtitle reveal" data-delay="1">Sua música será produzida por profissionais de elite.</p>
+      <div class="artists-grid mt-4">
+        <div class="artist-card-new reveal" data-delay="1">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300" alt="Artista 1">
+          <div class="artist-info">
+            <h4>Lucas Mendes</h4>
+            <p>Especialista em Sertanejo e Pop</p>
+          </div>
+        </div>
+        <div class="artist-card-new reveal" data-delay="2">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300" alt="Artista 2">
+          <div class="artist-info">
+            <h4>Juliana Costa</h4>
+            <p>Voz Feminina Premium</p>
+          </div>
+        </div>
+        <div class="artist-card-new reveal" data-delay="3">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300" alt="Artista 3">
+          <div class="artist-info">
+            <h4>Ricardo Lima</h4>
+            <p>Mestre em MPB e Samba</p>
           </div>
         </div>
       </div>
@@ -106,257 +760,109 @@ const SpotifySection = () => `
 `
 
 const HowItWorks = () => `
-  <section id="how" class="how-it-works py-large bg-porcelain">
+  <section id="how" class="how-it-works py-large bg-soft">
     <div class="container">
-      <h2 class="text-center">Como funciona?</h2>
-      <p class="text-center subtitle">Ouça o áudio abaixo para entender como funciona.</p>
+      <div class="text-center mb-4">
+        <div class="tag-badge reveal"><i data-lucide="info"></i> SIMPLES & MÁGICO</div>
+        <h2 class="section-title-serif reveal">Veja como a <em>mágica acontece</em></h2>
+        <p class="section-subtitle reveal" data-delay="1">Transformamos seus sentimentos em melodia em 3 passos simples.</p>
+      </div>
+
+      <div class="process-grid reveal" data-delay="2">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-icon"><i data-lucide="file-edit"></i></div>
+          <h4>Conte sua história</h4>
+          <p>Você preenche um formulário rápido com os detalhes e momentos mais importantes.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-icon"><i data-lucide="mic"></i></div>
+          <h4>Nós compomos</h4>
+          <p>Nossos artistas criam uma letra e melodia exclusivas, feitas sob medida para você.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-icon"><i data-lucide="heart"></i></div>
+          <h4>Emocione</h4>
+          <p>Você recebe a música e surpreende quem você ama com um presente eterno.</p>
+        </div>
+      </div>
       
-      <div class="whatsapp-audio-container">
-        <div class="wa-audio-bubble">
-          <button class="wa-play-btn">
-            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" /></svg>
-          </button>
-          <div class="wa-audio-info">
-            <div class="wa-wave">
-              <div class="wa-progress"></div>
+      <div class="wa-how-section mt-4 reveal" data-delay="3">
+        <div class="wa-container-premium">
+          <div class="wa-header">
+            <div class="wa-avatar">
+              <img src="https://i.pravatar.cc/100?u=audiogift" alt="Consultor">
+              <span class="online-indicator"></span>
             </div>
-            <div class="wa-footer">
-              <span class="wa-time">1:30</span>
-              <div class="wa-checks">
-                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#34B7F1" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg>
-              </div>
+            <div class="wa-user-info">
+              <strong>Especialista Audiogift</strong>
+              <span>Online agora</span>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="text-center" style="margin-top: 3rem;">
-        <a href="#create" class="btn-primary">Homenagear alguém agora</a>
-      </div>
-    </div>
-  </section>
-`
-
-const Pricing = () => `
-  <section id="pricing" class="pricing py-large bg-porcelain">
-    <div class="container">
-      <h2 class="text-center">Escolha o seu plano</h2>
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <div class="plan-header">
-            <h3>Essencial</h3>
-            <div class="price-old">R$ 147</div>
-            <div class="price">R$ 69,90</div>
-            <p class="delivery-time">Entrega em até 7 dias</p>
-          </div>
-          <ul class="plan-features">
-            <li>✅ Letra personalizada</li>
-            <li>✅ Produção profissional</li>
-            <li>✅ Alta qualidade (MP3)</li>
-          </ul>
-          <a href="#" class="btn-secondary">Selecionar</a>
-        </div>
-        <div class="pricing-card popular">
-          <div class="popular-badge">MAIS POPULAR</div>
-          <div class="plan-header">
-            <h3>Express</h3>
-            <div class="price-old">R$ 197</div>
-            <div class="price">R$ 99,90</div>
-            <p class="delivery-time">Entrega em até 24 horas</p>
-          </div>
-          <ul class="plan-features">
-            <li>✅ Prioridade na fila</li>
-            <li>✅ Suporte VIP WhatsApp</li>
-            <li>✅ Letra personalizada</li>
-          </ul>
-          <a href="#" class="btn-primary">Selecionar</a>
-        </div>
-        <div class="pricing-card">
-          <div class="plan-header">
-            <h3>Turbo</h3>
-            <div class="price-old">R$ 347</div>
-            <div class="price">R$ 199,90</div>
-            <p class="delivery-time">Entrega em até 6 horas</p>
-          </div>
-          <ul class="plan-features">
-            <li>✅ Entrega Ultra Rápida</li>
-            <li>✅ Gift Experience</li>
-            <li>✅ Playback Instrumental</li>
-            <li>✅ Letra em PDF Premium</li>
-          </ul>
-          <a href="#" class="btn-secondary">Selecionar</a>
-        </div>
-      </div>
-    </div>
-  </section>
-`
-
-const Hero = () => `
-  <section class="hero reveal">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-info">
-          <h1>Transforme sua história em uma <span class="text-gold">canção inesquecível</span></h1>
-          <p>O presente mais emocionante que alguém pode receber. Criamos músicas personalizadas com base na sua história real.</p>
-          <a href="#create" class="btn-primary">Homenagear Alguém Agora</a>
-          <div class="trust-badges">
-            <span>⭐ 4.9/5 (2k+ avaliações)</span>
-            <span>⏱️ Entrega em até 24h</span>
-          </div>
-        </div>
-        <div class="hero-video">
-          <div class="video-container">
-            <iframe 
-              src="https://www.youtube-nocookie.com/embed/euebKq4kErQ?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=euebKq4kErQ" 
-              title="YouTube video player" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-`
-
-const MusicStyles = () => `
-  <section class="music-styles py-large">
-    <div class="container">
-      <h2 class="text-center">Escolha o seu estilo musical</h2>
-      <p class="text-center subtitle">Nossos produtores dominam todos os gêneros para sua homenagem ser perfeita.</p>
-      
-      <div class="audio-grid">
-        ${['Sertanejo', 'Pop', 'Gospel', 'MPB', 'Forró', 'Rock'].map(style => `
-          <div class="whatsapp-player">
-            <div class="player-content">
-              <div class="play-icon-container">
-                <button class="btn-play">
-                  <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" /></svg>
-                </button>
-              </div>
-              <div class="player-info">
-                <span class="style-name">${style}</span>
-                <div class="progress-bar">
-                  <div class="progress" style="width: 30%"></div>
-                </div>
-                <div class="player-footer">
-                  <span class="duration">0:30</span>
-                  <div class="check-marks">
-                    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#34B7F1" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg>
+          <div class="wa-chat-body">
+            <div class="wa-bubble-received">
+              <p>Olá! Tudo bem? Ouça esse exemplo de como explicamos o processo para nossos clientes: ✨</p>
+              <span class="wa-time">10:45</span>
+            </div>
+            <div class="wa-bubble-received">
+              <div class="wa-voice-note">
+                <button class="wa-play-main"><i data-lucide="play"></i></button>
+                <div class="wa-audio-content">
+                  <div class="wa-waveform">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="wa-audio-meta">
+                    <span>0:19</span>
+                    <i data-lucide="check-check"></i>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        `).join('')}
-      </div>
-    </div>
-  </section>
-`
-
-const Benefits = () => `
-  <section class="benefits py-large">
-    <div class="container">
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="icon">🎸</div>
-          <h3>Produção Profissional</h3>
-          <p>Qualidade de estúdio com músicos e vocalistas reais selecionados.</p>
-        </div>
-        <div class="benefit-card">
-          <div class="icon">✍️</div>
-          <h3>Letra Exclusiva</h3>
-          <p>Nossos compositores criam a letra com base nos detalhes que você nos conta.</p>
-        </div>
-        <div class="benefit-card">
-          <div class="icon">🚀</div>
-          <h3>Entrega Rápida</h3>
-          <p>Receba sua música personalizada via WhatsApp e E-mail em tempo recorde.</p>
         </div>
       </div>
-    </div>
-  </section>
-`
-
-const Artists = () => `
-  <section class="artists py-large">
-    <div class="container">
-      <h2 class="text-center">Artistas de Estúdio</h2>
-      <p class="text-center subtitle">Nossa equipe de músicos profissionais.</p>
-      <div class="artists-grid">
-        ${[
-          { name: 'Lucas Silva', role: 'Especialista em Sertanejo', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200' },
-          { name: 'Marina Costa', role: 'Vocalista Pop/Gospel', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200' },
-          { name: 'André Lima', role: 'Mestre em MPB', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' }
-        ].map(art => `
-          <div class="artist-card">
-            <img src="${art.img}" alt="${art.name}">
-            <h4>${art.name}</h4>
-            <span>${art.role}</span>
-          </div>
-        `).join('')}
+      
+      <div class="text-center mt-4 reveal" data-delay="4">
+        <a href="#create" class="btn-primary-new btn-magnetic btn-pulse">
+          <i data-lucide="sparkles"></i>
+          QUERO COMEÇAR MINHA HISTÓRIA
+        </a>
       </div>
     </div>
   </section>
 `
 
-const Testimonials = () => `
-  <section id="reviews" class="testimonials py-large">
-    <div class="container">
-      <h2 class="text-center">Histórias que emocionam</h2>
-      <div class="testimonials-grid">
-        ${[
-          { name: 'Ana Souza', role: 'Aniversário de 50 anos da mãe', text: 'Não tenho palavras para descrever a emoção da minha mãe ao ouvir a música. Foi o melhor presente da vida dela.' },
-          { name: 'Carlos Lima', role: 'Pedido de Casamento', text: 'A música capturou cada detalhe da nossa história. Ela chorou do início ao fim. Foi perfeito!' }
-        ].map(t => `
-          <div class="testimonial-card">
-            <div class="quote-icon">"</div>
-            <p class="testimonial-text">${t.text}</p>
-            <div class="testimonial-author">
-              <div class="author-info">
-                <strong>${t.name}</strong>
-                <span>${t.role}</span>
-              </div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  </section>
-`
 
-const Reactions = () => `
-  <section class="reactions py-large" style="background: var(--dark-brown); color: white;">
-    <div class="container">
-      <h2 class="text-center" style="color: var(--secondary-gold)">Reações Reais</h2>
-      <p class="text-center" style="color: #ccc; margin-bottom: 3rem;">O momento exato em que a surpresa acontece.</p>
-      <div class="reactions-grid">
-        ${[1, 2, 3].map(i => `
-          <div class="reaction-placeholder">
-            <div class="play-small"></div>
-            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=400" alt="Reaction ${i}">
-          </div>
-        `).join('')}
+const Security = () => `
+  <section class="security py-medium bg-soft">
+    <div class="container text-center">
+      <p class="subtitle-small">PAGAMENTO 100% SEGURO VIA MERCADO PAGO E STRIPE</p>
+      <div class="security-logos mt-2">
+        <img src="https://logodownload.org/wp-content/uploads/2019/06/mercado-pago-logo.png" alt="Mercado Pago" class="grayscale h-30">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/1200px-Stripe_Logo%2C_revised_2016.svg.png" alt="Stripe" class="grayscale h-30">
       </div>
     </div>
   </section>
 `
 
 const FAQ = () => `
-  <section class="faq py-large">
+  <section id="faq" class="faq py-large">
     <div class="container">
-      <h2 class="text-center">Perguntas Frequentes</h2>
-      <div class="faq-list">
+      <h2 class="text-center section-title-serif">Perguntas Frequentes</h2>
+      <div class="faq-list mt-4">
         ${[
-          { q: 'Como recebo minha música?', a: 'Você recebe um link exclusivo via WhatsApp e E-mail com sua música em alta qualidade, pronta para compartilhar ou baixar.' },
-          { q: 'Quanto tempo demora a produção?', a: 'O prazo padrão é de até 3 dias úteis, mas temos a opção de entrega expressa em até 24 horas.' },
-          { q: 'A música é mesmo exclusiva?', a: 'Sim! Nossos compositores criam a letra do zero com base nos detalhes que você fornece no formulário.' }
+          { q: 'Como recebo minha música?', a: 'Você recebe um link exclusivo via WhatsApp e E-mail com sua música em alta qualidade (MP3/WAV), pronta para compartilhar.' },
+          { q: 'Quanto tempo demora a produção?', a: 'Depende do plano escolhido: Essencial (7 dias), Express (24h) ou Turbo (6h).' },
+          { q: 'A música é mesmo exclusiva?', a: 'Sim! Nossos compositores criam a letra do zero com base nos detalhes que você nos fornece.' },
+          { q: 'Posso pedir alterações?', a: 'Com certeza! Temos garantia de felicidade absoluta. Ajustamos a letra até você ficar 100% satisfeito.' }
         ].map(item => `
           <div class="faq-item">
             <div class="faq-question">
               <h4>${item.q}</h4>
-              <span class="plus">+</span>
+              <i data-lucide="plus" class="plus"></i>
             </div>
             <div class="faq-answer">
               <p>${item.a}</p>
@@ -364,107 +870,389 @@ const FAQ = () => `
           </div>
         `).join('')}
       </div>
+      <div class="text-center mt-4 mb-4">
+        <a href="https://wa.me/5511999999999" class="btn-primary-new btn-magnetic">
+          <i data-lucide="message-circle"></i> FALAR COM ESPECIALISTA AGORA
+        </a>
+      </div>
+    </div>
+  </section>
+`
+
+
+const FloatingButtons = () => `
+  <div class="floating-actions">
+    <a href="https://wa.me/5511999999999" class="float-btn wa-float" target="_blank">
+      <i data-lucide="message-circle"></i>
+      <span class="tooltip">Falar com especialista</span>
+    </a>
+    <button class="float-btn scroll-top" id="scrollTop">
+      <i data-lucide="chevron-up"></i>
+    </button>
+  </div>
+`
+
+const FooterCTA = () => `
+  <section class="footer-cta py-large bg-dark text-white">
+    <div class="container text-center">
+      <h2 class="text-white section-title-serif reveal">Uma Canção Que Só <em>Existe Pra Vocês.</em></h2>
+      <h3 class="text-orange section-title-serif reveal" data-delay="1">Feita Do Zero, Com A Sua História.</h3>
+      <p class="mt-2 text-muted reveal" data-delay="2">A maior plataforma de homenagens musicais do Brasil.</p>
+      <div class="mt-4 reveal" data-delay="3">
+        <a href="#create" class="btn-primary-new btn-magnetic">COMEÇAR AGORA</a>
+      </div>
     </div>
   </section>
 `
 
 const Footer = () => `
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <div class="logo">AUDIOGIFT</div>
-        <p>A maior plataforma de homenagens musicais do Brasil.</p>
-      </div>
-      <div class="footer-links">
-        <h4>Links Úteis</h4>
-        <a href="#">Termos de Uso</a>
-        <a href="#">Privacidade</a>
-        <a href="#">Perguntas Frequentes</a>
-      </div>
-      <div class="footer-social">
-        <h4>Siga-nos</h4>
-        <div class="social-icons">
-          <a href="#">IG</a>
-          <a href="#">TK</a>
-          <a href="#">YT</a>
+  <footer class="footer bg-black text-white">
+    <div class="container footer-content py-large">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">${Logo('white')}</a>
+          <p class="mt-2">Transformando histórias em canções desde 2024.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Institucional</h4>
+          <a href="#">Como Funciona</a>
+          <a href="#">Estilos Musicais</a>
+          <a href="#">Depoimentos</a>
+        </div>
+        <div class="footer-links">
+          <h4>Ajuda</h4>
+          <a href="#">Dúvidas Frequentes</a>
+          <a href="#">Termos de Uso</a>
+          <a href="#">Privacidade</a>
+        </div>
+        <div class="footer-contact">
+          <h4>Contato</h4>
+          <p>suporte@audiogift.com.br</p>
+          <div class="social-icons mt-2">
+            <a href="#"><i data-lucide="instagram"></i></a>
+            <a href="#"><i data-lucide="video"></i></a>
+            <a href="#"><i data-lucide="youtube"></i></a>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom text-center py-medium">
       <p>&copy; 2026 AUDIOGIFT. Todos os direitos reservados.</p>
     </div>
   </footer>
 `
 
-const FloatingButtons = () => `
-  <div class="floating-controls">
-    <a href="https://wa.me/5511999999999" class="btn-whatsapp" target="_blank">
-      <svg viewBox="0 0 24 24" width="30" height="30"><path fill="currentColor" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42 1.55 1.56 2.41 3.63 2.41 5.83 0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.19-.3a8.13 8.13 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m-3.96 3.03c-.22 0-.36.03-.54.22-.19.2-.72.71-.72 1.73s.73 2.01.83 2.14c.1.14 1.44 2.2 3.5 3.08.49.21.87.33 1.17.43.5.16.95.13 1.3.08.4-.06 1.21-.5 1.38-.97.17-.47.17-.87.12-.96-.05-.08-.18-.13-.37-.23-.19-.1-.1.14-.5-.33-1.01-.26-1.01-1.06-.01-.39-.1-.08-.18-.13-.37-.23-.2-.1-.36-.14-.54-.04-.18.09-.78.33-1.12.92-.34.59-.34 1.1-.34 1.6s.1.92.25 1.18c.15.26.54.91 1.31 1.43.77.52 1.44.82 1.95 1.02.5.2 1.01.3 1.4.2.39-.1.97-.4 1.12-.76.15-.36.15-.66.1-.76-.05-.1-.19-.15-.37-.24z"/></svg>
-    </a>
-  </div>
-`
+
+const Quiz = () => {
+  const steps = [
+    {
+      title: 'Vamos começar pelo básico',
+      subtitle: 'Conte-nos sobre a pessoa especial na sua vida',
+      content: `
+        <div class="quiz-step-content">
+          <label class="quiz-label">Para quem é essa canção? *</label>
+          <div class="quiz-options">
+            ${['Marido', 'Esposa', 'Namorado', 'Namorada', 'Filhos', 'Pai', 'Mãe', 'Irmão(ã)', 'Amigo(a)', 'Para mim', 'Grupo', 'Outro'].map(opt => `
+              <button class="pill-option" data-value="${opt}">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="quiz-input-group mt-3">
+            <label class="quiz-label">Nome do homenageado(a) que aparecerá na música</label>
+            <input type="text" placeholder="Digite o primeiro nome" class="quiz-input" id="quizName">
+            <p class="quiz-hint">Dica: use a acentuação correta para garantir a pronúncia (ex: Thaís, Jéssica, Luísa).</p>
+          </div>
+        </div>
+      `
+    },
+    {
+      title: 'Escolha o Gênero',
+      subtitle: 'Selecione o som que melhor combina com seu ente querido',
+      content: `
+        <div class="quiz-step-content">
+          <label class="quiz-label">Gênero Preferido *</label>
+          <div class="quiz-options">
+            ${['Samba', 'Gospel', 'Sertanejo', 'Pagode', 'MPB', 'Pop', 'Jovem Guarda', 'Forró', 'Reggae', 'Rock', 'Eletrônica', 'Latina', 'Rap', 'Jazz', 'Axé', 'Infantil'].map(opt => `
+              <button class="pill-option" data-value="${opt}">${opt}</button>
+            `).join('')}
+          </div>
+          <label class="quiz-label mt-3">Gênero da Voz</label>
+          <div class="quiz-options">
+            <button class="pill-option" data-value="Voz Feminina">Voz Feminina</button>
+            <button class="pill-option" data-value="Voz Masculina">Voz Masculina</button>
+          </div>
+        </div>
+      `
+    },
+    {
+      title: 'O que faz essa pessoa especial?',
+      subtitle: 'Descreva o caráter e as qualidades que você mais ama',
+      content: `
+        <div class="quiz-step-content">
+          <label class="quiz-label">As belas qualidades dela(e) *</label>
+          <textarea class="quiz-textarea" placeholder="Ela(e) é paciente, sábia(o), engraçada(o), encorajadora(or), piedosa(o)? O que faz dessa pessoa alguém incrível para você?"></textarea>
+          <div class="text-right"><span class="word-count">0 palavras</span></div>
+        </div>
+      `
+    },
+    {
+      title: 'Histórias, memórias e datas favoritas',
+      subtitle: 'Quanto mais detalhes específicos, melhor a letra que criaremos!',
+      content: `
+        <div class="quiz-step-content">
+          <label class="quiz-label">Momentos especiais juntos *</label>
+          <textarea class="quiz-textarea" placeholder="Quais memórias você sempre volta? Um momento que vocês sempre riem juntos? Algo que passaram juntos que os aproximou?"></textarea>
+          <div class="text-right"><span class="word-count">0 palavras</span></div>
+        </div>
+      `
+    },
+    {
+      title: 'Uma mensagem do coração',
+      subtitle: 'Escreva qualquer coisa que você acha relevante incluir na canção',
+      content: `
+        <div class="quiz-step-content">
+          <label class="quiz-label">Mensagem especial (opcional)</label>
+          <textarea class="quiz-textarea" placeholder="O que você quer que essa pessoa saiba, que nunca disse o suficiente? Pelo que quer agradecer? Qual é aquela coisa do fundo do coração que quer dizer?"></textarea>
+          <div class="text-right"><span class="word-count">0 palavras</span></div>
+        </div>
+      `
+    },
+    {
+      title: 'Escolha Seu Plano',
+      subtitle: 'Selecione o prazo de entrega ideal para você',
+      content: `
+        <div class="quiz-step-content">
+          <div class="quiz-pricing-options">
+            
+            <div class="pricing-card-horizontal" data-plan="essencial">
+              <div class="plan-icon-box"><i data-lucide="clock"></i></div>
+              <div class="plan-info">
+                <h3>Essencial • <span>Entrega em 7 dias</span></h3>
+                <p>Ideal para quem pode esperar um pouco mais</p>
+              </div>
+              <div class="plan-price">R$69,90</div>
+              <div class="plan-radio"></div>
+            </div>
+
+            <div class="pricing-card-horizontal active popular" data-plan="express">
+              <div class="plan-badge-top">MAIS POPULAR</div>
+              <div class="plan-icon-box"><i data-lucide="rocket"></i></div>
+              <div class="plan-info">
+                <h3>Express • <span>Entrega em até 24h</span></h3>
+                <p>Prioridade máxima + Revisões Ilimitadas + Suporte via WhatsApp</p>
+              </div>
+              <div class="plan-price">R$99,90</div>
+              <div class="plan-radio"><i data-lucide="check"></i></div>
+            </div>
+
+            <div class="pricing-card-horizontal vip" data-plan="turbo">
+              <div class="plan-badge-top-vip">★ VIP</div>
+              <div class="plan-icon-box"><i data-lucide="zap"></i></div>
+              <div class="plan-info">
+                <h3>Turbo • <span>Entrega em até 6h</span></h3>
+                <p>Tudo do Express + <b>Experiência de Presente</b> + <b>Letra em PDF</b> + <b>Playback Instrumental</b></p>
+              </div>
+              <div class="plan-price">R$199,90</div>
+              <div class="plan-radio"></div>
+            </div>
+
+          </div>
+
+          <div class="quiz-satisfaction-box">
+            <div class="satisfaction-icon"><i data-lucide="check-circle-2"></i></div>
+            <div class="satisfaction-text">
+              <h4>Garantia de Satisfação</h4>
+              <p>Não gostou? Devolvemos 100% do seu dinheiro em até 7 dias.</p>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  ];
+
+  let currentStep = 0;
+
+  const renderStep = () => {
+    const step = steps[currentStep];
+    const progress = Math.round(((currentStep + 1) / 7) * 100); // 7 steps total like the image
+    
+    document.getElementById('quiz-container').innerHTML = `
+      <div class="quiz-modal-inner">
+        <div class="quiz-header">
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" style="width: ${progress}%"></div>
+          </div>
+          <div class="quiz-top-info">
+            <span>Passo ${currentStep + 1} de 7</span>
+            <div class="quiz-logo-small">${Logo('var(--black)')}</div>
+            <span>${progress}% Completo</span>
+          </div>
+        </div>
+
+        <div class="quiz-body reveal">
+          <h2 class="quiz-title">${step.title}</h2>
+          <p class="quiz-subtitle">${step.subtitle}</p>
+          ${step.content}
+        </div>
+
+        <div class="quiz-footer">
+          <button class="btn-quiz-back" ${currentStep === 0 ? 'style="visibility:hidden"' : ''}>
+            <i data-lucide="arrow-left"></i> Voltar
+          </button>
+          <button class="btn-quiz-next">
+            ${currentStep === steps.length - 1 ? 'Próximo, já falei tudo que queria' : 'Próximo'} <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+        
+        <p class="quiz-legal">Ao continuar, você concorda com nossos <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a>.</p>
+        <p class="quiz-copyright">AUDIOGIFT.COM.BR</p>
+      </div>
+    `;
+    lucide.createIcons();
+    attachEvents();
+  };
+
+  const attachEvents = () => {
+    document.querySelectorAll('.pill-option').forEach(btn => {
+      btn.onclick = () => {
+        btn.parentElement.querySelectorAll('.pill-option').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+    });
+
+    document.querySelector('.btn-quiz-next').onclick = () => {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        renderStep();
+      } else {
+        document.getElementById('quiz-overlay').classList.remove('active');
+        window.location.hash = 'pricing';
+        alert('Dados salvos! Escolha seu plano agora.');
+      }
+    };
+
+    document.querySelector('.btn-quiz-back').onclick = () => {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+      }
+    };
+    
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  };
+
+  document.getElementById('quiz-overlay').classList.add('active');
+  renderStep();
+};
 
 app.innerHTML = `
-  <div class="custom-cursor"></div>
+  <div id="quiz-overlay" class="quiz-overlay">
+    <div id="quiz-container"></div>
+    <button class="quiz-close" onclick="document.getElementById('quiz-overlay').classList.remove('active')">&times;</button>
+  </div>
   ${Header()}
   <main>
     ${Hero()}
-    ${MediaProof()}
-    ${Categories()}
     ${HowItWorks()}
     ${MusicStyles()}
-    ${SpotifySection()}
-    ${Benefits()}
-    ${Artists()}
-    ${Testimonials()}
     ${Reactions()}
-    ${Pricing()}
+    ${Experience()}
+    ${Artists()}
     ${FAQ()}
-    <section class="cta-section py-large text-center">
-      <div class="container">
-        <h2>Pronto para criar um momento eterno?</h2>
-        <a href="#create" class="btn-primary" style="margin-top: 2rem">Começar Agora</a>
-      </div>
-    </section>
+    ${FooterCTA()}
   </main>
   ${Footer()}
   ${FloatingButtons()}
 `
 
-// Custom Cursor Logic
-const cursor = document.querySelector('.custom-cursor')
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px'
-  cursor.style.top = e.clientY + 'px'
+// Bind all create buttons
+document.querySelectorAll('a[href="#create"], .btn-primary-new, .btn-nav-gold, .btn-primary-pill, .pricing-card button').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const href = btn.getAttribute('href');
+    if (href === '#create' || btn.classList.contains('btn-primary-new') || btn.classList.contains('btn-nav-gold') || btn.textContent.includes('ESCOLHER')) {
+      e.preventDefault();
+      Quiz();
+    }
+  });
+});
+
+// Initialize Lucide Icons
+const script = document.createElement('script');
+script.src = 'https://unpkg.com/lucide@latest';
+script.onload = () => {
+  lucide.createIcons();
+};
+document.head.appendChild(script);
+
+// Magnetic Button Effect
+document.querySelectorAll('.btn-magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+    
+    // Smooth magnetic pull
+    btn.style.transition = 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)'
+    btn.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px)`
+  })
+  
+  btn.addEventListener('mouseleave', () => {
+    // Elegant return
+    btn.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)'
+    btn.style.transform = `translate(0, 0)`
+  })
 })
 
-document.querySelectorAll('a, button, .category-card, .pricing-card').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'))
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'))
-})
-
-// Reveal Animation Logic
-const observerOptions = {
-  threshold: 0.1
-}
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible')
-    }
+    if (entry.isIntersecting) entry.target.classList.add('visible')
   })
-}, observerOptions)
+}, { threshold: 0.1 })
 
-document.querySelectorAll('section').forEach(section => {
-  section.classList.add('reveal')
-  observer.observe(section)
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el)
 })
 
-// FAQ Toggle Logic
 document.querySelectorAll('.faq-question').forEach(q => {
   q.addEventListener('click', () => {
-    const item = q.parentElement
-    item.classList.toggle('active')
+    q.parentElement.classList.toggle('active');
   })
 })
+
+
+// Carousel Logic
+const carousel = document.querySelector('.reactions-carousel');
+const dots = document.querySelectorAll('.page-dot');
+const prevBtn = document.querySelector('.nav-arrow.prev');
+const nextBtn = document.querySelector('.nav-arrow.next');
+
+if (carousel) {
+  const updateDots = () => {
+    const cardWidth = carousel.querySelector('.reaction-card-premium')?.offsetWidth + 32 || 400;
+    const currentDot = Math.round(carousel.scrollLeft / cardWidth);
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentDot);
+    });
+  };
+
+  carousel.addEventListener('scroll', updateDots);
+
+  prevBtn?.addEventListener('click', () => {
+    carousel.scrollBy({ left: -400, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    carousel.scrollBy({ left: 400, behavior: 'smooth' });
+  });
+  
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const cardWidth = carousel.querySelector('.reaction-card-premium')?.offsetWidth + 32 || 400;
+      carousel.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+    });
+  });
+}
+
+// Final Initialization
+initVinylPlayer();
+lucide.createIcons();
