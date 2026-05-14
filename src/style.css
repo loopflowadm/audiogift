@@ -242,9 +242,10 @@ button {
   position: sticky;
   top: 0;
   width: 100%;
-  background: var(--primary-orange);
+  background: linear-gradient(90deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(252, 115, 1, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .header-content {
@@ -313,39 +314,41 @@ button {
 }
 
 .btn-nav-outline {
-  background: white;
-  border: 1.5px solid #D1C7BD;
-  color: #4A2C1D !important;
-  padding: 0.7rem 1.8rem;
-  border-radius: 50px;
-  font-weight: 600 !important;
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-nav-outline:hover {
-  background: #4A2C1D;
-  color: white !important;
-  border-color: #4A2C1D;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(74, 44, 29, 0.15);
-}
-
-.btn-nav-gold {
-  background: linear-gradient(180deg, #E2C99D 0%, #C4A66D 100%);
+  background: rgba(255, 255, 255, 1);
+  border: none;
   color: #111 !important;
   padding: 0.7rem 1.8rem;
   border-radius: 50px;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   font-size: 0.85rem;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(196, 166, 109, 0.3);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  position: relative;
-  overflow: hidden;
+  transition: all 0.4s var(--ease-out);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn-nav-outline:hover {
+  background: #f8f8f8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.btn-nav-gold {
+  background: linear-gradient(135deg, #fcebb6 0%, #d2ac67 50%, #b38c4d 100%);
+  color: #000 !important;
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 800 !important;
+  font-size: 0.85rem;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all 0.4s var(--ease-out);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-nav-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(179, 140, 77, 0.4);
+  filter: brightness(1.1);
 }
 
 .btn-nav-gold::after, .btn-primary-new::after, .btn-primary-pill::after {
