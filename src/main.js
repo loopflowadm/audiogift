@@ -215,7 +215,6 @@ const Reactions = () => `
       </div>
     </section>
   `
-}
 
 const Categories = () => {
   const cats = [
