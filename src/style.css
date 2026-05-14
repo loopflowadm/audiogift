@@ -798,12 +798,338 @@ button {
   }
 }
 
-/* Pricing and Testimonials Refined */
-.pricing-card, .testimonial-card {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+/* Testimonials Carousel (Premium Layout) */
+.testimonials-carousel-section {
+  position: relative;
+}
+
+.carousel-container-wrapper {
+  padding: 0 5%;
+}
+
+.carousel-track-viewport {
+  overflow: hidden;
+  padding: 20px 0 40px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 2rem;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.testimonial-card {
+  min-width: 350px;
+  max-width: 350px;
+  height: 480px;
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  transition: transform 0.5s ease;
+  flex-shrink: 0;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Song Card Type */
+.song-card .card-image-wrap {
+  position: relative;
+  height: 100%;
+}
+
+.song-card .card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease;
+}
+
+.song-card:hover .card-image-wrap img {
+  transform: scale(1.1);
+}
+
+.song-card .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+}
+
+.song-card .play-trigger {
+  position: absolute;
+  bottom: 80px;
+  left: 24px;
+}
+
+.song-card .play-circle {
+  width: 50px;
+  height: 50px;
+  background: var(--primary-orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 10px 20px rgba(252, 115, 1, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.song-card:hover .play-circle {
+  transform: scale(1.1);
+}
+
+.song-card .card-footer-info {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  color: white;
+  text-align: left;
+}
+
+.song-card .card-footer-info h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.song-card .card-footer-info p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* WhatsApp Card Type */
+.wa-testi-card {
+  background: #f0ebe3;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-card-header {
+  margin-bottom: 24px;
+  background: rgba(255,255,255,0.6);
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.wa-header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.wa-header-user img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.wa-header-user strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.wa-header-user span {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.wa-bubbles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wa-bubble-item {
+  background: #d9fdd3;
+  padding: 12px 16px;
+  border-radius: 0 16px 16px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.wa-bubble-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -8px;
+  border-width: 0 10px 10px 0;
+  border-color: transparent #d9fdd3 transparent transparent;
+}
+
+.wa-bubble-play {
+  width: 44px;
+  height: 44px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.wa-bubble-progress {
+  flex-grow: 1;
+}
+
+.wa-progress-line {
+  height: 4px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 2px;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.wa-progress-line::after {
+  content: '';
+  position: absolute;
+  left: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #25d366;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.wa-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Text Testimonial Type */
+.text-testi-card {
+  background: white;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.stars-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  color: #d2ac67;
+}
+
+.testi-quote {
+  flex-grow: 1;
+  margin-bottom: 32px;
+}
+
+.testi-quote p {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.testi-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.testi-user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.testi-user strong {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.testi-user .verified {
+  font-size: 0.75rem;
+  color: #25d366;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quote-icon-badge {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 32px;
+  height: 32px;
+  background: #FC7301;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Carousel Navigation */
+.carousel-nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.carousel-nav-controls .nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.carousel-nav-controls .nav-btn:hover {
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+}
+
+.nav-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-dots .dot.active {
+  width: 24px;
+  background: var(--black);
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    min-width: 300px;
+    max-width: 300px;
+    height: 440px;
+  }
 }
 
 /* Spotify Section Refinement */
@@ -3480,5 +3806,164 @@ button {
     padding: 10px 18px;
     font-size: 0.9rem;
   }
+}
+
+/* Mobile Menu */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  z-index: 999;
+  transform: translateY(-20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-menu a {
+  color: var(--black);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+  .nav-actions .btn-nav-outline,
+  .nav-actions .btn-nav-gold {
+    display: none;
+  }
+  .mobile-toggle {
+    display: block;
+  }
+  .mobile-menu {
+    display: flex;
+  }
+}
+
+/* Pricing Refinement on Landing */
+#pricing {
+  scroll-margin-top: 100px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 4rem auto 0;
+}
+
+.pricing-card {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 32px;
+  text-align: center;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+  border-color: var(--primary-orange);
+}
+
+.pricing-card.popular {
+  border: 2px solid var(--primary-orange);
+  position: relative;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-orange);
+  color: white;
+  padding: 6px 20px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.plan-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.plan-price {
+  margin-bottom: 2rem;
+}
+
+.plan-price .currency {
+  font-size: 1.25rem;
+  font-weight: 700;
+  vertical-align: top;
+}
+
+.plan-price .amount {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.plan-price .period {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.plan-features li {
+  padding: 0.8rem 0;
+  font-size: 0.95rem;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.plan-features li i {
+  color: #25d366;
+  width: 18px;
+  height: 18px;
 }
 

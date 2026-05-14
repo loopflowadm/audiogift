@@ -30,23 +30,86 @@ const AnnouncementBar = () => `
   </div>
 `
 
+const Pricing = () => `
+  <section id="pricing" class="pricing-section py-large bg-white">
+    <div class="container text-center">
+      <h2 class="section-title-serif reveal">Escolha o plano perfeito para sua <em>história</em></h2>
+      <p class="section-subtitle reveal">Presentes que emocionam, com a qualidade que sua história merece.</p>
+      
+      <div class="pricing-grid mt-12">
+        <div class="pricing-card reveal" data-delay="1">
+          <h3 class="plan-name">Digital</h3>
+          <div class="plan-price">
+            <span class="currency">R$</span>
+            <span class="amount">147</span>
+            <span class="period">/único</span>
+          </div>
+          <ul class="plan-features">
+            <li><i data-lucide="check-circle"></i> Canção Personalizada HD</li>
+            <li><i data-lucide="check-circle"></i> Letra Exclusiva</li>
+            <li><i data-lucide="check-circle"></i> Entrega em até 3 dias</li>
+            <li><i data-lucide="check-circle"></i> Link para Spotify Privado</li>
+          </ul>
+          <button class="btn-primary-new w-full" onclick="startQuiz()">Começar Agora</button>
+        </div>
+
+        <div class="pricing-card popular reveal" data-delay="2">
+          <div class="popular-badge">Mais Escolhido</div>
+          <h3 class="plan-name">Presente</h3>
+          <div class="plan-price">
+            <span class="currency">R$</span>
+            <span class="amount">297</span>
+            <span class="period">/único</span>
+          </div>
+          <ul class="plan-features">
+            <li><i data-lucide="check-circle"></i> <strong>Tudo do plano Digital</strong></li>
+            <li><i data-lucide="check-circle"></i> Entrega em 24 Horas</li>
+            <li><i data-lucide="check-circle"></i> Página de Homenagem Web</li>
+            <li><i data-lucide="check-circle"></i> QR Code para Presente</li>
+          </ul>
+          <button class="btn-primary-new w-full" onclick="startQuiz()">Começar Agora</button>
+        </div>
+
+        <div class="pricing-card reveal" data-delay="3">
+          <h3 class="plan-name">Eternidade</h3>
+          <div class="plan-price">
+            <span class="currency">R$</span>
+            <span class="amount">497</span>
+            <span class="period">/único</span>
+          </div>
+          <ul class="plan-features">
+            <li><i data-lucide="check-circle"></i> <strong>Tudo do plano Presente</strong></li>
+            <li><i data-lucide="check-circle"></i> Placa de Acrílico (Opcional)</li>
+            <li><i data-lucide="check-circle"></i> Vídeo com Retrospectiva</li>
+            <li><i data-lucide="check-circle"></i> Suporte VIP 24h</li>
+          </ul>
+          <button class="btn-primary-new w-full" onclick="startQuiz()">Começar Agora</button>
+        </div>
+      </div>
+    </div>
+  </section>
+`
+
 const Header = () => `
-  ${AnnouncementBar()}
   <header class="header">
     <div class="container header-content">
-      <a href="#" class="logo">
-        ${Logo('white')}
-      </a>
+      <a href="#" class="logo">${Logo('white')}</a>
       <nav class="nav">
-        <a href="#how">Como Funciona</a>
+        <a href="#how">Como funciona</a>
         <a href="#styles">Estilos</a>
-        <a href="#reviews">Avaliações</a>
-        <a href="#faq">Dúvidas</a>
-        <div class="nav-actions">
-          <a href="#track" class="btn-nav-outline">Acompanhar pedido</a>
-          <a href="#create" class="btn-nav-gold">Criar sua canção</a>
-        </div>
+        <a href="#reviews">Depoimentos</a>
       </nav>
+      <div class="nav-actions">
+        <a href="#" class="btn-nav-outline">Acompanhar pedido</a>
+        <a href="#create" class="btn-nav-gold">Criar sua canção</a>
+        <button class="mobile-toggle" id="mobileToggle"><i data-lucide="menu"></i></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#how">Como funciona</a>
+      <a href="#styles">Estilos</a>
+      <a href="#reviews">Depoimentos</a>
+      <a href="#" class="btn-primary-new w-full mt-4">Criar sua canção</a>
     </div>
   </header>
 `
@@ -170,36 +233,133 @@ const Hero = () => `
   </section>
 `
 
-const WhyChooseUs = () => `
-  <section class="why-choose py-large bg-soft">
-    <div class="container text-center">
-      <h2 class="section-title-serif reveal">Por que mais de 10.000 famílias amam o Audiogift</h2>
-      <div class="why-grid mt-4">
-        <div class="why-card reveal" data-delay="1">
-          <img src="https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800" alt="Mãe e Bebê">
-          <div class="why-overlay">
-            <span>Para mães</span>
-            <h4>Eternize o <em>primeiro amor</em></h4>
+const TestimonialsCarousel = () => {
+  const testimonials = [
+    {
+      type: 'audio-song',
+      title: 'Deus me Deu Você',
+      artist: 'Audiogift',
+      img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      type: 'whatsapp',
+      name: 'Rosely',
+      role: 'Depoimento em Áudio',
+      avatar: 'https://i.pravatar.cc/100?u=rosely',
+      audios: [
+        { time: '0:23', src: 'https://pub-b085b85804204c82b96e15ec554b0940.r2.dev/depoimento1.mp3' },
+        { time: '0:45', src: 'https://pub-b085b85804204c82b96e15ec554b0940.r2.dev/depoimento2.mp3' }
+      ]
+    },
+    {
+      type: 'text',
+      name: 'Vera Lúcia S.',
+      content: 'Oh glória a Deus! Isso é absolutamente de tirar o fôlego. Eu não consigo acreditar... Vou ter dificuldade em manter isso em segredo até domingo. Vamos ouvir no caminho para a igreja! Deus abençoe este trabalho que vocês estão fazendo.',
+      avatar: 'https://i.pravatar.cc/100?u=vera'
+    },
+    {
+      type: 'audio-song',
+      title: 'Três Apertos',
+      artist: 'Audiogift',
+      img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      type: 'audio-song',
+      title: 'Meu Coração é Seu',
+      artist: 'Audiogift',
+      img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800'
+    }
+  ];
+
+  return `
+    <section class="testimonials-carousel-section py-large bg-soft overflow-hidden">
+      <div class="container text-center mb-16">
+        <h2 class="section-title-serif reveal">Por que mais de 10.000 famílias amam o <em>Audiogift</em></h2>
+      </div>
+      
+      <div class="carousel-container-wrapper relative">
+        <div class="carousel-track-viewport" id="testimonialViewport">
+          <div class="carousel-track" id="testimonialTrack">
+            ${testimonials.map(t => {
+              if (t.type === 'audio-song') {
+                return `
+                  <div class="testimonial-card song-card">
+                    <div class="card-image-wrap">
+                      <img src="${t.img}" alt="${t.title}">
+                      <div class="card-overlay"></div>
+                      <div class="play-trigger">
+                        <div class="play-circle"><i data-lucide="play"></i></div>
+                      </div>
+                      <div class="card-footer-info">
+                        <h3>${t.title}</h3>
+                        <p>${t.artist}</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              } else if (t.type === 'whatsapp') {
+                return `
+                  <div class="testimonial-card wa-testi-card">
+                    <div class="wa-card-header">
+                      <div class="wa-header-user">
+                        <img src="${t.avatar}" alt="${t.name}">
+                        <div>
+                          <strong>${t.name}</strong>
+                          <span>${t.role}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wa-bubbles-list">
+                      ${t.audios.map(a => `
+                        <div class="wa-bubble-item">
+                          <button class="wa-bubble-play"><i data-lucide="play"></i></button>
+                          <div class="wa-bubble-progress">
+                            <div class="wa-progress-line"></div>
+                            <div class="wa-progress-meta">
+                              <span>0:00</span>
+                              <span>${a.time}</span>
+                            </div>
+                          </div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                `;
+              } else {
+                return `
+                  <div class="testimonial-card text-testi-card">
+                    <div class="stars-row">
+                      ${Array(5).fill('<i data-lucide="star"></i>').join('')}
+                    </div>
+                    <blockquote class="testi-quote">
+                      <p>${t.content}</p>
+                    </blockquote>
+                    <div class="testi-user">
+                      <img src="${t.avatar}" alt="${t.name}">
+                      <div>
+                        <strong>${t.name}</strong>
+                        <span class="verified"><i data-lucide="check-circle"></i> Cliente Verificado</span>
+                      </div>
+                    </div>
+                    <div class="quote-icon-badge"><i data-lucide="quote"></i></div>
+                  </div>
+                `;
+              }
+            }).join('')}
           </div>
         </div>
-        <div class="why-card reveal" data-delay="2">
-          <img src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=800" alt="Casal Idoso">
-          <div class="why-overlay">
-            <span>Para avós</span>
-            <h4>Um legado de <em>uma vida inteira</em></h4>
+
+        <div class="carousel-nav-controls">
+          <button class="nav-btn prev" id="testiPrev"><i data-lucide="chevron-left"></i></button>
+          <div class="nav-dots" id="testiDots">
+            ${testimonials.map((_, i) => `<button class="dot ${i === 0 ? 'active' : ''}"></button>`).join('')}
           </div>
-        </div>
-        <div class="why-card reveal" data-delay="3">
-          <img src="https://images.unsplash.com/photo-1516589174468-4719f02ec447?auto=format&fit=crop&q=80&w=800" alt="Emoção">
-          <div class="why-overlay">
-            <span>Histórias reais</span>
-            <h4>A trilha sonora da <em>sua alma</em></h4>
-          </div>
+          <button class="nav-btn next" id="testiNext"><i data-lucide="chevron-right"></i></button>
         </div>
       </div>
-    </div>
-  </section>
-`
+    </section>
+  `;
+};
 
 const Reactions = () => `
     <section id="reviews" class="reactions py-large bg-soft">
@@ -1062,11 +1222,11 @@ app.innerHTML = `
   ${Header()}
   <main>
     ${Hero()}
-    ${WhyChooseUs()}
-    ${Categories()}
-    ${Experience()}
     ${HowItWorks()}
     ${MusicStyles()}
+    ${TestimonialsCarousel()}
+    ${Categories()}
+    ${Experience()}
     ${Warranty()}
     ${Reactions()}
     ${FAQ()}
@@ -1132,41 +1292,81 @@ document.querySelectorAll('.faq-question').forEach(q => {
 })
 
 
-// Carousel Logic
-const carousel = document.querySelector('.reactions-carousel');
-const dots = document.querySelectorAll('.page-dot');
-const prevBtn = document.querySelector('.nav-arrow.prev');
-const nextBtn = document.querySelector('.nav-arrow.next');
+// Testimonials Carousel Logic
+const initTestimonialsCarousel = () => {
+  const track = document.getElementById('testimonialTrack');
+  const prev = document.getElementById('testiPrev');
+  const next = document.getElementById('testiNext');
+  const dots = document.querySelectorAll('#testiDots .dot');
+  
+  if (!track || !prev || !next) return;
 
-if (carousel) {
-  const updateDots = () => {
-    const cardWidth = carousel.querySelector('.reaction-card-premium')?.offsetWidth + 32 || 400;
-    const currentDot = Math.round(carousel.scrollLeft / cardWidth);
+  let currentIdx = 0;
+  const cardWidth = 350 + 32; // card + gap
+  const totalCards = document.querySelectorAll('.testimonial-card').length;
+  const viewportWidth = document.getElementById('testimonialViewport').offsetWidth;
+  const cardsInView = Math.floor(viewportWidth / cardWidth) || 1;
+  const maxIdx = totalCards - cardsInView;
+
+  const update = () => {
+    track.style.transform = `translateX(-${currentIdx * cardWidth}px)`;
     dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentDot);
+      dot.classList.toggle('active', i === currentIdx);
     });
   };
 
-  carousel.addEventListener('scroll', updateDots);
-
-  prevBtn?.addEventListener('click', () => {
-    carousel.scrollBy({ left: -400, behavior: 'smooth' });
+  next.addEventListener('click', () => {
+    if (currentIdx < maxIdx) {
+      currentIdx++;
+      update();
+    } else {
+      currentIdx = 0; // Loop back
+      update();
+    }
   });
 
-  nextBtn?.addEventListener('click', () => {
-    carousel.scrollBy({ left: 400, behavior: 'smooth' });
+  prev.addEventListener('click', () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      update();
+    } else {
+      currentIdx = maxIdx; // Go to end
+      update();
+    }
   });
-  
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      const cardWidth = carousel.querySelector('.reaction-card-premium')?.offsetWidth + 32 || 400;
-      carousel.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+
+  // Auto-init icons for dynamic content
+  lucide.createIcons();
+};
+
+const initMobileMenu = () => {
+  const toggle = document.getElementById('mobileToggle');
+  const menu = document.getElementById('mobileMenu');
+  if (!toggle || !menu) return;
+
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    const icon = toggle.querySelector('[data-lucide]');
+    if (menu.classList.contains('active')) {
+      icon.setAttribute('data-lucide', 'x');
+    } else {
+      icon.setAttribute('data-lucide', 'menu');
+    }
+    lucide.createIcons();
+  });
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('active');
+      lucide.createIcons();
     });
   });
-}
+};
 
-// Final Initialization
+// Initialize components
+initTestimonialsCarousel();
 initVinylPlayer();
+initMobileMenu();
 
 // Robust Lucide Init
 const initIcons = () => {
