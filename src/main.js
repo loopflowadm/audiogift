@@ -192,6 +192,11 @@ const WhyChooseUs = () => `
             <h4>A trilha sonora da <em>sua alma</em></h4>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+`
+
 const Reactions = () => `
     <section id="reviews" class="reactions py-large bg-soft">
       <div class="container text-center">
@@ -206,12 +211,6 @@ const Reactions = () => `
           <a href="https://tiktok.com/@audiogift" target="_blank" class="btn-social-tk">
             <i data-lucide="video"></i> Assistir no TikTok
           </a>
-        </div>
-      </div>
-    </section>
-  `
-n>
-          </div>
         </div>
       </div>
     </section>
