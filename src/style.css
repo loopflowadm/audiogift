@@ -2854,70 +2854,6 @@ button {
   color: var(--primary-orange);
 }
 
-/* New Artists Grid */
-.section-title-serif-new {
-  font-family: var(--font-serif);
-  font-size: 3.5rem;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
-  line-height: 1.1;
-}
-
-.artists-grid-modern {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.artist-card-modern {
-  position: relative;
-  border-radius: 40px;
-  overflow: hidden;
-  aspect-ratio: 4/5;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.artist-img-box {
-  width: 100%;
-  height: 100%;
-}
-
-.artist-img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.artist-card-modern:hover img {
-  transform: scale(1.05);
-}
-
-.artist-overlay-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 3rem 2rem 2rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-  color: white;
-  text-align: left;
-}
-
-.artist-overlay-info h4 {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
-}
-
-.artist-overlay-info p {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  font-weight: 500;
-}
-
 /* Warranty Section */
 .warranty-card-premium {
   display: flex;
@@ -3011,10 +2947,6 @@ button {
 }
 
 @media (max-width: 968px) {
-  .artists-grid-modern {
-    grid-template-columns: 1fr;
-    max-width: 400px;
-  }
   
   .warranty-card-premium {
     flex-direction: column;

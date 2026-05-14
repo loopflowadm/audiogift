@@ -651,44 +651,6 @@ const initVinylPlayer = () => {
 };
 
 
-const Artists = () => `
-  <section class="artists py-large bg-white">
-    <div class="container text-center">
-      <h2 class="section-title-serif-new reveal">Nossos <span class="text-orange italic">Talentos</span></h2>
-      <p class="section-subtitle reveal" data-delay="1">Sua música será produzida por profissionais de elite.</p>
-      
-      <div class="artists-grid-modern mt-5">
-        <div class="artist-card-modern reveal" data-delay="1">
-          <div class="artist-img-box">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800" alt="Lucas Mendes">
-            <div class="artist-overlay-info">
-              <h4>Lucas Mendes</h4>
-              <p>Especialista em Sertanejo e Pop</p>
-            </div>
-          </div>
-        </div>
-        <div class="artist-card-modern reveal" data-delay="2">
-          <div class="artist-img-box">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800" alt="Juliana Costa">
-            <div class="artist-overlay-info">
-              <h4>Juliana Costa</h4>
-              <p>Voz Feminina Premium</p>
-            </div>
-          </div>
-        </div>
-        <div class="artist-card-modern reveal" data-delay="3">
-          <div class="artist-img-box">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800" alt="Ricardo Lima">
-            <div class="artist-overlay-info">
-              <h4>Ricardo Lima</h4>
-              <p>Mestre em MPB e Samba</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-`
 
 const Warranty = () => `
   <section class="warranty-section py-medium">
@@ -1102,7 +1064,6 @@ app.innerHTML = `
     ${HowItWorks()}
     ${MusicStyles()}
     ${Experience()}
-    ${Artists()}
     ${Warranty()}
     ${Reactions()}
     ${FAQ()}
