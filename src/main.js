@@ -173,26 +173,26 @@ const Hero = () => `
 const WhyChooseUs = () => `
   <section class="why-choose py-large bg-soft">
     <div class="container text-center">
-      <h2 class="section-title-serif reveal">Por que mais de 2.000 famílias amam o AUDIOGIFT</h2>
+      <h2 class="section-title-serif reveal">Por que mais de 10.000 famílias amam o Audiogift</h2>
       <div class="why-grid mt-4">
         <div class="why-card reveal" data-delay="1">
           <img src="https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800" alt="Mãe e Bebê">
           <div class="why-overlay">
-            <span>Para Mães</span>
+            <span>Para mães</span>
             <h4>Eternize o <em>primeiro amor</em></h4>
           </div>
         </div>
         <div class="why-card reveal" data-delay="2">
           <img src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=800" alt="Casal Idoso">
           <div class="why-overlay">
-            <span>Para Avós</span>
+            <span>Para avós</span>
             <h4>Um legado de <em>uma vida inteira</em></h4>
           </div>
         </div>
         <div class="why-card reveal" data-delay="3">
           <img src="https://images.unsplash.com/photo-1516589174468-4719f02ec447?auto=format&fit=crop&q=80&w=800" alt="Emoção">
           <div class="why-overlay">
-            <span>Histórias Reais</span>
+            <span>Histórias reais</span>
             <h4>A trilha sonora da <em>sua alma</em></h4>
           </div>
         </div>
@@ -1062,9 +1062,11 @@ app.innerHTML = `
   ${Header()}
   <main>
     ${Hero()}
+    ${WhyChooseUs()}
+    ${Categories()}
+    ${Experience()}
     ${HowItWorks()}
     ${MusicStyles()}
-    ${Experience()}
     ${Warranty()}
     ${Reactions()}
     ${FAQ()}
