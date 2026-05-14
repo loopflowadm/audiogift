@@ -1165,4 +1165,13 @@ if (carousel) {
 
 // Final Initialization
 initVinylPlayer();
-lucide.createIcons();
+
+// Robust Lucide Init
+const initIcons = () => {
+  if (window.lucide) {
+    window.lucide.createIcons();
+  } else {
+    setTimeout(initIcons, 100);
+  }
+};
+initIcons();
