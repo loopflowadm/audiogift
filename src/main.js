@@ -209,7 +209,7 @@ const Reactions = () => `
         <p class="section-subtitle reveal" data-delay="2">Mais de 10.000 homenagens entregues. Assista os bastidores e as reações reais de quem foi surpreendido.</p>
         
         <div class="reactions-cta-group mt-4 reveal" data-delay="3">
-          <a href="https://instagram.com/audiogift" target="_blank" class="btn-social-ig">
+          <a href="https://www.instagram.com/audiogiftbrasil/" target="_blank" class="btn-social-ig">
             <i data-lucide="instagram"></i> Assistir no Instagram
           </a>
           <a href="https://tiktok.com/@audiogift" target="_blank" class="btn-social-tk">
@@ -838,8 +838,8 @@ const Footer = () => `
           <h4>Contato</h4>
           <p>suporte@audiogift.com.br</p>
           <div class="social-icons mt-2">
-            <a href="#"><i data-lucide="instagram"></i></a>
-            <a href="#"><i data-lucide="video"></i></a>
+            <a href="https://www.instagram.com/audiogiftbrasil/" target="_blank"><i data-lucide="instagram"></i></a>
+            <a href="https://www.tiktok.com/@audiogift" target="_blank"><i data-lucide="video"></i></a>
             <a href="#"><i data-lucide="youtube"></i></a>
           </div>
         </div>
