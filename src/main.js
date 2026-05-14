@@ -130,9 +130,13 @@ const Hero = () => `
       <div class="hero-new-layout">
         <div class="hero-visual-wrapper reveal" data-delay="1">
           <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=1200">
-              <source src="https://assets.mixkit.co/videos/preview/mixkit-recording-studio-with-microphones-and-equipment-4609-large.mp4" type="video/mp4">
-            </video>
+            <iframe 
+              class="hero-video" 
+              src="https://www.youtube-nocookie.com/embed/euebKq4kErQ?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=euebKq4kErQ" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
             <button class="btn-play-example">
               <i data-lucide="play"></i>
               Ouvir Exemplo
