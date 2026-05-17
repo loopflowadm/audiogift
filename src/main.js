@@ -1391,3 +1391,55 @@ const initIcons = () => {
   }
 };
 initIcons();
+
+// --- CUSTOM CURSOR LOGIC ---
+if (window.matchMedia('(pointer: fine)').matches) {
+  const cursorDot = document.createElement('div');
+  cursorDot.className = 'cursor-dot';
+  const cursorOutline = document.createElement('div');
+  cursorOutline.className = 'cursor-outline';
+  
+  document.body.appendChild(cursorDot);
+  document.body.appendChild(cursorOutline);
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let outlineX = 0;
+  let outlineY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+  });
+
+  const animate = () => {
+    let distX = mouseX - outlineX;
+    let distY = mouseY - outlineY;
+    outlineX = outlineX + distX * 0.15;
+    outlineY = outlineY + distY * 0.15;
+    cursorOutline.style.left = outlineX + 'px';
+    cursorOutline.style.top = outlineY + 'px';
+    requestAnimationFrame(animate);
+  };
+  animate();
+
+  // Re-bind hover events periodically in case of dynamic DOM changes
+  setInterval(() => {
+    const interactables = document.querySelectorAll('a, button, .btn-primary-new, .btn-nav-gold, .pill-option, .faq-question');
+    interactables.forEach(el => {
+      if(!el.dataset.cursorBound) {
+        el.dataset.cursorBound = 'true';
+        el.addEventListener('mouseenter', () => {
+          cursorOutline.classList.add('cursor-hover');
+          cursorDot.classList.add('cursor-hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursorOutline.classList.remove('cursor-hover');
+          cursorDot.classList.remove('cursor-hover');
+        });
+      }
+    });
+  }, 1000);
+}
