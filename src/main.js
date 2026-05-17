@@ -1,9 +1,6 @@
 import './style.css'
 
 const Logo = (baseColor = 'white', giftColor = '#FC7301') => `
-<?xml version="1.0" encoding="UTF-16"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Creator: CorelDRAW 2020 (64 Bit) -->
 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="5811px" height="1626px" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
 viewBox="0 0 1507040 421800"
  xmlns:xlink="http://www.w3.org/1999/xlink"
