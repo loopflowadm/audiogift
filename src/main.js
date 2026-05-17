@@ -1235,6 +1235,7 @@ app.innerHTML = `
     <div id="quiz-container"></div>
     <button class="quiz-close" onclick="document.getElementById('quiz-overlay').classList.remove('active')">&times;</button>
   </div>
+  ${AnnouncementBar()}
   ${Header()}
   <main>
     ${Hero()}
