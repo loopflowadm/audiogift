@@ -4066,6 +4066,7 @@ button {
     border-radius: 50%;
     z-index: 10000;
     pointer-events: none;
+    will-change: left, top, width, height, transform;
   }
 
   .cursor-dot {
