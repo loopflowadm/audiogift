@@ -861,13 +861,13 @@ const HowItWorks = () => `
           <div class="step-num">2</div>
           <div class="step-icon"><i data-lucide="mic"></i></div>
           <h4>Nós criamos sua música</h4>
-          <p>Transformamos sua história em uma canção exclusiva, feita sob medida para emocionar.</p>
+          <p>Transformamos seus momentos mais preciosos em poesia e melodia. Uma música feita com alma, carinho e muita verdade para quem ilumina a sua vida.</p>
         </div>
         <div class="process-step">
           <div class="step-num">3</div>
           <div class="step-icon"><i data-lucide="heart"></i></div>
           <h4>Surpreenda quem você ama</h4>
-          <p>Receba uma homenagem única e viva um momento que ficará marcado para sempre.</p>
+          <p>O link chega no seu WhatsApp. A nossa única dica é: prepare a câmera. O primeiro play costuma arrancar lágrimas inesquecíveis.</p>
         </div>
       </div>
       
@@ -940,7 +940,7 @@ const FAQ = () => `
           { q: 'Quanto tempo demora a produção?', a: 'Depende do plano escolhido: Essencial (7 dias), Express (24h) ou Turbo (6h).' },
           { q: 'A música é mesmo exclusiva?', a: 'Sim! Nossos compositores criam a letra do zero com base nos detalhes que você nos fornece.' },
           { q: 'Posso pedir alterações?', a: 'Fazemos até duas alterações caso necessário. Mas temos certeza que você vai amar o resultado.' },
-          { q: 'Qual a garantia que vou receber minha música?', a: 'Além de sermos uma empresa verificada pela META e termos seu pagamento processado por uma plataforma 100% segura, oferecemos 7 dias de garantia incondicional ou devolvemos 100% do seu dinheiro.' }
+          { q: 'Qual a garantia que vou receber minha música?', a: 'Além de sermos uma empresa verificada, nossa missão é entregar lágrimas de alegria. Se a música não tocar o coração de vocês do jeito que sonhou, nós refazemos. E se mesmo assim não for o presente mais inesquecível que ela já recebeu, devolvemos seu dinheiro em 7 dias.' }
         ].map(item => `
           <div class="faq-item">
             <div class="faq-question">
@@ -1068,18 +1068,18 @@ const Quiz = () => {
     },
     {
       title: 'O que faz essa pessoa especial?',
-      subtitle: 'Descreva o caráter e as qualidades que você mais ama',
+      subtitle: 'Descreva aquela beleza serena, o sorriso ou as manias que fazem você amar tanto essa pessoa.',
       content: `
         <div class="quiz-step-content">
-          <label class="quiz-label">As belas qualidades dela(e) *</label>
+          <label class="quiz-label">O que faz o coração dela(e) ser tão lindo? *</label>
           <textarea class="quiz-textarea" placeholder="Ela(e) é paciente, sábia(o), engraçada(o), encorajadora(or), piedosa(o)? O que faz dessa pessoa alguém incrível para você?"></textarea>
           <div class="text-right"><span class="word-count">0 palavras</span></div>
         </div>
       `
     },
     {
-      title: 'Histórias, memórias e datas favoritas',
-      subtitle: 'Quanto mais detalhes específicos, melhor a letra que criaremos!',
+      title: 'A história que merece virar música',
+      subtitle: 'Conte para nós como se conheceram, as viagens inesquecíveis ou aquele detalhe que só vocês dois sabem.',
       content: `
         <div class="quiz-step-content">
           <label class="quiz-label">Momentos especiais juntos *</label>
@@ -1089,8 +1089,8 @@ const Quiz = () => {
       `
     },
     {
-      title: 'Uma mensagem do coração',
-      subtitle: 'Escreva qualquer coisa que você acha relevante incluir na canção',
+      title: 'A sua declaração final (opcional)',
+      subtitle: 'Tem alguma frase de amor ou apelido carinhoso que não pode faltar nessa poesia?',
       content: `
         <div class="quiz-step-content">
           <label class="quiz-label">Mensagem especial (opcional)</label>
