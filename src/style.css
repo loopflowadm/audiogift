@@ -14,8 +14,8 @@
   --text-main: #000000;
   --text-muted: #6E6E73;
   
-  --font-serif: 'Fraunces', serif;
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
   
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: all 1.2s var(--ease-out);
@@ -72,7 +72,7 @@ body::before {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   background-color: var(--white);
   color: var(--text-main);
   line-height: 1.6;
@@ -80,7 +80,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-weight: 700;
 }
 
@@ -94,7 +94,7 @@ button {
   cursor: pointer;
   border: none;
   background: none;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   transition: var(--transition-medium);
 }
 
@@ -165,7 +165,7 @@ button {
   background: linear-gradient(90deg, #050505 0%, #1a1a1a 100%);
   color: white;
   padding: 10px 0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
   border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -467,7 +467,7 @@ button {
 }
 
 .main-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 4.5rem;
   line-height: 1.1;
   color: var(--black);
@@ -547,7 +547,7 @@ button {
 
 /* Section Headers */
 .section-title-serif {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 3rem;
   color: var(--black);
   margin-bottom: 1rem;
@@ -592,7 +592,7 @@ button {
   position: absolute;
   top: -10px;
   right: 20%;
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 4rem;
   color: rgba(252, 115, 1, 0.1);
   font-weight: 900;
@@ -616,7 +616,7 @@ button {
 }
 
 .process-step h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   margin-bottom: 1rem;
 }
@@ -1032,7 +1032,7 @@ button {
 }
 
 .testi-quote p {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 1rem;
   line-height: 1.6;
   color: #333;
@@ -1469,7 +1469,7 @@ button {
 }
 
 .scroll-hint {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 2px;
@@ -1543,7 +1543,7 @@ button {
 }
 
 .cat-story-card h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.25rem;
   font-weight: 700;
   color: white;
@@ -1656,7 +1656,7 @@ button {
 }
 
 .track-label {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 3px;
@@ -1667,7 +1667,7 @@ button {
 }
 
 .track-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 700;
   color: #1a1a1a;
@@ -1676,7 +1676,7 @@ button {
 }
 
 .track-artist {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1rem;
   color: rgba(0,0,0,0.4);
   margin-bottom: 1.5rem;
@@ -1725,7 +1725,7 @@ button {
 .prog-times {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.8rem;
   color: rgba(0,0,0,0.3);
   font-weight: 600;
@@ -1847,7 +1847,7 @@ button {
 }
 
 .pill-text {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 700;
   color: rgba(0,0,0,0.4);
@@ -2005,7 +2005,7 @@ button {
 }
 
 .footer h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   color: var(--secondary-orange);
@@ -2040,7 +2040,7 @@ button {
 
 /* Ensure em tags in titles have a distinct look */
 .section-title-serif em, .main-title em {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-style: italic;
   font-weight: 400;
   color: var(--primary-orange);
@@ -2079,7 +2079,7 @@ button {
 }
 
 .faq-question h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -2216,7 +2216,7 @@ button {
 }
 
 .review-quote {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-style: italic;
   font-size: 1.25rem;
   line-height: 1.4;
@@ -2461,7 +2461,7 @@ button {
 }
 
 .quote-icon {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 4rem;
   color: var(--secondary-orange);
   opacity: 0.2;
@@ -2722,7 +2722,7 @@ button {
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 2rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
 }
 
 .price-features {
@@ -2835,7 +2835,7 @@ button {
 }
 
 .track-label {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 2px;
@@ -2844,7 +2844,7 @@ button {
 }
 
 .track-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 3rem;
   font-weight: 800;
   color: #111;
@@ -2853,7 +2853,7 @@ button {
 }
 
 .track-artist {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   color: #666;
   margin-bottom: 1.5rem;
@@ -3014,7 +3014,7 @@ button {
 }
 
 .exp-card h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 800;
   color: #111;
@@ -3216,7 +3216,7 @@ button {
 }
 
 .warranty-text-content h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
   color: #1a1a1a;
@@ -3244,21 +3244,21 @@ button {
   margin-top: 2rem;
 }
 
-.btn-social-ig, .btn-social-tk {
+.btn-social-ig, .btn-social-tk, .btn-social-sp {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
   border-radius: 50px;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.btn-social-ig i, .btn-social-tk i,
-.btn-social-ig svg, .btn-social-tk svg {
+.btn-social-ig i, .btn-social-tk i, .btn-social-sp i,
+.btn-social-ig svg, .btn-social-tk svg, .btn-social-sp svg {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
@@ -3274,7 +3274,12 @@ button {
   color: white;
 }
 
-.btn-social-ig:hover, .btn-social-tk:hover {
+.btn-social-sp {
+  background: #1DB954;
+  color: white;
+}
+
+.btn-social-ig:hover, .btn-social-tk:hover, .btn-social-sp:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
@@ -3364,7 +3369,7 @@ button {
 }
 
 .plan-info h3 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.15rem;
   font-weight: 800;
   color: #1a1a1a;
@@ -3387,7 +3392,7 @@ button {
 }
 
 .plan-price {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.4rem;
   font-weight: 900;
   color: #1a1a1a;
@@ -3425,7 +3430,7 @@ button {
   transform: translateX(-50%);
   background: var(--primary-orange);
   color: white;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 900;
   padding: 4px 14px;
@@ -3440,7 +3445,7 @@ button {
   transform: translateX(-50%);
   background: #C4A66D; /* Gold for VIP */
   color: white;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 900;
   padding: 4px 14px;
@@ -3480,7 +3485,7 @@ button {
 }
 
 .satisfaction-text h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 800;
   color: #004D1C;
@@ -3581,7 +3586,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.8rem;
   color: #999;
   font-weight: 600;
@@ -3600,14 +3605,14 @@ button {
 }
 
 .quiz-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 2.8rem;
   color: #1a1a1a;
   margin-bottom: 1rem;
 }
 
 .quiz-subtitle {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   color: #666;
   margin-bottom: 3rem;
@@ -3615,7 +3620,7 @@ button {
 
 .quiz-label {
   display: block;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 800;
   color: #1a1a1a;
@@ -3636,7 +3641,7 @@ button {
   border-radius: 50px;
   border: 1px solid #e0e0e0;
   background: white;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
   color: #333;
@@ -3665,7 +3670,7 @@ button {
   padding: 20px 30px;
   border-radius: 20px;
   border: 1px solid #e0e0e0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   margin-bottom: 10px;
   transition: border-color 0.3s ease;
@@ -3682,7 +3687,7 @@ button {
   padding: 25px 30px;
   border-radius: 20px;
   border: 1px solid #e0e0e0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.1rem;
   resize: none;
   transition: border-color 0.3s ease;
@@ -3709,7 +3714,7 @@ button {
   border: 1px solid #e0e0e0;
   padding: 14px 30px;
   border-radius: 50px;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -3728,7 +3733,7 @@ button {
   border: none;
   padding: 16px 40px;
   border-radius: 50px;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 1.1rem;
   display: flex;

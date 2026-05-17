@@ -1,12 +1,19 @@
 import './style.css'
 
-const Logo = (color = 'var(--black)') => `
-<svg xmlns="http://www.w3.org/2000/svg" width="180" height="48" viewBox="0 0 4070910 1075080" fill="${color}" style="display: block;">
+const Logo = () => `
+<?xml version="1.0" encoding="UTF-16"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2020 (64 Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="5811px" height="1626px" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
+viewBox="0 0 1507040 421800"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
  <g id="Camada_x0020_1">
-  <g id="_2105988202176">
-   <path d="M110700 853680c1650,0 3290,40 4930,110l0 -267560c0,-38180 14550,-56590 44700,-79580l399000 -304250 0 692060c0,61140 -49570,110700 -110700,110700 -61140,0 -110700,-49560 -110700,-110700 0,-63000 52460,-113330 115630,-110580l0 -89980 -232160 0 0 270410c390,60550 -49340,110770 -110700,110770 -61140,0 -110700,-49560 -110700,-110700 0,-61140 49560,-110700 110700,-110700zm342860 -260590l0 -177020 -232160 177020 232160 0zm1622330 57080c0,68360 -26880,115110 -82970,115110 -56090,0 -82970,-46750 -82970,-115110 0,-68360 26880,-115100 82970,-115100 56090,0 82970,46740 82970,115100zm-300320 0c0,152500 104590,220270 217350,220270 112760,0 217350,-67770 217350,-220270 0,-147230 -105750,-220270 -217350,-220270 -111600,0 -217350,73040 -217350,220270zm-200590 145490c0,44990 25710,72450 67190,72450 41480,0 67190,-27460 67190,-72450l0 -290970c0,-44990 -25710,-72450 -67190,-72450 -41480,0 -67190,27460 -67190,72450l0 290970zm-454750 -15190c0,56090 24540,80040 76530,80040l113940 0c139640,0 201570,-93480 201570,-210340 0,-116850 -61930,-210330 -201570,-210330l-113940 0c-51990,0 -76530,23950 -76530,80040l0 260590zm130870 -25130l0 -210330 29800 0c77710,0 96990,38560 96990,105160 0,66610 -19280,105170 -96990,105170l-29800 0zm-340820 -59010c0,43820 -20450,72450 -67770,72450 -47330,0 -67780,-28630 -67780,-72450l0 -191640c0,-44990 -25710,-72450 -67190,-72450 -41480,0 -67190,27460 -67190,72450l0 192810c0,127370 86470,172940 202160,172940 115680,0 202160,-45570 202160,-172940l0 -192810c0,-44990 -25710,-72450 -67200,-72450 -41480,0 -67190,27460 -67190,72450l0 191640z"/>
-   <path d="M2716940 718530c-9350,32140 -32720,50250 -74200,50250 -67780,0 -87060,-44990 -87060,-116270 0,-84130 36810,-117440 81800,-117440 59010,0 60180,54340 103410,54340 42070,0 64270,-32130 64270,-59010 0,-32720 -36810,-100500 -172360,-100500 -94650,0 -211500,61350 -211500,220270 0,169440 111010,220270 205080,220270 46150,0 99320,-18690 120360,-53160l1160 0 0 11680c0,22200 16950,41480 44410,41480 37390,0 46740,-28630 46740,-55500l0 -120360c0,-35640 -23370,-63690 -63100,-63690l-86470 0c-29220,0 -44990,18120 -44990,46160 0,25120 19280,41480 39730,41480l32720 0zm201180 77130c0,44990 25710,72450 67190,72450 41480,0 67190,-27460 67190,-72450l0 -290970c0,-44990 -25710,-72450 -67190,-72450 -41480,0 -67190,27460 -67190,72450l0 290970zm357180 -184630l0 -66020 135550 0c50250,0 63680,-25710 63680,-52590 0,-26880 -13430,-52580 -63680,-52580l-193400 0c-52000,0 -76540,23950 -76540,80040l0 275780c0,44990 25710,72450 67200,72450 41480,0 67190,-27460 67190,-72450l0 -82970 121520 0c32140,0 48500,-24540 48500,-50830 0,-26290 -16360,-50830 -48500,-50830l-121520 0zm398420 -62520l0 247150c0,44990 25710,72450 67190,72450 41490,0 67190,-27460 67190,-72450l0 -247150 81220 0c37980,0 54920,-22200 54920,-54340 0,-32130 -16940,-54330 -59590,-54330l-287470 0c-42650,0 -59590,22200 -59590,54330 0,32140 16940,54340 54920,54340l81210 0zm-277630 -234090l560590 0c62870,0 114230,51360 114230,114220l0 451690c0,62870 -51360,114230 -114230,114230l-1547820 0c-62870,0 -114230,-51360 -114230,-114230l0 -451690c0,-62860 51360,-114220 114230,-114220 211170,0 422340,0 633520,0 18840,12400 38170,23210 57090,32090 7760,3650 15340,7050 22770,10210 -237800,0 -475590,0 -713380,0 -39520,0 -71920,32410 -71920,71920l0 451690c0,39520 32400,71920 71920,71920l1547820 0c39510,0 71920,-32400 71920,-71920l0 -451690c0,-39510 -32410,-71920 -71920,-71920l-558060 0c-111810,0 -177530,-1130 -280670,-49570 -57360,-26940 -126610,-77830 -159100,-138680 -17120,-32070 -20990,-61990 -15560,-87540 19260,-90580 125390,-99800 193220,-53980 35240,23810 65460,64320 83410,103360 34500,-56000 121760,-103980 179670,-54430 26050,22290 35840,54010 32530,85460 -7160,67980 -73540,105860 -123470,111970 28560,-16680 66000,-56280 77590,-96470 17620,-61090 -31790,-96990 -87960,-62920 -49080,29770 -65320,86330 -82350,137040 -11190,-57730 -52300,-154690 -103050,-188970 -41910,-28320 -115490,-32420 -128270,27700 -9590,45080 31410,93520 66250,124070 28560,25050 60390,43690 84940,55220 96720,45410 156220,45440 260290,45440z"/>
-  </g>
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <path fill="white" fill-rule="nonzero" d="M422810 279480c0,10390 -3190,18540 -9600,24480 -6370,5940 -15170,8910 -26400,8910l-84160 0c-11290,0 -20170,-2970 -26610,-8950 -6450,-5970 -9670,-14120 -9670,-24440l0 -128920 50620 0 0 117980 55410 0 0 -117980 50410 0 0 128920zm69780 -10940l57790 0 0 -74090 -57790 0 0 74090zm-50630 44330l0 -162310 120630 0c12490,0 22270,3840 29330,11520 7060,7640 10610,18400 10610,32160l0 73870c0,14700 -3480,25850 -10390,33420 -6920,7570 -17130,11340 -30640,11340l-119540 0zm179730 0l0 -162310 50620 0 0 162310 -50620 0zm223170 -43670c0,14480 -3290,25380 -9880,32690 -6560,7320 -16410,10980 -29480,10980l-74670 0c-13150,0 -23030,-3660 -29660,-10980 -6620,-7310 -9920,-18210 -9920,-32690l0 -74750c0,-14840 3260,-25850 9780,-33060 6480,-7210 16440,-10830 29800,-10830l74670 0c13430,0 23360,3590 29770,10720 6410,7140 9590,18180 9590,33170l0 74750zm-102770 -660l52150 0 0 -74090 -52150 0 0 74090z"/>
+  <path fill="white" fill-rule="nonzero" d="M48930 323940c730,0 1450,20 2180,50l0 -118250c0,-16880 6430,-25020 19750,-35180l176350 -134470 0 305880c0,27020 -21900,48930 -48920,48930 -27030,0 -48930,-21910 -48930,-48930 0,-27850 23190,-50090 51110,-48880l0 -39760 -102610 0 0 119510c170,26760 -21810,48960 -48930,48960 -27020,0 -48930,-21910 -48930,-48930 0,-27020 21910,-48930 48930,-48930zm151540 -115170l0 -78240 -102610 78240 102610 0z"/>
+  <path fill="white" d="M1162500 105820c-6640,-20240 -21770,-58580 -45370,-75300 -27620,-19570 -55170,-2800 -40590,25660 13350,26070 53710,48350 85960,49640zm-265340 2370c-16010,0 -29100,13090 -29100,29100l0 57410c0,12330 7850,23260 19260,27380l0 90590c0,16010 13090,29110 29100,29110 180750,0 361500,0 542250,0 16020,0 29110,-13100 29110,-29110l0 -90590c11400,-4120 19260,-15050 19260,-27380l0 -57410c0,-16010 -13090,-29100 -29110,-29100l-213120 0c18060,-10940 31850,-27130 34330,-48220 4390,-37200 -34940,-58590 -71940,-32230 -29800,21230 -39040,62780 -41530,78370 -5810,-19160 -23930,-70970 -55830,-93570 -14650,-10380 -29740,-13810 -42680,-12140 -16700,2160 -30490,12890 -35130,29040 -8940,31070 18950,61740 47260,78750 -67370,0 -134750,0 -202130,0zm342840 -62470c-19900,14170 -28130,41390 -31330,56930 26790,-1150 66550,-16950 68670,-46820 1300,-18290 -18400,-23610 -37340,-10110z"/>
+  <path fill="#FC7301" fill-rule="nonzero" d="M1081350 262430c0,14520 -3290,25420 -9920,32730 -6590,7320 -16480,10970 -29620,10970l-79270 0c-13150,0 -23030,-3650 -29660,-10970 -6630,-7310 -9920,-18210 -9920,-32730l0 -74710c0,-15360 3260,-26470 9780,-33460 6480,-6950 16870,-10430 31070,-10430l115800 0 0 43890 -105810 0 0 73870 57580 0 0 -53230 49970 0 0 54070zm18720 43700l0 -162300 50630 0 0 162300 -50630 0zm72180 0l0 -162300 135360 0 0 43890 -84520 0 0 18680 84520 0 0 36720 -84520 0 0 63010 -50840 0zm198330 0l0 -118410 -49760 0 0 -43890 150580 0 0 43890 -47590 0 0 118410 -53230 0z"/>
  </g>
 </svg>
 `
@@ -116,23 +123,22 @@ const Header = () => `
 
 const MusicStyles = () => {
   const genresTags = [
-    'Arrocha / Brega', 'Axé', 'Black Music', 'Blues Americano', 'Bolero', 'Capoeira', 'Forró', 'Funk',
-    'Gospel', 'Infantil', 'Jazz', 'Jovem Guarda', 'MPB', 'Música Clássica', 'Música Eletrônica', 'Música Latina',
-    'Pagode', 'Pop', 'Rap', 'Reggae', 'Rock', 'Samba', 'Sertanejo', 'Tango', 'Valsa'
+    'Pop Acústico', 'Soul Romântico', 'Violão e Voz', 'Pop Rock', 'Forró', 'Gospel',
+    'MPB', 'Música Eletrônica', 'Samba', 'Pagode', 'Pop', 'Rap/Hip Hop', 'Reggae', 'Rock', 'Sertanejo'
   ]
   
   const featuredGenres = [
     { name: 'Sertanejo', voice: 'Masculina' },
     { name: 'Pop', voice: 'Feminina' },
-    { name: 'Gospel', voice: 'Feminina' },
+    { name: 'Pop Acústico', voice: 'Feminina' },
     { name: 'MPB', voice: 'Masculina' },
-    { name: 'Samba/Pagode', voice: 'Masculina' },
+    { name: 'Samba', voice: 'Masculina' },
     { name: 'Rock', voice: 'Masculina' },
     { name: 'Forró', voice: 'Feminina' },
-    { name: 'Jazz', voice: 'Instrumental' },
-    { name: 'Infantil', voice: 'Feminina' },
-    { name: 'Rap/Trap', voice: 'Masculina' },
-    { name: 'Bossa Nova', voice: 'Feminina' },
+    { name: 'Violão e Voz', voice: 'Instrumental' },
+    { name: 'Soul Romântico', voice: 'Feminina' },
+    { name: 'Rap/Hip Hop', voice: 'Masculina' },
+    { name: 'Pagode', 'voice': 'Masculina' },
     { name: 'Reggae', voice: 'Masculina' }
   ]
   
@@ -237,7 +243,7 @@ const TestimonialsCarousel = () => {
   const testimonials = [
     {
       type: 'audio-song',
-      title: 'Deus me Deu Você',
+      title: 'Para Sempre Nós',
       artist: 'Audiogift',
       img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800'
     },
@@ -254,7 +260,7 @@ const TestimonialsCarousel = () => {
     {
       type: 'text',
       name: 'Vera Lúcia S.',
-      content: 'Oh glória a Deus! Isso é absolutamente de tirar o fôlego. Eu não consigo acreditar... Vou ter dificuldade em manter isso em segredo até domingo. Vamos ouvir no caminho para a igreja! Deus abençoe este trabalho que vocês estão fazendo.',
+      content: 'Nossa, que emoção! Isso é absolutamente de tirar o fôlego. Eu não consigo acreditar... Choramos muito ouvindo juntos ontem à noite. Vocês conseguiram colocar toda a nossa história em 3 minutos! Muito obrigada pelo carinho.',
       avatar: 'https://i.pravatar.cc/100?u=vera'
     },
     {
@@ -374,7 +380,16 @@ const Reactions = () => `
             Assistir no Instagram
           </a>
           <a href="https://www.tiktok.com/@audiogift" target="_blank" class="btn-social-tk">
-            <i data-lucide="music"></i> Assistir no TikTok
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.78-1.15 5.54-3.33 7.31-1.92 1.57-4.58 2.22-6.95 1.55-2.61-.75-4.75-2.88-5.46-5.51-.71-2.67-.09-5.61 1.72-7.75 1.77-2.09 4.61-3.1 7.29-2.71v4.06c-1.89-.3-3.83.27-5.06 1.63-1.45 1.63-1.47 4.15-.22 5.8 1.34 1.77 3.95 2.21 5.88 1.05 1.2-.73 1.94-2.03 1.98-3.41.05-4.22.03-8.45.03-12.68.01-2.05-.01-4.09.03-6.14z"/>
+            </svg>
+            Assistir no TikTok
+          </a>
+          <a href="https://open.spotify.com/artist/24rv68FArmAuCtAhHjoIEy" target="_blank" class="btn-social-sp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            Ouça no Spotify
           </a>
         </div>
       </div>
@@ -822,7 +837,7 @@ const Warranty = () => `
         </div>
         <div class="warranty-text-content">
           <h3>Garantia de devolução em 7 dias</h3>
-          <p>Se sua Canção Divina não tocar seu coração ou não captar sua história perfeitamente, é só nos avisar. Reescrevemos ou reembolsamos integralmente. Sem risco, só fé.</p>
+          <p>Se sua música não tocar seu coração ou não captar sua história perfeitamente, é só nos avisar. Ajustamos a letra ou reembolsamos 100% do seu dinheiro. Sem riscos.</p>
         </div>
       </div>
     </div>
@@ -834,28 +849,28 @@ const HowItWorks = () => `
     <div class="container">
       <div class="text-center mb-4">
         <div class="tag-badge reveal"><i data-lucide="info"></i> SIMPLES & MÁGICO</div>
-        <h2 class="section-title-serif reveal">Veja como a <em>mágica acontece</em></h2>
-        <p class="section-subtitle reveal" data-delay="1">Transformamos seus sentimentos em melodia em 3 passos simples.</p>
+        <h2 class="section-title-serif reveal">Em apenas 3 passos,<br>sua história vira música.</h2>
+        <p class="section-subtitle reveal" data-delay="1">Simples, emocionante e totalmente personalizada.</p>
       </div>
 
       <div class="process-grid reveal" data-delay="2">
         <div class="process-step">
           <div class="step-num">1</div>
           <div class="step-icon"><i data-lucide="file-edit"></i></div>
-          <h4>Conte sua história</h4>
-          <p>Você preenche um formulário rápido com os detalhes e momentos mais importantes.</p>
+          <h4>Compartilhe sua história</h4>
+          <p>Conte os momentos, memórias e sentimentos mais importantes dessa pessoa especial.</p>
         </div>
         <div class="process-step">
           <div class="step-num">2</div>
           <div class="step-icon"><i data-lucide="mic"></i></div>
-          <h4>Nós compomos</h4>
-          <p>Nossos artistas criam uma letra e melodia exclusivas, feitas sob medida para você.</p>
+          <h4>Nós criamos sua música</h4>
+          <p>Transformamos sua história em uma canção exclusiva, feita sob medida para emocionar.</p>
         </div>
         <div class="process-step">
           <div class="step-num">3</div>
           <div class="step-icon"><i data-lucide="heart"></i></div>
-          <h4>Emocione</h4>
-          <p>Você recebe a música e surpreende quem você ama com um presente eterno.</p>
+          <h4>Surpreenda quem você ama</h4>
+          <p>Receba uma homenagem única e viva um momento que ficará marcado para sempre.</p>
         </div>
       </div>
       
@@ -927,7 +942,8 @@ const FAQ = () => `
           { q: 'Como recebo minha música?', a: 'Você recebe um link exclusivo via WhatsApp e E-mail com sua música em alta qualidade (MP3/WAV), pronta para compartilhar.' },
           { q: 'Quanto tempo demora a produção?', a: 'Depende do plano escolhido: Essencial (7 dias), Express (24h) ou Turbo (6h).' },
           { q: 'A música é mesmo exclusiva?', a: 'Sim! Nossos compositores criam a letra do zero com base nos detalhes que você nos fornece.' },
-          { q: 'Posso pedir alterações?', a: 'Com certeza! Temos garantia de felicidade absoluta. Ajustamos a letra até você ficar 100% satisfeito.' }
+          { q: 'Posso pedir alterações?', a: 'Fazemos até duas alterações caso necessário. Mas temos certeza que você vai amar o resultado.' },
+          { q: 'Qual a garantia que vou receber minha música?', a: 'Além de sermos uma empresa verificada pela META e termos seu pagamento processado por uma plataforma 100% segura, oferecemos 7 dias de garantia incondicional ou devolvemos 100% do seu dinheiro.' }
         ].map(item => `
           <div class="faq-item">
             <div class="faq-question">
@@ -1001,7 +1017,7 @@ const Footer = () => `
           <div class="social-icons mt-2">
             <a href="https://www.instagram.com/audiogiftbrasil/" target="_blank"><i data-lucide="instagram"></i></a>
             <a href="https://www.tiktok.com/@audiogift" target="_blank"><i data-lucide="video"></i></a>
-            <a href="#"><i data-lucide="youtube"></i></a>
+            <a href="https://open.spotify.com/artist/24rv68FArmAuCtAhHjoIEy" target="_blank" title="Spotify"><i data-lucide="music"></i></a>
           </div>
         </div>
       </div>
@@ -1041,7 +1057,7 @@ const Quiz = () => {
         <div class="quiz-step-content">
           <label class="quiz-label">Gênero Preferido *</label>
           <div class="quiz-options">
-            ${['Samba', 'Gospel', 'Sertanejo', 'Pagode', 'MPB', 'Pop', 'Jovem Guarda', 'Forró', 'Reggae', 'Rock', 'Eletrônica', 'Latina', 'Rap', 'Jazz', 'Axé', 'Infantil'].map(opt => `
+            ${['Pop Acústico', 'Soul Romântico', 'Violão e Voz', 'Pop Rock', 'Forró', 'Gospel', 'MPB', 'Música Eletrônica', 'Samba', 'Pagode', 'Pop', 'Rap/Hip Hop', 'Reggae', 'Rock', 'Sertanejo'].map(opt => `
               <button class="pill-option" data-value="${opt}">${opt}</button>
             `).join('')}
           </div>
