@@ -217,7 +217,7 @@ const Hero = () => `
           <div class="hero-cta-wrapper reveal" data-delay="5">
             <a href="#create" class="btn-primary-new btn-magnetic">
               <i data-lucide="gift"></i>
-              HOMENAGEAR ALGUÉM AGORA
+              Pedir minha música personalizada
             </a>
             <div class="hero-trust">
               <div class="stars">
