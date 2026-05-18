@@ -1359,7 +1359,7 @@ const Quiz = () => {
           </div>
           <div class="quiz-top-info">
             <span>Passo ${currentStep + 1} de ${steps.length}</span>
-            <div class="quiz-logo-small">${Logo('white', 'white')}</div>
+            <div class="quiz-logo-small">${Logo('white', '#000000')}</div>
             <span>${progress}% Completo</span>
           </div>
         </div>
