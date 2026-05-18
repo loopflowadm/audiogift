@@ -1213,9 +1213,143 @@ const Quiz = () => {
 
   let currentStep = 0;
 
+  const answers = {
+    forWho: '',
+    occasion: '',
+    name: '',
+    genre: '',
+    voice: '',
+    feelings: '',
+    story: '',
+    message: '',
+    babyName: '',
+    plan: 'memoravel',
+    email: '',
+    phone: ''
+  };
+
+  const saveCurrentStepData = () => {
+    if (currentStep === 0) {
+      const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
+      const activeForWho = optionGroups[0] ? optionGroups[0].querySelector('.active') : null;
+      if (activeForWho) answers.forWho = activeForWho.dataset.value;
+
+      const activeOccasion = optionGroups[1] ? optionGroups[1].querySelector('.active') : null;
+      if (activeOccasion) answers.occasion = activeOccasion.dataset.value;
+
+      const inputName = document.getElementById('quizName');
+      if (inputName) answers.name = inputName.value.trim();
+    } else if (currentStep === 1) {
+      const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
+      const activeGenre = optionGroups[0] ? optionGroups[0].querySelector('.active') : null;
+      if (activeGenre) answers.genre = activeGenre.dataset.value;
+
+      const activeVoice = optionGroups[1] ? optionGroups[1].querySelector('.active') : null;
+      if (activeVoice) answers.voice = activeVoice.dataset.value;
+    } else if (currentStep === 2) {
+      const ta = document.querySelector('.quiz-textarea');
+      if (ta) answers.feelings = ta.value.trim();
+    } else if (currentStep === 3) {
+      const ta = document.querySelector('.quiz-textarea');
+      if (ta) answers.story = ta.value.trim();
+    } else if (currentStep === 4) {
+      const tas = document.querySelectorAll('.quiz-textarea');
+      if (tas[0]) answers.message = tas[0].value.trim();
+      if (tas[1]) answers.babyName = tas[1].value.trim();
+    } else if (currentStep === 5) {
+      const activePlan = document.querySelector('.pricing-card-horizontal.active');
+      if (activePlan) answers.plan = activePlan.dataset.plan;
+    } else if (currentStep === 6) {
+      const inputs = document.querySelectorAll('.quiz-capture-section input');
+      if (inputs[0]) answers.email = inputs[0].value.trim();
+      if (inputs[1]) answers.phone = inputs[1].value.trim();
+    }
+  };
+
+  const restoreCurrentStepData = () => {
+    if (currentStep === 0) {
+      if (answers.forWho) {
+        const pill = document.querySelector(`.pill-option[data-value="${answers.forWho}"]`);
+        if (pill) pill.classList.add('active');
+      }
+      if (answers.occasion) {
+        const pill = document.querySelector(`.pill-option[data-value="${answers.occasion}"]`);
+        if (pill) pill.classList.add('active');
+      }
+      if (answers.name) {
+        const inputName = document.getElementById('quizName');
+        if (inputName) inputName.value = answers.name;
+      }
+    } else if (currentStep === 1) {
+      if (answers.genre) {
+        const pill = document.querySelector(`.pill-option[data-value="${answers.genre}"]`);
+        if (pill) pill.classList.add('active');
+      }
+      if (answers.voice) {
+        const pill = document.querySelector(`.pill-option[data-value="${answers.voice}"]`);
+        if (pill) pill.classList.add('active');
+      }
+    } else if (currentStep === 2) {
+      const ta = document.querySelector('.quiz-textarea');
+      if (ta) {
+        if (answers.feelings) ta.value = answers.feelings;
+        ta.dispatchEvent(new Event('input'));
+      }
+    } else if (currentStep === 3) {
+      const ta = document.querySelector('.quiz-textarea');
+      if (ta) {
+        if (answers.story) ta.value = answers.story;
+        ta.dispatchEvent(new Event('input'));
+      }
+    } else if (currentStep === 4) {
+      const tas = document.querySelectorAll('.quiz-textarea');
+      if (tas[0]) {
+        if (answers.message) tas[0].value = answers.message;
+        tas[0].dispatchEvent(new Event('input'));
+      }
+      if (tas[1]) {
+        if (answers.babyName) tas[1].value = answers.babyName;
+      }
+    } else if (currentStep === 5) {
+      if (answers.plan) {
+        document.querySelectorAll('.pricing-card-horizontal').forEach(c => {
+          c.classList.remove('active');
+          const check = c.querySelector('.plan-radio i');
+          if (check) check.remove();
+        });
+        const card = document.querySelector(`.pricing-card-horizontal[data-plan="${answers.plan}"]`);
+        if (card) {
+          card.classList.add('active');
+          card.querySelector('.plan-radio').innerHTML = '<i data-lucide="check"></i>';
+          lucide.createIcons();
+        }
+      }
+    } else if (currentStep === 6) {
+      const inputs = document.querySelectorAll('.quiz-capture-section input');
+      if (inputs[0] && answers.email) inputs[0].value = answers.email;
+      if (inputs[1] && answers.phone) inputs[1].value = answers.phone;
+
+      const planNames = {
+        especial: { name: 'Especial • entrega em 7 dias', price: 'R$ 89,90' },
+        memoravel: { name: 'Memorável • entrega em até 72h', price: 'R$ 149,90' },
+        inesquecivel: { name: 'Inesquecível • entrega em até 24h', price: 'R$ 199,90' }
+      };
+      const planObj = planNames[answers.plan] || planNames['memoravel'];
+      const planTextEl = document.querySelector('.review-item:nth-of-type(1) p');
+      if (planTextEl) planTextEl.textContent = `${planObj.name} • ${planObj.price}`;
+
+      const genreTextEl = document.querySelector('.review-item:nth-of-type(2) p');
+      if (genreTextEl) {
+        const genre = answers.genre || 'Pop Acústico';
+        const voice = answers.voice || 'Voz Feminina';
+        genreTextEl.textContent = `${genre} (${voice})`;
+      }
+    }
+  };
+
   const renderStep = () => {
     const step = steps[currentStep];
-    const progress = Math.round(((currentStep + 1) / steps.length) * 100); // 7 steps total like the image
+    const progress = Math.round(((currentStep + 1) / steps.length) * 100);
     
     document.getElementById('quiz-container').innerHTML = `
       <div class="quiz-modal-inner">
@@ -1250,6 +1384,7 @@ const Quiz = () => {
       </div>
     `;
     lucide.createIcons();
+    restoreCurrentStepData();
     attachEvents();
   };
 
@@ -1258,6 +1393,7 @@ const Quiz = () => {
       btn.onclick = () => {
         btn.parentElement.querySelectorAll('.pill-option').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        saveCurrentStepData();
       };
     });
 
@@ -1271,11 +1407,13 @@ const Quiz = () => {
         card.classList.add('active');
         card.querySelector('.plan-radio').innerHTML = '<i data-lucide="check"></i>';
         lucide.createIcons();
+        saveCurrentStepData();
       };
     });
 
     document.querySelectorAll('.btn-review-edit').forEach(btn => {
       btn.onclick = () => {
+        saveCurrentStepData();
         currentStep = parseInt(btn.dataset.target);
         renderStep();
       };
@@ -1287,45 +1425,55 @@ const Quiz = () => {
         const wordCount = ta.value.trim().split(/\s+/).filter(w => w.length > 0).length;
         const countSpan = ta.parentElement.querySelector('.word-count');
         if (countSpan) countSpan.textContent = `${wordCount} palavras`;
+        saveCurrentStepData();
+      };
+    });
+
+    const nameInput = document.getElementById('quizName');
+    if (nameInput) {
+      nameInput.oninput = () => {
+        saveCurrentStepData();
+      };
+    }
+
+    const captureInputs = document.querySelectorAll('.quiz-capture-section input');
+    captureInputs.forEach(inp => {
+      inp.oninput = () => {
+        saveCurrentStepData();
       };
     });
 
     document.querySelector('.btn-quiz-next').onclick = () => {
+      saveCurrentStepData();
       let isValid = true;
       let errorMsg = '';
 
       if (currentStep === 0) {
-        const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
-        const hasForWho = optionGroups[0] && optionGroups[0].querySelector('.active');
-        const hasOccasion = optionGroups[1] && optionGroups[1].querySelector('.active');
-        if (!hasForWho || !hasOccasion) {
+        if (!answers.forWho || !answers.occasion) {
           isValid = false;
           errorMsg = 'Por favor, selecione para quem é a canção e qual a ocasião.';
         }
       } else if (currentStep === 1) {
-        const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
-        const hasGenre = optionGroups[0] && optionGroups[0].querySelector('.active');
-        if (!hasGenre) {
+        if (!answers.genre) {
           isValid = false;
           errorMsg = 'Por favor, selecione o gênero musical preferido.';
         }
       } else if (currentStep === 2 || currentStep === 3) {
-        const textarea = document.querySelector('.quiz-textarea');
-        if (!textarea || textarea.value.trim().length < 5) {
+        if (currentStep === 2 && answers.feelings.length < 5) {
+          isValid = false;
+          errorMsg = 'Por favor, descreva com suas palavras para prosseguir.';
+        }
+        if (currentStep === 3 && answers.story.length < 5) {
           isValid = false;
           errorMsg = 'Por favor, descreva com suas palavras para prosseguir.';
         }
       } else if (currentStep === 5) {
-        const hasPlan = document.querySelector('.pricing-card-horizontal.active');
-        if (!hasPlan) {
+        if (!answers.plan) {
           isValid = false;
           errorMsg = 'Por favor, escolha um plano de entrega.';
         }
       } else if (currentStep === 6) {
-        const inputs = document.querySelectorAll('.quiz-capture-section input');
-        const email = inputs[0] ? inputs[0].value.trim() : '';
-        const phone = inputs[1] ? inputs[1].value.trim() : '';
-        if (!email || !phone) {
+        if (!answers.email || !answers.phone) {
           isValid = false;
           errorMsg = 'Por favor, preencha seu e-mail e WhatsApp para continuar.';
         }
@@ -1348,6 +1496,7 @@ const Quiz = () => {
     const backBtn = document.querySelector('.btn-quiz-back');
     if (backBtn) {
       backBtn.onclick = () => {
+        saveCurrentStepData();
         if (currentStep > 0) {
           currentStep--;
           renderStep();
