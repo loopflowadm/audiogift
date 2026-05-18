@@ -1261,23 +1261,99 @@ const Quiz = () => {
       };
     });
 
+    document.querySelectorAll('.pricing-card-horizontal').forEach(card => {
+      card.onclick = () => {
+        document.querySelectorAll('.pricing-card-horizontal').forEach(c => {
+          c.classList.remove('active');
+          const check = c.querySelector('.plan-radio i');
+          if (check) check.remove();
+        });
+        card.classList.add('active');
+        card.querySelector('.plan-radio').innerHTML = '<i data-lucide="check"></i>';
+        lucide.createIcons();
+      };
+    });
+
+    document.querySelectorAll('.btn-review-edit').forEach(btn => {
+      btn.onclick = () => {
+        currentStep = parseInt(btn.dataset.target);
+        renderStep();
+      };
+    });
+
+    const textareas = document.querySelectorAll('.quiz-textarea');
+    textareas.forEach(ta => {
+      ta.oninput = () => {
+        const wordCount = ta.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+        const countSpan = ta.parentElement.querySelector('.word-count');
+        if (countSpan) countSpan.textContent = `${wordCount} palavras`;
+      };
+    });
+
     document.querySelector('.btn-quiz-next').onclick = () => {
+      let isValid = true;
+      let errorMsg = '';
+
+      if (currentStep === 0) {
+        const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
+        const hasForWho = optionGroups[0] && optionGroups[0].querySelector('.active');
+        const hasOccasion = optionGroups[1] && optionGroups[1].querySelector('.active');
+        if (!hasForWho || !hasOccasion) {
+          isValid = false;
+          errorMsg = 'Por favor, selecione para quem é a canção e qual a ocasião.';
+        }
+      } else if (currentStep === 1) {
+        const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
+        const hasGenre = optionGroups[0] && optionGroups[0].querySelector('.active');
+        if (!hasGenre) {
+          isValid = false;
+          errorMsg = 'Por favor, selecione o gênero musical preferido.';
+        }
+      } else if (currentStep === 2 || currentStep === 3) {
+        const textarea = document.querySelector('.quiz-textarea');
+        if (!textarea || textarea.value.trim().length < 5) {
+          isValid = false;
+          errorMsg = 'Por favor, descreva com suas palavras para prosseguir.';
+        }
+      } else if (currentStep === 5) {
+        const hasPlan = document.querySelector('.pricing-card-horizontal.active');
+        if (!hasPlan) {
+          isValid = false;
+          errorMsg = 'Por favor, escolha um plano de entrega.';
+        }
+      } else if (currentStep === 6) {
+        const inputs = document.querySelectorAll('.quiz-capture-section input');
+        const email = inputs[0] ? inputs[0].value.trim() : '';
+        const phone = inputs[1] ? inputs[1].value.trim() : '';
+        if (!email || !phone) {
+          isValid = false;
+          errorMsg = 'Por favor, preencha seu e-mail e WhatsApp para continuar.';
+        }
+      }
+
+      if (!isValid) {
+        alert(errorMsg);
+        return;
+      }
+
       if (currentStep < steps.length - 1) {
         currentStep++;
         renderStep();
       } else {
+        alert('Tudo certo! Redirecionando para o ambiente seguro de pagamento...');
         document.getElementById('quiz-overlay').classList.remove('active');
-        window.location.hash = 'pricing';
-        alert('Dados salvos! Escolha seu plano agora.');
       }
     };
 
-    document.querySelector('.btn-quiz-back').onclick = () => {
-      if (currentStep > 0) {
-        currentStep--;
-        renderStep();
-      }
-    };
+    const backBtn = document.querySelector('.btn-quiz-back');
+    if (backBtn) {
+      backBtn.onclick = () => {
+        if (currentStep > 0) {
+          currentStep--;
+          renderStep();
+        }
+      };
+    }
     
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   };
