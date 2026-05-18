@@ -1039,6 +1039,12 @@ const Quiz = () => {
               <button class="pill-option" data-value="${opt}">${opt}</button>
             `).join('')}
           </div>
+          <label class="quiz-label mt-3">Qual a ocasião? *</label>
+          <div class="quiz-options">
+            ${['Aniversário', 'Dia dos Namorados', 'Casamento / Noivado', 'Bodas de Casamento', 'Dia das Mães', 'Dia dos Pais', 'Chá Revelação', 'Pedido de Desculpas', 'Amizade', 'Homenagem Póstuma', 'Formatura', 'Sem data específica'].map(opt => `
+              <button class="pill-option" data-value="${opt}">${opt}</button>
+            `).join('')}
+          </div>
           <div class="quiz-input-group mt-3">
             <label class="quiz-label">Nome do homenageado(a) que aparecerá na música</label>
             <input type="text" placeholder="Digite o primeiro nome" class="quiz-input" id="quizName">
@@ -1049,7 +1055,7 @@ const Quiz = () => {
     },
     {
       title: 'Escolha o Gênero',
-      subtitle: 'Selecione o som que melhor combina com seu ente querido',
+      subtitle: 'Selecione o estilo que mais combina com a sua história',
       content: `
         <div class="quiz-step-content">
           <label class="quiz-label">Gênero Preferido *</label>
@@ -1067,12 +1073,12 @@ const Quiz = () => {
       `
     },
     {
-      title: 'O que faz essa pessoa especial?',
-      subtitle: 'Descreva aquela beleza serena, o sorriso ou as manias que fazem você amar tanto essa pessoa.',
+      title: 'Como ela faz você se sentir?',
+      subtitle: 'Descreva tudo que essa pessoa significa para você e o porquê merece essa linda homenagem',
       content: `
         <div class="quiz-step-content">
           <label class="quiz-label">O que faz o coração dela(e) ser tão lindo? *</label>
-          <textarea class="quiz-textarea" placeholder="Ela(e) é paciente, sábia(o), engraçada(o), encorajadora(or), piedosa(o)? O que faz dessa pessoa alguém incrível para você?"></textarea>
+          <textarea class="quiz-textarea" placeholder="Ele(a) é paciente, sábio(a), engraçado(a), encorajador(a), piedoso(a)? O que faz dessa pessoa alguém incrível para você? O que você sente quando pensa nele(a) ou está com ele(a)? Por que ela significa tanto para você?"></textarea>
           <div class="text-right"><span class="word-count">0 palavras</span></div>
         </div>
       `
@@ -1090,51 +1096,54 @@ const Quiz = () => {
     },
     {
       title: 'A sua declaração final (opcional)',
-      subtitle: 'Tem alguma frase de amor ou apelido carinhoso que não pode faltar nessa poesia?',
+      subtitle: 'Escreva aquela frase importante e que não pode ficar de fora dessa música.',
       content: `
         <div class="quiz-step-content">
           <label class="quiz-label">Mensagem especial (opcional)</label>
           <textarea class="quiz-textarea" placeholder="O que você quer que essa pessoa saiba, que nunca disse o suficiente? Pelo que quer agradecer? Qual é aquela coisa do fundo do coração que quer dizer?"></textarea>
           <div class="text-right"><span class="word-count">0 palavras</span></div>
+          
+          <label class="quiz-label mt-3">Caso seja chá revelação (opcional)</label>
+          <textarea class="quiz-textarea" placeholder="Se a ocasião for chá revelação escreva qual será o(s) nome(s) do bebê. Ex: Se for menina Maria, menino João"></textarea>
         </div>
       `
     },
     {
-      title: 'Escolha Seu Plano',
-      subtitle: 'Selecione o prazo de entrega ideal para você',
+      title: 'Escolha seu plano',
+      subtitle: 'Selecione seu presente ideal',
       content: `
         <div class="quiz-step-content">
           <div class="quiz-pricing-options">
             
-            <div class="pricing-card-horizontal" data-plan="essencial">
+            <div class="pricing-card-horizontal" data-plan="especial">
               <div class="plan-icon-box"><i data-lucide="clock"></i></div>
               <div class="plan-info">
-                <h3>Essencial • <span>Entrega em 7 dias</span></h3>
+                <h3>Especial • <span>entrega em 7 dias</span></h3>
                 <p>Ideal para quem pode esperar um pouco mais</p>
               </div>
-              <div class="plan-price">R$69,90</div>
+              <div class="plan-price">R$ 89,90</div>
               <div class="plan-radio"></div>
             </div>
 
-            <div class="pricing-card-horizontal active popular" data-plan="express">
+            <div class="pricing-card-horizontal active popular" data-plan="memoravel">
               <div class="plan-badge-top">MAIS POPULAR</div>
               <div class="plan-icon-box"><i data-lucide="rocket"></i></div>
               <div class="plan-info">
-                <h3>Express • <span>Entrega em até 24h</span></h3>
-                <p>Prioridade máxima + Revisões Ilimitadas + Suporte via WhatsApp</p>
+                <h3>Memorável • <span>entrega em até 72h</span></h3>
+                <p>Letra em PDF + Playback instrumental</p>
               </div>
-              <div class="plan-price">R$99,90</div>
+              <div class="plan-price">R$ 149,90</div>
               <div class="plan-radio"><i data-lucide="check"></i></div>
             </div>
 
-            <div class="pricing-card-horizontal vip" data-plan="turbo">
+            <div class="pricing-card-horizontal vip" data-plan="inesquecivel">
               <div class="plan-badge-top-vip">★ VIP</div>
               <div class="plan-icon-box"><i data-lucide="zap"></i></div>
               <div class="plan-info">
-                <h3>Turbo • <span>Entrega em até 6h</span></h3>
-                <p>Tudo do Express + <b>Experiência de Presente</b> + <b>Letra em PDF</b> + <b>Playback Instrumental</b></p>
+                <h3>Inesquecível • <span>entrega em até 24h</span></h3>
+                <p>Prioridade Máxima + Letra PDF + Playback + sua música nos streamings</p>
               </div>
-              <div class="plan-price">R$199,90</div>
+              <div class="plan-price">R$ 199,90</div>
               <div class="plan-radio"></div>
             </div>
 
@@ -1149,6 +1158,56 @@ const Quiz = () => {
           </div>
         </div>
       `
+    },
+    {
+      title: 'Quase lá!',
+      subtitle: 'Revise suas escolhas e nos informe onde enviar a sua música.',
+      content: `
+        <div class="quiz-step-content">
+          <div class="quiz-review-section">
+            <div class="review-item">
+              <div class="review-info">
+                <i data-lucide="music"></i>
+                <div>
+                  <strong>Plano Selecionado</strong>
+                  <p>Memorável • R$ 149,90</p>
+                </div>
+              </div>
+              <button class="btn-review-edit" data-target="5">Mudar</button>
+            </div>
+            
+            <div class="review-item mt-2">
+              <div class="review-info">
+                <i data-lucide="mic"></i>
+                <div>
+                  <strong>Gênero Musical</strong>
+                  <p>Pop Acústico (Feminino)</p>
+                </div>
+              </div>
+              <button class="btn-review-edit" data-target="1">Mudar</button>
+            </div>
+
+            <div class="review-item mt-2">
+              <div class="review-info">
+                <i data-lucide="file-text"></i>
+                <div>
+                  <strong>Suas Respostas</strong>
+                  <p>História e detalhes preenchidos</p>
+                </div>
+              </div>
+              <button class="btn-review-edit" data-target="0">Revisar</button>
+            </div>
+          </div>
+
+          <div class="quiz-capture-section mt-4">
+            <label class="quiz-label">Seu E-mail *</label>
+            <input type="email" placeholder="Para receber a música e o comprovante" class="quiz-input">
+            
+            <label class="quiz-label mt-3">Seu WhatsApp *</label>
+            <input type="tel" placeholder="(11) 99999-9999" class="quiz-input">
+          </div>
+        </div>
+      `
     }
   ];
 
@@ -1156,7 +1215,7 @@ const Quiz = () => {
 
   const renderStep = () => {
     const step = steps[currentStep];
-    const progress = Math.round(((currentStep + 1) / 7) * 100); // 7 steps total like the image
+    const progress = Math.round(((currentStep + 1) / steps.length) * 100); // 7 steps total like the image
     
     document.getElementById('quiz-container').innerHTML = `
       <div class="quiz-modal-inner">
@@ -1165,7 +1224,7 @@ const Quiz = () => {
             <div class="quiz-progress-fill" style="width: ${progress}%"></div>
           </div>
           <div class="quiz-top-info">
-            <span>Passo ${currentStep + 1} de 7</span>
+            <span>Passo ${currentStep + 1} de ${steps.length}</span>
             <div class="quiz-logo-small">${Logo('var(--black)')}</div>
             <span>${progress}% Completo</span>
           </div>
@@ -1181,8 +1240,8 @@ const Quiz = () => {
           <button class="btn-quiz-back" ${currentStep === 0 ? 'style="visibility:hidden"' : ''}>
             <i data-lucide="arrow-left"></i> Voltar
           </button>
-          <button class="btn-quiz-next">
-            ${currentStep === steps.length - 1 ? 'Próximo, já falei tudo que queria' : 'Próximo'} <i data-lucide="arrow-right"></i>
+          <button class="btn-quiz-next" ${currentStep === steps.length - 1 ? 'id="btn-checkout"' : ''}>
+            ${currentStep === steps.length - 1 ? 'Continuar para pagamento <i data-lucide="credit-card"></i>' : 'Próximo <i data-lucide="arrow-right"></i>'}
           </button>
         </div>
         
