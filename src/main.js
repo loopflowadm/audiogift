@@ -936,11 +936,11 @@ const FAQ = () => `
       <h2 class="text-center section-title-serif">Perguntas frequentes</h2>
       <div class="faq-list mt-4">
         ${[
-          { q: 'Como recebo minha música?', a: 'Você recebe um link exclusivo via WhatsApp e E-mail com sua música em alta qualidade (MP3/WAV), pronta para compartilhar.' },
-          { q: 'Quanto tempo demora a produção?', a: 'Depende do plano escolhido: Essencial (7 dias), Express (24h) ou Turbo (6h).' },
-          { q: 'A música é mesmo exclusiva?', a: 'Sim! Nossos compositores criam a letra do zero com base nos detalhes que você nos fornece.' },
-          { q: 'Posso pedir alterações?', a: 'Fazemos até duas alterações caso necessário. Mas temos certeza que você vai amar o resultado.' },
-          { q: 'Qual a garantia que vou receber minha música?', a: 'Além de sermos uma empresa verificada, nossa missão é entregar lágrimas de alegria. Se a música não tocar o coração de vocês do jeito que sonhou, nós refazemos. E se mesmo assim não for o presente mais inesquecível que ela já recebeu, devolvemos seu dinheiro em 7 dias.' }
+          { q: 'Como recebo minha música?', a: 'Você recebe um link exclusivo pelos contatos cadastrados (whatsApp e e-mail) com sua música em alta qualidade (MP3/WAV), pronta para compartilhar.' },
+          { q: 'Quanto tempo demora a produção?', a: 'Depende da escolha do plano:<ul style="margin-top: 8px; margin-left: 20px; list-style-type: disc;"><li style="margin-bottom: 4px;"><strong>Especial</strong>: 7 dias</li><li style="margin-bottom: 4px;"><strong>Memorável</strong>: 72h</li><li style="margin-bottom: 4px;"><strong>Inesquecível</strong>: 24h</li></ul>' },
+
+          { q: 'Posso pedir alterações?', a: 'Fazemos até duas alterações caso necessário.' },
+          { q: 'Qual a garantia de que vou receber minha música?', a: 'Somos uma empresa séria e temos um compromisso simples: emocionar de verdade. Se a música não ficou próximo ao que você imaginou, nós refazemos. E, se ainda assim suas expectativas não foram atendidas, devolvemos 100% do seu dinheiro em até 7 dias após a entrega.' }
         ].map(item => `
           <div class="faq-item">
             <div class="faq-question">

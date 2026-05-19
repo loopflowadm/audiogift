@@ -1904,7 +1904,7 @@ button {
 }
 
 .faq-item.active .faq-answer {
-  max-height: 200px;
+  max-height: 500px;
   padding-bottom: 1.5rem;
 }
 
@@ -2106,7 +2106,7 @@ button {
 }
 
 .faq-item.active .faq-answer {
-  max-height: 200px;
+  max-height: 500px;
 }
 
 /* Reactions Premium Carousel */
@@ -2603,7 +2603,7 @@ button {
 }
 
 .faq-item.active .faq-answer {
-  max-height: 200px;
+  max-height: 500px;
   padding-bottom: 1.5rem;
 }
 
