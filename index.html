@@ -1,25 +1,395 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AUDIOGIFT | Homenagens Musicais</title>
-    <meta name="description" content="A plataforma #1 de músicas personalizadas. Tudo que você nunca conseguiu dizer... Agora em uma canção." />
-    
-    <!-- Open Graph / WhatsApp / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://audiogift.com.br/">
-    <meta property="og:title" content="AUDIOGIFT | A Homenagem Definitiva">
-    <meta property="og:description" content="Transformamos sua história em uma canção exclusiva, feita sob medida para emocionar.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=1200">
-    
+
+    <!-- ================================================
+         SEO CORE
+    ================================================ -->
+    <title>Música Personalizada | AudioGift — Canção Exclusiva para Quem Você Ama</title>
+    <meta name="description" content="Crie uma música personalizada exclusiva para aniversário, casamento, Dia das Mães, Dia dos Namorados ou qualquer ocasião especial. Entrega em até 24h. +3.000 clientes emocionados. Garantia de 7 dias." />
+    <meta name="keywords" content="música personalizada, canção personalizada, música para presente, homenagem musical, música de aniversário, música de casamento, música dia das mães, música dia dos namorados, presente único, audiogift" />
+    <meta name="author" content="AudioGift" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://audiogift.com.br/" />
+
+    <!-- Language & Region -->
+    <meta http-equiv="content-language" content="pt-BR" />
+    <link rel="alternate" hreflang="pt-BR" href="https://audiogift.com.br/" />
+    <link rel="alternate" hreflang="x-default" href="https://audiogift.com.br/" />
+
+    <!-- ================================================
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
+    ================================================ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="AudioGift" />
+    <meta property="og:url" content="https://audiogift.com.br/" />
+    <meta property="og:title" content="Música Personalizada para Quem Você Ama | AudioGift" />
+    <meta property="og:description" content="Transformamos sua história em uma canção exclusiva, feita sob medida para emocionar. Entrega em até 24h. Garantia de 7 dias ou seu dinheiro de volta." />
+    <meta property="og:image" content="https://audiogift.com.br/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AudioGift — Crie uma música personalizada exclusiva" />
+
+    <!-- ================================================
+         TWITTER / X CARD
+    ================================================ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@audiogiftbrasil" />
+    <meta name="twitter:creator" content="@audiogiftbrasil" />
+    <meta name="twitter:title" content="Música Personalizada para Quem Você Ama | AudioGift" />
+    <meta name="twitter:description" content="Transformamos sua história em uma canção exclusiva. Entrega em até 24h. +3.000 clientes emocionados." />
+    <meta name="twitter:image" content="https://audiogift.com.br/og-image.jpg" />
+
+    <!-- ================================================
+         FAVICON & ICONS
+    ================================================ -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#1a1a1a" />
+
+    <!-- ================================================
+         PERFORMANCE: Resource Hints
+    ================================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://i.pravatar.cc" />
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/src/style.css" />
+
+    <!-- ================================================
+         SCHEMA.ORG JSON-LD (GEO — Generative Engine Optimization)
+         Structured data consumed by ChatGPT, Perplexity, Google SGE / AI Overviews
+    ================================================ -->
+
+    <!-- 1. Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://audiogift.com.br/#organization",
+      "name": "AudioGift",
+      "url": "https://audiogift.com.br/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://audiogift.com.br/logo.svg",
+        "width": 400,
+        "height": 112
+      },
+      "description": "AudioGift é a principal plataforma brasileira de músicas personalizadas. Criamos canções exclusivas baseadas na história do cliente para presentear em qualquer ocasião especial.",
+      "foundingDate": "2022",
+      "areaServed": "BR",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "Portuguese",
+        "contactOption": "TollFree",
+        "url": "https://wa.me/5511999999999"
+      },
+      "sameAs": [
+        "https://www.instagram.com/audiogiftbrasil/",
+        "https://www.tiktok.com/@audiogift",
+        "https://open.spotify.com/artist/24rv68FArmAuCtAhHjoIEy"
+      ]
+    }
+    </script>
+
+    <!-- 2. WebSite + SiteLinks SearchBox -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://audiogift.com.br/#website",
+      "name": "AudioGift",
+      "url": "https://audiogift.com.br/",
+      "description": "Plataforma #1 de músicas personalizadas do Brasil. Crie uma canção exclusiva para quem você ama.",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://audiogift.com.br/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://audiogift.com.br/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- 3. Product / Service (Principal) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "@id": "https://audiogift.com.br/#produto-musica-personalizada",
+      "name": "Música Personalizada AudioGift",
+      "description": "Canção exclusiva criada sob medida com base na história do cliente. Inclui letra personalizada, produção musical profissional e entrega digital em formato MP3/WAV. Disponível nos planos Especial (7 dias), Memorável (72h) e Inesquecível (24h).",
+      "brand": {
+        "@type": "Brand",
+        "name": "AudioGift"
+      },
+      "image": "https://audiogift.com.br/og-image.jpg",
+      "url": "https://audiogift.com.br/",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Plano Especial",
+          "description": "Música personalizada com entrega em até 7 dias. Inclui canção em MP3/WAV, letra exclusiva e link para compartilhar.",
+          "price": "89.90",
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock",
+          "deliveryLeadTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 5,
+            "maxValue": 7,
+            "unitCode": "DAY"
+          },
+          "url": "https://audiogift.com.br/"
+        },
+        {
+          "@type": "Offer",
+          "name": "Plano Memorável",
+          "description": "Música personalizada com entrega em até 72 horas. Inclui tudo do plano Especial + Playback Instrumental + Letra em PDF.",
+          "price": "149.90",
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock",
+          "deliveryLeadTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 3,
+            "unitCode": "DAY"
+          },
+          "url": "https://audiogift.com.br/"
+        },
+        {
+          "@type": "Offer",
+          "name": "Plano Inesquecível VIP",
+          "description": "Música personalizada com entrega prioritária em até 24 horas. Inclui tudo do Memorável + publicação nos streamings (Spotify, Deezer) + suporte VIP.",
+          "price": "199.90",
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock",
+          "deliveryLeadTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 1,
+            "unitCode": "DAY"
+          },
+          "url": "https://audiogift.com.br/"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "3247",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Vera Lúcia S." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Nossa, que emoção! Choramos muito ouvindo juntos ontem à noite. Vocês conseguiram colocar toda a nossa história em 3 minutos! Muito obrigada pelo carinho."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Carla M." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Presenteei meu marido no aniversário de casamento e ele ficou sem palavras. A música é linda e muito personalizada. Valeu cada centavo!"
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Rafael T." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Pedi para o dia das mães da minha mãe. Ela chorou do começo ao fim. Nunca vi ela tão emocionada. Recomendo demais!"
+        }
+      ]
+    }
+    </script>
+
+    <!-- 4. FAQPage — consumida diretamente por Google SGE, ChatGPT e Perplexity -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que é uma música personalizada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Uma música personalizada é uma canção criada exclusivamente para uma pessoa específica, baseada na sua história, sentimentos e relação com o destinatário. No AudioGift, compositores profissionais criam a letra e a melodia a partir das informações que você fornece, resultando em uma obra única que não existe em nenhum outro lugar do mundo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como funciona o AudioGift?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O processo é simples: 1) Você responde um questionário sobre a pessoa homenageada (quem é, qual a ocasião, o que a torna especial, suas histórias em comum); 2) Escolhe o estilo musical e o plano de entrega; 3) Nossos compositores criam a música; 4) Você recebe um link exclusivo com a canção em até 7 dias, 72h ou 24h, dependendo do plano escolhido."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como recebo minha música personalizada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Você recebe um link exclusivo pelo WhatsApp e e-mail cadastrados, com sua música em alta qualidade (MP3/WAV), pronta para ouvir e compartilhar com quem você ama."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto tempo demora para receber uma música personalizada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O prazo de entrega depende do plano escolhido: Plano Especial em até 7 dias corridos; Plano Memorável em até 72 horas; Plano Inesquecível VIP em até 24 horas, com prioridade máxima de produção."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual o preço de uma música personalizada no AudioGift?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O AudioGift oferece três planos: Especial por R$ 89,90 (entrega em 7 dias), Memorável por R$ 149,90 (entrega em 72h com Playback e PDF da letra) e Inesquecível VIP por R$ 199,90 (entrega em 24h com publicação no Spotify e Deezer). Todos incluem garantia de 7 dias."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso pedir alterações na música?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. O AudioGift oferece até duas revisões gratuitas caso a música não esteja de acordo com o esperado. Se mesmo após as revisões você não ficar satisfeito, devolvemos 100% do valor pago em até 7 dias após a entrega, sem burocracia."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Para quais ocasiões posso encomendar uma música personalizada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Você pode encomendar músicas personalizadas para aniversário, casamento, noivado, bodas de casamento, Dia das Mães, Dia dos Pais, Dia dos Namorados, Dia dos Avós, chá revelação, formatura, pedido de desculpas, homenagem póstuma, batizado, ou qualquer outra ocasião especial."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "A música pode ser publicada no Spotify?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. No Plano Inesquecível VIP (R$ 199,90), a música é publicada nos principais serviços de streaming, incluindo Spotify, Deezer, Apple Music e YouTube Music, para que você possa ouvi-la para sempre e compartilhar com qualquer pessoa no mundo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual a garantia de que vou receber minha música?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O AudioGift oferece garantia completa de satisfação de 7 dias. Se a música não emocionar ou não atender às suas expectativas, refazemos gratuitamente. Se ainda assim não ficar satisfeito, devolvemos 100% do seu dinheiro, sem perguntas e sem burocracia."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- 5. BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://audiogift.com.br/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Música Personalizada",
+          "item": "https://audiogift.com.br/#create"
+        }
+      ]
+    }
+    </script>
+
+    <!-- 6. LocalBusiness — sinaliza presença institucional -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://audiogift.com.br/#local-business",
+      "name": "AudioGift",
+      "description": "Plataforma brasileira especializada em criação de músicas personalizadas como presente. Atendemos todo o Brasil com entrega digital.",
+      "url": "https://audiogift.com.br/",
+      "email": "audiogiftbrasil@gmail.com",
+      "telephone": "+55-11-99999-9999",
+      "priceRange": "R$ 89,90 — R$ 199,90",
+      "currenciesAccepted": "BRL",
+      "paymentAccepted": "Cartão de Crédito, PIX, Boleto",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Brasil"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "22:00"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "3247",
+        "bestRating": "5"
+      }
+    }
+    </script>
+
+    <!-- 7. ItemList — Planos de Preços (GEO: respostas sobre opções) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Planos de Música Personalizada AudioGift",
+      "description": "Opções de planos para criação de música personalizada no AudioGift",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Plano Especial — R$ 89,90",
+          "description": "Música personalizada com entrega em até 7 dias. Ideal para quem tem tempo para planejar o presente. Inclui canção personalizada HD, letra exclusiva, baseada na sua história e link exclusivo para compartilhar.",
+          "url": "https://audiogift.com.br/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Plano Memorável — R$ 149,90",
+          "description": "Música personalizada com entrega em até 72 horas. Inclui tudo do Especial, mais Playback Instrumental e Letra em PDF diagramada. O plano mais escolhido.",
+          "url": "https://audiogift.com.br/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Plano Inesquecível VIP — R$ 199,90",
+          "description": "Música personalizada com entrega prioritária em até 24 horas. Inclui tudo do Memorável, mais publicação nos streamings (Spotify, Deezer, Apple Music), capa de single personalizada e suporte VIP.",
+          "url": "https://audiogift.com.br/"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="app"></div>

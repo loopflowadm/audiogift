@@ -42,58 +42,60 @@ const Pricing = () => `
       
       <div class="pricing-grid mt-12">
         <div class="pricing-card reveal" data-delay="1">
-          <h3 class="plan-name">Digital</h3>
+          <h3 class="plan-name">Especial</h3>
           <div class="plan-price">
             <span class="currency">R$</span>
-            <span class="amount">147</span>
+            <span class="amount">89,90</span>
             <span class="period">/único</span>
           </div>
-          <ul class="plan-features">
+          <p class="plan-delivery-time" style="color: #666; font-size: 0.9rem; margin-top: 8px; font-weight: 500;"><i data-lucide="clock" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 4px;"></i> Entrega em até 7 dias</p>
+          <ul class="plan-features" style="margin-top: 20px;">
             <li><i data-lucide="check-circle"></i> Canção Personalizada HD</li>
-            <li><i data-lucide="check-circle"></i> Letra Exclusiva</li>
-            <li><i data-lucide="check-circle"></i> Entrega em até 3 dias</li>
-            <li><i data-lucide="check-circle"></i> Link para Spotify Privado</li>
+            <li><i data-lucide="check-circle"></i> Letra Exclusiva e Poética</li>
+            <li><i data-lucide="check-circle"></i> Baseada na sua história</li>
+            <li><i data-lucide="check-circle"></i> Link exclusivo para compartilhar</li>
           </ul>
-          <button class="btn-primary-new w-full" onclick="startQuiz()">Começar Agora</button>
+          <button class="btn-primary-new w-full" style="margin-top: 24px;" onclick="Quiz('especial')">Pedir este plano</button>
         </div>
 
         <div class="pricing-card popular reveal" data-delay="2">
           <div class="popular-badge">Mais Escolhido</div>
-          <h3 class="plan-name">Presente</h3>
+          <h3 class="plan-name">Memorável</h3>
           <div class="plan-price">
             <span class="currency">R$</span>
-            <span class="amount">297</span>
+            <span class="amount">149,90</span>
             <span class="period">/único</span>
           </div>
-          <ul class="plan-features">
-            <li><i data-lucide="check-circle"></i> <strong>Tudo do plano Digital</strong></li>
-            <li><i data-lucide="check-circle"></i> Entrega em 24 Horas</li>
-            <li><i data-lucide="check-circle"></i> Página de Homenagem Web</li>
-            <li><i data-lucide="check-circle"></i> QR Code para Presente</li>
+          <p class="plan-delivery-time" style="color: var(--primary-orange); font-size: 0.9rem; margin-top: 8px; font-weight: 600;"><i data-lucide="rocket" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 4px;"></i> Entrega em até 72 horas</p>
+          <ul class="plan-features" style="margin-top: 20px;">
+            <li><i data-lucide="check-circle"></i> <strong>Tudo do plano Especial</strong></li>
+            <li><i data-lucide="check-circle"></i> Playback Instrumental</li>
+            <li><i data-lucide="check-circle"></i> Letra em PDF diagramada</li>
+            <li><i data-lucide="check-circle"></i> Ajustes e correções grátis</li>
           </ul>
-          <button class="btn-primary-new w-full" onclick="startQuiz()">Começar Agora</button>
+          <button class="btn-primary-new w-full" style="margin-top: 24px;" onclick="Quiz('memoravel')">Pedir este plano</button>
         </div>
 
-        <div class="pricing-card reveal" data-delay="3">
-          <h3 class="plan-name">Eternidade</h3>
+        <div class="pricing-card vip reveal" data-delay="3">
+          <h3 class="plan-name" style="color: #cda851; font-weight: 800;">★ VIP • Inesquecível</h3>
           <div class="plan-price">
             <span class="currency">R$</span>
-            <span class="amount">497</span>
+            <span class="amount">199,90</span>
             <span class="period">/único</span>
           </div>
-          <ul class="plan-features">
-            <li><i data-lucide="check-circle"></i> <strong>Tudo do plano Presente</strong></li>
-            <li><i data-lucide="check-circle"></i> Placa de Acrílico (Opcional)</li>
-            <li><i data-lucide="check-circle"></i> Vídeo com Retrospectiva</li>
-            <li><i data-lucide="check-circle"></i> Suporte VIP 24h</li>
+          <p class="plan-delivery-time" style="color: #cda851; font-size: 0.9rem; margin-top: 8px; font-weight: 600;"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 4px;"></i> Entrega máxima em 24h</p>
+          <ul class="plan-features" style="margin-top: 20px;">
+            <li><i data-lucide="check-circle"></i> <strong>Tudo do plano Memorável</strong></li>
+            <li><i data-lucide="check-circle"></i> Publicação nos Streamings (Spotify, Deezer...)</li>
+            <li><i data-lucide="check-circle"></i> Capa do Single Personalizada</li>
+            <li><i data-lucide="check-circle"></i> Suporte Prioritário VIP</li>
           </ul>
-          <button class="btn-primary-new w-full" onclick="startQuiz()">Começar Agora</button>
+          <button class="btn-primary-new w-full" style="margin-top: 24px;" onclick="Quiz('inesquecivel')">Pedir este plano</button>
         </div>
       </div>
     </div>
   </section>
 `
-
 const Header = () => `
   <header class="header">
     <div class="container header-content">
@@ -102,6 +104,7 @@ const Header = () => `
         <a href="#how">Como funciona</a>
         <a href="#styles">Estilos</a>
         <a href="#reviews">Depoimentos</a>
+        <a href="#planos">Planos</a>
       </nav>
       <div class="nav-actions">
         <a href="#" class="btn-nav-outline">Acompanhar pedido</a>
@@ -113,6 +116,7 @@ const Header = () => `
       <a href="#how">Como funciona</a>
       <a href="#styles">Estilos</a>
       <a href="#reviews">Depoimentos</a>
+      <a href="#planos">Planos</a>
       <a href="#" class="btn-primary-new w-full mt-4">Criar sua canção</a>
     </div>
   </header>
@@ -125,18 +129,18 @@ const MusicStyles = () => {
   ]
   
   const featuredGenres = [
-    { name: 'Sertanejo', voice: 'Masculina' },
-    { name: 'Pop', voice: 'Feminina' },
-    { name: 'Pop Acústico', voice: 'Feminina' },
-    { name: 'MPB', voice: 'Masculina' },
-    { name: 'Samba', voice: 'Masculina' },
-    { name: 'Rock', voice: 'Masculina' },
-    { name: 'Forró', voice: 'Feminina' },
-    { name: 'Violão e Voz', voice: 'Instrumental' },
-    { name: 'Soul Romântico', voice: 'Feminina' },
-    { name: 'Rap/Hip Hop', voice: 'Masculina' },
-    { name: 'Pagode', 'voice': 'Masculina' },
-    { name: 'Reggae', voice: 'Masculina' }
+    { name: 'Sertanejo', voice: 'Masculina', src: '/genres/sertanejo-masculina.mp3' },
+    { name: 'Pop', voice: 'Feminina', src: '/genres/pop-feminina.mp3' },
+    { name: 'Pop Acústico', voice: 'Feminina', src: '/genres/pop-acustico-feminina.mp3' },
+    { name: 'MPB', voice: 'Masculina', src: '/genres/mpb-masculina.mp3' },
+    { name: 'Samba', voice: 'Masculina', src: '/genres/samba-masculina.mp3' },
+    { name: 'Rock', voice: 'Masculina', src: '/genres/rock-masculina.mp3' },
+    { name: 'Forró', voice: 'Feminina', src: '/genres/forro-feminina.mp3' },
+    { name: 'Violão e Voz', voice: 'Instrumental', src: '/genres/violao-e-voz-instrumental.mp3' },
+    { name: 'Soul Romântico', voice: 'Feminina', src: '/genres/soul-romantico-feminina.mp3' },
+    { name: 'Rap/Hip Hop', voice: 'Masculina', src: '/genres/rap-hip-hop-masculina.mp3' },
+    { name: 'Pagode', voice: 'Masculina', src: '/genres/pagode-masculina.mp3' },
+    { name: 'Reggae', voice: 'Masculina', src: '/genres/reggae-masculina.mp3' }
   ]
   
   return `
@@ -168,12 +172,14 @@ const MusicStyles = () => {
         
         <div class="genre-grid-players">
           ${featuredGenres.map((genre, i) => `
-            <div class="style-player-card reveal" data-delay="${(i % 4) + 1}">
+            <div class="style-player-card reveal" data-genre="${genre.name}" data-voice="${genre.voice}" data-delay="${(i % 4) + 1}">
               <div class="wa-bubble-small">
-                <button class="wa-play-small"><i data-lucide="play"></i></button>
+                <button class="wa-play-small" data-src="${genre.src}"><i data-lucide="play"></i></button>
                 <div class="wa-info-small">
                   <span class="wa-name-small">${genre.name}</span>
-                  <div class="wa-wave-small"></div>
+                  <div class="wa-wave-small" style="position: relative;">
+                    <div class="wa-wave-fill" style="position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary-orange); transition: width 0.1s linear;"></div>
+                  </div>
                   <span class="wa-time-small">0:30</span>
                 </div>
               </div>
@@ -242,7 +248,8 @@ const TestimonialsCarousel = () => {
       type: 'audio-song',
       title: 'Para Sempre Nós',
       artist: 'Audiogift',
-      img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800'
+      img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800',
+      src: '/songs/para-sempre-nos.mp3'
     },
     {
       type: 'whatsapp',
@@ -250,8 +257,8 @@ const TestimonialsCarousel = () => {
       role: 'Depoimento em Áudio',
       avatar: 'https://i.pravatar.cc/100?u=rosely',
       audios: [
-        { time: '0:23', src: 'https://pub-b085b85804204c82b96e15ec554b0940.r2.dev/depoimento1.mp3' },
-        { time: '0:45', src: 'https://pub-b085b85804204c82b96e15ec554b0940.r2.dev/depoimento2.mp3' }
+        { time: '0:23', src: '/depoimento1.mp3' },
+        { time: '0:45', src: '/depoimento2.mp3' }
       ]
     },
     {
@@ -264,13 +271,15 @@ const TestimonialsCarousel = () => {
       type: 'audio-song',
       title: 'Três Apertos',
       artist: 'Audiogift',
-      img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=800'
+      img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=800',
+      src: '/songs/tres-apertos.mp3'
     },
     {
       type: 'audio-song',
       title: 'Meu Coração é Seu',
       artist: 'Audiogift',
-      img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800'
+      img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800',
+      src: '/songs/meu-coracao-e-seu.mp3'
     }
   ];
 
@@ -290,9 +299,9 @@ const TestimonialsCarousel = () => {
                     <div class="card-image-wrap">
                       <img src="${t.img}" alt="${t.title}">
                       <div class="card-overlay"></div>
-                      <div class="play-trigger">
+                      <button class="play-trigger" data-src="${t.src}">
                         <div class="play-circle"><i data-lucide="play"></i></div>
-                      </div>
+                      </button>
                       <div class="card-footer-info">
                         <h3>${t.title}</h3>
                         <p>${t.artist}</p>
@@ -315,11 +324,14 @@ const TestimonialsCarousel = () => {
                     <div class="wa-bubbles-list">
                       ${t.audios.map(a => `
                         <div class="wa-bubble-item">
-                          <button class="wa-bubble-play"><i data-lucide="play"></i></button>
+                          <button class="wa-bubble-play" data-src="${a.src}"><i data-lucide="play"></i></button>
                           <div class="wa-bubble-progress">
-                            <div class="wa-progress-line"></div>
+                            <div class="wa-progress-line">
+                              <div class="wa-progress-fill"></div>
+                              <div class="wa-progress-dot"></div>
+                            </div>
                             <div class="wa-progress-meta">
-                              <span>0:00</span>
+                              <span class="wa-time-elapsed">0:00</span>
                               <span>${a.time}</span>
                             </div>
                           </div>
@@ -446,22 +458,19 @@ const Experience = () => {
         <h2 class="section-title-serif reveal">Muito mais que uma música. <br><span class="text-orange">Uma experiência completa.</span></h2>
         <p class="section-subtitle reveal" data-delay="1">O presente ideal para emocionar e ser lembrado para sempre.</p>
         
-        <div class="player-scene reveal" data-delay="2">
+        <div class="player-scene spotify-theme reveal" data-delay="2">
           <div class="player-top">
-            <div class="vinyl-wrap">
-              <canvas id="vinylCanvas" width="280" height="280"></canvas>
-              <svg class="arm-svg" id="tonearm" width="100" height="130" viewBox="0 0 100 130">
-                <line x1="88" y1="14" x2="55" y2="110" stroke="#888" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="88" cy="14" r="8" fill="#333" stroke="#555" stroke-width="1"/>
-                <ellipse cx="55" cy="112" rx="5" ry="3" fill="#FC7301" transform="rotate(-20,55,112)"/>
-                <line x1="88" y1="14" x2="100" y2="8" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+            <div class="spotify-album-wrap">
+              <img id="spotifyAlbumImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Capa do Álbum" onerror="this.style.display='none';">
+              <div class="spotify-badge"><i data-lucide="music-4"></i> Spotify Preview</div>
             </div>
 
             <div class="player-info">
-              <p class="track-label">AUDIOGIFT PLAYER</p>
+              <div class="artist-verification">
+                <span class="verification-badge"><i data-lucide="check-circle-2"></i> Artista Verificado</span>
+              </div>
               <h3 class="track-title" id="playerTitle">Uma canção pra você</h3>
-              <p class="track-artist" id="playerArtist">Canção personalizada · 2025</p>
+              <p class="track-artist" id="playerArtist">Audiogift · Single</p>
               
               <div class="player-tags" id="playerTags">
                 <span class="tag">Romance</span>
@@ -474,19 +483,21 @@ const Experience = () => {
                 </div>
                 <div class="prog-times">
                   <span id="timeCur">0:00</span>
-                  <span id="timeDur">3:42</span>
+                  <span id="timeDur">0:30</span>
                 </div>
               </div>
 
               <div class="player-controls">
-                <button class="ctrl-btn" id="prevBtn"><i data-lucide="skip-back"></i></button>
-                <button class="play-btn-large" id="playBtn">
+                <button class="ctrl-btn" id="shuffleBtn" title="Ordem aleatória"><i data-lucide="shuffle"></i></button>
+                <button class="ctrl-btn" id="prevBtn" title="Voltar"><i data-lucide="skip-back"></i></button>
+                <button class="play-btn-large spotify-green-play" id="playBtn" title="Tocar / Pausar">
                   <i data-lucide="play" id="playIcon"></i>
                 </button>
-                <button class="ctrl-btn" id="nextBtn"><i data-lucide="skip-forward"></i></button>
+                <button class="ctrl-btn" id="nextBtn" title="Avançar"><i data-lucide="skip-forward"></i></button>
+                <button class="ctrl-btn" id="repeatBtn" title="Repetir"><i data-lucide="repeat"></i></button>
                 
                 <div class="vol-control">
-                  <i data-lucide="volume-2" class="vol-icon"></i>
+                  <button class="ctrl-btn volume-icon-btn" id="volumeMuteBtn"><i data-lucide="volume-2" class="vol-icon"></i></button>
                   <div class="vol-bar-container" id="volBar">
                     <div class="vol-fill" id="volFill"></div>
                   </div>
@@ -511,11 +522,6 @@ const Experience = () => {
             <h4>Letra sob medida</h4>
             <p>Cada verso conta a história de vocês — com os detalhes que só vocês conhecem.</p>
           </div>
-
-
-
-
-
           <div class="exp-card reveal" data-delay="3">
             <div class="exp-icon"><i data-lucide="calendar-clock"></i></div>
             <h4>Entrega rápida</h4>
@@ -538,26 +544,27 @@ const Experience = () => {
   `;
 }
 
-const initVinylPlayer = () => {
+const initSpotifyPlayer = () => {
   const songs = [
-    { title: "Uma canção pra você", artist: "Canção personalizada · 2025", tags: ["Romance", "Alma"], dur: 222, color: "#222", color2: "#FC7301" },
-    { title: "Pro Amor da Minha Vida", artist: "Dedicada com carinho · 2025", tags: ["Amor", "Eterno"], dur: 198, color: "#1A2E5C", color2: "#4A7FCC" },
-    { title: "Feliz Aniversário, Meu Bem", artist: "Canção especial · 2025", tags: ["Festa", "Alegria"], dur: 175, color: "#1A4A2A", color2: "#4AC47A" },
-    { title: "Pra Minha Mãe", artist: "Com amor infinito · 2025", tags: ["Família", "Saudade"], dur: 210, color: "#4A1A3A", color2: "#CC4A9A" },
+    { title: "Uma canção pra você", artist: "Audiogift", tags: ["Romance", "Alma"], dur: 30, src: "/songs/uma-cancao-pra-voce.mp3", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" },
+    { title: "Pro Amor da Minha Vida", artist: "Audiogift", tags: ["Amor", "Eterno"], dur: 30, src: "/songs/pro-amor-da-minha-vida.mp3", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=400" },
+    { title: "Feliz Aniversário, Meu Bem", artist: "Audiogift", tags: ["Festa", "Alegria"], dur: 30, src: "/songs/feliz-aniversario-meu-bem.mp3", img: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=400" },
+    { title: "Pra Minha Mãe", artist: "Audiogift", tags: ["Família", "Saudade"], dur: 30, src: "/songs/pra-minha-mae.mp3", img: "https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=400" }
   ];
 
+  const audio = new Audio();
   let currentIdx = 0;
   let isPlaying = false;
   let elapsed = 0;
   let raf = null;
   let lastTime = null;
-  let angle = 0;
   let volume = 0.7;
+  let isMuted = false;
+  let isShuffle = false;
+  let isRepeat = false;
 
-  const canvas = document.getElementById('vinylCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const tonearm = document.getElementById('tonearm');
+  const playerScene = document.querySelector('.player-scene');
+  const albumImg = document.getElementById('spotifyAlbumImg');
   const playBtn = document.getElementById('playBtn');
   const playIcon = document.getElementById('playIcon');
   const progFill = document.getElementById('progFill');
@@ -565,156 +572,39 @@ const initVinylPlayer = () => {
   const timeDur = document.getElementById('timeDur');
   const volFill = document.getElementById('volFill');
   const playlist = document.getElementById('playerPlaylist');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const shuffleBtn = document.getElementById('shuffleBtn');
+  const repeatBtn = document.getElementById('repeatBtn');
+  const volumeMuteBtn = document.getElementById('volumeMuteBtn');
+
+  if (!playBtn) return;
 
   const fmtTime = (s) => {
-    s = Math.floor(s);
+    s = Math.floor(s || 0);
     return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60);
-  };
-
-  const drawVinyl = (ang, song) => {
-    const W = 280, R = W / 2;
-    if (!ctx) return;
-    ctx.clearRect(0, 0, W, W);
-    
-    // 1. Static Shadow Base
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(R, R, R - 6, 0, Math.PI * 2);
-    ctx.shadowBlur = 45;
-    ctx.shadowColor = 'rgba(0,0,0,0.3)';
-    ctx.fillStyle = '#080808';
-    ctx.fill();
-    ctx.restore();
-
-    // 2. Main Disc Layer
-    ctx.save();
-    ctx.translate(R, R);
-    
-    // ROTATING CONTENT
-    ctx.save();
-    ctx.rotate(ang);
-    
-    // Base Disc
-    ctx.beginPath();
-    ctx.arc(0, 0, R - 10, 0, Math.PI * 2);
-    const discGrad = ctx.createRadialGradient(0,0,0, 0,0,R-10);
-    discGrad.addColorStop(0, '#111');
-    discGrad.addColorStop(0.9, '#080808');
-    discGrad.addColorStop(1, '#1a1a1a');
-    ctx.fillStyle = discGrad;
-    ctx.fill();
-
-    // Procedural Grooves (with rotation flicker)
-    for (let i = 0; i < 140; i++) {
-      const r = 56 + (i * 0.9);
-      if (r > R - 12) break;
-      ctx.beginPath();
-      ctx.arc(0, 0, r, 0, Math.PI * 2);
-      // Flicker effect: opacity changes slightly based on rotation + index
-      const flicker = Math.sin(ang * 2 + i * 0.5) * 0.01;
-      ctx.strokeStyle = `rgba(255,255,255,${0.01 + flicker})`;
-      ctx.lineWidth = 0.4;
-      ctx.stroke();
-    }
-
-    // Rotating Imperfections (Tiny scratches/dust that follow rotation)
-    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i < 15; i++) {
-      const seed = (i * 137) % 360;
-      const rStart = 60 + (i * 5) % (R - 70);
-      ctx.beginPath();
-      ctx.arc(0, 0, rStart, seed, seed + 0.1);
-      ctx.stroke();
-    }
-
-    // 3. Center Label
-    const labelR = 54;
-    ctx.beginPath();
-    ctx.arc(0, 0, labelR, 0, Math.PI * 2);
-    const lGrad = ctx.createRadialGradient(0,0,0, 0,0,labelR);
-    lGrad.addColorStop(0, song.color2);
-    lGrad.addColorStop(0.95, song.color);
-    lGrad.addColorStop(1, 'rgba(0,0,0,0.3)');
-    ctx.fillStyle = lGrad;
-    ctx.fill();
-
-    // Label Text
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
-    ctx.font = 'bold 10px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText("AUDIOGIFT", 0, -22);
-    ctx.font = '700 6px Inter, sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    ctx.fillText("MASTER EDITION", 0, 26);
-
-    // Spindle Detail
-    ctx.beginPath();
-    ctx.arc(0, 0, 7, 0, Math.PI * 2);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(0, 0, 5, 0, Math.PI * 2);
-    ctx.fillStyle = '#000';
-    ctx.fill();
-    
-    ctx.restore(); // END ROTATING CONTENT
-
-    // 4. STATIC LIGHTING (The V Gloss)
-    const drawConic = (rot, op, size = 0.15) => {
-      if (!ctx.createConicGradient) return;
-      ctx.save();
-      ctx.globalCompositeOperation = 'screen';
-      const g = ctx.createConicGradient(rot, 0, 0);
-      g.addColorStop(0, 'transparent');
-      g.addColorStop(size, `rgba(255,255,255,${op})`);
-      g.addColorStop(size * 2, 'transparent');
-      ctx.beginPath();
-      ctx.arc(0, 0, R - 11, 0, Math.PI * 2);
-      ctx.fillStyle = g;
-      ctx.fill();
-      ctx.restore();
-    };
-
-    // Main static highlights
-    drawConic(Math.PI * 0.2, 0.12);
-    drawConic(Math.PI * 1.2, 0.12);
-
-    // 5. DYNAMIC ROTATING GLIMMER
-    // This moves WITH the disc but much more subtly
-    ctx.save();
-    ctx.rotate(ang * 0.5); // Moves slower for a parallax effect
-    drawConic(0, 0.05, 0.05);
-    drawConic(Math.PI, 0.05, 0.05);
-    ctx.restore();
-
-    // 6. SURFACE GRAIN (Static)
-    for (let i = 0; i < 400; i++) {
-      const rx = (Math.random() - 0.5) * W;
-      const ry = (Math.random() - 0.5) * W;
-      if (Math.sqrt(rx*rx + ry*ry) < R - 12) {
-        ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
-        ctx.fillRect(rx, ry, 1, 1);
-      }
-    }
-
-    ctx.restore(); // END Main Disc Layer
   };
 
   const loadTrack = (idx) => {
     const s = songs[idx];
+    audio.src = s.src;
+    audio.load();
+    if (albumImg) {
+      albumImg.src = s.img;
+      albumImg.style.display = 'block';
+    }
+    
     document.getElementById('playerTitle').textContent = s.title;
-    document.getElementById('playerArtist').textContent = s.artist;
+    document.getElementById('playerArtist').textContent = s.artist + ' · Single';
     document.getElementById('playerTags').innerHTML = s.tags.map(t => `<span class="tag">${t}</span>`).join('');
-    timeDur.textContent = fmtTime(s.dur);
+    
+    timeDur.textContent = '0:30';
     timeCur.textContent = '0:00';
     progFill.style.width = '0%';
     
     document.querySelectorAll('.song-pill').forEach((p, i) => {
       p.classList.toggle('active', i === idx);
     });
-    
-    drawVinyl(angle, s);
   };
 
   const updateLoop = (ts) => {
@@ -722,82 +612,191 @@ const initVinylPlayer = () => {
       lastTime = null;
       return;
     }
-    if (lastTime !== null) {
-      const dt = (ts - lastTime) / 1000;
-      elapsed += dt;
-      angle += dt * Math.PI * 1.5;
-      const s = songs[currentIdx];
-      if (elapsed >= s.dur) {
-        elapsed = 0;
-        angle = 0;
+    
+    elapsed = audio.currentTime;
+    
+    // 30 seconds preview limit enforcement
+    if (elapsed >= 30) {
+      audio.currentTime = 0;
+      elapsed = 0;
+      progFill.style.width = '0%';
+      timeCur.textContent = '0:00';
+      
+      if (isRepeat) {
+        audio.play().catch(err => console.log(err));
+      } else {
+        audio.pause();
+        
+        let nextIdx = currentIdx + 1;
+        if (isShuffle) {
+          nextIdx = Math.floor(Math.random() * songs.length);
+        } else {
+          nextIdx = nextIdx % songs.length;
+        }
+        currentIdx = nextIdx;
+        loadTrack(currentIdx);
+        
+        // Auto-play the next song
+        setTimeout(() => {
+          if (window.GlobalAudio) {
+            window.GlobalAudio.play(audio, playBtn, 'vinyl');
+          } else {
+            audio.play().catch(err => console.log(err));
+          }
+        }, 100);
+        return;
       }
-      const pct = (elapsed / s.dur) * 100;
-      progFill.style.width = pct + '%';
-      timeCur.textContent = fmtTime(elapsed);
-      drawVinyl(angle, s);
     }
+    
+    const pct = (elapsed / 30) * 100;
+    progFill.style.width = pct + '%';
+    timeCur.textContent = fmtTime(elapsed);
+    
     lastTime = ts;
     raf = requestAnimationFrame(updateLoop);
   };
 
-  const togglePlayback = () => {
-    isPlaying = !isPlaying;
-    if (isPlaying) {
-      playIcon.setAttribute('data-lucide', 'pause');
-      tonearm.classList.add('playing');
-      lastTime = null;
-      raf = requestAnimationFrame(updateLoop);
-    } else {
-      playIcon.setAttribute('data-lucide', 'play');
-      tonearm.classList.remove('playing');
-      cancelAnimationFrame(raf);
-    }
+  // Sound element events for robust play/pause tracking
+  audio.addEventListener('play', () => {
+    isPlaying = true;
+    playIcon.setAttribute('data-lucide', 'pause');
+    if (playerScene) playerScene.classList.add('playing');
     lucide.createIcons();
+    lastTime = null;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(updateLoop);
+  });
+
+  audio.addEventListener('pause', () => {
+    isPlaying = false;
+    playIcon.setAttribute('data-lucide', 'play');
+    if (playerScene) playerScene.classList.remove('playing');
+    lucide.createIcons();
+    cancelAnimationFrame(raf);
+  });
+
+  audio.addEventListener('error', () => {
+    // If the file fails to play (e.g. 404), make sure we reset correctly
+    isPlaying = false;
+    playIcon.setAttribute('data-lucide', 'play');
+    if (playerScene) playerScene.classList.remove('playing');
+    lucide.createIcons();
+    cancelAnimationFrame(raf);
+  });
+
+  const togglePlayback = () => {
+    if (window.GlobalAudio && window.GlobalAudio.activeAudio === audio && !audio.paused) {
+      window.GlobalAudio.pause();
+    } else {
+      if (window.GlobalAudio) {
+        window.GlobalAudio.play(audio, playBtn, 'vinyl');
+      } else {
+        audio.play().catch(err => console.log('Audio file not found yet:', err));
+      }
+    }
   };
 
   playBtn.addEventListener('click', togglePlayback);
 
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    cancelAnimationFrame(raf);
-    isPlaying = false;
+  prevBtn.addEventListener('click', () => {
+    const wasPlaying = isPlaying;
+    audio.pause();
     elapsed = 0;
-    angle = 0;
-    currentIdx = (currentIdx - 1 + songs.length) % songs.length;
+    let prevIdx = currentIdx - 1;
+    if (isShuffle) {
+      prevIdx = Math.floor(Math.random() * songs.length);
+    } else {
+      prevIdx = (prevIdx + songs.length) % songs.length;
+    }
+    currentIdx = prevIdx;
     loadTrack(currentIdx);
-    tonearm.classList.remove('playing');
-    playIcon.setAttribute('data-lucide', 'play');
-    lucide.createIcons();
+    if (wasPlaying) {
+      setTimeout(() => {
+        if (window.GlobalAudio) window.GlobalAudio.play(audio, playBtn, 'vinyl');
+        else audio.play().catch(err => console.log(err));
+      }, 50);
+    }
   });
 
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    cancelAnimationFrame(raf);
-    isPlaying = false;
+  nextBtn.addEventListener('click', () => {
+    const wasPlaying = isPlaying;
+    audio.pause();
     elapsed = 0;
-    angle = 0;
-    currentIdx = (currentIdx + 1) % songs.length;
+    let nextIdx = currentIdx + 1;
+    if (isShuffle) {
+      nextIdx = Math.floor(Math.random() * songs.length);
+    } else {
+      nextIdx = nextIdx % songs.length;
+    }
+    currentIdx = nextIdx;
     loadTrack(currentIdx);
-    tonearm.classList.remove('playing');
-    playIcon.setAttribute('data-lucide', 'play');
-    lucide.createIcons();
+    if (wasPlaying) {
+      setTimeout(() => {
+        if (window.GlobalAudio) window.GlobalAudio.play(audio, playBtn, 'vinyl');
+        else audio.play().catch(err => console.log(err));
+      }, 50);
+    }
   });
 
-  // Progress Bar Interaction
+  shuffleBtn.addEventListener('click', () => {
+    isShuffle = !isShuffle;
+    shuffleBtn.classList.toggle('active', isShuffle);
+  });
+
+  repeatBtn.addEventListener('click', () => {
+    isRepeat = !isRepeat;
+    repeatBtn.classList.toggle('active', isRepeat);
+  });
+
+  // Progress Bar Interaction (max 30 seconds)
   document.getElementById('progBar').addEventListener('click', e => {
     const rect = e.currentTarget.getBoundingClientRect();
     const pct = (e.clientX - rect.left) / rect.width;
-    elapsed = pct * songs[currentIdx].dur;
-    angle = elapsed * Math.PI * 1.5;
+    audio.currentTime = pct * 30;
+    elapsed = audio.currentTime;
     progFill.style.width = (pct * 100) + '%';
     timeCur.textContent = fmtTime(elapsed);
-    drawVinyl(angle, songs[currentIdx]);
   });
 
   // Volume Interaction
+  const updateVolumeUI = () => {
+    if (isMuted) {
+      audio.volume = 0;
+      volFill.style.width = '0%';
+      volumeMuteBtn.querySelector('.vol-icon').setAttribute('data-lucide', 'volume-x');
+    } else {
+      audio.volume = volume;
+      volFill.style.width = (volume * 100) + '%';
+      if (volume === 0) {
+        volumeMuteBtn.querySelector('.vol-icon').setAttribute('data-lucide', 'volume-x');
+      } else if (volume < 0.5) {
+        volumeMuteBtn.querySelector('.vol-icon').setAttribute('data-lucide', 'volume-1');
+      } else {
+        volumeMuteBtn.querySelector('.vol-icon').setAttribute('data-lucide', 'volume-2');
+      }
+    }
+    lucide.createIcons();
+  };
+
   document.getElementById('volBar').addEventListener('click', e => {
     const rect = e.currentTarget.getBoundingClientRect();
     volume = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    volFill.style.width = (volume * 100) + '%';
+    isMuted = false;
+    updateVolumeUI();
   });
+
+  volumeMuteBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    updateVolumeUI();
+  });
+
+  if (window._spotifyPausedHandler) {
+    window.removeEventListener('vinyl-paused', window._spotifyPausedHandler);
+  }
+  window._spotifyPausedHandler = () => {
+    audio.pause();
+  };
+  window.addEventListener('vinyl-paused', window._spotifyPausedHandler);
 
   // Build Playlist
   playlist.innerHTML = '';
@@ -807,23 +806,25 @@ const initVinylPlayer = () => {
     pill.innerHTML = `<span class="pill-dot"></span><span class="pill-text">${s.title}</span>`;
     pill.addEventListener('click', () => {
       if (currentIdx === i) return;
-      cancelAnimationFrame(raf);
-      isPlaying = false;
+      const wasPlaying = isPlaying;
+      audio.pause();
       elapsed = 0;
-      angle = 0;
       currentIdx = i;
       loadTrack(i);
-      tonearm.classList.remove('playing');
-      playIcon.setAttribute('data-lucide', 'play');
-      lucide.createIcons();
+      if (wasPlaying) {
+        setTimeout(() => {
+          if (window.GlobalAudio) window.GlobalAudio.play(audio, playBtn, 'vinyl');
+          else audio.play().catch(err => console.log(err));
+        }, 50);
+      }
     });
     playlist.appendChild(pill);
   });
 
+  // Initial load
   loadTrack(0);
-};
-
-
+  updateVolumeUI();
+};;
 
 const Warranty = () => `
   <section class="warranty-section py-medium">
@@ -1026,7 +1027,8 @@ const Footer = () => `
 `
 
 
-const Quiz = () => {
+const Quiz = (defaultPlan = 'memoravel') => {
+  window.Quiz = Quiz;
   const steps = [
     {
       title: 'Vamos começar pelo básico',
@@ -1077,7 +1079,7 @@ const Quiz = () => {
       subtitle: 'Descreva tudo que essa pessoa significa para você e o porquê merece essa linda homenagem',
       content: `
         <div class="quiz-step-content">
-          <label class="quiz-label">O que faz o coração dela(e) ser tão lindo? *</label>
+          <label class="quiz-label">Como ela faz você se sentir? *</label>
           <textarea class="quiz-textarea" placeholder="Ele(a) é paciente, sábio(a), engraçado(a), encorajador(a), piedoso(a)? O que faz dessa pessoa alguém incrível para você? O que você sente quando pensa nele(a) ou está com ele(a)? Por que ela significa tanto para você?"></textarea>
           <div class="text-right"><span class="word-count">0 palavras</span></div>
         </div>
@@ -1141,7 +1143,7 @@ const Quiz = () => {
               <div class="plan-icon-box"><i data-lucide="zap"></i></div>
               <div class="plan-info">
                 <h3>Inesquecível • <span>entrega em até 24h</span></h3>
-                <p>Prioridade Máxima + Letra PDF + Playback + sua música nos streamings</p>
+                <p>Prioridade Máxima + Letra em PDF + Playback instrumental + sua música nos streamings (Spotify, Deezer e outros)</p>
               </div>
               <div class="plan-price">R$ 199,90</div>
               <div class="plan-radio"></div>
@@ -1213,7 +1215,7 @@ const Quiz = () => {
 
   let currentStep = 0;
 
-  const answers = {
+    const answers = {
     forWho: '',
     occasion: '',
     name: '',
@@ -1223,7 +1225,7 @@ const Quiz = () => {
     story: '',
     message: '',
     babyName: '',
-    plan: 'memoravel',
+    plan: defaultPlan,
     email: '',
     phone: ''
   };
@@ -1242,7 +1244,12 @@ const Quiz = () => {
     } else if (currentStep === 5) {
       return !!answers.plan;
     } else if (currentStep === 6) {
-      return !!(answers.email && answers.phone);
+      const isWhatsappChecked = document.getElementById('whatsapp-followup') 
+        ? document.getElementById('whatsapp-followup').checked 
+        : true;
+      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email || '');
+      const isPhoneValid = !isWhatsappChecked || (answers.phone && answers.phone.trim().length >= 8);
+      return isEmailValid && isPhoneValid;
     }
     return true;
   };
@@ -1346,8 +1353,8 @@ const Quiz = () => {
       if (answers.plan) {
         document.querySelectorAll('.pricing-card-horizontal').forEach(c => {
           c.classList.remove('active');
-          const check = c.querySelector('.plan-radio i');
-          if (check) check.remove();
+          const radio = c.querySelector('.plan-radio');
+          if (radio) radio.innerHTML = '';
         });
         const card = document.querySelector(`.pricing-card-horizontal[data-plan="${answers.plan}"]`);
         if (card) {
@@ -1379,9 +1386,645 @@ const Quiz = () => {
     }
   };
 
+  const renderCheckoutStep = (progress) => {
+    const planNames = {
+      especial: { name: 'Especial', nameFull: 'Especial • entrega em 7 dias', price: 89.90, priceStr: 'R$ 89,90', delivery: '7 dias', deliveryHours: '7 dias', icon: 'clock' },
+      memoravel: { name: 'Memorável', nameFull: 'Memorável • entrega em até 72h', price: 149.90, priceStr: 'R$ 149,90', delivery: 'até 72h', deliveryHours: '72 horas', icon: 'rocket' },
+      inesquecivel: { name: 'Inesquecível', nameFull: 'Inesquecível • entrega em até 24h', price: 199.90, priceStr: 'R$ 199,90', delivery: 'até 24h', deliveryHours: '24 horas', icon: 'zap' }
+    };
+    
+    const planObj = planNames[answers.plan] || planNames['memoravel'];
+    
+    const EXTRAS_CATALOG = [
+      { id: 'dupla', icon: '🎵', iconColor: '#2e5a44', tag: 'OUTRA PESSOA', tagColor: '#e8f8f0', tagTextColor: '#2e5a44', name: 'Dupla Emoção', price: 49.90, desc: 'Surpreenda outra pessoa especial com uma canção exclusiva' },
+      { id: 'estilos', icon: '🎸', iconColor: '#7c3aed', tag: 'MESMA PESSOA', tagColor: '#f3e8ff', tagTextColor: '#7c3aed', name: 'Mais Estilos Musicais', price: 39.90, desc: `A história de ${answers.name || 'você'} reescrita do zero em outro estilo musical`, priceNote: 'por estilo' },
+      { id: 'experiencia', icon: '🏅', iconColor: '#d97706', tag: 'MAIS EMOCIONANTE', tagColor: '#fef3c7', tagTextColor: '#92400e', name: 'Experiência de Presente', price: 19.90, desc: 'Página exclusiva na internet — prepare os lencinhos pra ver a reação' },
+      { id: 'letra', icon: '📄', iconColor: '#2563eb', tag: 'PARA EMOLDURAR', tagColor: '#eff6ff', tagTextColor: '#1d4ed8', name: 'Letra da Música', price: 14.90, desc: 'Letra em PDF pronta pra imprimir e emoldurar na parede' }
+    ];
+
+    answers.extras = answers.extras || [];
+    let extrasTotal = answers.extras.reduce((sum, id) => {
+      const extra = EXTRAS_CATALOG.find(e => e.id === id);
+      return sum + (extra ? extra.price : 0);
+    }, 0);
+    let totalPrice = planObj.price + extrasTotal;
+    const totalPriceStr = totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    const extrasSelectedCount = answers.extras.length;
+    const extrasSelectedText = extrasSelectedCount === 0 
+      ? 'Nenhum extra selecionado' 
+      : `${extrasSelectedCount} ${extrasSelectedCount === 1 ? 'extra' : 'extras'} selecionado(s)`;
+
+    document.getElementById('quiz-container').innerHTML = `
+      <div class="quiz-modal-inner checkout-step-inner">
+        <div class="quiz-header checkout-header">
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" style="width: ${progress}%"></div>
+          </div>
+          <div class="quiz-top-info">
+            <span>Passo 7 de 7</span>
+            <div class="quiz-logo-small">${Logo('white', '#000000')}</div>
+            <span>100% Completo</span>
+          </div>
+        </div>
+
+        <div class="checkout-body reveal">
+          <h2 class="checkout-title">Você Está Quase Lá!</h2>
+          <p class="checkout-subtitle">A um passo de presentear <strong>${answers.name || 'quem você ama'}</strong> com uma canção que será guardada para sempre</p>
+          
+          <div class="checkout-badges-row">
+            <div class="checkout-badge">
+              <i data-lucide="clock"></i>
+              <span>Data prevista de entrega: <strong>${planObj.delivery}</strong></span>
+            </div>
+            <div class="checkout-badge">
+              <i data-lucide="music-2"></i>
+              <span>Gênero: <strong>${answers.genre || 'Pop Acústico'} (${answers.voice || 'Voz Feminina'})</strong></span>
+            </div>
+          </div>
+
+          <div class="checkout-card main-capture-card">
+            <div class="checkout-input-group">
+              <label class="quiz-label" style="margin-bottom:8px; font-weight:800; font-size: 0.95rem;">Insira o seu melhor endereço de email * <span class="label-required">Obrigatório</span></label>
+              <input type="email" placeholder="voce@email.com" class="quiz-input checkout-email-input" value="${answers.email || ''}">
+            </div>
+
+            <div class="checkout-input-group mt-2">
+              <label class="quiz-label" style="margin-bottom:8px; font-weight:800; font-size: 0.95rem;">WhatsApp para contato <span class="label-optional">(opcional, porém recomendado)</span></label>
+              <div class="checkout-phone-input-wrapper">
+                <div class="phone-prefix-select">
+                  <span class="flag-icon">🇧🇷</span>
+                  <span class="prefix-value">+55</span>
+                </div>
+                <input type="tel" placeholder="(11) 99999-9999" class="quiz-input checkout-phone-input" value="${answers.phone || ''}">
+              </div>
+            </div>
+
+            <div class="checkout-checkbox-group mt-3">
+              <label class="checkout-checkbox-label">
+                <input type="checkbox" id="whatsapp-followup" checked>
+                <span class="custom-checkbox"></span>
+                <span class="checkbox-text">Quero receber o link de acompanhamento das músicas pelo WhatsApp</span>
+              </label>
+            </div>
+
+            <button class="btn-checkout-cta mt-4" id="btn-checkout-top">
+              <i data-lucide="credit-card"></i>
+              Continuar para Pagamento - ${totalPriceStr}
+            </button>
+
+            <div class="checkout-guarantee-badge">
+              <i data-lucide="shield-check" class="text-green"></i>
+              <span>Garantia de 7 Dias</span>
+            </div>
+          </div>
+
+          <h3 class="checkout-section-title mt-4">🎵 Seu Pedido de Canção</h3>
+          <div class="checkout-options-list">
+            
+            <div class="checkout-option-item" data-edit-step="5">
+              <div class="option-left">
+                <div class="option-icon-box bg-light-green text-green">
+                  <i data-lucide="${planObj.icon}"></i>
+                </div>
+                <div class="option-details">
+                  <h4>Mudar plano</h4>
+                  <p>Atual: Plano ${planObj.name}. Toque para mudar</p>
+                </div>
+              </div>
+              <div class="option-right">
+                <span class="option-value">${planObj.priceStr}</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="checkout-option-item" data-edit-step="1">
+              <div class="option-left">
+                <div class="option-icon-box bg-light-blue text-blue">
+                  <i data-lucide="music"></i>
+                </div>
+                <div class="option-details">
+                  <h4>Mudar gênero musical</h4>
+                  <p>Toque para mudar e ouvir exemplos</p>
+                </div>
+              </div>
+              <div class="option-right">
+                <span class="option-value">${answers.genre || 'Pop Acústico'}</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="checkout-option-item" id="btn-open-extras-modal">
+              <div class="option-left">
+                <div class="option-icon-box bg-light-orange text-orange">
+                  <i data-lucide="plus-circle"></i>
+                </div>
+                <div class="option-details">
+                  <h4>Adicionar extras (opcional)</h4>
+                  <p>Confira extras e o valor final antes de pagar</p>
+                </div>
+              </div>
+              <div class="option-right">
+                <span class="option-value" id="extras-summary-val">${extrasSelectedText}</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="checkout-option-item" id="btn-edit-story">
+              <div class="option-left">
+                <div class="option-icon-box bg-light-purple text-purple">
+                  <i data-lucide="edit-3"></i>
+                </div>
+                <div class="option-details">
+                  <h4>Revisar ou Editar Respostas</h4>
+                  <p>Edite história, memórias e mensagem sem perder o pedido</p>
+                </div>
+              </div>
+              <div class="option-right">
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="checkout-satisfaction-card mt-4">
+            <div class="satisfaction-header">
+              <i data-lucide="check-circle-2" class="text-green"></i>
+              <h3>100% Garantia de Satisfação</h3>
+            </div>
+            <ul class="satisfaction-bullets">
+              <li>
+                <span class="bullet-dot"></span>
+                <div>
+                  <strong>Não satisfeito? Reembolso total</strong>
+                  <p>Sem perguntas, sem burocracia</p>
+                </div>
+              </li>
+              <li>
+                <span class="bullet-dot"></span>
+                <div>
+                  <strong>Garantia de 7 dias</strong>
+                  <p>Tempo de sobra para ouvir e decidir</p>
+                </div>
+              </li>
+              <li>
+                <span class="bullet-dot"></span>
+                <div>
+                  <strong>Compra sem risco</strong>
+                  <p>Sua satisfação é nossa prioridade</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <button class="btn-checkout-cta mt-4" id="btn-checkout-bottom">
+            <i data-lucide="credit-card"></i>
+            Continuar para Pagamento - ${totalPriceStr}
+          </button>
+          <p class="checkout-prompt-note mt-2">Pronto para criar algo especial para <strong>${answers.name || 'quem você ama'}</strong>?</p>
+
+          <div class="checkout-details-card mt-4">
+            <h3>🎁 O Que Você Recebe</h3>
+            <ul class="details-list">
+              <li>
+                <span class="bullet-dot"></span>
+                <div>
+                  <strong>Canção Qualidade de Rádio</strong>
+                  <p>Canção profissional, pronta para compartilhar</p>
+                </div>
+              </li>
+              <li>
+                <span class="bullet-dot"></span>
+                <div>
+                  <strong>Letra Personalizada</strong>
+                  <p>Escrita especialmente para ${answers.name || 'quem você ama'}</p>
+                </div>
+              </li>
+              <li>
+                <span class="bullet-dot"></span>
+                <div>
+                  <strong>Entrega em até ${planObj.delivery}</strong>
+                  <p>Perfeito para presentes de última hora</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="checkout-details-card mt-4">
+            <h3>⭐ Por Que Escolher AudioGift?</h3>
+            <ul class="why-choose-list">
+              <li><i data-lucide="check"></i> <span>+3.000 clientes satisfeitos</span></li>
+              <li><i data-lucide="check"></i> <span>100% garantia de satisfação</span></li>
+              <li><i data-lucide="check"></i> <span>Pagamento seguro</span></li>
+              <li><i data-lucide="check"></i> <span>Entregue em até ${planObj.deliveryHours}</span></li>
+              <li><i data-lucide="check"></i> <span>Suporte exclusivo via WhatsApp: +55 (11) 99999-9999</span></li>
+            </ul>
+          </div>
+
+          <div class="checkout-testimonial-card mt-4">
+            <h3>💬 O Que Nossos Clientes Dizem</h3>
+            <div id="checkout-testimonial-container"></div>
+            <div class="testimonial-nav">
+              <button class="testi-arrow prev" id="testi-checkout-prev"><i data-lucide="chevron-left"></i></button>
+              <div class="testi-dots" id="testi-checkout-dots"></div>
+              <button class="testi-arrow next" id="testi-checkout-next"><i data-lucide="chevron-right"></i></button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modals outside checkout-body reveal to prevent transform stacking context bugs -->
+        <div class="extras-modal-overlay" id="extras-modal-overlay">
+          <div class="extras-modal">
+            <button class="extras-modal-close" id="extras-modal-close">×</button>
+            <h2 class="extras-modal-title">Torne Seu Presente Inesquecível</h2>
+            <p class="extras-modal-subtitle">Opções especiais escolhidas por 67% dos nossos clientes</p>
+            <div class="extras-modal-list" id="extras-modal-list">
+              ${EXTRAS_CATALOG.map(extra => `
+                <div class="extras-modal-item ${answers.extras.includes(extra.id) ? 'selected' : ''}" data-extra-id="${extra.id}">
+                  <div class="extras-radio-circle ${answers.extras.includes(extra.id) ? 'checked' : ''}"></div>
+                  <span class="extras-item-icon">${extra.icon}</span>
+                  <div class="extras-item-info">
+                    <div class="extras-item-header">
+                      <strong>${extra.name}</strong>
+                      <span class="extras-item-tag" style="background:${extra.tagColor};color:${extra.tagTextColor}">${extra.tag}</span>
+                    </div>
+                    <p class="extras-item-desc">${extra.desc}</p>
+                  </div>
+                  <div class="extras-item-price">
+                    <span>+R$${extra.price.toFixed(2).replace('.', ',')}</span>
+                    ${extra.priceNote ? `<small>${extra.priceNote}</small>` : ''}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="extras-modal-footer">
+              <div class="extras-modal-total">
+                <span>Total do Pedido</span>
+                <strong id="extras-modal-total-val">${totalPriceStr}</strong>
+              </div>
+              <button class="btn-extras-save" id="btn-extras-save">Salvar extras • ${totalPriceStr}</button>
+              <button class="btn-extras-clear" id="btn-extras-clear">Limpar extras</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-edit-overlay" id="story-edit-overlay">
+          <div class="story-edit-modal">
+            <div class="story-edit-header">
+              <h2 class="story-edit-title">Edite a história da canção</h2>
+              <button class="story-edit-close" id="story-edit-close">×</button>
+            </div>
+            <div class="story-edit-subheader">
+              <span class="story-edit-tag">Para: ${answers.name || 'sua homenagem'}</span>
+              <p class="story-edit-hint">Pode escrever o quanto quiser (sem limite). Toque em <em>Salvar</em> quando terminar.</p>
+            </div>
+            <div class="story-edit-body">
+              <div class="story-edit-section">
+                <div class="story-section-header">O que faz essa pessoa especial?</div>
+                <label class="story-section-label">As belas qualidades dele(a)</label>
+                <textarea class="story-edit-textarea" id="edit-feelings" placeholder="Ele(a) é paciente, sábio(a), engraçado(a)...">${answers.feelings || ''}</textarea>
+              </div>
+              <div class="story-edit-section">
+                <div class="story-section-header">Histórias, memórias e datas favoritas</div>
+                <label class="story-section-label">Momentos especiais juntos</label>
+                <textarea class="story-edit-textarea" id="edit-story" placeholder="Quais memórias você sempre volta?">${answers.story || ''}</textarea>
+              </div>
+              <div class="story-edit-section">
+                <div class="story-section-header">Uma mensagem do coração</div>
+                <label class="story-section-label">Mensagem especial (opcional)</label>
+                <textarea class="story-edit-textarea" id="edit-message" placeholder="O que você quer que essa pessoa saiba...">${answers.message || ''}</textarea>
+              </div>
+            </div>
+            <div class="story-edit-footer">
+              <button class="btn-story-back" id="btn-story-back">Voltar</button>
+              <button class="btn-story-save" id="btn-story-save">Salvar</button>
+            </div>
+          </div>
+        </div>
+        
+        <p class="quiz-legal">Ao continuar, você concorda com nossos <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a>.</p>
+        <p class="quiz-copyright">AUDIOGIFT.COM.BR</p>
+      </div>
+    `;
+
+    lucide.createIcons();
+
+    const testimonials = [
+      {
+        img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150',
+        quote: '"Minha mãe chorou quando ouviu a música. Ela disse que foi o presente mais especial que já recebeu em 70 anos de vida. Valeu cada centavo!"',
+        name: 'Maria Silva',
+        city: 'São Paulo, SP'
+      },
+      {
+        img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+        quote: '"Fiz para o aniversário de namoro com a Thaís. A voz ficou linda demais e a letra pegou cada detalhe que escrevi. Ficou perfeito!"',
+        name: 'Thiago M.',
+        city: 'Rio de Janeiro, RJ'
+      },
+      {
+        img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
+        quote: '"O plano VIP de 24h foi a salvação! Entregaram super rápido e ficou simplesmente emocionante. Toda a família chorou reunida."',
+        name: 'Ana Laura G.',
+        city: 'Belo Horizonte, MG'
+      }
+    ];
+
+    let currentTestiIdx = 0;
+    const renderTesti = () => {
+      const t = testimonials[currentTestiIdx];
+      const container = document.getElementById('checkout-testimonial-container');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="checkout-testimonial-slide active">
+          <img src="${t.img}" alt="${t.name}" class="testimonial-avatar">
+          <blockquote class="testimonial-quote">
+            ${t.quote}
+          </blockquote>
+          <cite class="testimonial-author">
+            <strong>${t.name}</strong>
+            <span>${t.city}</span>
+          </cite>
+        </div>
+      `;
+
+      const dotsContainer = document.getElementById('testi-checkout-dots');
+      if (dotsContainer) {
+        dotsContainer.innerHTML = testimonials.map((_, idx) => `
+          <span class="dot ${idx === currentTestiIdx ? 'active' : ''}" data-idx="${idx}"></span>
+        `).join('');
+
+        dotsContainer.querySelectorAll('.dot').forEach(dot => {
+          dot.onclick = () => {
+            currentTestiIdx = parseInt(dot.dataset.idx);
+            renderTesti();
+          };
+        });
+      }
+      lucide.createIcons();
+    };
+
+    renderTesti();
+
+    const btnTestiPrev = document.getElementById('testi-checkout-prev');
+    const btnTestiNext = document.getElementById('testi-checkout-next');
+
+    if (btnTestiPrev) {
+      btnTestiPrev.onclick = () => {
+        currentTestiIdx = currentTestiIdx === 0 ? testimonials.length - 1 : currentTestiIdx - 1;
+        renderTesti();
+      };
+    }
+    if (btnTestiNext) {
+      btnTestiNext.onclick = () => {
+        currentTestiIdx = currentTestiIdx === testimonials.length - 1 ? 0 : currentTestiIdx + 1;
+        renderTesti();
+      };
+    }
+
+    const emailInput = document.querySelector('.checkout-email-input');
+    const phoneInput = document.querySelector('.checkout-phone-input');
+
+    const handleInputChanges = () => {
+      answers.email = emailInput ? emailInput.value.trim() : '';
+      answers.phone = phoneInput ? phoneInput.value.trim() : '';
+      
+      const isWhatsappChecked = document.getElementById('whatsapp-followup') 
+        ? document.getElementById('whatsapp-followup').checked 
+        : true;
+      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
+      const isPhoneValid = !isWhatsappChecked || (answers.phone && answers.phone.trim().length >= 8);
+      const isValid = isEmailValid && isPhoneValid;
+      
+      const btns = [
+        document.getElementById('btn-checkout-top'),
+        document.getElementById('btn-checkout-bottom')
+      ];
+
+      btns.forEach(btn => {
+        if (!btn) return;
+        if (isValid) {
+          btn.removeAttribute('disabled');
+          btn.classList.remove('disabled');
+        } else {
+          btn.setAttribute('disabled', 'true');
+          btn.classList.add('disabled');
+        }
+      });
+    };
+
+    if (emailInput) emailInput.oninput = handleInputChanges;
+    if (phoneInput) phoneInput.oninput = handleInputChanges;
+
+    const whatsappCheckbox = document.getElementById('whatsapp-followup');
+    if (whatsappCheckbox) whatsappCheckbox.onchange = handleInputChanges;
+
+    handleInputChanges();
+
+    // --- Extras Modal Logic ---
+    const extrasModal = document.getElementById('extras-modal-overlay');
+    const btnOpenExtras = document.getElementById('btn-open-extras-modal');
+    const btnCloseExtras = document.getElementById('extras-modal-close');
+    const btnSaveExtras = document.getElementById('btn-extras-save');
+    const btnClearExtras = document.getElementById('btn-extras-clear');
+
+    // Track pending selection separately from committed answers.extras
+    let pendingExtras = [...answers.extras];
+
+    const getExtrasTotal = (selectedIds) => {
+      return selectedIds.reduce((sum, id) => {
+        const extra = EXTRAS_CATALOG.find(e => e.id === id);
+        return sum + (extra ? extra.price : 0);
+      }, 0);
+    };
+
+    const updateModalUI = () => {
+      const total = planObj.price + getExtrasTotal(pendingExtras);
+      const totalStr = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const totalEl = document.getElementById('extras-modal-total-val');
+      if (totalEl) totalEl.textContent = totalStr;
+      const saveBtn = document.getElementById('btn-extras-save');
+      if (saveBtn) saveBtn.textContent = `Salvar extras \u2022 ${totalStr}`;
+      const clearBtn = document.getElementById('btn-extras-clear');
+      if (clearBtn) {
+        const extrasAmt = getExtrasTotal(pendingExtras);
+        clearBtn.textContent = extrasAmt > 0
+          ? `Limpar extras \u2022 ${extrasAmt.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`
+          : 'Limpar extras';
+      }
+      document.querySelectorAll('.extras-modal-item').forEach(item => {
+        const id = item.dataset.extraId;
+        const sel = pendingExtras.includes(id);
+        item.classList.toggle('selected', sel);
+        const circle = item.querySelector('.extras-radio-circle');
+        if (circle) circle.classList.toggle('checked', sel);
+      });
+    };
+
+    if (btnOpenExtras) {
+      btnOpenExtras.onclick = () => {
+        pendingExtras = [...answers.extras];
+        updateModalUI();
+        extrasModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      };
+    }
+
+    const closeModal = () => {
+      extrasModal.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    if (btnCloseExtras) btnCloseExtras.onclick = closeModal;
+
+    extrasModal.addEventListener('click', (e) => {
+      if (e.target === extrasModal) closeModal();
+    });
+
+    document.querySelectorAll('.extras-modal-item').forEach(item => {
+      item.onclick = () => {
+        const id = item.dataset.extraId;
+        if (pendingExtras.includes(id)) {
+          pendingExtras = pendingExtras.filter(i => i !== id);
+        } else {
+          pendingExtras.push(id);
+        }
+        updateModalUI();
+      };
+    });
+
+    if (btnSaveExtras) {
+      btnSaveExtras.onclick = () => {
+        answers.extras = [...pendingExtras];
+        closeModal();
+        renderCheckoutStep(progress);
+      };
+    }
+
+    if (btnClearExtras) {
+      btnClearExtras.onclick = () => {
+        pendingExtras = [];
+        updateModalUI();
+      };
+    }
+
+    // --- data-edit-step: plan / genre navigation ---
+    document.querySelectorAll('[data-edit-step]').forEach(item => {
+      item.onclick = () => {
+        answers.email = emailInput ? emailInput.value.trim() : '';
+        answers.phone = phoneInput ? phoneInput.value.trim() : '';
+        currentStep = parseInt(item.dataset.editStep);
+        renderStep();
+      };
+    });
+
+    // --- Edit Story Modal ---
+    const storyOverlay = document.getElementById('story-edit-overlay');
+    const btnEditStory = document.getElementById('btn-edit-story');
+    const btnStoryClose = document.getElementById('story-edit-close');
+    const btnStoryBack = document.getElementById('btn-story-back');
+    const btnStorySave = document.getElementById('btn-story-save');
+
+    const openStoryModal = () => {
+      // Sync current values into modal textareas
+      const fe = document.getElementById('edit-feelings');
+      const st = document.getElementById('edit-story');
+      const ms = document.getElementById('edit-message');
+      if (fe) fe.value = answers.feelings || '';
+      if (st) st.value = answers.story || '';
+      if (ms) ms.value = answers.message || '';
+      storyOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeStoryModal = (save) => {
+      if (save) {
+        const fe = document.getElementById('edit-feelings');
+        const st = document.getElementById('edit-story');
+        const ms = document.getElementById('edit-message');
+        if (fe) answers.feelings = fe.value.trim();
+        if (st) answers.story   = st.value.trim();
+        if (ms) answers.message = ms.value.trim();
+      }
+      storyOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    if (btnEditStory) btnEditStory.onclick = openStoryModal;
+    if (btnStoryClose) btnStoryClose.onclick = () => closeStoryModal(false);
+    if (btnStoryBack)  btnStoryBack.onclick  = () => closeStoryModal(false);
+    if (btnStorySave)  btnStorySave.onclick  = () => closeStoryModal(true);
+
+    storyOverlay && storyOverlay.addEventListener('click', (e) => {
+      if (e.target === storyOverlay) closeStoryModal(false);
+    });
+
+    const triggerCheckoutPayment = () => {
+      const isWhatsappChecked = document.getElementById('whatsapp-followup') 
+        ? document.getElementById('whatsapp-followup').checked 
+        : true;
+      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email || '');
+      if (!isEmailValid) {
+        alert('Por favor, insira um endereço de e-mail válido.');
+        return;
+      }
+      if (isWhatsappChecked && (!answers.phone || answers.phone.trim().length < 8)) {
+        alert('Por favor, preencha o WhatsApp para receber o acompanhamento da música.');
+        return;
+      }
+      
+      const planNames = {
+        'especial': 'Plano Especial (R$ 89,90)',
+        'memoravel': 'Plano Memorável (R$ 149,90)',
+        'inesquecivel': 'Plano Inesquecível VIP (R$ 199,90)'
+      };
+      const planName = planNames[answers.plan] || answers.plan;
+      
+      const whatsappMsg = `Olá! Acabei de criar meu pedido no site da AudioGift e quero finalizar o pagamento.
+      
+📋 *Detalhes do Pedido:*
+- *Plano:* ${planName}
+- *Para quem:* ${answers.forWho || 'Não informado'}
+- *Ocasião:* ${answers.occasion || 'Não informado'}
+- *Nome do homenageado:* ${answers.name || 'Não informado'}
+- *Estilo Musical:* ${answers.genre || 'Não informado'}
+- *Voz:* ${answers.voice || 'Não informado'}
+- *E-mail:* ${answers.email || 'Não informado'}
+- *WhatsApp:* ${answers.phone || 'Não informado'}
+
+✍️ *História enviada:*
+"${answers.story ? answers.story.substring(0, 150) + '...' : 'Não informado'}"`;
+
+      const encodedMsg = encodeURIComponent(whatsappMsg);
+      const whatsappUrl = `https://wa.me/5511999999999?text=${encodedMsg}`;
+      
+      alert('Tudo certo! Redirecionando para o WhatsApp do suporte da AudioGift para finalizar o pagamento via PIX...');
+      window.open(whatsappUrl, '_blank');
+      document.getElementById('quiz-overlay').classList.remove('active');
+    };
+
+    const ctaTop = document.getElementById('btn-checkout-top');
+    const ctaBottom = document.getElementById('btn-checkout-bottom');
+
+    if (ctaTop) ctaTop.onclick = triggerCheckoutPayment;
+    if (ctaBottom) ctaBottom.onclick = triggerCheckoutPayment;
+
+    setTimeout(() => {
+      const revealEl = document.querySelector('.checkout-body.reveal');
+      if (revealEl) revealEl.classList.add('visible');
+    }, 50);
+  };
+
   const renderStep = () => {
     const step = steps[currentStep];
     const progress = Math.round(((currentStep + 1) / steps.length) * 100);
+    
+    if (currentStep === 6) {
+      renderCheckoutStep(progress);
+      return;
+    }
     
     document.getElementById('quiz-container').innerHTML = `
       <div class="quiz-modal-inner">
@@ -1435,8 +2078,8 @@ const Quiz = () => {
       card.onclick = () => {
         document.querySelectorAll('.pricing-card-horizontal').forEach(c => {
           c.classList.remove('active');
-          const check = c.querySelector('.plan-radio i');
-          if (check) check.remove();
+          const radio = c.querySelector('.plan-radio');
+          if (radio) radio.innerHTML = '';
         });
         card.classList.add('active');
         card.querySelector('.plan-radio').innerHTML = '<i data-lucide="check"></i>';
@@ -1511,9 +2154,16 @@ const Quiz = () => {
           errorMsg = 'Por favor, escolha um plano de entrega.';
         }
       } else if (currentStep === 6) {
-        if (!answers.email || !answers.phone) {
+        const isWhatsappChecked = document.getElementById('whatsapp-followup') 
+          ? document.getElementById('whatsapp-followup').checked 
+          : true;
+        const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email || '');
+        if (!isEmailValid) {
           isValid = false;
-          errorMsg = 'Por favor, preencha seu e-mail e WhatsApp para continuar.';
+          errorMsg = 'Por favor, insira um endereço de e-mail válido.';
+        } else if (isWhatsappChecked && (!answers.phone || answers.phone.trim().length < 8)) {
+          isValid = false;
+          errorMsg = 'Por favor, preencha o WhatsApp para receber o acompanhamento da música.';
         }
       }
 
@@ -1556,18 +2206,7 @@ app.innerHTML = `
   </div>
   ${AnnouncementBar()}
   ${Header()}
-  <main>
-    ${Hero()}
-    ${HowItWorks()}
-    ${MusicStyles()}
-    ${TestimonialsCarousel()}
-    ${Categories()}
-    ${Experience()}
-    ${Warranty()}
-
-    ${FAQ()}
-    ${FooterCTA()}
-  </main>
+  <main></main>
   ${Footer()}
   ${FloatingButtons()}
 
@@ -1633,21 +2272,23 @@ app.innerHTML = `
       </div>
     </div>
   </div>
-`
+`;
 
-// Bind all create buttons
-document.querySelectorAll('a[href="#create"], .btn-primary-new, .btn-nav-gold, .btn-primary-pill, .pricing-card button').forEach(btn => {
-  btn.addEventListener('click', (e) => {
+// Global event delegation for creating songs, modals, and scrolling
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('a[href="#create"], .btn-primary-new, .btn-nav-gold, .btn-primary-pill, .pricing-card button');
+  if (btn) {
     const href = btn.getAttribute('href');
-    if (href === '#create' || btn.classList.contains('btn-primary-new') || btn.classList.contains('btn-nav-gold') || btn.textContent.includes('ESCOLHER')) {
+    if (href === '#create' || btn.classList.contains('btn-primary-new') || btn.classList.contains('btn-nav-gold') || (btn.tagName === 'BUTTON' && btn.closest('.pricing-card'))) {
+      if (btn.hasAttribute('onclick')) {
+        return;
+      }
       e.preventDefault();
       Quiz();
     }
-  });
-});
+  }
 
-// Bind terms and privacy links to open overlays
-document.addEventListener('click', (e) => {
+  // Bind terms and privacy links to open overlays
   const btnTerms = e.target.closest('#btn-terms');
   const btnPrivacy = e.target.closest('#btn-privacy');
   
@@ -1660,49 +2301,41 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Initialize Lucide Icons
+// Initialize Lucide Icons via dynamic script injection
 const script = document.createElement('script');
 script.src = 'https://unpkg.com/lucide@latest';
 script.onload = () => {
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
+  renderRoute();
 };
 document.head.appendChild(script);
 
 // Magnetic Button Effect
-document.querySelectorAll('.btn-magnetic').forEach(btn => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect()
-    const x = e.clientX - rect.left - rect.width / 2
-    const y = e.clientY - rect.top - rect.height / 2
+const initMagneticButtons = () => {
+  document.querySelectorAll('.btn-magnetic').forEach(btn => {
+    if (btn.dataset.magneticBound) return;
+    btn.dataset.magneticBound = 'true';
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      btn.style.transition = 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)';
+      btn.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px)`;
+    });
     
-    // Smooth magnetic pull
-    btn.style.transition = 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)'
-    btn.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px)`
-  })
-  
-  btn.addEventListener('mouseleave', () => {
-    // Elegant return
-    btn.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)'
-    btn.style.transform = `translate(0, 0)`
-  })
-})
-
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+      btn.style.transform = `translate(0, 0)`;
+    });
+  });
+};
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible')
-  })
-}, { threshold: 0.1 })
-
-document.querySelectorAll('.reveal').forEach(el => {
-  observer.observe(el)
-})
-
-document.querySelectorAll('.faq-question').forEach(q => {
-  q.addEventListener('click', () => {
-    q.parentElement.classList.toggle('active');
-  })
-})
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
 
 
 // Testimonials Carousel Logic
@@ -1748,8 +2381,271 @@ const initTestimonialsCarousel = () => {
     }
   });
 
+  // Clickable dots
+  dots.forEach((dot, idx) => {
+    dot.style.cursor = 'pointer';
+    dot.addEventListener('click', () => {
+      if (idx <= maxIdx) {
+        currentIdx = idx;
+        update();
+      }
+    });
+  });
+
   // Auto-init icons for dynamic content
   lucide.createIcons();
+};
+
+// --- GLOBAL AUDIO COORDINATOR ---
+window.GlobalAudio = {
+  activeAudio: null,
+  activeBtn: null,
+  activeType: null, // 'vinyl', 'wa', 'song', 'genre'
+  activeProgressInterval: null,
+  activeWaveFill: null,
+  activeTimeLabel: null,
+  activeProgressFill: null,
+  activeProgressDot: null,
+
+  play: function(audioEl, btn, type, onTimeUpdate = null) {
+    if (this.activeAudio && this.activeAudio !== audioEl) {
+      this.activeAudio.pause();
+      if (this.activeProgressInterval) {
+        clearInterval(this.activeProgressInterval);
+        this.activeProgressInterval = null;
+      }
+      this.resetActiveBtnVisuals();
+      
+      if (this.activeType === 'vinyl') {
+        window.dispatchEvent(new CustomEvent('vinyl-paused'));
+      }
+    }
+
+    this.activeAudio = audioEl;
+    this.activeBtn = btn;
+    this.activeType = type;
+
+    audioEl.play().then(() => {
+      this.setBtnIcon(btn, 'pause');
+      
+      if (onTimeUpdate) {
+        this.activeProgressInterval = setInterval(() => {
+          if (audioEl.paused || audioEl.ended) {
+            clearInterval(this.activeProgressInterval);
+            this.activeProgressInterval = null;
+            if (audioEl.ended) {
+              this.resetActiveBtnVisuals();
+            }
+          } else {
+            onTimeUpdate(audioEl.currentTime, audioEl.duration);
+          }
+        }, 100);
+      }
+    }).catch(err => {
+      console.log(`Audio play failed or file not found yet:`, err);
+      this.resetActiveBtnVisuals();
+    });
+  },
+
+  pause: function() {
+    if (this.activeAudio) {
+      this.activeAudio.pause();
+      if (this.activeProgressInterval) {
+        clearInterval(this.activeProgressInterval);
+        this.activeProgressInterval = null;
+      }
+      this.setBtnIcon(this.activeBtn, 'play');
+    }
+  },
+
+  resetActiveBtnVisuals: function() {
+    if (this.activeBtn) {
+      this.setBtnIcon(this.activeBtn, 'play');
+    }
+    if (this.activeWaveFill) this.activeWaveFill.style.width = '0%';
+    if (this.activeTimeLabel) this.activeTimeLabel.textContent = '0:30';
+    if (this.activeProgressFill) this.activeProgressFill.style.width = '0%';
+    if (this.activeProgressDot) this.activeProgressDot.style.left = '0%';
+  },
+
+  setBtnIcon: function(btn, iconName) {
+    if (!btn) return;
+    const icon = btn.querySelector('[data-lucide]');
+    if (icon) {
+      icon.setAttribute('data-lucide', iconName);
+      lucide.createIcons();
+    }
+  }
+};
+
+// --- INITIALIZE ALL AUDIO PLAYERS ---
+const initAllAudioPlayers = () => {
+  // 1. WhatsApp Audio Bubbles
+  document.querySelectorAll('.wa-bubble-item').forEach(bubble => {
+    const playBtn = bubble.querySelector('.wa-bubble-play');
+    const src = playBtn ? playBtn.getAttribute('data-src') : null;
+    const progressFill = bubble.querySelector('.wa-progress-fill');
+    const progressDot = bubble.querySelector('.wa-progress-dot');
+    const timeElapsed = bubble.querySelector('.wa-time-elapsed');
+    const progressLine = bubble.querySelector('.wa-progress-line');
+    
+    if (!playBtn || !src) return;
+    
+    const audio = new Audio(src);
+    
+    playBtn.addEventListener('click', () => {
+      if (window.GlobalAudio.activeAudio === audio && !audio.paused) {
+        window.GlobalAudio.pause();
+      } else {
+        window.GlobalAudio.activeProgressFill = progressFill;
+        window.GlobalAudio.activeProgressDot = progressDot;
+        window.GlobalAudio.activeTimeLabel = timeElapsed;
+        
+        window.GlobalAudio.play(audio, playBtn, 'wa', (currentTime, duration) => {
+          const pct = (currentTime / (duration || 1)) * 100;
+          if (progressFill) progressFill.style.width = `${pct}%`;
+          if (progressDot) progressDot.style.left = `${pct}%`;
+          if (timeElapsed) {
+            const sec = Math.floor(currentTime % 60);
+            const min = Math.floor(currentTime / 60);
+            timeElapsed.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+          }
+        });
+      }
+    });
+
+    if (progressLine) {
+      progressLine.style.cursor = 'pointer';
+      progressLine.addEventListener('click', (e) => {
+        const rect = progressLine.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        const dur = audio.duration || 23;
+        audio.currentTime = pct * dur;
+        if (progressFill) progressFill.style.width = `${pct * 100}%`;
+        if (progressDot) progressDot.style.left = `${pct * 100}%`;
+      });
+    }
+    
+    audio.addEventListener('ended', () => {
+      if (progressFill) progressFill.style.width = '0%';
+      if (progressDot) progressDot.style.left = '0%';
+      if (timeElapsed) timeElapsed.textContent = '0:00';
+    });
+  });
+
+  // 2. Testimonials Song Cards
+  document.querySelectorAll('.song-card .play-trigger').forEach(trigger => {
+    const src = trigger.getAttribute('data-src');
+    if (!src) return;
+    
+    const audio = new Audio(src);
+    
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.GlobalAudio.activeAudio === audio && !audio.paused) {
+        window.GlobalAudio.pause();
+      } else {
+        window.GlobalAudio.play(audio, trigger, 'song');
+      }
+    });
+  });
+
+  // 3. Music Styles Genre Player Cards
+  document.querySelectorAll('.style-player-card').forEach(card => {
+    const playBtn = card.querySelector('.wa-play-small');
+    const src = playBtn ? playBtn.getAttribute('data-src') : null;
+    const waveFill = card.querySelector('.wa-wave-fill');
+    const timeLabel = card.querySelector('.wa-time-small');
+    
+    if (!playBtn || !src) return;
+    
+    const audio = new Audio(src);
+    
+    playBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.GlobalAudio.activeAudio === audio && !audio.paused) {
+        window.GlobalAudio.pause();
+      } else {
+        window.GlobalAudio.activeWaveFill = waveFill;
+        window.GlobalAudio.activeTimeLabel = timeLabel;
+        
+        window.GlobalAudio.play(audio, playBtn, 'genre', (currentTime, duration) => {
+          const pct = (currentTime / (duration || 30)) * 100;
+          if (waveFill) waveFill.style.width = `${pct}%`;
+          if (timeLabel) {
+            const sec = Math.floor(currentTime % 60);
+            const min = Math.floor(currentTime / 60);
+            timeLabel.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+          }
+        });
+      }
+    });
+    
+    audio.addEventListener('ended', () => {
+      if (waveFill) waveFill.style.width = '0%';
+      if (timeLabel) timeLabel.textContent = '0:30';
+    });
+  });
+};
+
+// --- MUSIC STYLES FILTER AND SEARCH ---
+const initMusicStylesFilter = () => {
+  const searchInput = document.querySelector('.search-input');
+  const voiceToggleBtns = document.querySelectorAll('.voice-toggle .toggle-btn');
+  const tagBtns = document.querySelectorAll('.genre-tags .tag-btn');
+  const styleCards = document.querySelectorAll('.style-player-card');
+
+  if (!searchInput || !styleCards.length) return;
+
+  let activeVoice = 'Masculina';
+  let activeTag = 'Todos';
+  let searchQuery = '';
+
+  const filterCards = () => {
+    styleCards.forEach(card => {
+      const genreName = card.getAttribute('data-genre').toLowerCase();
+      const cardVoice = card.getAttribute('data-voice');
+
+      const matchesSearch = genreName.includes(searchQuery);
+      const matchesVoice = (cardVoice === activeVoice || cardVoice === 'Instrumental');
+      const matchesTag = (activeTag === 'Todos' || genreName === activeTag.toLowerCase());
+
+      if (matchesSearch && matchesVoice && matchesTag) {
+        card.style.display = 'block';
+        card.classList.add('visible');
+      } else {
+        card.style.display = 'none';
+        card.classList.remove('visible');
+      }
+    });
+  };
+
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    filterCards();
+  });
+
+  voiceToggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      voiceToggleBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeVoice = btn.textContent.trim();
+      filterCards();
+    });
+  });
+
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tagBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTag = btn.textContent.trim();
+      filterCards();
+    });
+  });
+
+  filterCards();
 };
 
 const initMobileMenu = () => {
@@ -1776,20 +2672,75 @@ const initMobileMenu = () => {
   });
 };
 
-// Initialize components
-initTestimonialsCarousel();
-initVinylPlayer();
-initMobileMenu();
+// Roteador SPA
+const renderRoute = () => {
+  const hash = window.location.hash;
+  const mainEl = document.querySelector('main');
+  if (!mainEl) return;
 
-// Robust Lucide Init
-const initIcons = () => {
-  if (window.lucide) {
-    window.lucide.createIcons();
+  if (window.GlobalAudio) {
+    window.GlobalAudio.pause();
+    window.GlobalAudio.resetActiveBtnVisuals();
+  }
+
+  if (hash === '#planos') {
+    mainEl.innerHTML = `
+      ${Pricing()}
+      ${Warranty()}
+    `;
+    window.scrollTo({ top: 0, behavior: 'instant' });
   } else {
-    setTimeout(initIcons, 100);
+    mainEl.innerHTML = `
+      ${Hero()}
+      ${HowItWorks()}
+      ${MusicStyles()}
+      ${TestimonialsCarousel()}
+      ${Categories()}
+      ${Experience()}
+      ${Warranty()}
+      ${FAQ()}
+      ${FooterCTA()}
+    `;
+
+    if (hash && hash !== '#') {
+      setTimeout(() => {
+        const target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }
+
+  // Re-observe dynamic .reveal elements
+  document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Re-bind FAQ question toggles
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.onclick = () => {
+      q.parentElement.classList.toggle('active');
+    };
+  });
+
+  // Re-initialize dynamic components on the route
+  initTestimonialsCarousel();
+  initSpotifyPlayer();
+  initAllAudioPlayers();
+  initMusicStylesFilter();
+  initMagneticButtons();
+
+  if (window.lucide) {
+    lucide.createIcons();
   }
 };
-initIcons();
+
+// Initialize static components once
+initMobileMenu();
+
+// Listen to hash change for routing
+window.addEventListener('hashchange', renderRoute);
 
 // --- CUSTOM CURSOR LOGIC ---
 if (window.matchMedia('(pointer: fine)').matches) {
@@ -1809,17 +2760,20 @@ if (window.matchMedia('(pointer: fine)').matches) {
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top = mouseY + 'px';
   });
 
   const animate = () => {
     let distX = mouseX - outlineX;
     let distY = mouseY - outlineY;
-    outlineX = outlineX + distX * 0.15;
-    outlineY = outlineY + distY * 0.15;
-    cursorOutline.style.left = outlineX + 'px';
-    cursorOutline.style.top = outlineY + 'px';
+    
+    // Snappier 0.32 lerp for instant responsive tracking
+    outlineX = outlineX + distX * 0.32;
+    outlineY = outlineY + distY * 0.32;
+    
+    // GPU hardware-accelerated translate3d transforms
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+    
     requestAnimationFrame(animate);
   };
   animate();
