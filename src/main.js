@@ -503,28 +503,28 @@ const Experience = () => {
         <div class="experience-grid mt-5">
           <div class="exp-card reveal" data-delay="1">
             <div class="exp-icon"><i data-lucide="music"></i></div>
-            <h4>Som profissional</h4>
-            <p>Produzida por artistas de verdade, com qualidade que impressiona no primeiro acorde.</p>
+            <h4>Som Profissional</h4>
+            <p>Produzida com qualidade profissional, sob a supervisão de um produtor musical com mais de 20 anos de experiência, com atenção aos detalhes em cada acorde.</p>
           </div>
           <div class="exp-card reveal" data-delay="2">
             <div class="exp-icon"><i data-lucide="file-text"></i></div>
             <h4>Letra sob medida</h4>
             <p>Cada verso conta a história de vocês — com os detalhes que só vocês conhecem.</p>
           </div>
+
+
+
+
+
           <div class="exp-card reveal" data-delay="3">
-            <div class="exp-icon"><i data-lucide="disc"></i></div>
-            <h4>Você escolhe a melhor</h4>
-            <p>Receba 2 versões com melodias diferentes e a mesma letra; escolha a que mais emociona.</p>
-          </div>
-          <div class="exp-card reveal" data-delay="4">
             <div class="exp-icon"><i data-lucide="calendar-clock"></i></div>
             <h4>Entrega rápida</h4>
-            <p>Precisa pra ontem? Turbo em até 6h, Express em 24h ou até 7 dias no plano essencial.</p>
+            <p>Precisa para ontem? Temos planos com entrega em até 24h.</p>
           </div>
-          <div class="exp-card reveal" data-delay="5">
+          <div class="exp-card reveal" data-delay="4">
             <div class="exp-icon"><i data-lucide="podcast"></i></div>
             <h4>Eternize no Spotify</h4>
-            <p>Serviço vendido separadamente: publique a canção no Spotify e outras plataformas.</p>
+            <p>Tenha a sua música para sempre nas principais plataformas de streaming de música (spotify, deezer, apple music, youtube music, etc)</p>
           </div>
         </div>
 
