@@ -3788,6 +3788,16 @@ button {
   box-shadow: 0 6px 25px rgba(74, 50, 37, 0.4);
 }
 
+.btn-quiz-next:disabled,
+.btn-quiz-next.disabled {
+  background: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
 .quiz-close {
   position: fixed;
   top: 30px;

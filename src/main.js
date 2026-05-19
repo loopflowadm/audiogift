@@ -1228,6 +1228,38 @@ const Quiz = () => {
     phone: ''
   };
 
+  const checkStepValidity = () => {
+    if (currentStep === 0) {
+      return !!(answers.forWho && answers.occasion);
+    } else if (currentStep === 1) {
+      return !!answers.genre;
+    } else if (currentStep === 2) {
+      return answers.feelings && answers.feelings.trim().length >= 5;
+    } else if (currentStep === 3) {
+      return answers.story && answers.story.trim().length >= 5;
+    } else if (currentStep === 4) {
+      return true;
+    } else if (currentStep === 5) {
+      return !!answers.plan;
+    } else if (currentStep === 6) {
+      return !!(answers.email && answers.phone);
+    }
+    return true;
+  };
+
+  const updateNextButtonState = () => {
+    const nextBtn = document.querySelector('.btn-quiz-next');
+    if (!nextBtn) return;
+    const isValid = checkStepValidity();
+    if (isValid) {
+      nextBtn.removeAttribute('disabled');
+      nextBtn.classList.remove('disabled');
+    } else {
+      nextBtn.setAttribute('disabled', 'true');
+      nextBtn.classList.add('disabled');
+    }
+  };
+
   const saveCurrentStepData = () => {
     if (currentStep === 0) {
       const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
@@ -1386,6 +1418,7 @@ const Quiz = () => {
     lucide.createIcons();
     restoreCurrentStepData();
     attachEvents();
+    updateNextButtonState();
   };
 
   const attachEvents = () => {
@@ -1394,6 +1427,7 @@ const Quiz = () => {
         btn.parentElement.querySelectorAll('.pill-option').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         saveCurrentStepData();
+        updateNextButtonState();
       };
     });
 
@@ -1408,6 +1442,7 @@ const Quiz = () => {
         card.querySelector('.plan-radio').innerHTML = '<i data-lucide="check"></i>';
         lucide.createIcons();
         saveCurrentStepData();
+        updateNextButtonState();
       };
     });
 
@@ -1426,6 +1461,7 @@ const Quiz = () => {
         const countSpan = ta.parentElement.querySelector('.word-count');
         if (countSpan) countSpan.textContent = `${wordCount} palavras`;
         saveCurrentStepData();
+        updateNextButtonState();
       };
     });
 
@@ -1433,6 +1469,7 @@ const Quiz = () => {
     if (nameInput) {
       nameInput.oninput = () => {
         saveCurrentStepData();
+        updateNextButtonState();
       };
     }
 
@@ -1440,6 +1477,7 @@ const Quiz = () => {
     captureInputs.forEach(inp => {
       inp.oninput = () => {
         saveCurrentStepData();
+        updateNextButtonState();
       };
     });
 
