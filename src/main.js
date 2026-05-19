@@ -994,23 +994,23 @@ const Footer = () => `
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#" class="logo">${Logo('white', '#000000')}</a>
-          <p class="mt-2">Transformando histórias em canções desde 2024.</p>
+          <p class="mt-2">Transformando histórias em canções desde 2022.</p>
         </div>
         <div class="footer-links">
           <h4>Institucional</h4>
-          <a href="#">Como Funciona</a>
-          <a href="#">Estilos Musicais</a>
-          <a href="#">Depoimentos</a>
+          <a href="#how">Como Funciona</a>
+          <a href="#styles">Estilos Musicais</a>
+          <a href="#reviews">Depoimentos</a>
         </div>
         <div class="footer-links">
           <h4>Ajuda</h4>
-          <a href="#">Dúvidas Frequentes</a>
-          <a href="#">Termos de Uso</a>
-          <a href="#">Privacidade</a>
+          <a href="#faq">Dúvidas Frequentes</a>
+          <a href="#" id="btn-terms">Termos de Uso</a>
+          <a href="#" id="btn-privacy">Privacidade</a>
         </div>
         <div class="footer-contact">
           <h4>Contato</h4>
-          <p>suporte@audiogift.com.br</p>
+          <p><a href="mailto:audiogiftbrasil@gmail.com" style="color: #ccc; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#FC7301'" onmouseout="this.style.color='#ccc'">audiogiftbrasil@gmail.com</a></p>
           <div class="footer-social-buttons">
             <a href="https://www.instagram.com/audiogiftbrasil/" target="_blank" class="btn-social-ig footer-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</a>
             <a href="https://www.tiktok.com/@audiogift" target="_blank" class="btn-social-tk footer-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.78-1.15 5.54-3.33 7.31-1.92 1.57-4.58 2.22-6.95 1.55-2.61-.75-4.75-2.88-5.46-5.51-.71-2.67-.09-5.61 1.72-7.75 1.77-2.09 4.61-3.1 7.29-2.71v4.06c-1.89-.3-3.83.27-5.06 1.63-1.45 1.63-1.47 4.15-.22 5.8 1.34 1.77 3.95 2.21 5.88 1.05 1.2-.73 1.94-2.03 1.98-3.41.05-4.22.03-8.45.03-12.68.01-2.05-.01-4.09.03-6.14z"/></svg>TikTok</a>
@@ -1532,6 +1532,69 @@ app.innerHTML = `
   </main>
   ${Footer()}
   ${FloatingButtons()}
+
+  <div id="terms-overlay" class="modal-overlay">
+    <div class="modal-container">
+      <button class="modal-close" onclick="document.getElementById('terms-overlay').classList.remove('active')">&times;</button>
+      <div class="modal-content">
+        <h2>Termos de Uso - AUDIOGIFT</h2>
+        <p style="margin-top: 10px; color: #888; font-size: 0.85rem;">Última atualização: Maio de 2026</p>
+        <p style="margin-top: 20px;">Bem-vindo à AUDIOGIFT. Ao acessar e utilizar nossa plataforma de homenagens musicais, você concorda em cumprir e estar vinculado aos seguintes Termos de Uso. Por favor, leia-os com atenção antes de solicitar uma música.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">1. Objeto e Descrição dos Serviços</h3>
+        <p>A AUDIOGIFT oferece serviços de criação e personalização de canções e trilhas sonoras com base nas histórias, depoimentos e preferências compartilhados pelo cliente através do preenchimento de nossos formulários/quizzes. O produto final é uma composição original entregue em formato digital.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">2. Cadastro e Uso do Serviço</h3>
+        <p>Para solicitar uma canção, o usuário deve preencher todas as informações solicitadas de forma verídica e precisa no formulário da plataforma. Reservamo-nos o direito de recusar solicitações que contenham conteúdo ofensivo, ilegal ou de ódio.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">3. Direitos de Propriedade Intelectual</h3>
+        <p>Toda a composição, gravação, melodia e letra criadas pela AUDIOGIFT são de propriedade intelectual exclusiva da AUDIOGIFT, protegidas pelas leis de direitos autorais brasileiras. O cliente recebe uma licença de uso exclusiva e perpétua para fins puramente pessoais, afetivos e não comerciais (compartilhamento com familiares, parceiros e amigos). Qualquer exploração comercial, reprodução pública lucrativa ou distribuição sem consentimento prévio por escrito é estritamente proibida.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">4. Prazos e Entrega</h3>
+        <p>O prazo de produção e entrega da homenagem musical será estipulado no momento da finalização do pedido. A entrega é realizada de maneira digital (links de áudio, QR codes personalizados e/ou arquivos de áudio) no endereço de e-mail ou número de contato fornecido pelo cliente.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">5. Alterações nos Termos</h3>
+        <p>A AUDIOGIFT reserva-se o direito de alterar ou atualizar estes Termos de Uso a qualquer momento, visando a melhoria dos serviços oferecidos. O uso continuado da plataforma após alterações constituirá sua aceitação das novas diretrizes.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">6. Foro</h3>
+        <p>Fica eleito o foro da comarca da sede da AUDIOGIFT para dirimir quaisquer dúvidas ou controvérsias decorrentes destes termos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="privacy-overlay" class="modal-overlay">
+    <div class="modal-container">
+      <button class="modal-close" onclick="document.getElementById('privacy-overlay').classList.remove('active')">&times;</button>
+      <div class="modal-content">
+        <h2>Políticas de Privacidade - AUDIOGIFT</h2>
+        <p style="margin-top: 10px; color: #888; font-size: 0.85rem;">Última atualização: Maio de 2026</p>
+        <p style="margin-top: 20px;">A sua privacidade é extremamente importante para nós. Na AUDIOGIFT, temos alguns princípios fundamentais para proteger a confidencialidade e segurança dos dados fornecidos por nossos clientes durante a personalização de canções.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">1. Coleta de Informações</h3>
+        <p>Coletamos as informações fornecidas voluntariamente por você ao preencher o formulário para criação da música. Isso inclui nomes, datas marcantes, histórias pessoais, traços de personalidade da pessoa homenageada e detalhes de contato (e-mail e telefone) necessários para a entrega do serviço e processamento do pagamento.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">2. Uso das Informações</h3>
+        <p>Suas informações são utilizadas exclusivamente para:</p>
+        <ul style="padding-left: 20px; list-style-type: disc; margin: 10px 0 20px;">
+          <li style="margin-bottom: 8px;">Redigir e compor as letras personalizadas que farão parte de sua homenagem musical.</li>
+          <li style="margin-bottom: 8px;">Realizar a entrega e fornecer atualizações sobre o andamento do seu pedido.</li>
+          <li style="margin-bottom: 8px;">Melhorar continuamente a experiência do usuário em nosso portal.</li>
+        </ul>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">3. Compartilhamento de Dados</h3>
+        <p>Nós não vendemos, comercializamos nem alugamos suas informações de identificação pessoal para terceiros. As informações compartilhadas são usadas apenas por nossa equipe criativa e estúdios parceiros envolvidos diretamente na composição e gravação do seu pedido, sob estrito acordo de confidencialidade.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">4. Segurança da Informação</h3>
+        <p>Adotamos medidas de segurança técnicas e administrativas adequadas para proteger seus dados pessoais contra acessos não autorizados, alterações, divulgação ou destruição acidental das informações armazenadas.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">5. Seus Direitos</h3>
+        <p>Você tem o direito de, a qualquer momento, solicitar o acesso, a correção ou a exclusão total de seus dados pessoais armazenados em nossos servidores enviando um e-mail para nossa equipe de suporte em <strong>audiogiftbrasil@gmail.com</strong>.</p>
+        
+        <h3 style="color: var(--primary-orange); margin-top: 24px; font-size: 1.2rem; font-family: var(--font-heading);">6. Cookies</h3>
+        <p>Utilizamos cookies de navegação apenas para compreender e guardar suas preferências para futuras visitas, garantindo um carregamento mais rápido e responsivo de nossa página.</p>
+      </div>
+    </div>
+  </div>
 `
 
 // Bind all create buttons
@@ -1543,6 +1606,20 @@ document.querySelectorAll('a[href="#create"], .btn-primary-new, .btn-nav-gold, .
       Quiz();
     }
   });
+});
+
+// Bind terms and privacy links to open overlays
+document.addEventListener('click', (e) => {
+  const btnTerms = e.target.closest('#btn-terms');
+  const btnPrivacy = e.target.closest('#btn-privacy');
+  
+  if (btnTerms) {
+    e.preventDefault();
+    document.getElementById('terms-overlay').classList.add('active');
+  } else if (btnPrivacy) {
+    e.preventDefault();
+    document.getElementById('privacy-overlay').classList.add('active');
+  }
 });
 
 // Initialize Lucide Icons
