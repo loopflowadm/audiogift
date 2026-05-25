@@ -1153,7 +1153,7 @@ const HowItWorks = () => `
         <div class="wa-container-premium">
           <div class="wa-header">
             <div class="wa-avatar">
-              <img src="https://i.pravatar.cc/100?u=audiogift" alt="Consultor">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Consultor">
               <span class="online-indicator"></span>
             </div>
             <div class="wa-user-info">
@@ -2755,6 +2755,65 @@ const initAllAudioPlayers = () => {
       if (timeLabel) timeLabel.textContent = '0:30';
     });
   });
+
+  // 4. WhatsApp How It Works Main Audio Preview
+  const waPlayMain = document.querySelector('.wa-play-main');
+  if (waPlayMain) {
+    const audioSrc = '/songs/A Chave do Teu Coração.mp3.mpeg';
+    const audio = new Audio(audioSrc);
+    const waveformSpans = document.querySelectorAll('.wa-waveform span');
+    const waTimeLabel = document.querySelector('.wa-audio-meta span');
+    
+    const resetWaveform = () => {
+      waveformSpans.forEach(span => span.classList.remove('active'));
+      if (waTimeLabel) waTimeLabel.textContent = '0:19';
+    };
+    
+    waPlayMain.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (window.GlobalAudio.activeAudio === audio && !audio.paused) {
+        window.GlobalAudio.pause();
+      } else {
+        window.GlobalAudio.play(audio, waPlayMain, 'wa', (currentTime, duration) => {
+          const limit = Math.min(duration || 30, 30);
+          if (currentTime >= limit) {
+            window.GlobalAudio.pause();
+            return;
+          }
+          
+          // Update waveform spans
+          const progressPct = currentTime / limit;
+          const activeSpansCount = Math.floor(progressPct * waveformSpans.length);
+          waveformSpans.forEach((span, index) => {
+            if (index < activeSpansCount) {
+              span.classList.add('active');
+            } else {
+              span.classList.remove('active');
+            }
+          });
+          
+          // Update time label
+          if (waTimeLabel) {
+            const sec = Math.floor(currentTime % 60);
+            const min = Math.floor(currentTime / 60);
+            waTimeLabel.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+          }
+        });
+      }
+    });
+    
+    audio.addEventListener('pause', () => {
+      audio.currentTime = 0;
+      resetWaveform();
+    });
+    
+    audio.addEventListener('ended', () => {
+      audio.currentTime = 0;
+      resetWaveform();
+    });
+  }
 };
 
 // --- MUSIC STYLES FILTER AND SEARCH ---
