@@ -167,36 +167,88 @@ button {
 
 /* Announcement Bar */
 .announcement-bar {
-  background: linear-gradient(90deg, #050505 0%, #1a1a1a 100%);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   color: white;
-  padding: 10px 0;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcement-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.announcement-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #000;
+}
+
+/* Force iframe covering aspect ratio */
+@media (min-aspect-ratio: 16/9) {
+  .announcement-video {
+    height: 300%;
+    width: 100%;
+  }
+}
+@media (max-aspect-ratio: 16/9) {
+  .announcement-video {
+    width: 300%;
+    height: 100%;
+  }
+}
+
+.announcement-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(20,5,5,0.7) 50%, rgba(0,0,0,0.85) 100%);
+  z-index: 2;
 }
 
 .announcement-content {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2.5rem;
+  width: 100%;
+  padding: 12px 0;
 }
 
 .announcement-badge {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(252, 115, 1, 0.1);
-  color: var(--primary-orange);
+  background: rgba(255, 51, 102, 0.15);
+  color: #ff3366;
   padding: 4px 12px;
   border-radius: 50px;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 1.5px;
-  border: 1px solid rgba(252, 115, 1, 0.2);
+  border: 1px solid rgba(255, 51, 102, 0.3);
 }
 
 .announcement-text {
@@ -213,13 +265,30 @@ button {
   gap: 6px;
   font-weight: 700;
   transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(252, 115, 1, 0.3);
+  border-bottom: 1px solid rgba(255, 51, 102, 0.4);
   padding-bottom: 2px;
 }
 
 .announcement-link:hover {
-  color: var(--primary-orange);
+  color: #ff3366;
+  border-bottom-color: #ff3366;
   gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .video-desktop { display: none !important; }
+  .video-mobile { display: block !important; }
+  .announcement-content {
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .video-desktop { display: block !important; }
+  .video-mobile { display: none !important; }
 }
 
 @media (max-width: 900px) {

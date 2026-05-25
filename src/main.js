@@ -19,16 +19,35 @@ const app = document.querySelector('#app')
 
 const AnnouncementBar = () => `
   <div class="announcement-bar">
+    <div class="announcement-video-container">
+      <iframe 
+        class="announcement-video video-desktop" 
+        src="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        style="pointer-events: none;"
+        title="Dia dos Namorados - Desktop">
+      </iframe>
+      <iframe 
+        class="announcement-video video-mobile" 
+        src="https://player.vimeo.com/video/1195222822?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        style="pointer-events: none;"
+        title="Dia dos Namorados - Mobile">
+      </iframe>
+      <div class="announcement-overlay"></div>
+    </div>
     <div class="container announcement-content">
       <div class="announcement-badge">
-        <i data-lucide="shield-check"></i>
-        <span>100% satisfação garantida</span>
+        <i data-lucide="heart" style="color: #ff3366; fill: #ff3366;"></i>
+        <span>ESPECIAL DIA DOS NAMORADOS</span>
       </div>
       <p class="announcement-text">
-        Seu dinheiro de volta se não se emocionar.
+        Surpreenda com uma música exclusiva. <strong>Satisfação garantida ou seu dinheiro de volta</strong>.
       </p>
       <a href="#create" class="announcement-link">
-        Crie sua canção <i data-lucide="arrow-right"></i>
+        Criar Música <i data-lucide="arrow-right"></i>
       </a>
     </div>
   </div>
