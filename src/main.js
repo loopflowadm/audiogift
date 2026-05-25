@@ -1247,10 +1247,6 @@ const FAQ = () => `
 
 const FloatingButtons = () => `
   <div class="floating-actions">
-    <a href="https://wa.me/5511999999999" class="float-btn wa-float" target="_blank">
-      <i data-lucide="message-circle"></i>
-      <span class="tooltip">Falar com especialista</span>
-    </a>
     <button class="float-btn scroll-top" id="scrollTop">
       <i data-lucide="chevron-up"></i>
     </button>
