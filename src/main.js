@@ -25,6 +25,7 @@ const AnnouncementBar = () => `
         src="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
         frameborder="0" 
         allow="autoplay; fullscreen" 
+        loading="lazy"
         title="Dia dos Namorados - Desktop">
       </iframe>
       <iframe 
@@ -32,6 +33,7 @@ const AnnouncementBar = () => `
         src="https://player.vimeo.com/video/1195222822?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
         frameborder="0" 
         allow="autoplay; fullscreen" 
+        loading="lazy"
         title="Dia dos Namorados - Mobile">
       </iframe>
     </div>
@@ -240,6 +242,7 @@ const Hero = () => `
                 src="https://player.vimeo.com/video/1195075467?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
                 frameborder="0" 
                 allow="autoplay; fullscreen; picture-in-picture" 
+                loading="lazy"
                 style="width: 100%; height: 100%; object-fit: cover; border: none; background: #000; pointer-events: none;"
                 allowfullscreen>
               </iframe>
@@ -2494,7 +2497,7 @@ script.onload = () => {
       document.body.classList.add('app-ready');
       document.body.style.backgroundColor = '';
     }
-  }, 1200);
+  }, 100);
 };
 document.head.appendChild(script);
 
