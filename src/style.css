@@ -212,7 +212,7 @@ button {
   .video-desktop {
     display: block !important;
     width: 100%;
-    max-width: 580px;
+    max-width: 100%;
     aspect-ratio: 16/9;
   }
   .video-mobile {
