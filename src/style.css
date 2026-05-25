@@ -7108,3 +7108,184 @@ button {
     aspect-ratio: 1/1;
   }
 }
+
+/* Mobile Footer Alignment Adjustments */
+@media (max-width: 768px) {
+  .footer {
+    padding: 3.5rem 0 1.5rem;
+    text-align: center;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .footer-brand, .footer-links, .footer-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-brand .logo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .footer-links {
+    align-items: center;
+  }
+  .footer-contact {
+    align-items: center;
+  }
+  .footer-social-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    margin-top: 1.25rem;
+  }
+  .footer-social-buttons .footer-btn {
+    margin: 0 auto;
+  }
+}
+
+/* ==========================================================================
+   Preloader Loading Screen Styling (Vibrant Orange & White Logo)
+   ========================================================================== */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #ff8224 0%, #e05e00 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s cubic-bezier(0.85, 0, 0.15, 1), 
+              visibility 1s cubic-bezier(0.85, 0, 0.15, 1), 
+              transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+#preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1) translateY(-20px);
+}
+
+#preloader.fade-out .preloader-content {
+  transform: scale(0.9) translateY(-15px);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease-in;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+  transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease-out;
+}
+
+.preloader-logo {
+  width: 280px;
+  max-width: 85vw;
+  margin-bottom: 0.5rem;
+  animation: floatLogo 4s ease-in-out infinite;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  will-change: transform;
+}
+
+@keyframes floatLogo {
+  0%, 100% {
+    transform: translateY(0) rotate(-0.5deg) scale(1);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg) scale(1.02);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+  }
+}
+
+/* Soundwave Equalizer Anim (White) */
+.preloader-equalizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 24px;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.preloader-equalizer .eq-bar {
+  width: 3.5px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  transform-origin: bottom;
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+
+.preloader-equalizer .bar-1 { height: 35%; animation-duration: 0.7s; }
+.preloader-equalizer .bar-2 { height: 75%; animation-duration: 0.5s; animation-delay: 0.15s; }
+.preloader-equalizer .bar-3 { height: 95%; animation-duration: 0.6s; animation-delay: 0.3s; }
+.preloader-equalizer .bar-4 { height: 50%; animation-duration: 0.8s; animation-delay: 0.05s; }
+.preloader-equalizer .bar-5 { height: 80%; animation-duration: 0.55s; animation-delay: 0.2s; }
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.25); }
+  100% { transform: scaleY(1); }
+}
+
+/* Translucent Loading bar */
+.premium-progress-bar {
+  width: 150px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.premium-progress-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  position: absolute;
+  left: -100%;
+  animation: progressPulse 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes progressPulse {
+  0% { left: -100%; }
+  50% { left: 0%; }
+  100% { left: 100%; }
+}
+
+/* App Initial State for Fade In */
+#app {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  filter: blur(10px);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+body.app-ready #app {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}

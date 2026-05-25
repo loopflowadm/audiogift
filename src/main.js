@@ -2479,6 +2479,20 @@ script.src = 'https://unpkg.com/lucide@latest';
 script.onload = () => {
   if (window.lucide) lucide.createIcons();
   renderRoute();
+
+  // Desativa o preloader e exibe a página principal
+  setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.classList.add('fade-out');
+      document.body.classList.add('app-ready');
+      setTimeout(() => {
+        preloader.remove();
+      }, 800);
+    } else {
+      document.body.classList.add('app-ready');
+    }
+  }, 1200);
 };
 document.head.appendChild(script);
 
