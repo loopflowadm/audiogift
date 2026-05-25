@@ -427,6 +427,7 @@
         if (loader && !loader.classList.contains('fade-out')) {
           loader.classList.add('fade-out');
           document.body.classList.add('app-ready');
+          document.body.style.backgroundColor = '';
           setTimeout(function() { loader.remove(); }, 800);
         }
       }, 4000);

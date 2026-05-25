@@ -2486,11 +2486,13 @@ script.onload = () => {
     if (preloader) {
       preloader.classList.add('fade-out');
       document.body.classList.add('app-ready');
+      document.body.style.backgroundColor = '';
       setTimeout(() => {
         preloader.remove();
       }, 800);
     } else {
       document.body.classList.add('app-ready');
+      document.body.style.backgroundColor = '';
     }
   }, 1200);
 };
