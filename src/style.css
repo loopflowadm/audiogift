@@ -221,13 +221,23 @@ button {
 }
 
 @media (max-width: 768px) {
+  .announcement-bar {
+    padding: 0;
+  }
+  .announcement-bar .announcement-content {
+    padding: 0 !important;
+  }
+  .announcement-video {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
   .video-desktop {
     display: none !important;
   }
   .video-mobile {
     display: block !important;
     width: 100%;
-    max-width: 280px;
+    max-width: 100% !important;
     aspect-ratio: 9/16;
   }
 }

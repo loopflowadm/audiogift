@@ -1153,42 +1153,6 @@ const HowItWorks = () => `
         </div>
       </div>
       
-      <div class="wa-how-section mt-4 reveal" data-delay="3">
-        <div class="wa-container-premium">
-          <div class="wa-header">
-            <div class="wa-avatar">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Consultor">
-              <span class="online-indicator"></span>
-            </div>
-            <div class="wa-user-info">
-              <strong>Especialista Audiogift</strong>
-              <span>Online agora</span>
-            </div>
-          </div>
-          <div class="wa-chat-body">
-            <div class="wa-bubble-received">
-              <p>Olá! Tudo bem? Ouça esse exemplo de como explicamos o processo para nossos clientes: ✨</p>
-              <span class="wa-time">10:45</span>
-            </div>
-            <div class="wa-bubble-received">
-              <div class="wa-voice-note">
-                <button class="wa-play-main"><i data-lucide="play"></i></button>
-                <div class="wa-audio-content">
-                  <div class="wa-waveform">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                  </div>
-                  <div class="wa-audio-meta">
-                    <span>0:19</span>
-                    <i data-lucide="check-check"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       <div class="text-center mt-4 reveal" data-delay="4">
         <a href="#create" class="btn-primary-new btn-magnetic btn-pulse">
           <i data-lucide="sparkles"></i>
