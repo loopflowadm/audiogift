@@ -123,24 +123,18 @@ const Header = () => `
 `
 
 const MusicStyles = () => {
-  const genresTags = [
-    'Pop Acústico', 'Soul Romântico', 'Violão e Voz', 'Pop Rock', 'Forró', 'Gospel',
-    'MPB', 'Música Eletrônica', 'Samba', 'Pagode', 'Pop', 'Rap/Hip Hop', 'Reggae', 'Rock', 'Sertanejo'
-  ]
-  
   const featuredGenres = [
-    { name: 'Sertanejo', voice: 'Masculina', src: '/genres/sertanejo-masculina.mp3' },
-    { name: 'Pop', voice: 'Feminina', src: '/genres/pop-feminina.mp3' },
-    { name: 'Pop Acústico', voice: 'Feminina', src: '/genres/pop-acustico-feminina.mp3' },
-    { name: 'MPB', voice: 'Masculina', src: '/genres/mpb-masculina.mp3' },
-    { name: 'Samba', voice: 'Masculina', src: '/genres/samba-masculina.mp3' },
-    { name: 'Rock', voice: 'Masculina', src: '/genres/rock-masculina.mp3' },
-    { name: 'Forró', voice: 'Feminina', src: '/genres/forro-feminina.mp3' },
-    { name: 'Violão e Voz', voice: 'Instrumental', src: '/genres/violao-e-voz-instrumental.mp3' },
-    { name: 'Soul Romântico', voice: 'Feminina', src: '/genres/soul-romantico-feminina.mp3' },
-    { name: 'Rap/Hip Hop', voice: 'Masculina', src: '/genres/rap-hip-hop-masculina.mp3' },
-    { name: 'Pagode', voice: 'Masculina', src: '/genres/pagode-masculina.mp3' },
-    { name: 'Reggae', voice: 'Masculina', src: '/genres/reggae-masculina.mp3' }
+    { name: 'Sertanejo', voice: 'Masculina', src: '/songs/Sempre Para Sempre.mp3.mpeg', title: 'Sempre Para Sempre' },
+    { name: 'Pop Acústico', voice: 'Feminina', src: '/songs/A Chave do Teu Coração.mp3.mpeg', title: 'A Chave do Teu Coração' },
+    { name: 'MPB', voice: 'Masculina', src: '/songs/Pra Sempre Você.mp3.mpeg', title: 'Pra Sempre Você' },
+    { name: 'Samba', voice: 'Masculina', src: '/songs/Coração De Ouro.mp3.mpeg', title: 'Coração De Ouro' },
+    { name: 'Pop Rock', voice: 'Masculina', src: '/songs/Você É Meu Sol.mp3.mpeg', title: 'Você É Meu Sol' },
+    { name: 'Forró', voice: 'Feminina', src: '/songs/Minha Princesa, Meu amor..mp3.mpeg', title: 'Minha Princesa, Meu Amor' },
+    { name: 'Violão e Voz', voice: 'Instrumental', src: '/songs/Você É Minha Vida.mp3.mpeg', title: 'Você É Minha Vida' },
+    { name: 'Soul Romântico', voice: 'Feminina', src: '/songs/Te Amo Muitinho.mp3.mpeg', title: 'Te Amo Muitinho' },
+    { name: 'Gospel', voice: 'Feminina', src: '/songs/Presente de Deus.mp3.mpeg', title: 'Presente de Deus' },
+    { name: 'Pagode', voice: 'Masculina', src: '/songs/Minha Marina.mp3.mpeg', title: 'Minha Marina' },
+    { name: 'Reggae', voice: 'Masculina', src: '/songs/Filha do Meu Coração.mp3.mpeg', title: 'Filha do Meu Coração' }
   ]
   
   return `
@@ -153,35 +147,42 @@ const MusicStyles = () => {
         <div class="styles-controls reveal" data-delay="3">
           <div class="search-wrapper">
             <span class="search-icon"><i data-lucide="search"></i></span>
-            <input type="text" placeholder="Buscar gênero musical..." class="search-input">
+            <input type="text" placeholder="Buscar gênero musical ou música..." class="search-input">
           </div>
-          
-          <div class="voice-toggle-wrapper">
-            <span>Quero ouvir os exemplos com voz:</span>
-            <div class="voice-toggle">
-              <button class="toggle-btn active">Masculina</button>
-              <button class="toggle-btn">Feminina</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="genre-tags mb-4 reveal" data-delay="4">
-          <button class="tag-btn active">Todos</button>
-          ${genresTags.map(genre => `<button class="tag-btn">${genre}</button>`).join('')}
         </div>
         
         <div class="genre-grid-players">
           ${featuredGenres.map((genre, i) => `
             <div class="style-player-card reveal" data-genre="${genre.name}" data-voice="${genre.voice}" data-delay="${(i % 4) + 1}">
-              <div class="wa-bubble-small">
-                <button class="wa-play-small" data-src="${genre.src}"><i data-lucide="play"></i></button>
-                <div class="wa-info-small">
-                  <span class="wa-name-small">${genre.name}</span>
-                  <div class="wa-wave-small" style="position: relative;">
-                    <div class="wa-wave-fill" style="position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary-orange); transition: width 0.1s linear;"></div>
-                  </div>
-                  <span class="wa-time-small">0:30</span>
+              <div class="audio-card-left">
+                <button class="wa-play-small player-card-play-btn" data-src="${genre.src}" aria-label="Tocar exemplo">
+                  <i data-lucide="play"></i>
+                </button>
+                <div class="audio-card-details">
+                  <h4 class="genre-name-label">${genre.title}</h4>
+                  <p class="genre-example-desc">${genre.name}</p>
                 </div>
+              </div>
+              
+              <div class="audio-card-right">
+                <div class="equalizer-wave">
+                  <span class="eq-bar bar-1"></span>
+                  <span class="eq-bar bar-2"></span>
+                  <span class="eq-bar bar-3"></span>
+                  <span class="eq-bar bar-4"></span>
+                  <span class="eq-bar bar-5"></span>
+                  <span class="eq-bar bar-6"></span>
+                  <span class="eq-bar bar-7"></span>
+                  <span class="eq-bar bar-8"></span>
+                  <span class="eq-bar bar-9"></span>
+                  <span class="eq-bar bar-10"></span>
+                </div>
+                
+                <div class="wa-wave-small modern-wave" style="display: none;">
+                  <div class="wa-wave-fill"></div>
+                </div>
+                
+                <span class="wa-time-small">0:30</span>
               </div>
             </div>
           `).join('')}
@@ -200,27 +201,11 @@ const Hero = () => `
   <section class="hero">
     <div class="container">
       <div class="hero-new-layout">
-        <div class="hero-visual-wrapper reveal" data-delay="1">
-          <div class="hero-video-container">
-            <iframe 
-              class="hero-video" 
-              src="https://www.youtube-nocookie.com/embed/euebKq4kErQ?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=euebKq4kErQ" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-            </iframe>
-            <button class="btn-play-example">
-              <i data-lucide="play"></i>
-              Ouvir Exemplo
-            </button>
-          </div>
-        </div>
-        
-        <div class="hero-text-content text-center">
-        <p class="tagline reveal" data-delay="2">A plataforma #1 de músicas personalizadas</p>
-          <h1 class="main-title reveal" data-delay="3">Tudo que você nunca conseguiu dizer... <em>Agora em uma canção.</em></h1>
-          <p class="hero-subtitle reveal" data-delay="4">A homenagem definitiva para quem você ama. Uma composição exclusiva, feita sob medida para a sua história.</p>
-          <div class="hero-cta-wrapper reveal" data-delay="5">
+        <div class="hero-text-content">
+          <span class="tagline reveal" data-delay="1"><i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--primary-orange);"></i> A plataforma #1 de músicas personalizadas</span>
+          <h1 class="main-title reveal" data-delay="2">Tudo que você nunca conseguiu dizer... <br><span class="gradient-text">Agora em uma canção.</span></h1>
+          <p class="hero-subtitle reveal" data-delay="3">A homenagem definitiva para quem você ama. Uma composição exclusiva, feita sob medida para a sua história.</p>
+          <div class="hero-cta-wrapper reveal" data-delay="4">
             <a href="#create" class="btn-primary-new btn-magnetic">
               <i data-lucide="gift"></i>
               Pedir minha música personalizada
@@ -233,177 +218,449 @@ const Hero = () => `
                 <i data-lucide="star"></i>
                 <i data-lucide="star"></i>
               </div>
-              <p>Mais de <strong>2.000 pessoas</strong> já se emocionaram</p>
+              <div class="trust-divider"></div>
+              <p>Mais de <strong>2.000 histórias</strong> já se emocionaram</p>
             </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-wrapper reveal" data-delay="2">
+          <div class="smartphone-mockup proof-video-card" data-video-url="https://player.vimeo.com/video/1195075467?badge=0&autopause=0&player_id=0&app_id=58479" data-aspect="vertical">
+            <div class="smartphone-screen">
+              <iframe 
+                class="hero-video" 
+                src="https://player.vimeo.com/video/1195075467?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                style="width: 100%; height: 100%; object-fit: cover; border: none; background: #000; pointer-events: none;"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="smartphone-speaker"></div>
+            <div class="smartphone-dynamic-island"></div>
+            <div class="smartphone-home-bar"></div>
+            <button class="btn-play-example" aria-label="Ouvir Exemplo em Tela Cheia">
+              <i data-lucide="volume-2"></i>
+              Ouvir Exemplo
+            </button>
           </div>
         </div>
       </div>
     </div>
   </section>
-`
+  `;
 
-const TestimonialsCarousel = () => {
-  const testimonials = [
+const SocialProofSection = () => {
+  const bentoItems = [
     {
-      type: 'audio-song',
-      title: 'Para Sempre Nós',
-      artist: 'Audiogift',
-      img: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800',
-      src: '/songs/para-sempre-nos.mp3'
+      type: 'video',
+      title: "Depoimento Real, Emoção Verdadeira",
+      tag: "Depoimento",
+      duration: "0:30",
+      img: "https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072346?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "vertical"
     },
     {
-      type: 'whatsapp',
-      name: 'Rosely',
-      role: 'Depoimento em Áudio',
-      avatar: 'https://i.pravatar.cc/100?u=rosely',
-      audios: [
-        { time: '0:23', src: '/depoimento1.mp3' },
-        { time: '0:45', src: '/depoimento2.mp3' }
-      ]
+      type: 'image',
+      imgUrl: "/images/provasocial 1.webp",
+      aspect: "square"
     },
     {
-      type: 'text',
-      name: 'Vera Lúcia S.',
-      content: 'Nossa, que emoção! Isso é absolutamente de tirar o fôlego. Eu não consigo acreditar... Choramos muito ouvindo juntos ontem à noite. Vocês conseguiram colocar toda a nossa história em 3 minutos! Muito obrigada pelo carinho.',
-      avatar: 'https://i.pravatar.cc/100?u=vera'
+      type: 'video',
+      title: "Reação Real: 'Até eu me emocionei...'",
+      tag: "Reação Real",
+      duration: "0:35",
+      img: "https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072345?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "vertical"
     },
     {
-      type: 'audio-song',
-      title: 'Três Apertos',
-      artist: 'Audiogift',
-      img: 'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=800',
-      src: '/songs/tres-apertos.mp3'
+      type: 'image',
+      imgUrl: "/images/provasocial 2.webp",
+      aspect: "square"
     },
     {
-      type: 'audio-song',
-      title: 'Meu Coração é Seu',
-      artist: 'Audiogift',
-      img: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800',
-      src: '/songs/meu-coracao-e-seu.mp3'
+      type: 'video',
+      title: "Ídolo Emocionado com o Audiogift",
+      tag: "Homenagem",
+      duration: "0:45",
+      img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072341?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "square"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 3.webp",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Sua História em Música em 3 Passos",
+      tag: "Como Criar",
+      duration: "2:29",
+      img: "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072336?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Depoimento de Cliente Emocionada",
+      tag: "Feedback",
+      duration: "0:23",
+      img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072334?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "square"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 4.webp",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Nossa Maior Motivação: Sua Mensagem",
+      tag: "Feedback",
+      duration: "0:48",
+      img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072335?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Nossa Especialidade: Emocionar Você",
+      tag: "Feedback",
+      duration: "0:58",
+      img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072333?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "vertical"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 5.webp",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Reações Inesperadas de Emoção",
+      tag: "Reações Reais",
+      duration: "0:26",
+      img: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072318?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "square"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 6.webp",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Presente de Dia dos Namorados Perfeito",
+      tag: "Dia dos Namorados",
+      duration: "1:45",
+      img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072316?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "vertical"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 7.webp",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "Chá Revelação Emocionante",
+      tag: "Chá Revelação",
+      duration: "0:21",
+      img: "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072317?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "square"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 8.webp",
+      aspect: "square"
+    },
+    {
+      type: 'video',
+      title: "A Música Perfeita para Sua História",
+      tag: "Homenagem",
+      duration: "0:45",
+      img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800",
+      videoUrl: "https://player.vimeo.com/video/1195072315?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "vertical"
+    },
+    {
+      type: 'image',
+      imgUrl: "/images/provasocial 9.webp",
+      aspect: "square"
     }
   ];
 
   return `
-    <section class="testimonials-carousel-section py-large bg-soft overflow-hidden">
-      <div class="container text-center mb-16">
-        <h2 class="section-title-serif reveal">Por que mais de 10.000 famílias amam o <em>Audiogift</em></h2>
-      </div>
-      
-      <div class="carousel-container-wrapper relative">
-        <div class="carousel-track-viewport" id="testimonialViewport">
-          <div class="carousel-track" id="testimonialTrack">
-            ${testimonials.map(t => {
-              if (t.type === 'audio-song') {
-                return `
-                  <div class="testimonial-card song-card">
-                    <div class="card-image-wrap">
-                      <img src="${t.img}" alt="${t.title}">
-                      <div class="card-overlay"></div>
-                      <button class="play-trigger" data-src="${t.src}">
-                        <div class="play-circle"><i data-lucide="play"></i></div>
-                      </button>
-                      <div class="card-footer-info">
-                        <h3>${t.title}</h3>
-                        <p>${t.artist}</p>
-                      </div>
-                    </div>
-                  </div>
-                `;
-              } else if (t.type === 'whatsapp') {
-                return `
-                  <div class="testimonial-card wa-testi-card">
-                    <div class="wa-card-header">
-                      <div class="wa-header-user">
-                        <img src="${t.avatar}" alt="${t.name}">
-                        <div>
-                          <strong>${t.name}</strong>
-                          <span>${t.role}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="wa-bubbles-list">
-                      ${t.audios.map(a => `
-                        <div class="wa-bubble-item">
-                          <button class="wa-bubble-play" data-src="${a.src}"><i data-lucide="play"></i></button>
-                          <div class="wa-bubble-progress">
-                            <div class="wa-progress-line">
-                              <div class="wa-progress-fill"></div>
-                              <div class="wa-progress-dot"></div>
-                            </div>
-                            <div class="wa-progress-meta">
-                              <span class="wa-time-elapsed">0:00</span>
-                              <span>${a.time}</span>
-                            </div>
-                          </div>
-                        </div>
-                      `).join('')}
-                    </div>
-                  </div>
-                `;
-              } else {
-                return `
-                  <div class="testimonial-card text-testi-card">
-                    <div class="stars-row">
-                      ${Array(5).fill('<i data-lucide="star"></i>').join('')}
-                    </div>
-                    <blockquote class="testi-quote">
-                      <p>${t.content}</p>
-                    </blockquote>
-                    <div class="testi-user">
-                      <img src="${t.avatar}" alt="${t.name}">
-                      <div>
-                        <strong>${t.name}</strong>
-                        <span class="verified"><i data-lucide="check-circle"></i> Cliente Verificado</span>
-                      </div>
-                    </div>
-                    <div class="quote-icon-badge"><i data-lucide="quote"></i></div>
-                  </div>
-                `;
-              }
-            }).join('')}
+    <section id="proof" class="social-proof-section py-large bg-soft overflow-hidden">
+      <div class="container">
+        <div class="text-center mb-12">
+          <div class="tag-badge reveal"><i data-lucide="heart"></i> EMOÇÃO QUE TRANSFORMA</div>
+          <h2 class="section-title-serif reveal" data-delay="1">Por que milhares de famílias se emocionam com o <em>Audiogift</em></h2>
+          <p class="section-subtitle reveal" data-delay="2">Assista às reações em vídeo e veja os feedbacks reais de quem eternizou momentos inesquecíveis em música.</p>
+          
+          <div class="proof-tabs reveal" data-delay="3">
+            <button class="proof-tab-btn active" data-tab="all">Mostrar Tudo</button>
+            <button class="proof-tab-btn" data-tab="videos"><i data-lucide="video"></i> Reações em Vídeo</button>
+            <button class="proof-tab-btn" data-tab="comments"><i data-lucide="image"></i> Prints e Depoimentos</button>
           </div>
         </div>
 
-        <div class="carousel-nav-controls">
-          <button class="nav-btn prev" id="testiPrev"><i data-lucide="chevron-left"></i></button>
-          <div class="nav-dots" id="testiDots">
-            ${testimonials.map((_, i) => `<button class="dot ${i === 0 ? 'active' : ''}"></button>`).join('')}
+        <!-- Bento Grid -->
+        <div class="proof-bento-grid" id="proofBentoGrid">
+          ${bentoItems.map((item, idx) => {
+            if (item.type === 'video') {
+              return `
+                <div class="proof-video-card bento-item reveal ${item.aspect === 'vertical' ? 'bento-portrait' : 'bento-square'}" data-delay="${(idx % 4) + 1}" data-video-url="${item.videoUrl}" data-aspect="${item.aspect}">
+                  <div class="video-cover-wrap">
+                    <img class="cover-img" src="${item.img}" alt="${item.title}">
+                    <div class="video-overlay-gradient"></div>
+                    <div class="video-duration"><i data-lucide="clock"></i> ${item.duration}</div>
+                    <span class="video-tag">${item.tag}</span>
+                    <button class="video-play-btn" aria-label="Tocar depoimento">
+                      <div class="play-btn-circle">
+                        <i data-lucide="play"></i>
+                      </div>
+                    </button>
+                  </div>
+                  <div class="video-card-info">
+                    <h3>${item.title}</h3>
+                  </div>
+                </div>
+              `;
+            } else {
+              return `
+                <div class="comment-img-card bento-item bento-square reveal" data-delay="${(idx % 4) + 1}" data-img-url="${item.imgUrl}">
+                  <img src="${item.imgUrl}" alt="Feedback Cliente AudioGift" loading="lazy">
+                  <div class="img-card-overlay">
+                    <i data-lucide="zoom-in"></i>
+                  </div>
+                </div>
+              `;
+            }
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- Video Player Modal -->
+      <div class="video-modal-overlay" id="videoModalOverlay">
+        <div class="video-modal-content" id="videoModalContent">
+          <button class="video-modal-close" id="videoModalClose" aria-label="Fechar vídeo">&times;</button>
+          <div class="video-player-container" id="modalVideoContainer" style="width:100%; height:100%;">
+            <!-- Dynamic video player or iframe will be inserted here -->
           </div>
-          <button class="nav-btn next" id="testiNext"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Image Lightbox Modal -->
+      <div class="image-modal-overlay" id="imageModalOverlay">
+        <div class="image-modal-content-lightbox">
+          <button class="image-modal-close" id="imageModalCloseBtn" aria-label="Fechar imagem">&times;</button>
+          <img id="lightboxImage" src="" alt="Feedback Ampliado">
         </div>
       </div>
     </section>
   `;
 };
 
-const Reactions = () => `
-    <section id="reviews" class="reactions py-large bg-soft">
-      <div class="container text-center">
-        <div class="tag-badge-small reveal">Reações reais</div>
-        <h2 class="section-title-serif reveal" data-delay="1">Veja as reações de quem recebeu uma canção</h2>
-        <p class="section-subtitle reveal" data-delay="2">Mais de 10.000 homenagens entregues. Assista os bastidores e as reações reais de quem foi surpreendido.</p>
+const initSocialProof = () => {
+  const tabs = document.querySelectorAll('.proof-tab-btn');
+  const videoCards = document.querySelectorAll('.proof-video-card');
+  const commentImgCards = document.querySelectorAll('.comment-img-card');
+
+  if (!tabs.length) return;
+
+  // Carregar as thumbnails reais (primeiro frame) dos vídeos do Vimeo
+  videoCards.forEach(card => {
+    const img = card.querySelector('.cover-img');
+    const videoUrl = card.dataset.videoUrl;
+    if (img && videoUrl) {
+      const matches = videoUrl.match(/\/video\/(\d+)/);
+      if (matches && matches[1]) {
+        const videoId = matches[1];
+        // Busca OEmbed primeiro para obter thumbnail HD (1280px se disponível)
+        fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.thumbnail_url) {
+              img.src = data.thumbnail_url;
+            }
+          })
+          .catch(() => {
+            // Fallback para API v2 se falhar
+            fetch(`https://vimeo.com/api/v2/video/${videoId}.json`)
+              .then(res => res.json())
+              .then(data => {
+                if (data && data[0] && data[0].thumbnail_large) {
+                  img.src = data[0].thumbnail_large;
+                }
+              })
+              .catch(err => console.warn(`Falha ao obter thumbnail para o vídeo ${videoId}:`, err));
+          });
+      }
+    }
+  });
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filter = tab.dataset.tab;
+
+      if (filter === 'all') {
+        videoCards.forEach(c => c.style.display = 'block');
+        commentImgCards.forEach(c => c.style.display = 'block');
+      } else if (filter === 'videos') {
+        videoCards.forEach(c => c.style.display = 'block');
+        commentImgCards.forEach(c => c.style.display = 'none');
+      } else if (filter === 'comments') {
+        videoCards.forEach(c => c.style.display = 'none');
+        commentImgCards.forEach(c => c.style.display = 'block');
+      }
+      
+      // Re-trigger layout/reveal check
+      if (window.observer) {
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      }
+    });
+  });
+
+  // Modal Video Player logic
+  const videoModal = document.getElementById('videoModalOverlay');
+  const videoContent = document.getElementById('videoModalContent');
+  const videoContainer = document.getElementById('modalVideoContainer');
+  const videoCloseBtn = document.getElementById('videoModalClose');
+
+  if (videoModal && videoContainer && videoCloseBtn) {
+    videoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        // Stop any background site audio that might be playing
+        if (window.GlobalAudio) {
+          window.GlobalAudio.pause();
+        }
         
-        <div class="reactions-cta-group mt-4 reveal" data-delay="3">
-          <a href="https://www.instagram.com/audiogiftbrasil/" target="_blank" class="btn-social-ig">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-            Assistir no Instagram
-          </a>
-          <a href="https://www.tiktok.com/@audiogift" target="_blank" class="btn-social-tk">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.78-1.15 5.54-3.33 7.31-1.92 1.57-4.58 2.22-6.95 1.55-2.61-.75-4.75-2.88-5.46-5.51-.71-2.67-.09-5.61 1.72-7.75 1.77-2.09 4.61-3.1 7.29-2.71v4.06c-1.89-.3-3.83.27-5.06 1.63-1.45 1.63-1.47 4.15-.22 5.8 1.34 1.77 3.95 2.21 5.88 1.05 1.2-.73 1.94-2.03 1.98-3.41.05-4.22.03-8.45.03-12.68.01-2.05-.01-4.09.03-6.14z"/>
-            </svg>
-            Assistir no TikTok
-          </a>
-          <a href="https://open.spotify.com/artist/24rv68FArmAuCtAhHjoIEy" target="_blank" class="btn-social-sp">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-            </svg>
-            Ouça no Spotify
-          </a>
-        </div>
-      </div>
-    </section>
-  `
+        const videoSrc = card.dataset.videoUrl;
+        const isIframe = videoSrc.includes('vimeo.com') || videoSrc.includes('youtube.com') || videoSrc.includes('youtube-nocookie.com');
+        const aspect = card.dataset.aspect || 'vertical';
+
+        // Adjust modal content style for aspect ratio dynamically
+        if (videoContent) {
+          if (aspect === 'square') {
+            videoContent.style.aspectRatio = '1/1';
+            videoContent.style.maxWidth = window.innerWidth < 480 ? '92%' : '550px';
+          } else {
+            videoContent.style.aspectRatio = '9/16';
+            videoContent.style.maxWidth = window.innerWidth < 480 ? '85%' : '420px';
+          }
+        }
+
+        if (isIframe) {
+          let finalUrl = videoSrc;
+          try {
+            if (videoSrc.includes('vimeo.com')) {
+              const urlObj = new URL(videoSrc);
+              urlObj.searchParams.set('autoplay', '1');
+              urlObj.searchParams.set('badge', '0');
+              urlObj.searchParams.set('autopause', '0');
+              finalUrl = urlObj.toString();
+            } else if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be') || videoSrc.includes('youtube-nocookie.com')) {
+              const urlObj = new URL(videoSrc);
+              urlObj.searchParams.set('autoplay', '1');
+              finalUrl = urlObj.toString();
+            }
+          } catch (e) {
+            if (videoSrc.includes('vimeo.com')) {
+              finalUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1&badge=0&autopause=0';
+            } else {
+              finalUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1';
+            }
+          }
+          
+          videoContainer.innerHTML = `
+            <iframe 
+              src="${finalUrl}" 
+              frameborder="0" 
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+              style="width:100%; height:100%; object-fit:cover; background:#000;" 
+              allowfullscreen>
+            </iframe>
+          `;
+        } else {
+          videoContainer.innerHTML = `
+            <video id="modalVideoPlayer" controls autoplay playsinline style="width:100%; height:100%; object-fit:cover; background:#000;">
+              <source src="${videoSrc}" type="video/mp4">
+              Seu navegador não suporta a tag de vídeo.
+            </video>
+          `;
+        }
+
+        videoModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeVideoModal = () => {
+      // Clear container to stop playback/destruct iframe or video
+      videoContainer.innerHTML = '';
+      videoModal.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    videoCloseBtn.addEventListener('click', closeVideoModal);
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal || e.target.classList.contains('video-player-container')) {
+        closeVideoModal();
+      }
+    });
+  }
+
+  // Lightbox Image Logic
+  const imageModal = document.getElementById('imageModalOverlay');
+  const lightboxImg = document.getElementById('lightboxImage');
+  const imageCloseBtn = document.getElementById('imageModalCloseBtn');
+
+  if (imageModal && lightboxImg && imageCloseBtn) {
+    commentImgCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const imgSrc = card.dataset.imgUrl;
+        lightboxImg.src = imgSrc;
+        imageModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeImageModal = () => {
+      imageModal.classList.remove('active');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    };
+
+    imageCloseBtn.addEventListener('click', closeImageModal);
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal || e.target.classList.contains('image-modal-content-lightbox')) {
+        closeImageModal();
+      }
+    });
+    
+    // Close on ESC
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageModal();
+        if (videoModal && videoModal.classList.contains('active')) {
+          closeVideoModal();
+        }
+      }
+    });
+  }
+};
 
 const Categories = () => {
   const cats = [
@@ -458,56 +715,69 @@ const Experience = () => {
         <h2 class="section-title-serif reveal">Muito mais que uma música. <br><span class="text-orange">Uma experiência completa.</span></h2>
         <p class="section-subtitle reveal" data-delay="1">O presente ideal para emocionar e ser lembrado para sempre.</p>
         
-        <div class="player-scene spotify-theme reveal" data-delay="2">
-          <div class="player-top">
-            <div class="spotify-album-wrap">
+        <div class="spotify-card-container reveal" data-delay="2">
+          <div class="spotify-card player-scene">
+            <!-- Capa do Álbum grande e quadrada -->
+            <div class="spotify-art-wrap">
               <img id="spotifyAlbumImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Capa do Álbum" onerror="this.style.display='none';">
-              <div class="spotify-badge"><i data-lucide="music-4"></i> Spotify Preview</div>
             </div>
 
-            <div class="player-info">
-              <div class="artist-verification">
-                <span class="verification-badge"><i data-lucide="check-circle-2"></i> Artista Verificado</span>
+            <!-- Informações da Música -->
+            <div class="spotify-info-header">
+              <div class="spotify-info-left">
+                <span class="spotify-device-label"><i data-lucide="music"></i> Spotify Preview</span>
+                <h3 class="spotify-song-title" id="playerTitle">Uma canção pra você</h3>
+                <p class="spotify-song-artist" id="playerArtist">Audiogift · Single</p>
+                <!-- Tag container hidden or kept hidden to satisfy JS query without breaking layout -->
+                <div id="playerTags" style="display: none;"></div>
               </div>
-              <h3 class="track-title" id="playerTitle">Uma canção pra você</h3>
-              <p class="track-artist" id="playerArtist">Audiogift · Single</p>
-              
-              <div class="player-tags" id="playerTags">
-                <span class="tag">Romance</span>
-                <span class="tag">Alma</span>
+              <div class="spotify-info-right">
+                <button class="spotify-heart-btn" title="Salvar na sua Biblioteca"><i data-lucide="heart"></i></button>
               </div>
+            </div>
 
-              <div class="prog-wrapper">
-                <div class="prog-bar-container" id="progBar">
-                  <div class="prog-fill" id="progFill"></div>
-                </div>
-                <div class="prog-times">
-                  <span id="timeCur">0:00</span>
-                  <span id="timeDur">0:30</span>
+            <!-- Barra de Progresso e Tempos -->
+            <div class="spotify-progress-section">
+              <div class="prog-bar-container" id="progBar">
+                <div class="prog-fill" id="progFill"></div>
+              </div>
+              <div class="prog-times">
+                <span id="timeCur">0:00</span>
+                <span id="timeDur">0:30</span>
+              </div>
+            </div>
+
+            <!-- Controles de Mídia -->
+            <div class="spotify-controls-row">
+              <button class="ctrl-btn" id="shuffleBtn" title="Ordem aleatória"><i data-lucide="shuffle"></i></button>
+              <button class="ctrl-btn" id="prevBtn" title="Voltar"><i data-lucide="skip-back"></i></button>
+              <button class="spotify-play-btn" id="playBtn" title="Tocar / Pausar">
+                <i data-lucide="play" id="playIcon"></i>
+              </button>
+              <button class="ctrl-btn" id="nextBtn" title="Avançar"><i data-lucide="skip-forward"></i></button>
+              <button class="ctrl-btn" id="repeatBtn" title="Repetir"><i data-lucide="repeat"></i></button>
+            </div>
+
+            <!-- Volume e Rodapé -->
+            <div class="spotify-bottom-row">
+              <div class="vol-control">
+                <button class="ctrl-btn volume-icon-btn" id="volumeMuteBtn"><i data-lucide="volume-2" class="vol-icon"></i></button>
+                <div class="vol-bar-container" id="volBar">
+                  <div class="vol-fill" id="volFill"></div>
                 </div>
               </div>
-
-              <div class="player-controls">
-                <button class="ctrl-btn" id="shuffleBtn" title="Ordem aleatória"><i data-lucide="shuffle"></i></button>
-                <button class="ctrl-btn" id="prevBtn" title="Voltar"><i data-lucide="skip-back"></i></button>
-                <button class="play-btn-large spotify-green-play" id="playBtn" title="Tocar / Pausar">
-                  <i data-lucide="play" id="playIcon"></i>
-                </button>
-                <button class="ctrl-btn" id="nextBtn" title="Avançar"><i data-lucide="skip-forward"></i></button>
-                <button class="ctrl-btn" id="repeatBtn" title="Repetir"><i data-lucide="repeat"></i></button>
-                
-                <div class="vol-control">
-                  <button class="ctrl-btn volume-icon-btn" id="volumeMuteBtn"><i data-lucide="volume-2" class="vol-icon"></i></button>
-                  <div class="vol-bar-container" id="volBar">
-                    <div class="vol-fill" id="volFill"></div>
-                  </div>
-                </div>
+              <div class="spotify-device-info">
+                <i data-lucide="monitor-speaker"></i> Devices Available
               </div>
             </div>
           </div>
 
-          <div class="player-footer" id="playerPlaylist">
-            <!-- Playlist pills generated by JS -->
+          <!-- Playlist de faixas demonstrativas abaixo do player -->
+          <div class="spotify-playlist-wrapper">
+            <h4 class="playlist-title"><i data-lucide="list-music"></i> Escolha uma demonstração:</h4>
+            <div class="player-footer" id="playerPlaylist">
+              <!-- Playlist pills generated by JS -->
+            </div>
           </div>
         </div>
 
@@ -546,10 +816,10 @@ const Experience = () => {
 
 const initSpotifyPlayer = () => {
   const songs = [
-    { title: "Uma canção pra você", artist: "Audiogift", tags: ["Romance", "Alma"], dur: 30, src: "/songs/uma-cancao-pra-voce.mp3", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" },
-    { title: "Pro Amor da Minha Vida", artist: "Audiogift", tags: ["Amor", "Eterno"], dur: 30, src: "/songs/pro-amor-da-minha-vida.mp3", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=400" },
-    { title: "Feliz Aniversário, Meu Bem", artist: "Audiogift", tags: ["Festa", "Alegria"], dur: 30, src: "/songs/feliz-aniversario-meu-bem.mp3", img: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=400" },
-    { title: "Pra Minha Mãe", artist: "Audiogift", tags: ["Família", "Saudade"], dur: 30, src: "/songs/pra-minha-mae.mp3", img: "https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=400" }
+    { title: "A Chave do Teu Coração", artist: "Audiogift", tags: ["Romance", "Alma"], dur: 30, src: "/songs/A Chave do Teu Coração.mp3.mpeg", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" },
+    { title: "Você É Meu Sol", artist: "Audiogift", tags: ["Amor", "Eterno"], dur: 30, src: "/songs/Você É Meu Sol.mp3.mpeg", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=400" },
+    { title: "Minha Princesa, Meu Amor", artist: "Audiogift", tags: ["Festa", "Alegria"], dur: 30, src: "/songs/Minha Princesa, Meu amor..mp3.mpeg", img: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&q=80&w=400" },
+    { title: "Pra Sempre Você", artist: "Audiogift", tags: ["Família", "Saudade"], dur: 30, src: "/songs/Pra Sempre Você.mp3.mpeg", img: "https://images.unsplash.com/photo-1591035897819-f4bdf739f446?auto=format&fit=crop&q=80&w=400" }
   ];
 
   const audio = new Audio();
@@ -592,6 +862,10 @@ const initSpotifyPlayer = () => {
     if (albumImg) {
       albumImg.src = s.img;
       albumImg.style.display = 'block';
+    }
+    const vinylLabel = document.getElementById('vinylLabelImg');
+    if (vinylLabel) {
+      vinylLabel.style.backgroundImage = `url('${s.img}')`;
     }
     
     document.getElementById('playerTitle').textContent = s.title;
@@ -1394,26 +1668,7 @@ const Quiz = (defaultPlan = 'memoravel') => {
     };
     
     const planObj = planNames[answers.plan] || planNames['memoravel'];
-    
-    const EXTRAS_CATALOG = [
-      { id: 'dupla', icon: '🎵', iconColor: '#2e5a44', tag: 'OUTRA PESSOA', tagColor: '#e8f8f0', tagTextColor: '#2e5a44', name: 'Dupla Emoção', price: 49.90, desc: 'Surpreenda outra pessoa especial com uma canção exclusiva' },
-      { id: 'estilos', icon: '🎸', iconColor: '#7c3aed', tag: 'MESMA PESSOA', tagColor: '#f3e8ff', tagTextColor: '#7c3aed', name: 'Mais Estilos Musicais', price: 39.90, desc: `A história de ${answers.name || 'você'} reescrita do zero em outro estilo musical`, priceNote: 'por estilo' },
-      { id: 'experiencia', icon: '🏅', iconColor: '#d97706', tag: 'MAIS EMOCIONANTE', tagColor: '#fef3c7', tagTextColor: '#92400e', name: 'Experiência de Presente', price: 19.90, desc: 'Página exclusiva na internet — prepare os lencinhos pra ver a reação' },
-      { id: 'letra', icon: '📄', iconColor: '#2563eb', tag: 'PARA EMOLDURAR', tagColor: '#eff6ff', tagTextColor: '#1d4ed8', name: 'Letra da Música', price: 14.90, desc: 'Letra em PDF pronta pra imprimir e emoldurar na parede' }
-    ];
-
-    answers.extras = answers.extras || [];
-    let extrasTotal = answers.extras.reduce((sum, id) => {
-      const extra = EXTRAS_CATALOG.find(e => e.id === id);
-      return sum + (extra ? extra.price : 0);
-    }, 0);
-    let totalPrice = planObj.price + extrasTotal;
-    const totalPriceStr = totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-    const extrasSelectedCount = answers.extras.length;
-    const extrasSelectedText = extrasSelectedCount === 0 
-      ? 'Nenhum extra selecionado' 
-      : `${extrasSelectedCount} ${extrasSelectedCount === 1 ? 'extra' : 'extras'} selecionado(s)`;
+    const totalPriceStr = planObj.priceStr;
 
     document.getElementById('quiz-container').innerHTML = `
       <div class="quiz-modal-inner checkout-step-inner">
@@ -1510,22 +1765,6 @@ const Quiz = (defaultPlan = 'memoravel') => {
               </div>
               <div class="option-right">
                 <span class="option-value">${answers.genre || 'Pop Acústico'}</span>
-                <i data-lucide="chevron-right"></i>
-              </div>
-            </div>
-
-            <div class="checkout-option-item" id="btn-open-extras-modal">
-              <div class="option-left">
-                <div class="option-icon-box bg-light-orange text-orange">
-                  <i data-lucide="plus-circle"></i>
-                </div>
-                <div class="option-details">
-                  <h4>Adicionar extras (opcional)</h4>
-                  <p>Confira extras e o valor final antes de pagar</p>
-                </div>
-              </div>
-              <div class="option-right">
-                <span class="option-value" id="extras-summary-val">${extrasSelectedText}</span>
                 <i data-lucide="chevron-right"></i>
               </div>
             </div>
@@ -1631,42 +1870,6 @@ const Quiz = (defaultPlan = 'memoravel') => {
             </div>
           </div>
 
-        </div>
-
-        <!-- Modals outside checkout-body reveal to prevent transform stacking context bugs -->
-        <div class="extras-modal-overlay" id="extras-modal-overlay">
-          <div class="extras-modal">
-            <button class="extras-modal-close" id="extras-modal-close">×</button>
-            <h2 class="extras-modal-title">Torne Seu Presente Inesquecível</h2>
-            <p class="extras-modal-subtitle">Opções especiais escolhidas por 67% dos nossos clientes</p>
-            <div class="extras-modal-list" id="extras-modal-list">
-              ${EXTRAS_CATALOG.map(extra => `
-                <div class="extras-modal-item ${answers.extras.includes(extra.id) ? 'selected' : ''}" data-extra-id="${extra.id}">
-                  <div class="extras-radio-circle ${answers.extras.includes(extra.id) ? 'checked' : ''}"></div>
-                  <span class="extras-item-icon">${extra.icon}</span>
-                  <div class="extras-item-info">
-                    <div class="extras-item-header">
-                      <strong>${extra.name}</strong>
-                      <span class="extras-item-tag" style="background:${extra.tagColor};color:${extra.tagTextColor}">${extra.tag}</span>
-                    </div>
-                    <p class="extras-item-desc">${extra.desc}</p>
-                  </div>
-                  <div class="extras-item-price">
-                    <span>+R$${extra.price.toFixed(2).replace('.', ',')}</span>
-                    ${extra.priceNote ? `<small>${extra.priceNote}</small>` : ''}
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-            <div class="extras-modal-footer">
-              <div class="extras-modal-total">
-                <span>Total do Pedido</span>
-                <strong id="extras-modal-total-val">${totalPriceStr}</strong>
-              </div>
-              <button class="btn-extras-save" id="btn-extras-save">Salvar extras • ${totalPriceStr}</button>
-              <button class="btn-extras-clear" id="btn-extras-clear">Limpar extras</button>
-            </div>
-          </div>
         </div>
 
         <div class="story-edit-overlay" id="story-edit-overlay">
@@ -1975,33 +2178,35 @@ const Quiz = (defaultPlan = 'memoravel') => {
         return;
       }
       
-      const planNames = {
-        'especial': 'Plano Especial (R$ 89,90)',
-        'memoravel': 'Plano Memorável (R$ 149,90)',
-        'inesquecivel': 'Plano Inesquecível VIP (R$ 199,90)'
+      const kiwifyLinks = {
+        'especial': 'https://pay.kiwify.com.br/yZYhb1T',
+        'memoravel': 'https://pay.kiwify.com.br/1RiFp8q',
+        'inesquecivel': 'https://pay.kiwify.com.br/VZnGyRD'
       };
-      const planName = planNames[answers.plan] || answers.plan;
       
-      const whatsappMsg = `Olá! Acabei de criar meu pedido no site da AudioGift e quero finalizar o pagamento.
+      const baseUrl = kiwifyLinks[answers.plan] || kiwifyLinks['memoravel'];
       
-📋 *Detalhes do Pedido:*
-- *Plano:* ${planName}
-- *Para quem:* ${answers.forWho || 'Não informado'}
-- *Ocasião:* ${answers.occasion || 'Não informado'}
-- *Nome do homenageado:* ${answers.name || 'Não informado'}
-- *Estilo Musical:* ${answers.genre || 'Não informado'}
-- *Voz:* ${answers.voice || 'Não informado'}
-- *E-mail:* ${answers.email || 'Não informado'}
-- *WhatsApp:* ${answers.phone || 'Não informado'}
-
-✍️ *História enviada:*
-"${answers.story ? answers.story.substring(0, 150) + '...' : 'Não informado'}"`;
-
-      const encodedMsg = encodeURIComponent(whatsappMsg);
-      const whatsappUrl = `https://wa.me/5511999999999?text=${encodedMsg}`;
+      // Build checkout URL with prefill parameters and metadata parameters
+      const params = [];
+      if (answers.email) params.push(`email=${encodeURIComponent(answers.email)}`);
+      if (answers.phone) {
+        params.push(`phone=${encodeURIComponent(answers.phone)}`);
+        params.push(`mobile=${encodeURIComponent(answers.phone)}`);
+      }
+      if (answers.forWho) params.push(`para_quem=${encodeURIComponent(answers.forWho)}`);
+      if (answers.occasion) params.push(`ocasiao=${encodeURIComponent(answers.occasion)}`);
+      if (answers.name) params.push(`homenageado=${encodeURIComponent(answers.name)}`);
+      if (answers.genre) params.push(`estilo=${encodeURIComponent(answers.genre)}`);
+      if (answers.voice) params.push(`voz=${encodeURIComponent(answers.voice)}`);
+      if (answers.feelings) params.push(`qualidades=${encodeURIComponent(answers.feelings)}`);
+      if (answers.story) params.push(`historia=${encodeURIComponent(answers.story)}`);
+      if (answers.message) params.push(`mensagem=${encodeURIComponent(answers.message)}`);
+      if (answers.babyName) params.push(`bebe_nome=${encodeURIComponent(answers.babyName)}`);
       
-      alert('Tudo certo! Redirecionando para o WhatsApp do suporte da AudioGift para finalizar o pagamento via PIX...');
-      window.open(whatsappUrl, '_blank');
+      const checkoutUrl = `${baseUrl}?${params.join('&')}`;
+      
+      alert('Tudo certo! Redirecionando para a página segura de pagamento da Kiwify...');
+      window.location.href = checkoutUrl;
       document.getElementById('quiz-overlay').classList.remove('active');
     };
 
@@ -2338,63 +2543,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 
-// Testimonials Carousel Logic
-const initTestimonialsCarousel = () => {
-  const track = document.getElementById('testimonialTrack');
-  const prev = document.getElementById('testiPrev');
-  const next = document.getElementById('testiNext');
-  const dots = document.querySelectorAll('#testiDots .dot');
-  
-  if (!track || !prev || !next) return;
 
-  let currentIdx = 0;
-  const cardWidth = 350 + 32; // card + gap
-  const totalCards = document.querySelectorAll('.testimonial-card').length;
-  const viewportWidth = document.getElementById('testimonialViewport').offsetWidth;
-  const cardsInView = Math.floor(viewportWidth / cardWidth) || 1;
-  const maxIdx = totalCards - cardsInView;
-
-  const update = () => {
-    track.style.transform = `translateX(-${currentIdx * cardWidth}px)`;
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentIdx);
-    });
-  };
-
-  next.addEventListener('click', () => {
-    if (currentIdx < maxIdx) {
-      currentIdx++;
-      update();
-    } else {
-      currentIdx = 0; // Loop back
-      update();
-    }
-  });
-
-  prev.addEventListener('click', () => {
-    if (currentIdx > 0) {
-      currentIdx--;
-      update();
-    } else {
-      currentIdx = maxIdx; // Go to end
-      update();
-    }
-  });
-
-  // Clickable dots
-  dots.forEach((dot, idx) => {
-    dot.style.cursor = 'pointer';
-    dot.addEventListener('click', () => {
-      if (idx <= maxIdx) {
-        currentIdx = idx;
-        update();
-      }
-    });
-  });
-
-  // Auto-init icons for dynamic content
-  lucide.createIcons();
-};
 
 // --- GLOBAL AUDIO COORDINATOR ---
 window.GlobalAudio = {
@@ -2562,6 +2711,12 @@ const initAllAudioPlayers = () => {
     
     const audio = new Audio(src);
     
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.wa-play-small')) return;
+      playBtn.click();
+    });
+    
     playBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -2583,7 +2738,16 @@ const initAllAudioPlayers = () => {
       }
     });
     
+    audio.addEventListener('play', () => {
+      card.classList.add('playing');
+    });
+    
+    audio.addEventListener('pause', () => {
+      card.classList.remove('playing');
+    });
+    
     audio.addEventListener('ended', () => {
+      card.classList.remove('playing');
       if (waveFill) waveFill.style.width = '0%';
       if (timeLabel) timeLabel.textContent = '0:30';
     });
@@ -2593,26 +2757,20 @@ const initAllAudioPlayers = () => {
 // --- MUSIC STYLES FILTER AND SEARCH ---
 const initMusicStylesFilter = () => {
   const searchInput = document.querySelector('.search-input');
-  const voiceToggleBtns = document.querySelectorAll('.voice-toggle .toggle-btn');
-  const tagBtns = document.querySelectorAll('.genre-tags .tag-btn');
   const styleCards = document.querySelectorAll('.style-player-card');
 
   if (!searchInput || !styleCards.length) return;
 
-  let activeVoice = 'Masculina';
-  let activeTag = 'Todos';
   let searchQuery = '';
 
   const filterCards = () => {
     styleCards.forEach(card => {
       const genreName = card.getAttribute('data-genre').toLowerCase();
-      const cardVoice = card.getAttribute('data-voice');
+      const songTitle = (card.querySelector('.genre-name-label')?.textContent || '').toLowerCase();
 
-      const matchesSearch = genreName.includes(searchQuery);
-      const matchesVoice = (cardVoice === activeVoice || cardVoice === 'Instrumental');
-      const matchesTag = (activeTag === 'Todos' || genreName === activeTag.toLowerCase());
+      const matchesSearch = genreName.includes(searchQuery) || songTitle.includes(searchQuery);
 
-      if (matchesSearch && matchesVoice && matchesTag) {
+      if (matchesSearch) {
         card.style.display = 'block';
         card.classList.add('visible');
       } else {
@@ -2625,24 +2783,6 @@ const initMusicStylesFilter = () => {
   searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value.toLowerCase().trim();
     filterCards();
-  });
-
-  voiceToggleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      voiceToggleBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeVoice = btn.textContent.trim();
-      filterCards();
-    });
-  });
-
-  tagBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tagBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeTag = btn.textContent.trim();
-      filterCards();
-    });
   });
 
   filterCards();
@@ -2694,7 +2834,7 @@ const renderRoute = () => {
       ${Hero()}
       ${HowItWorks()}
       ${MusicStyles()}
-      ${TestimonialsCarousel()}
+      ${SocialProofSection()}
       ${Categories()}
       ${Experience()}
       ${Warranty()}
@@ -2725,11 +2865,11 @@ const renderRoute = () => {
   });
 
   // Re-initialize dynamic components on the route
-  initTestimonialsCarousel();
   initSpotifyPlayer();
   initAllAudioPlayers();
   initMusicStylesFilter();
   initMagneticButtons();
+  initSocialProof();
 
   if (window.lucide) {
     lucide.createIcons();
