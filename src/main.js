@@ -19,48 +19,21 @@ const app = document.querySelector('#app')
 
 const AnnouncementBar = () => `
   <div class="announcement-bar">
-    <div class="container announcement-content">
-      
-      <!-- Video Thumbnail/Mini-player -->
-      <div class="announcement-video-wrap proof-video-card" 
-           data-video-url="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479" 
-           data-aspect="vertical">
-        <iframe 
-          class="announcement-video-frame video-desktop" 
-          src="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1" 
-          frameborder="0" 
-          allow="autoplay; fullscreen" 
-          style="pointer-events: none;"
-          title="Dia dos Namorados - Desktop">
-        </iframe>
-        <iframe 
-          class="announcement-video-frame video-mobile" 
-          src="https://player.vimeo.com/video/1195222822?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1" 
-          frameborder="0" 
-          allow="autoplay; fullscreen" 
-          style="pointer-events: none;"
-          title="Dia dos Namorados - Mobile">
-        </iframe>
-        <div class="announcement-video-play-btn">
-          <i data-lucide="play" style="width: 11px; height: 11px; color: white; fill: white;"></i>
-        </div>
-      </div>
-
-      <!-- Text Side -->
-      <div class="announcement-text-side">
-        <div class="announcement-badge">
-          <i data-lucide="heart" style="color: #ff3366; fill: #ff3366;"></i>
-          <span>ESPECIAL DIA DOS NAMORADOS</span>
-        </div>
-        <p class="announcement-text">
-          Surpreenda com uma música exclusiva. <strong>Satisfação garantida ou seu dinheiro de volta</strong>.
-        </p>
-      </div>
-
-      <!-- CTA -->
-      <a href="#create" class="announcement-link">
-        Criar Música <i data-lucide="arrow-right"></i>
-      </a>
+    <div class="announcement-video-container">
+      <iframe 
+        class="announcement-video video-desktop" 
+        src="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        title="Dia dos Namorados - Desktop">
+      </iframe>
+      <iframe 
+        class="announcement-video video-mobile" 
+        src="https://player.vimeo.com/video/1195222822?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        title="Dia dos Namorados - Mobile">
+      </iframe>
     </div>
   </div>
 `
