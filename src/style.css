@@ -167,74 +167,87 @@ button {
 
 /* Announcement Bar */
 .announcement-bar {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: #000;
   color: white;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  width: 100%;
+  position: relative;
+  z-index: 100;
 }
 
-.announcement-video-container {
-  position: absolute;
-  top: 0;
-  left: 0;
+.announcement-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 20px;
+}
+
+.announcement-video-wrap {
+  height: 52px;
+  aspect-ratio: 9/16; /* Vertical video aspect ratio */
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  border: 1.5px solid rgba(255, 51, 102, 0.4);
+  flex-shrink: 0;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
+}
+
+.announcement-video-wrap:hover {
+  transform: scale(1.08);
+  border-color: #ff3366;
+  box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+}
+
+.announcement-video-frame {
   width: 100%;
   height: 100%;
-  z-index: 1;
+  border: none;
+  background: #111;
   pointer-events: none;
-  overflow: hidden;
+  transform: scale(1.35); /* zoom slightly to crop black edges of the vimeo player */
 }
 
-.announcement-video {
+.announcement-video-play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: #000;
-}
-
-/* Force iframe covering aspect ratio */
-@media (min-aspect-ratio: 16/9) {
-  .announcement-video {
-    height: 300%;
-    width: 100%;
-  }
-}
-@media (max-aspect-ratio: 16/9) {
-  .announcement-video {
-    width: 300%;
-    height: 100%;
-  }
-}
-
-.announcement-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(20,5,5,0.7) 50%, rgba(0,0,0,0.85) 100%);
-  z-index: 2;
-}
-
-.announcement-content {
-  position: relative;
-  z-index: 3;
+  background: rgba(255, 51, 102, 0.95);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 2.5rem;
-  width: 100%;
-  padding: 12px 0;
+  justify-content: center;
+  z-index: 5;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.announcement-video-play-btn i {
+  width: 11px;
+  height: 11px;
+  color: white;
+  fill: white;
+  margin-left: 1px;
+}
+
+.announcement-video-wrap:hover .announcement-video-play-btn {
+  background: #ff3366;
+}
+
+.announcement-text-side {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-grow: 1;
 }
 
 .announcement-badge {
@@ -247,13 +260,16 @@ button {
   border-radius: 50px;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   border: 1px solid rgba(255, 51, 102, 0.3);
+  white-space: nowrap;
 }
 
 .announcement-text {
   margin: 0;
   opacity: 0.9;
+  font-size: 0.85rem;
+  line-height: 1.4;
   letter-spacing: -0.2px;
 }
 
@@ -264,9 +280,12 @@ button {
   align-items: center;
   gap: 6px;
   font-weight: 700;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
   border-bottom: 1px solid rgba(255, 51, 102, 0.4);
   padding-bottom: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .announcement-link:hover {
@@ -275,40 +294,36 @@ button {
   gap: 10px;
 }
 
+@media (max-width: 991px) {
+  .announcement-content {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    padding: 15px 15px;
+  }
+  .announcement-text-side {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .announcement-video-wrap {
+    height: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .video-desktop { display: none !important; }
   .video-mobile { display: block !important; }
-  .announcement-content {
-    flex-direction: column;
-    gap: 8px;
-    padding: 14px 10px;
-    text-align: center;
-  }
-}
-
-@media (min-width: 769px) {
-  .video-desktop { display: block !important; }
-  .video-mobile { display: none !important; }
-}
-
-@media (max-width: 900px) {
-  .announcement-content {
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .announcement-content {
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 8px 0;
-  }
   .announcement-badge {
     font-size: 0.65rem;
   }
   .announcement-text {
     font-size: 0.8rem;
   }
+}
+
+@media (min-width: 769px) {
+  .video-desktop { display: block !important; }
+  .video-mobile { display: none !important; }
 }
 
 /* Header */
