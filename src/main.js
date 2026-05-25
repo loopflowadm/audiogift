@@ -19,7 +19,7 @@ const app = document.querySelector('#app')
 
 const AnnouncementBar = () => `
   <div class="announcement-bar">
-    <div class="announcement-video-container">
+    <div class="container announcement-content">
       <iframe 
         class="announcement-video video-desktop" 
         src="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
