@@ -2885,7 +2885,7 @@ initMobileMenu();
 // Listen to hash change for routing
 window.addEventListener('hashchange', renderRoute);
 
-// --- CUSTOM CURSOR LOGIC ---
+// --- CUSTOM CURSOR LOGIC WITH VALENTINE'S DAY EFFECTS ---
 if (window.matchMedia('(pointer: fine)').matches) {
   const cursorDot = document.createElement('div');
   cursorDot.className = 'cursor-dot';
@@ -2899,21 +2899,61 @@ if (window.matchMedia('(pointer: fine)').matches) {
   let mouseY = 0;
   let outlineX = 0;
   let outlineY = 0;
+  
+  let lastX = 0;
+  let lastY = 0;
+  const minDistance = 50; // distância mínima em pixels para spawnar o próximo coração
+
+  const spawnHeart = (x, y) => {
+    const heart = document.createElement('div');
+    heart.className = 'heart-trail';
+    const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#FC7301', '#ffb3c1'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    heart.innerHTML = `<svg viewBox="0 0 24 24" fill="${randomColor}" width="100%" height="100%"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+    
+    heart.style.left = `${x}px`;
+    heart.style.top = `${y}px`;
+    
+    const size = Math.random() * 8 + 8; // 8px a 16px
+    heart.style.width = `${size}px`;
+    heart.style.height = `${size}px`;
+    
+    const driftY = -50 - Math.random() * 50; // flutuar para cima
+    const driftX = (Math.random() - 0.5) * 60; // balanço horizontal
+    const rotate = (Math.random() - 0.5) * 60; // rotação leve
+    
+    heart.style.setProperty('--drift-x', `${driftX}px`);
+    heart.style.setProperty('--drift-y', `${driftY}px`);
+    heart.style.setProperty('--rotate', `${rotate}deg`);
+    
+    document.body.appendChild(heart);
+    
+    setTimeout(() => {
+      heart.remove();
+    }, 1000);
+  };
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    
+    // Calcula a distância percorrida desde o último coração gerado
+    const dist = Math.hypot(mouseX - lastX, mouseY - lastY);
+    if (dist > minDistance) {
+      spawnHeart(mouseX, mouseY);
+      lastX = mouseX;
+      lastY = mouseY;
+    }
   });
 
   const animate = () => {
     let distX = mouseX - outlineX;
     let distY = mouseY - outlineY;
     
-    // Snappier 0.32 lerp for instant responsive tracking
     outlineX = outlineX + distX * 0.32;
     outlineY = outlineY + distY * 0.32;
     
-    // GPU hardware-accelerated translate3d transforms
     cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
     cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
     
@@ -2921,9 +2961,9 @@ if (window.matchMedia('(pointer: fine)').matches) {
   };
   animate();
 
-  // Re-bind hover events periodically in case of dynamic DOM changes
+  // Re-bind de eventos de hover periodicamente
   setInterval(() => {
-    const interactables = document.querySelectorAll('a, button, .btn-primary-new, .btn-nav-gold, .pill-option, .faq-question');
+    const interactables = document.querySelectorAll('a, button, .btn-primary-new, .btn-nav-gold, .pill-option, .faq-question, .song-pill');
     interactables.forEach(el => {
       if(!el.dataset.cursorBound) {
         el.dataset.cursorBound = 'true';
