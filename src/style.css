@@ -564,14 +564,11 @@ button {
 .smartphone-mockup {
   position: relative;
   width: 300px;
-  height: 533px; /* Proporção 9:16 exata */
-  background: #000;
-  border: 12px solid #000; /* Bezel do iPhone */
+  height: 604px; /* Proporção do SVG exata (152670x307380) */
+  background: transparent;
+  border: none;
   border-radius: 40px;
-  box-shadow: 
-    0 0 0 2px #2f2f31, /* Contorno metálico */
-    0 25px 55px rgba(0, 0, 0, 0.4),
-    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -581,18 +578,27 @@ button {
 .smartphone-mockup:hover {
   transform: translateY(-8px) rotateY(-4px) rotateX(2px);
   box-shadow: 
-    0 0 0 2px var(--primary-orange),
-    0 35px 70px rgba(252, 115, 1, 0.2),
+    0 35px 70px rgba(252, 115, 1, 0.25),
     0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-.smartphone-screen {
+.phone-svg-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 30px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.smartphone-screen {
+  position: absolute;
+  top: 3.6%; /* Alinhado precisamente com o recorte transparente da tela */
+  bottom: 3.6%;
+  left: 5%;
+  right: 5%;
+  border-radius: 30px; /* Cantos curvos internos da tela */
   overflow: hidden;
   background: #000;
   z-index: 1;
@@ -600,38 +606,24 @@ button {
 
 .smartphone-speaker {
   position: absolute;
-  top: -6px; /* Posicionado perfeitamente no bezel superior */
+  top: 7px; /* Senta perfeitamente sobre a área do speaker na moldura superior */
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
+  width: 45px;
   height: 3px;
   background: #2a2a2e;
   border-radius: 10px;
-  z-index: 16;
-}
-
-.smartphone-dynamic-island {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 82px;
-  height: 24px;
-  background: #000000;
-  border-radius: 20px;
   z-index: 15;
-  border: 1px solid rgba(255, 255, 255, 0.08); /* Borda fina da lente */
-  box-shadow: inset 0 0.5px 1px rgba(255, 255, 255, 0.15);
 }
 
 .smartphone-home-bar {
   position: absolute;
-  bottom: 8px;
+  bottom: 24px; /* Posicionado acima do bezel inferior */
   left: 50%;
   transform: translateX(-50%);
   width: 100px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.85); /* Brilho aumentado */
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   z-index: 15;
 }
@@ -747,20 +739,15 @@ button {
   }
   .smartphone-mockup {
     width: 260px;
-    height: 462px; /* Proporção 9:16 exata no mobile */
-    border-width: 9px;
+    height: 523px; /* Proporção do SVG exata no mobile */
+    border: none;
     border-radius: 34px;
   }
   .smartphone-screen {
     border-radius: 24px;
   }
-  .smartphone-dynamic-island {
-    width: 70px;
-    height: 20px;
-    top: 10px;
-  }
   .smartphone-speaker {
-    top: -5px; /* Alinhado ao bezel móvel */
+    top: 6px;
     width: 35px;
     height: 2.5px;
   }

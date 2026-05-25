@@ -226,6 +226,10 @@ const Hero = () => `
 
         <div class="hero-visual-wrapper reveal" data-delay="2">
           <div class="smartphone-mockup proof-video-card" data-video-url="https://player.vimeo.com/video/1195075467?badge=0&autopause=0&player_id=0&app_id=58479" data-aspect="vertical">
+            <!-- iPhone SVG Frame Overlay -->
+            <svg class="phone-svg-overlay" viewBox="0 0 152670 307380" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="black" fill-rule="nonzero" d="M24880 0l102460 0c6450,0 12300,2630 16550,6880 4240,4240 6870,10100 6870,16540l0 54820 1910 0 0 40170 -1910 0 0 165550c0,6450 -2630,12300 -6870,16550 -4250,4240 -10100,6870 -16550,6870l-102460 0c-6440,0 -12300,-2630 -16540,-6870 -4240,-4250 -6880,-10100 -6880,-16550l0 -160060 -1460 0 0 -23420 1460 0 0 -6730 -1460 0 0 -23420 1460 0 0 -10320 -1460 0 0 -12810 1460 0 0 -23780c0,-6440 2640,-12300 6880,-16540 4240,-4250 10100,-6880 16540,-6880zm39450 11490l24010 0c2330,0 4240,1910 4240,4240l0 0c0,2340 -1910,4250 -4240,4250l-24010 0c-2330,0 -4240,-1910 -4240,-4250l0 0c0,-2330 1910,-4240 4240,-4240zm63010 -5630l-102460 0c-4820,0 -9210,1970 -12400,5160 -3180,3180 -5160,7570 -5160,12400l0 260540c0,4830 1980,9220 5160,12410 3190,3180 7580,5160 12400,5160l102460 0c4830,0 9220,-1980 12410,-5160 3180,-3190 5160,-7580 5160,-12410l0 -260540c0,-4830 -1980,-9220 -5160,-12400 -3190,-3190 -7580,-5160 -12410,-5160z"/>
+            </svg>
             <div class="smartphone-screen">
               <iframe 
                 class="hero-video" 
@@ -237,7 +241,6 @@ const Hero = () => `
               </iframe>
             </div>
             <div class="smartphone-speaker"></div>
-            <div class="smartphone-dynamic-island"></div>
             <div class="smartphone-home-bar"></div>
             <button class="btn-play-example" aria-label="Ouvir Exemplo em Tela Cheia">
               <i data-lucide="volume-2"></i>
