@@ -1,8 +1,9 @@
 import './style.css'
+import { db, adminPassword } from './supabaseClient.js'
+import { runAiAgent, generateLyrics, generatePrompt, buildChatgptPrompt } from './agentEngine.js'
 
 const Logo = (baseColor = 'white', giftColor = '#FC7301') => `
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="5811px" height="1626px" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
-viewBox="0 0 1507040 421800"
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 1507040 421800" style="width: 100%; height: auto; display: block;" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
  xmlns:xlink="http://www.w3.org/1999/xlink"
  xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
  <g id="Camada_x0020_1">
@@ -48,7 +49,7 @@ const Pricing = () => `
       
       <div class="pricing-grid mt-12">
         <div class="pricing-card reveal" data-delay="1">
-          <h3 class="plan-name">Especial</h3>
+          <h3 class="plan-name">Audio Gift Especial</h3>
           <div class="plan-price">
             <span class="currency">R$</span>
             <span class="amount">89,90</span>
@@ -66,7 +67,7 @@ const Pricing = () => `
 
         <div class="pricing-card popular reveal" data-delay="2">
           <div class="popular-badge">Mais Escolhido</div>
-          <h3 class="plan-name">Memorável</h3>
+          <h3 class="plan-name">Audio Gift Memorável</h3>
           <div class="plan-price">
             <span class="currency">R$</span>
             <span class="amount">149,90</span>
@@ -83,7 +84,7 @@ const Pricing = () => `
         </div>
 
         <div class="pricing-card vip reveal" data-delay="3">
-          <h3 class="plan-name" style="color: #cda851; font-weight: 800;">★ VIP • Inesquecível</h3>
+          <h3 class="plan-name" style="color: #cda851; font-weight: 800;">★ VIP • Audio Gift Inesquecível</h3>
           <div class="plan-price">
             <span class="currency">R$</span>
             <span class="amount">199,90</span>
@@ -430,7 +431,7 @@ const SocialProofSection = () => {
               return `
                 <div class="proof-video-card bento-item reveal ${item.aspect === 'vertical' ? 'bento-portrait' : 'bento-square'}" data-delay="${(idx % 4) + 1}" data-video-url="${item.videoUrl}" data-aspect="${item.aspect}">
                   <div class="video-cover-wrap">
-                    <img class="cover-img" src="${item.img}" alt="${item.title}">
+                    <img class="cover-img" src="${item.img}" alt="${item.title}" loading="lazy">
                     <div class="video-overlay-gradient"></div>
                     <div class="video-duration"><i data-lucide="clock"></i> ${item.duration}</div>
                     <span class="video-tag">${item.tag}</span>
@@ -461,19 +462,23 @@ const SocialProofSection = () => {
 
       <!-- Video Player Modal -->
       <div class="video-modal-overlay" id="videoModalOverlay">
-        <div class="video-modal-content" id="videoModalContent">
+        <div class="video-modal-wrapper">
           <button class="video-modal-close" id="videoModalClose" aria-label="Fechar vídeo">&times;</button>
-          <div class="video-player-container" id="modalVideoContainer" style="width:100%; height:100%;">
-            <!-- Dynamic video player or iframe will be inserted here -->
+          <div class="video-modal-content" id="videoModalContent">
+            <div class="video-player-container" id="modalVideoContainer" style="width:100%; height:100%;">
+              <!-- Dynamic video player or iframe will be inserted here -->
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Image Lightbox Modal -->
       <div class="image-modal-overlay" id="imageModalOverlay">
-        <div class="image-modal-content-lightbox">
+        <div class="image-modal-wrapper">
           <button class="image-modal-close" id="imageModalCloseBtn" aria-label="Fechar imagem">&times;</button>
-          <img id="lightboxImage" src="" alt="Feedback Ampliado">
+          <div class="image-modal-content-lightbox">
+            <img id="lightboxImage" src="" alt="Feedback Ampliado">
+          </div>
         </div>
       </div>
     </section>
@@ -626,7 +631,7 @@ const initSocialProof = () => {
 
     videoCloseBtn.addEventListener('click', closeVideoModal);
     videoModal.addEventListener('click', (e) => {
-      if (e.target === videoModal || e.target.classList.contains('video-player-container')) {
+      if (!e.target.closest('.video-modal-content') && !e.target.closest('.video-modal-close')) {
         closeVideoModal();
       }
     });
@@ -655,7 +660,7 @@ const initSocialProof = () => {
 
     imageCloseBtn.addEventListener('click', closeImageModal);
     imageModal.addEventListener('click', (e) => {
-      if (e.target === imageModal || e.target.classList.contains('image-modal-content-lightbox')) {
+      if (!e.target.closest('.image-modal-content-lightbox') && !e.target.closest('#imageModalCloseBtn')) {
         closeImageModal();
       }
     });
@@ -698,7 +703,7 @@ const Categories = () => {
           <div class="cat-track">
             ${[...cats, ...cats].map((cat, i) => `
               <div class="cat-story-card">
-                <img src="${cat.img}" alt="${cat.title}">
+                <img src="${cat.img}" alt="${cat.title}" loading="lazy">
                 <div class="cat-story-overlay">
                   <h4>${cat.title}</h4>
                 </div>
@@ -1272,7 +1277,81 @@ const Footer = () => `
 
 
 const Quiz = (defaultPlan = 'memoravel') => {
-  window.Quiz = Quiz;
+  window.location.hash = `#quiz?plan=${defaultPlan}`;
+};
+window.Quiz = Quiz;
+
+const QuizEngine = (defaultPlan = 'memoravel') => {
+  
+  // Injetar estilos dinâmicos para contornar qualquer problema de cache do arquivo CSS externo
+  let styleEl = document.getElementById('quiz-dynamic-styles');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'quiz-dynamic-styles';
+    styleEl.innerHTML = `
+      .quiz-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(15, 15, 15, 0.45) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        z-index: 2000 !important;
+        display: none !important;
+        overflow-y: auto !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+      }
+      .quiz-overlay.active {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        opacity: 1 !important;
+      }
+      .quiz-modal-inner {
+        max-width: 720px !important;
+        width: 90% !important;
+        margin: 40px auto !important;
+        padding: 32px 40px 40px !important;
+        background: #ffffff !important;
+        border-radius: 24px !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.03) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: auto !important;
+      }
+      .quiz-body {
+        flex: none !important;
+        text-align: center !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
+      @media (max-width: 768px) {
+        .quiz-overlay {
+          background: #ffffff !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+        }
+        .quiz-overlay.active {
+          display: block !important;
+        }
+        .quiz-modal-inner {
+          padding: 20px 20px 28px !important;
+          margin: 0 auto !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          background: #ffffff !important;
+          min-height: 100vh !important;
+          width: 100% !important;
+        }
+      }
+    `;
+    document.head.appendChild(styleEl);
+  }
+
   const steps = [
     {
       title: 'Vamos começar pelo básico',
@@ -1292,9 +1371,15 @@ const Quiz = (defaultPlan = 'memoravel') => {
             `).join('')}
           </div>
           <div class="quiz-input-group mt-3">
-            <label class="quiz-label">Nome do homenageado(a) que aparecerá na música</label>
+            <label class="quiz-label">Nome do homenageado(a) que aparecerá na música *</label>
             <input type="text" placeholder="Digite o primeiro nome" class="quiz-input" id="quizName">
             <p class="quiz-hint">Dica: use a acentuação correta para garantir a pronúncia (ex: Thaís, Jéssica, Luísa).</p>
+          </div>
+          <label class="quiz-label mt-3">Você gostaria de ter o nome dele(a) falado na música? *</label>
+          <div class="quiz-options speak-name-options">
+            <button class="pill-option" data-value="Sim">Sim</button>
+            <button class="pill-option" data-value="Não">Não</button>
+            <button class="pill-option" data-value="Tanto faz">Tanto faz</button>
           </div>
         </div>
       `
@@ -1315,16 +1400,22 @@ const Quiz = (defaultPlan = 'memoravel') => {
             <button class="pill-option" data-value="Voz Feminina">Voz Feminina</button>
             <button class="pill-option" data-value="Voz Masculina">Voz Masculina</button>
           </div>
+          <label class="quiz-label mt-3">Como essa música deve fazer ele(a) se sentir? (Vibe/Clima) - Selecione até 2 *</label>
+          <div class="quiz-options vibe-options">
+            ${['Sincero', 'Romântico', 'Cômico', 'Reflexivo', 'Motivacional', 'Alegre'].map(opt => `
+              <button class="pill-option multi-pill" data-value="${opt}">${opt}</button>
+            `).join('')}
+          </div>
         </div>
       `
     },
     {
-      title: 'Como ela faz você se sentir?',
+      title: 'Como ele(a) faz você se sentir?',
       subtitle: 'Descreva tudo que essa pessoa significa para você e o porquê merece essa linda homenagem',
       content: `
         <div class="quiz-step-content">
-          <label class="quiz-label">Como ela faz você se sentir? *</label>
-          <textarea class="quiz-textarea" placeholder="Ele(a) é paciente, sábio(a), engraçado(a), encorajador(a), piedoso(a)? O que faz dessa pessoa alguém incrível para você? O que você sente quando pensa nele(a) ou está com ele(a)? Por que ela significa tanto para você?"></textarea>
+          <label class="quiz-label">Como ele(a) faz você se sentir? *</label>
+          <textarea class="quiz-textarea" placeholder="Ele(a) é paciente, sábio(a), engraçado(a), encorajador(a), piedoso(a)? O que faz dessa pessoa alguém incrível para você? O que você sente quando pensa nele(a) ou está com ele(a)? Por que ele(a) significa tanto para você?"></textarea>
           <div class="text-right"><span class="word-count">0 palavras</span></div>
         </div>
       `
@@ -1364,7 +1455,7 @@ const Quiz = (defaultPlan = 'memoravel') => {
             <div class="pricing-card-horizontal" data-plan="especial">
               <div class="plan-icon-box"><i data-lucide="clock"></i></div>
               <div class="plan-info">
-                <h3>Especial • <span>entrega em 7 dias</span></h3>
+                <h3>Audio Gift Especial • <span>entrega em 7 dias</span></h3>
                 <p>Ideal para quem pode esperar um pouco mais</p>
               </div>
               <div class="plan-price">R$ 89,90</div>
@@ -1375,7 +1466,7 @@ const Quiz = (defaultPlan = 'memoravel') => {
               <div class="plan-badge-top">MAIS POPULAR</div>
               <div class="plan-icon-box"><i data-lucide="rocket"></i></div>
               <div class="plan-info">
-                <h3>Memorável • <span>entrega em até 72h</span></h3>
+                <h3>Audio Gift Memorável • <span>entrega em até 72h</span></h3>
                 <p>Letra em PDF + Playback instrumental</p>
               </div>
               <div class="plan-price">R$ 149,90</div>
@@ -1386,7 +1477,7 @@ const Quiz = (defaultPlan = 'memoravel') => {
               <div class="plan-badge-top-vip">★ VIP</div>
               <div class="plan-icon-box"><i data-lucide="zap"></i></div>
               <div class="plan-info">
-                <h3>Inesquecível • <span>entrega em até 24h</span></h3>
+                <h3>Audio Gift Inesquecível • <span>entrega em até 24h</span></h3>
                 <p>Prioridade Máxima + Letra em PDF + Playback instrumental + sua música nos streamings (Spotify, Deezer e outros)</p>
               </div>
               <div class="plan-price">R$ 199,90</div>
@@ -1463,22 +1554,26 @@ const Quiz = (defaultPlan = 'memoravel') => {
     forWho: '',
     occasion: '',
     name: '',
+    speakName: '',
     genre: '',
     voice: '',
+    vibes: [],
     feelings: '',
     story: '',
     message: '',
     babyName: '',
     plan: defaultPlan,
+    customerName: '',
     email: '',
-    phone: ''
+    phone: '',
+    extras: []
   };
 
   const checkStepValidity = () => {
     if (currentStep === 0) {
-      return !!(answers.forWho && answers.occasion);
+      return !!(answers.forWho && answers.occasion && answers.name && answers.name.trim().length >= 1 && answers.speakName);
     } else if (currentStep === 1) {
-      return !!answers.genre;
+      return !!(answers.genre && answers.vibes && answers.vibes.length >= 1 && answers.vibes.length <= 2);
     } else if (currentStep === 2) {
       return answers.feelings && answers.feelings.trim().length >= 5;
     } else if (currentStep === 3) {
@@ -1492,8 +1587,10 @@ const Quiz = (defaultPlan = 'memoravel') => {
         ? document.getElementById('whatsapp-followup').checked 
         : true;
       const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email || '');
-      const isPhoneValid = !isWhatsappChecked || (answers.phone && answers.phone.trim().length >= 8);
-      return isEmailValid && isPhoneValid;
+      const digitsOnly = (answers.phone || '').replace(/\D/g, '');
+      const isPhoneValid = !isWhatsappChecked || (digitsOnly.length >= 10);
+      const isNameValid = !!(answers.customerName && answers.customerName.trim().length >= 2);
+      return isEmailValid && isPhoneValid && isNameValid;
     }
     return true;
   };
@@ -1522,6 +1619,9 @@ const Quiz = (defaultPlan = 'memoravel') => {
 
       const inputName = document.getElementById('quizName');
       if (inputName) answers.name = inputName.value.trim();
+
+      const activeSpeakName = optionGroups[2] ? optionGroups[2].querySelector('.active') : null;
+      if (activeSpeakName) answers.speakName = activeSpeakName.dataset.value;
     } else if (currentStep === 1) {
       const optionGroups = document.querySelectorAll('.quiz-step-content .quiz-options');
       const activeGenre = optionGroups[0] ? optionGroups[0].querySelector('.active') : null;
@@ -1529,6 +1629,15 @@ const Quiz = (defaultPlan = 'memoravel') => {
 
       const activeVoice = optionGroups[1] ? optionGroups[1].querySelector('.active') : null;
       if (activeVoice) answers.voice = activeVoice.dataset.value;
+
+      const activeVibes = [];
+      const vibeGroup = document.querySelector('.vibe-options');
+      if (vibeGroup) {
+        vibeGroup.querySelectorAll('.pill-option.active').forEach(btn => {
+          activeVibes.push(btn.dataset.value);
+        });
+      }
+      answers.vibes = activeVibes;
     } else if (currentStep === 2) {
       const ta = document.querySelector('.quiz-textarea');
       if (ta) answers.feelings = ta.value.trim();
@@ -1543,9 +1652,12 @@ const Quiz = (defaultPlan = 'memoravel') => {
       const activePlan = document.querySelector('.pricing-card-horizontal.active');
       if (activePlan) answers.plan = activePlan.dataset.plan;
     } else if (currentStep === 6) {
-      const inputs = document.querySelectorAll('.quiz-capture-section input');
-      if (inputs[0]) answers.email = inputs[0].value.trim();
-      if (inputs[1]) answers.phone = inputs[1].value.trim();
+      const nameInput = document.querySelector('.checkout-name-input');
+      const emailInput = document.querySelector('.checkout-email-input');
+      const phoneInput = document.querySelector('.checkout-phone-input');
+      if (nameInput) answers.customerName = nameInput.value.trim();
+      if (emailInput) answers.email = emailInput.value.trim().toLowerCase();
+      if (phoneInput) answers.phone = phoneInput.value;
     }
   };
 
@@ -1563,6 +1675,10 @@ const Quiz = (defaultPlan = 'memoravel') => {
         const inputName = document.getElementById('quizName');
         if (inputName) inputName.value = answers.name;
       }
+      if (answers.speakName) {
+        const pill = document.querySelector(`.speak-name-options .pill-option[data-value="${answers.speakName}"]`);
+        if (pill) pill.classList.add('active');
+      }
     } else if (currentStep === 1) {
       if (answers.genre) {
         const pill = document.querySelector(`.pill-option[data-value="${answers.genre}"]`);
@@ -1571,6 +1687,12 @@ const Quiz = (defaultPlan = 'memoravel') => {
       if (answers.voice) {
         const pill = document.querySelector(`.pill-option[data-value="${answers.voice}"]`);
         if (pill) pill.classList.add('active');
+      }
+      if (answers.vibes && answers.vibes.length > 0) {
+        answers.vibes.forEach(val => {
+          const pill = document.querySelector(`.vibe-options .pill-option[data-value="${val}"]`);
+          if (pill) pill.classList.add('active');
+        });
       }
     } else if (currentStep === 2) {
       const ta = document.querySelector('.quiz-textarea');
@@ -1608,14 +1730,17 @@ const Quiz = (defaultPlan = 'memoravel') => {
         }
       }
     } else if (currentStep === 6) {
-      const inputs = document.querySelectorAll('.quiz-capture-section input');
-      if (inputs[0] && answers.email) inputs[0].value = answers.email;
-      if (inputs[1] && answers.phone) inputs[1].value = answers.phone;
+      const nameInput = document.querySelector('.checkout-name-input');
+      const emailInput = document.querySelector('.checkout-email-input');
+      const phoneInput = document.querySelector('.checkout-phone-input');
+      if (nameInput && answers.customerName) nameInput.value = answers.customerName;
+      if (emailInput && answers.email) emailInput.value = answers.email;
+      if (phoneInput && answers.phone) phoneInput.value = answers.phone;
 
       const planNames = {
-        especial: { name: 'Especial • entrega em 7 dias', price: 'R$ 89,90' },
-        memoravel: { name: 'Memorável • entrega em até 72h', price: 'R$ 149,90' },
-        inesquecivel: { name: 'Inesquecível • entrega em até 24h', price: 'R$ 199,90' }
+        especial: { name: 'Audio Gift Especial • entrega em 7 dias', price: 'R$ 89,90' },
+        memoravel: { name: 'Audio Gift Memorável • entrega em até 72h', price: 'R$ 149,90' },
+        inesquecivel: { name: 'Audio Gift Inesquecível • entrega em até 24h', price: 'R$ 199,90' }
       };
       const planObj = planNames[answers.plan] || planNames['memoravel'];
       const planTextEl = document.querySelector('.review-item:nth-of-type(1) p');
@@ -1632,9 +1757,9 @@ const Quiz = (defaultPlan = 'memoravel') => {
 
   const renderCheckoutStep = (progress) => {
     const planNames = {
-      especial: { name: 'Especial', nameFull: 'Especial • entrega em 7 dias', price: 89.90, priceStr: 'R$ 89,90', delivery: '7 dias', deliveryHours: '7 dias', icon: 'clock' },
-      memoravel: { name: 'Memorável', nameFull: 'Memorável • entrega em até 72h', price: 149.90, priceStr: 'R$ 149,90', delivery: 'até 72h', deliveryHours: '72 horas', icon: 'rocket' },
-      inesquecivel: { name: 'Inesquecível', nameFull: 'Inesquecível • entrega em até 24h', price: 199.90, priceStr: 'R$ 199,90', delivery: 'até 24h', deliveryHours: '24 horas', icon: 'zap' }
+      especial: { name: 'Audio Gift Especial', nameFull: 'Audio Gift Especial • entrega em 7 dias', price: 89.90, priceStr: 'R$ 89,90', delivery: '7 dias', deliveryHours: '7 dias', icon: 'clock' },
+      memoravel: { name: 'Audio Gift Memorável', nameFull: 'Audio Gift Memorável • entrega em até 72h', price: 149.90, priceStr: 'R$ 149,90', delivery: 'até 72h', deliveryHours: '72 horas', icon: 'rocket' },
+      inesquecivel: { name: 'Audio Gift Inesquecível', nameFull: 'Audio Gift Inesquecível • entrega em até 24h', price: 199.90, priceStr: 'R$ 199,90', delivery: 'até 24h', deliveryHours: '24 horas', icon: 'zap' }
     };
     
     const planObj = planNames[answers.plan] || planNames['memoravel'];
@@ -1648,7 +1773,6 @@ const Quiz = (defaultPlan = 'memoravel') => {
           </div>
           <div class="quiz-top-info">
             <span>Passo 7 de 7</span>
-            <div class="quiz-logo-small">${Logo('white', '#000000')}</div>
             <span>100% Completo</span>
           </div>
         </div>
@@ -1670,8 +1794,15 @@ const Quiz = (defaultPlan = 'memoravel') => {
 
           <div class="checkout-card main-capture-card">
             <div class="checkout-input-group">
+              <label class="quiz-label" style="margin-bottom:8px; font-weight:800; font-size: 0.95rem;">Seu Nome Completo * <span class="label-required">Obrigatório</span></label>
+              <input type="text" placeholder="Como quer ser chamado(a)" class="quiz-input checkout-name-input" value="${answers.customerName || ''}">
+              <span class="name-error" style="color: #ff4d6d; font-size: 0.8rem; display: none; margin-top: 4px; font-weight: 600;">Por favor, digite seu nome.</span>
+            </div>
+
+            <div class="checkout-input-group mt-2">
               <label class="quiz-label" style="margin-bottom:8px; font-weight:800; font-size: 0.95rem;">Insira o seu melhor endereço de email * <span class="label-required">Obrigatório</span></label>
               <input type="email" placeholder="voce@email.com" class="quiz-input checkout-email-input" value="${answers.email || ''}">
+              <span class="email-error" style="color: #ff4d6d; font-size: 0.8rem; display: none; margin-top: 4px; font-weight: 600;">E-mail inválido. Exemplo: seu-nome@provedor.com</span>
             </div>
 
             <div class="checkout-input-group mt-2">
@@ -1683,6 +1814,7 @@ const Quiz = (defaultPlan = 'memoravel') => {
                 </div>
                 <input type="tel" placeholder="(11) 99999-9999" class="quiz-input checkout-phone-input" value="${answers.phone || ''}">
               </div>
+              <span class="phone-error" style="color: #ff4d6d; font-size: 0.8rem; display: none; margin-top: 4px; font-weight: 600;">Digite um número válido com DDD (ex: 11999999999)</span>
             </div>
 
             <div class="checkout-checkbox-group mt-3">
@@ -1912,7 +2044,7 @@ const Quiz = (defaultPlan = 'memoravel') => {
 
       container.innerHTML = `
         <div class="checkout-testimonial-slide active">
-          <img src="${t.img}" alt="${t.name}" class="testimonial-avatar">
+          <img src="${t.img}" alt="${t.name}" class="testimonial-avatar" loading="lazy">
           <blockquote class="testimonial-quote">
             ${t.quote}
           </blockquote>
@@ -1957,19 +2089,61 @@ const Quiz = (defaultPlan = 'memoravel') => {
       };
     }
 
+    const nameInput = document.querySelector('.checkout-name-input');
     const emailInput = document.querySelector('.checkout-email-input');
     const phoneInput = document.querySelector('.checkout-phone-input');
 
     const handleInputChanges = () => {
-      answers.email = emailInput ? emailInput.value.trim() : '';
-      answers.phone = phoneInput ? phoneInput.value.trim() : '';
+      answers.customerName = nameInput ? nameInput.value.trim() : '';
+      answers.email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+      const rawPhone = phoneInput ? phoneInput.value : '';
+      const digitsOnly = rawPhone.replace(/\D/g, '');
+      answers.phone = rawPhone;
       
       const isWhatsappChecked = document.getElementById('whatsapp-followup') 
         ? document.getElementById('whatsapp-followup').checked 
         : true;
+        
+      const isNameValid = !!(answers.customerName && answers.customerName.length >= 2);
       const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
-      const isPhoneValid = !isWhatsappChecked || (answers.phone && answers.phone.trim().length >= 8);
-      const isValid = isEmailValid && isPhoneValid;
+      const isPhoneValid = !isWhatsappChecked || (digitsOnly.length >= 10);
+      const isValid = isEmailValid && isPhoneValid && isNameValid;
+      
+      // Real-time visual feedback for name
+      const nameErr = document.querySelector('.name-error');
+      if (nameInput) {
+        if (answers.customerName.length > 0 && !isNameValid) {
+          nameInput.classList.add('error');
+          if (nameErr) nameErr.style.display = 'block';
+        } else {
+          nameInput.classList.remove('error');
+          if (nameErr) nameErr.style.display = 'none';
+        }
+      }
+
+      // Real-time visual feedback for email
+      const emailErr = document.querySelector('.email-error');
+      if (emailInput) {
+        if (answers.email.length > 0 && !isEmailValid) {
+          emailInput.classList.add('error');
+          if (emailErr) emailErr.style.display = 'block';
+        } else {
+          emailInput.classList.remove('error');
+          if (emailErr) emailErr.style.display = 'none';
+        }
+      }
+
+      // Real-time visual feedback for phone
+      const phoneErr = document.querySelector('.phone-error');
+      if (phoneInput) {
+        if (isWhatsappChecked && rawPhone.length > 0 && digitsOnly.length < 10) {
+          phoneInput.classList.add('error');
+          if (phoneErr) phoneErr.style.display = 'block';
+        } else {
+          phoneInput.classList.remove('error');
+          if (phoneErr) phoneErr.style.display = 'none';
+        }
+      }
       
       const btns = [
         document.getElementById('btn-checkout-top'),
@@ -1988,8 +2162,41 @@ const Quiz = (defaultPlan = 'memoravel') => {
       });
     };
 
-    if (emailInput) emailInput.oninput = handleInputChanges;
-    if (phoneInput) phoneInput.oninput = handleInputChanges;
+    if (nameInput) {
+      nameInput.oninput = () => {
+        handleInputChanges();
+      };
+    }
+
+    if (emailInput) {
+      emailInput.oninput = (e) => {
+        e.target.value = e.target.value.trim().toLowerCase();
+        handleInputChanges();
+      };
+    }
+    
+    if (phoneInput) {
+      phoneInput.oninput = (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        value = value.substring(0, 11); // Limita a 11 dígitos
+        
+        if (value.length > 2) {
+          const ddd = value.substring(0, 2);
+          let rest = value.substring(2);
+          if (rest.length > 5) {
+            rest = rest.substring(0, 5) + '-' + rest.substring(5);
+          } else if (rest.length > 4 && value.length <= 10) {
+            rest = rest.substring(0, 4) + '-' + rest.substring(4);
+          }
+          e.target.value = `(${ddd}) ${rest}`;
+        } else if (value.length > 0) {
+          e.target.value = `(${value}`;
+        } else {
+          e.target.value = '';
+        }
+        handleInputChanges();
+      };
+    }
 
     const whatsappCheckbox = document.getElementById('whatsapp-followup');
     if (whatsappCheckbox) whatsappCheckbox.onchange = handleInputChanges;
@@ -1998,89 +2205,91 @@ const Quiz = (defaultPlan = 'memoravel') => {
 
     // --- Extras Modal Logic ---
     const extrasModal = document.getElementById('extras-modal-overlay');
-    const btnOpenExtras = document.getElementById('btn-open-extras-modal');
-    const btnCloseExtras = document.getElementById('extras-modal-close');
-    const btnSaveExtras = document.getElementById('btn-extras-save');
-    const btnClearExtras = document.getElementById('btn-extras-clear');
+    if (extrasModal) {
+      const btnOpenExtras = document.getElementById('btn-open-extras-modal');
+      const btnCloseExtras = document.getElementById('extras-modal-close');
+      const btnSaveExtras = document.getElementById('btn-extras-save');
+      const btnClearExtras = document.getElementById('btn-clear-extras-modal');
 
-    // Track pending selection separately from committed answers.extras
-    let pendingExtras = [...answers.extras];
+      // Track pending selection separately from committed answers.extras
+      let pendingExtras = [...answers.extras];
 
-    const getExtrasTotal = (selectedIds) => {
-      return selectedIds.reduce((sum, id) => {
-        const extra = EXTRAS_CATALOG.find(e => e.id === id);
-        return sum + (extra ? extra.price : 0);
-      }, 0);
-    };
-
-    const updateModalUI = () => {
-      const total = planObj.price + getExtrasTotal(pendingExtras);
-      const totalStr = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      const totalEl = document.getElementById('extras-modal-total-val');
-      if (totalEl) totalEl.textContent = totalStr;
-      const saveBtn = document.getElementById('btn-extras-save');
-      if (saveBtn) saveBtn.textContent = `Salvar extras \u2022 ${totalStr}`;
-      const clearBtn = document.getElementById('btn-extras-clear');
-      if (clearBtn) {
-        const extrasAmt = getExtrasTotal(pendingExtras);
-        clearBtn.textContent = extrasAmt > 0
-          ? `Limpar extras \u2022 ${extrasAmt.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`
-          : 'Limpar extras';
-      }
-      document.querySelectorAll('.extras-modal-item').forEach(item => {
-        const id = item.dataset.extraId;
-        const sel = pendingExtras.includes(id);
-        item.classList.toggle('selected', sel);
-        const circle = item.querySelector('.extras-radio-circle');
-        if (circle) circle.classList.toggle('checked', sel);
-      });
-    };
-
-    if (btnOpenExtras) {
-      btnOpenExtras.onclick = () => {
-        pendingExtras = [...answers.extras];
-        updateModalUI();
-        extrasModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+      const getExtrasTotal = (selectedIds) => {
+        return selectedIds.reduce((sum, id) => {
+          const extra = EXTRAS_CATALOG.find(e => e.id === id);
+          return sum + (extra ? extra.price : 0);
+        }, 0);
       };
-    }
 
-    const closeModal = () => {
-      extrasModal.classList.remove('active');
-      document.body.style.overflow = '';
-    };
-
-    if (btnCloseExtras) btnCloseExtras.onclick = closeModal;
-
-    extrasModal.addEventListener('click', (e) => {
-      if (e.target === extrasModal) closeModal();
-    });
-
-    document.querySelectorAll('.extras-modal-item').forEach(item => {
-      item.onclick = () => {
-        const id = item.dataset.extraId;
-        if (pendingExtras.includes(id)) {
-          pendingExtras = pendingExtras.filter(i => i !== id);
-        } else {
-          pendingExtras.push(id);
+      const updateModalUI = () => {
+        const total = planObj.price + getExtrasTotal(pendingExtras);
+        const totalStr = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        const totalEl = document.getElementById('extras-modal-total-val');
+        if (totalEl) totalEl.textContent = totalStr;
+        const saveBtn = document.getElementById('btn-extras-save');
+        if (saveBtn) saveBtn.textContent = `Salvar extras \u2022 ${totalStr}`;
+        const clearBtn = document.getElementById('btn-extras-clear');
+        if (clearBtn) {
+          const extrasAmt = getExtrasTotal(pendingExtras);
+          clearBtn.textContent = extrasAmt > 0
+            ? `Limpar extras \u2022 ${extrasAmt.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`
+            : 'Limpar extras';
         }
-        updateModalUI();
+        document.querySelectorAll('.extras-modal-item').forEach(item => {
+          const id = item.dataset.extraId;
+          const sel = pendingExtras.includes(id);
+          item.classList.toggle('selected', sel);
+          const circle = item.querySelector('.extras-radio-circle');
+          if (circle) circle.classList.toggle('checked', sel);
+        });
       };
-    });
 
-    if (btnSaveExtras) {
-      btnSaveExtras.onclick = () => {
-        answers.extras = [...pendingExtras];
-        closeModal();
-        renderCheckoutStep(progress);
-      };
-    }
+      if (btnOpenExtras) {
+        btnOpenExtras.onclick = () => {
+          pendingExtras = [...answers.extras];
+          updateModalUI();
+          extrasModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        };
+      }
 
-    if (btnClearExtras) {
-      btnClearExtras.onclick = () => {
-        pendingExtras = [];
-        updateModalUI();
+      const closeModal = () => {
+        extrasModal.classList.remove('active');
+        document.body.style.overflow = '';
       };
+
+      if (btnCloseExtras) btnCloseExtras.onclick = closeModal;
+
+      extrasModal.addEventListener('click', (e) => {
+        if (e.target === extrasModal) closeModal();
+      });
+
+      document.querySelectorAll('.extras-modal-item').forEach(item => {
+        item.onclick = () => {
+          const id = item.dataset.extraId;
+          if (pendingExtras.includes(id)) {
+            pendingExtras = pendingExtras.filter(i => i !== id);
+          } else {
+            pendingExtras.push(id);
+          }
+          updateModalUI();
+        };
+      });
+
+      if (btnSaveExtras) {
+        btnSaveExtras.onclick = () => {
+          answers.extras = [...pendingExtras];
+          closeModal();
+          renderCheckoutStep(progress);
+        };
+      }
+
+      if (btnClearExtras) {
+        btnClearExtras.onclick = () => {
+          pendingExtras = [];
+          updateModalUI();
+        };
+      }
     }
 
     // --- data-edit-step: plan / genre navigation ---
@@ -2134,50 +2343,88 @@ const Quiz = (defaultPlan = 'memoravel') => {
       if (e.target === storyOverlay) closeStoryModal(false);
     });
 
-    const triggerCheckoutPayment = () => {
+    const triggerCheckoutPayment = async () => { // Forçar hash bust v2
+      console.log("AudioGift: Redirecionando para o checkout da Kiwify...");
       const isWhatsappChecked = document.getElementById('whatsapp-followup') 
         ? document.getElementById('whatsapp-followup').checked 
         : true;
       const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email || '');
+      const digitsOnly = (answers.phone || '').replace(/\D/g, '');
+      const isPhoneValid = !isWhatsappChecked || (digitsOnly.length >= 10);
+      const isNameValid = !!(answers.customerName && answers.customerName.trim().length >= 2);
+
+      if (!isNameValid) {
+        alert('Por favor, preencha o seu nome completo.');
+        return;
+      }
       if (!isEmailValid) {
         alert('Por favor, insira um endereço de e-mail válido.');
         return;
       }
-      if (isWhatsappChecked && (!answers.phone || answers.phone.trim().length < 8)) {
-        alert('Por favor, preencha o WhatsApp para receber o acompanhamento da música.');
+      if (isWhatsappChecked && !isPhoneValid) {
+        alert('Por favor, preencha o WhatsApp com DDD para receber o acompanhamento da música.');
         return;
       }
       
-      const kiwifyLinks = {
-        'especial': 'https://pay.kiwify.com.br/yZYhb1T',
-        'memoravel': 'https://pay.kiwify.com.br/1RiFp8q',
-        'inesquecivel': 'https://pay.kiwify.com.br/VZnGyRD'
-      };
-      
-      const baseUrl = kiwifyLinks[answers.plan] || kiwifyLinks['memoravel'];
-      
-      // Build checkout URL with prefill parameters and metadata parameters
-      const params = [];
-      if (answers.email) params.push(`email=${encodeURIComponent(answers.email)}`);
-      if (answers.phone) {
-        params.push(`phone=${encodeURIComponent(answers.phone)}`);
-        params.push(`mobile=${encodeURIComponent(answers.phone)}`);
+      const btnTop = document.getElementById('btn-checkout-top');
+      const btnBottom = document.getElementById('btn-checkout-bottom');
+      const loadHtml = `<div class="preloader-equalizer" style="height:15px; margin:0;"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span></div> Processando...`;
+      if (btnTop) { btnTop.setAttribute('disabled', 'true'); btnTop.innerHTML = loadHtml; }
+      if (btnBottom) { btnBottom.setAttribute('disabled', 'true'); btnBottom.innerHTML = loadHtml; }
+
+      try {
+        const orderData = {
+          customer_name: answers.customerName,
+          customer_email: answers.email,
+          customer_phone: answers.phone,
+          whatsapp_followup: isWhatsappChecked,
+          for_who: answers.forWho,
+          occasion: answers.occasion,
+          recipient_name: answers.name,
+          speak_name: answers.speakName,
+          genre: answers.genre,
+          voice: answers.voice,
+          vibes: answers.vibes.join(', '),
+          feelings: answers.feelings,
+          story: answers.story,
+          message: answers.message,
+          baby_name: answers.babyName,
+          plan: answers.plan,
+          status: 'pendente'
+        };
+
+        const createdOrder = await db.createOrder(orderData);
+        
+        // Remove active class to close overlay quiz if exists
+        const overlay = document.getElementById('quiz-overlay');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restaura scroll do site principal
+        
+        // Redireciona para o checkout oficial do Kiwify correspondente ao plano
+        const kiwifyLinks = {
+          especial: 'https://pay.kiwify.com.br/yZYhb1T',
+          memoravel: 'https://pay.kiwify.com.br/1RiFp8q',
+          inesquecivel: 'https://pay.kiwify.com.br/VZnGyRD'
+        };
+        
+        let checkoutUrl = kiwifyLinks[answers.plan] || kiwifyLinks['memoravel'];
+        
+        // Passa o e-mail e telefone do cliente para auto-preenchimento e o ID do pedido no utm_medium
+        const params = new URLSearchParams();
+        if (answers.customerName) params.append('name', answers.customerName);
+        if (answers.email) params.append('email', answers.email);
+        if (answers.phone) params.append('phone', answers.phone);
+        params.append('utm_source', 'audiogift');
+        params.append('utm_medium', createdOrder.id);
+        
+        window.location.href = `${checkoutUrl}?${params.toString()}`;
+      } catch (err) {
+        console.error('Erro ao registrar o pedido no banco de dados:', err);
+        alert('Erro ao processar o seu pedido. Por favor, tente novamente.');
+        if (btnTop) { btnTop.removeAttribute('disabled'); btnTop.innerHTML = `<i data-lucide="credit-card"></i> Continuar para Pagamento`; }
+        if (btnBottom) { btnBottom.removeAttribute('disabled'); btnBottom.innerHTML = `<i data-lucide="credit-card"></i> Continuar para Pagamento`; }
+        lucide.createIcons();
       }
-      if (answers.forWho) params.push(`para_quem=${encodeURIComponent(answers.forWho)}`);
-      if (answers.occasion) params.push(`ocasiao=${encodeURIComponent(answers.occasion)}`);
-      if (answers.name) params.push(`homenageado=${encodeURIComponent(answers.name)}`);
-      if (answers.genre) params.push(`estilo=${encodeURIComponent(answers.genre)}`);
-      if (answers.voice) params.push(`voz=${encodeURIComponent(answers.voice)}`);
-      if (answers.feelings) params.push(`qualidades=${encodeURIComponent(answers.feelings)}`);
-      if (answers.story) params.push(`historia=${encodeURIComponent(answers.story)}`);
-      if (answers.message) params.push(`mensagem=${encodeURIComponent(answers.message)}`);
-      if (answers.babyName) params.push(`bebe_nome=${encodeURIComponent(answers.babyName)}`);
-      
-      const checkoutUrl = `${baseUrl}?${params.join('&')}`;
-      
-      alert('Tudo certo! Redirecionando para a página segura de pagamento da Kiwify...');
-      window.location.href = checkoutUrl;
-      document.getElementById('quiz-overlay').classList.remove('active');
     };
 
     const ctaTop = document.getElementById('btn-checkout-top');
@@ -2209,7 +2456,6 @@ const Quiz = (defaultPlan = 'memoravel') => {
           </div>
           <div class="quiz-top-info">
             <span>Passo ${currentStep + 1} de ${steps.length}</span>
-            <div class="quiz-logo-small">${Logo('white', '#000000')}</div>
             <span>${progress}% Completo</span>
           </div>
         </div>
@@ -2240,10 +2486,27 @@ const Quiz = (defaultPlan = 'memoravel') => {
   };
 
   const attachEvents = () => {
-    document.querySelectorAll('.pill-option').forEach(btn => {
+    document.querySelectorAll('.pill-option:not(.multi-pill)').forEach(btn => {
       btn.onclick = () => {
         btn.parentElement.querySelectorAll('.pill-option').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        saveCurrentStepData();
+        updateNextButtonState();
+      };
+    });
+
+    document.querySelectorAll('.vibe-options .pill-option').forEach(btn => {
+      btn.onclick = () => {
+        const activeCount = btn.parentElement.querySelectorAll('.pill-option.active').length;
+        if (btn.classList.contains('active')) {
+          btn.classList.remove('active');
+        } else {
+          if (activeCount < 2) {
+            btn.classList.add('active');
+          } else {
+            alert('Por favor, selecione no máximo duas vibes.');
+          }
+        }
         saveCurrentStepData();
         updateNextButtonState();
       };
@@ -2305,14 +2568,14 @@ const Quiz = (defaultPlan = 'memoravel') => {
       let errorMsg = '';
 
       if (currentStep === 0) {
-        if (!answers.forWho || !answers.occasion) {
+        if (!answers.forWho || !answers.occasion || !answers.name || answers.name.trim().length < 1 || !answers.speakName) {
           isValid = false;
-          errorMsg = 'Por favor, selecione para quem é a canção e qual a ocasião.';
+          errorMsg = 'Por favor, selecione para quem é a canção, qual a ocasião, preencha o nome do homenageado(a) e se deseja falar o nome.';
         }
       } else if (currentStep === 1) {
-        if (!answers.genre) {
+        if (!answers.genre || !answers.vibes || answers.vibes.length < 1) {
           isValid = false;
-          errorMsg = 'Por favor, selecione o gênero musical preferido.';
+          errorMsg = 'Por favor, selecione o gênero musical preferido e de 1 a 2 vibes/climas para a música.';
         }
       } else if (currentStep === 2 || currentStep === 3) {
         if (currentStep === 2 && answers.feelings.length < 5) {
@@ -2333,12 +2596,19 @@ const Quiz = (defaultPlan = 'memoravel') => {
           ? document.getElementById('whatsapp-followup').checked 
           : true;
         const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email || '');
-        if (!isEmailValid) {
+        const digitsOnly = (answers.phone || '').replace(/\D/g, '');
+        const isPhoneValid = !isWhatsappChecked || (digitsOnly.length >= 10);
+        const isNameValid = !!(answers.customerName && answers.customerName.trim().length >= 2);
+        
+        if (!isNameValid) {
+          isValid = false;
+          errorMsg = 'Por favor, preencha o seu nome completo.';
+        } else if (!isEmailValid) {
           isValid = false;
           errorMsg = 'Por favor, insira um endereço de e-mail válido.';
-        } else if (isWhatsappChecked && (!answers.phone || answers.phone.trim().length < 8)) {
+        } else if (isWhatsappChecked && !isPhoneValid) {
           isValid = false;
-          errorMsg = 'Por favor, preencha o WhatsApp para receber o acompanhamento da música.';
+          errorMsg = 'Por favor, preencha o WhatsApp com DDD para receber o acompanhamento da música.';
         }
       }
 
@@ -2352,7 +2622,9 @@ const Quiz = (defaultPlan = 'memoravel') => {
         renderStep();
       } else {
         alert('Tudo certo! Redirecionando para o ambiente seguro de pagamento...');
-        document.getElementById('quiz-overlay').classList.remove('active');
+        const overlay = document.getElementById('quiz-overlay');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restaura scroll do site principal
       }
     };
 
@@ -2370,15 +2642,17 @@ const Quiz = (defaultPlan = 'memoravel') => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   };
 
-  document.getElementById('quiz-overlay').classList.add('active');
+  const overlay = document.getElementById('quiz-overlay');
+  if (overlay) {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Bloqueia scroll do site principal por trás
+  }
   renderStep();
 };
 
+// O overlay estático foi removido para que o quiz seja renderizado como página SPA na rota #quiz
+
 app.innerHTML = `
-  <div id="quiz-overlay" class="quiz-overlay">
-    <div id="quiz-container"></div>
-    <button class="quiz-close" onclick="document.getElementById('quiz-overlay').classList.remove('active')">&times;</button>
-  </div>
   ${AnnouncementBar()}
   ${Header()}
   <main></main>
@@ -2453,6 +2727,10 @@ app.innerHTML = `
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('a[href="#create"], .btn-primary-new, .btn-nav-gold, .btn-primary-pill, .pricing-card button');
   if (btn) {
+    // Ignorar e não abrir o quiz se o clique vier da área do admin
+    if (btn.closest('.admin-login-page') || btn.closest('.admin-dashboard') || btn.closest('[class*="admin"]') || window.location.pathname === '/admin' || window.location.hash.split('?')[0] === '#admin') {
+      return;
+    }
     const href = btn.getAttribute('href');
     if (href === '#create' || btn.classList.contains('btn-primary-new') || btn.classList.contains('btn-nav-gold') || (btn.tagName === 'BUTTON' && btn.closest('.pricing-card'))) {
       if (btn.hasAttribute('onclick')) {
@@ -2524,7 +2802,10 @@ const initMagneticButtons = () => {
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
   });
 }, { threshold: 0.1 });
 
@@ -2857,24 +3138,1402 @@ const initMobileMenu = () => {
   });
 };
 
-// Roteador SPA
-const renderRoute = () => {
+// --- HELPER PARA OBTER DEMO DE ÁUDIO ---
+const getDemoSong = (genre) => {
+  const map = {
+    'Sertanejo': '/songs/Sempre Para Sempre.mp3.mpeg',
+    'Pop Acústico': '/songs/A Chave do Teu Coração.mp3.mpeg',
+    'MPB': '/songs/Pra Sempre Você.mp3.mpeg',
+    'Samba': '/songs/Coração De Ouro.mp3.mpeg',
+    'Pop Rock': '/songs/Você É Meu Sol.mp3.mpeg',
+    'Forró': '/songs/Minha Princesa, Meu amor..mp3.mpeg',
+    'Violão e Voz': '/songs/Você É Minha Vida.mp3.mpeg',
+    'Soul Romântico': '/songs/Te Amo Muitinho.mp3.mpeg',
+    'Gospel': '/songs/Presente de Deus.mp3.mpeg',
+    'Pagode': '/songs/Minha Marina.mp3.mpeg',
+    'Reggae': '/songs/Filha do Meu Coração.mp3.mpeg'
+  };
+  return map[genre] || '/songs/A Chave do Teu Coração.mp3.mpeg';
+};
+
+// --- RENDERIZAR TELA DE CHECKOUT SIMULADO ---
+const renderCheckoutPage = async (mainEl, orderId) => {
+  if (!orderId) {
+    mainEl.innerHTML = `
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+        <h2 class="section-title-serif text-orange">Erro no Checkout</h2>
+        <p class="section-subtitle">Pedido inválido ou ID de pedido não encontrado.</p>
+        <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
+      </div>
+    `;
+    return;
+  }
+
+  mainEl.innerHTML = `
+    <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh; display:flex; align-items:center; justify-content:center;">
+      <div>
+        <div class="preloader-equalizer" style="margin-bottom: 15px;">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+        </div>
+        <p style="color: var(--text-muted);">Carregando detalhes do pedido...</p>
+      </div>
+    </div>
+  `;
+
+  const order = await db.getOrder(orderId);
+  if (!order) {
+    mainEl.innerHTML = `
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+        <h2 class="section-title-serif text-orange">Pedido Não Encontrado</h2>
+        <p class="section-subtitle">O pedido especificado não pôde ser recuperado do banco de dados.</p>
+        <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
+      </div>
+    `;
+    return;
+  }
+
+  const prices = {
+    especial: 89.90,
+    memoravel: 149.90,
+    inesquecivel: 199.90
+  };
+  const amount = prices[order.plan] || 149.90;
+  const amountStr = amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+  const planNames = {
+    especial: 'Especial (Entrega em 7 dias)',
+    memoravel: 'Memorável (Entrega em 72h)',
+    inesquecivel: 'Inesquecível VIP (Entrega em 24h)'
+  };
+
+  mainEl.innerHTML = `
+    <div class="checkout-page py-large bg-dark text-white" style="min-height: 80vh;">
+      <div class="container">
+        <div class="checkout-grid-container">
+          
+          <!-- LADO ESQUERDO: Opções de Pagamento -->
+          <div class="checkout-form-side">
+            <h2 class="section-title-serif text-white text-left" style="font-size:2.4rem;">Finalize sua <em>Homenagem</em></h2>
+            <p class="checkout-desc" style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">Escolha a forma de pagamento para iniciarmos a criação da música de <strong>${order.recipient_name || 'quem você ama'}</strong>.</p>
+            
+            <div class="payment-methods-tabs">
+              <button class="pay-tab active" id="tab-pix">
+                <i data-lucide="qr-code"></i> Pagar com PIX
+              </button>
+              <button class="pay-tab" id="tab-card">
+                <i data-lucide="credit-card"></i> Cartão de Crédito
+              </button>
+            </div>
+
+            <!-- Conteúdo PIX -->
+            <div class="payment-content active" id="content-pix">
+              <div class="pix-instructions">
+                <div class="pix-qr-container">
+                  <svg class="pix-qr-svg" viewBox="0 0 100 100" width="150" height="150">
+                    <rect width="100" height="100" fill="white"/>
+                    <rect x="5" y="5" width="22" height="22" fill="black" stroke="white" stroke-width="1.5"/>
+                    <rect x="9" y="9" width="14" height="14" fill="white"/>
+                    <rect x="12" y="12" width="8" height="8" fill="black"/>
+                    
+                    <rect x="73" y="5" width="22" height="22" fill="black" stroke="white" stroke-width="1.5"/>
+                    <rect x="77" y="9" width="14" height="14" fill="white"/>
+                    <rect x="80" y="12" width="8" height="8" fill="black"/>
+                    
+                    <rect x="5" y="73" width="22" height="22" fill="black" stroke="white" stroke-width="1.5"/>
+                    <rect x="9" y="77" width="14" height="14" fill="white"/>
+                    <rect x="12" y="80" width="8" height="8" fill="black"/>
+                    
+                    <rect x="32" y="8" width="4" height="12" fill="black"/>
+                    <rect x="42" y="4" width="8" height="4" fill="black"/>
+                    <rect x="58" y="12" width="4" height="12" fill="black"/>
+                    <rect x="32" y="32" width="12" height="4" fill="black"/>
+                    <rect x="52" y="32" width="8" height="8" fill="black"/>
+                    <rect x="12" y="42" width="8" height="4" fill="black"/>
+                    <rect x="4" y="52" width="4" height="8" fill="black"/>
+                    <rect x="32" y="48" width="12" height="12" fill="black"/>
+                    <rect x="68" y="42" width="4" height="16" fill="black"/>
+                    <rect x="78" y="52" width="12" height="4" fill="black"/>
+                    <rect x="32" y="72" width="8" height="4" fill="black"/>
+                    <rect x="52" y="77" width="4" height="12" fill="black"/>
+                    <rect x="68" y="78" width="16" height="8" fill="black"/>
+                    
+                    <circle cx="50" cy="50" r="10" fill="white"/>
+                    <path d="M48 46 v8 l5 -4 z" fill="#FC7301"/>
+                  </svg>
+                  <div class="pix-scan-pulse"></div>
+                </div>
+                
+                <div class="pix-text-details">
+                  <h4>Aprovação Instantânea</h4>
+                  <p>Escaneie o QR Code ao lado pelo app do seu banco ou copie a chave Pix abaixo.</p>
+                  
+                  <div class="pix-copy-box">
+                    <input type="text" readonly value="00020101021226830014br.gov.bcb.pix2561api.pay.audiogift.com/v2/order-${orderId}5204000053039865405${amount}5802BR5909AudioGift6009Sao Paulo62070503***6304" id="pix-code-input" class="quiz-input select-all">
+                    <button class="btn-copy-pix" id="btn-copy-pix-code"><i data-lucide="copy"></i> Copiar</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="sandbox-approve-box mt-3" style="border: 1px dashed rgba(252,115,1,0.3); border-radius: 12px; padding: 15px; background: rgba(252,115,1,0.03);">
+                <p style="font-size:0.9rem; margin-bottom: 12px;"><i data-lucide="info" style="color: var(--primary-orange); width: 16px; height: 16px;"></i> <strong>Ambiente Sandbox:</strong> Você pode simular o pagamento para testar o fluxo completo localmente.</p>
+                <button class="btn-primary-new w-full" id="btn-approve-pix">
+                  <i data-lucide="check-circle"></i> Simular Confirmação do PIX
+                </button>
+              </div>
+            </div>
+
+            <!-- Conteúdo Cartão de Crédito -->
+            <div class="payment-content" id="content-card">
+              <div class="card-simulator-container">
+                <!-- Virtual Credit Card (Apple style) -->
+                <div class="credit-card-preview" id="card-preview">
+                  <div class="card-inner">
+                    <div class="card-front">
+                      <div class="card-chip"></div>
+                      <div class="card-brand"><i data-lucide="sparkles" style="width:24px; height:24px; color:#fff;"></i></div>
+                      <div class="card-number" id="preview-number">•••• •••• •••• ••••</div>
+                      <div class="card-bottom">
+                        <div class="card-holder" id="preview-holder">NOME DO TITULAR</div>
+                        <div class="card-expiry" id="preview-expiry">MM/AA</div>
+                      </div>
+                    </div>
+                    <div class="card-back">
+                      <div class="card-magnetic-strip"></div>
+                      <div class="card-signature-cvv">
+                        <div class="card-signature"></div>
+                        <div class="card-cvv-box" id="preview-cvv">•••</div>
+                      </div>
+                      <div class="card-back-brand">AudioGift</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <form class="credit-card-form mt-3" id="card-form" onsubmit="return false;">
+                  <div class="form-row">
+                    <label>Número do Cartão *</label>
+                    <input type="text" placeholder="0000 0000 0000 0000" id="card-number-input" class="quiz-input" maxlength="19" required>
+                  </div>
+                  <div class="form-row">
+                    <label>Nome Impresso no Cartão *</label>
+                    <input type="text" placeholder="NOME COMO NO CARTÃO" id="card-holder-input" class="quiz-input" style="text-transform: uppercase;" required>
+                  </div>
+                  <div class="form-col-2">
+                    <div class="form-row">
+                      <label>Validade *</label>
+                      <input type="text" placeholder="MM/AA" id="card-expiry-input" class="quiz-input" maxlength="5" required>
+                    </div>
+                    <div class="form-row">
+                      <label>CVV *</label>
+                      <input type="text" placeholder="CVV" id="card-cvv-input" class="quiz-input" maxlength="4" required>
+                    </div>
+                  </div>
+                  
+                  <button type="submit" class="btn-primary-new w-full mt-2" id="btn-pay-card">
+                    <i data-lucide="shield-check"></i> Confirmar Pagamento - ${amountStr}
+                  </button>
+                </form>
+              </div>
+            </div>
+            
+          </div>
+
+          <!-- LADO DIREITO: Resumo do Pedido -->
+          <div class="checkout-summary-side">
+            <div class="summary-box">
+              <h3>Resumo do seu Pedido</h3>
+              <div class="divider"></div>
+              
+              <div class="summary-item">
+                <span class="item-label">Plano Escolhido:</span>
+                <span class="item-val">${planNames[order.plan] || order.plan}</span>
+              </div>
+              <div class="summary-item">
+                <span class="item-label">Homenageado(a):</span>
+                <span class="item-val">${order.recipient_name || 'Não informado'}</span>
+              </div>
+              <div class="summary-item">
+                <span class="item-label">Estilo:</span>
+                <span class="item-val">${order.genre || 'Pop Acústico'} (${order.voice || 'Feminina'})</span>
+              </div>
+              <div class="summary-item">
+                <span class="item-label">WhatsApp:</span>
+                <span class="item-val">${order.customer_phone || 'Não informado'}</span>
+              </div>
+              <div class="summary-item" style="border-bottom:none;">
+                <span class="item-label">E-mail:</span>
+                <span class="item-val" style="word-break: break-all;">${order.customer_email}</span>
+              </div>
+              
+              <div class="divider"></div>
+              <div class="summary-total">
+                <span>Total a pagar:</span>
+                <span class="total-price">${amountStr}</span>
+              </div>
+              
+              <div class="summary-badges">
+                <div class="badge-item"><i data-lucide="shield-check"></i> Pagamento Seguro</div>
+                <div class="badge-item"><i data-lucide="rotate-ccw"></i> 7 Dias de Garantia</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  `;
+
+  if (window.lucide) lucide.createIcons();
+
+  const tabPix = document.getElementById('tab-pix');
+  const tabCard = document.getElementById('tab-card');
+  const contentPix = document.getElementById('content-pix');
+  const contentCard = document.getElementById('content-card');
+
+  tabPix.onclick = () => {
+    tabPix.classList.add('active');
+    tabCard.classList.remove('active');
+    contentPix.classList.add('active');
+    contentCard.classList.remove('active');
+  };
+
+  tabCard.onclick = () => {
+    tabCard.classList.add('active');
+    tabPix.classList.remove('active');
+    contentCard.classList.add('active');
+    contentPix.classList.remove('active');
+  };
+
+  // Copiar código PIX
+  const btnCopyPix = document.getElementById('btn-copy-pix-code');
+  if (btnCopyPix) {
+    btnCopyPix.onclick = () => {
+      const pixInp = document.getElementById('pix-code-input');
+      pixInp.select();
+      document.execCommand('copy');
+      btnCopyPix.innerHTML = `<i data-lucide="check"></i> Copiado!`;
+      lucide.createIcons();
+      setTimeout(() => {
+        btnCopyPix.innerHTML = `<i data-lucide="copy"></i> Copiar`;
+        lucide.createIcons();
+      }, 2000);
+    };
+  }
+
+  // Simular aprovação PIX
+  const btnApprovePix = document.getElementById('btn-approve-pix');
+  if (btnApprovePix) {
+    btnApprovePix.onclick = async () => {
+      btnApprovePix.setAttribute('disabled', 'true');
+      btnApprovePix.innerHTML = `<i data-lucide="loader" class="spin"></i> Processando...`;
+      
+      await db.updateOrder(orderId, { status: 'pago', payment_method: 'pix' });
+      
+      setTimeout(() => {
+        window.location.hash = `#acompanhamento?orderId=${orderId}`;
+      }, 1000);
+    };
+  }
+
+  // Cartão Crédito inputs
+  const cardNum = document.getElementById('card-number-input');
+  const cardHolder = document.getElementById('card-holder-input');
+  const cardExpiry = document.getElementById('card-expiry-input');
+  const cardCvv = document.getElementById('card-cvv-input');
+
+  const preNum = document.getElementById('preview-number');
+  const preHolder = document.getElementById('preview-holder');
+  const preExpiry = document.getElementById('preview-expiry');
+  const preCvv = document.getElementById('preview-cvv');
+  const cardPreview = document.getElementById('card-preview');
+
+  cardNum.oninput = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(.{4})/g, '$1 ').trim();
+    e.target.value = value;
+    preNum.textContent = value || '•••• •••• •••• ••••';
+  };
+
+  cardHolder.oninput = (e) => {
+    preHolder.textContent = e.target.value.toUpperCase() || 'NOME DO TITULAR';
+  };
+
+  cardExpiry.oninput = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    e.target.value = value;
+    preExpiry.textContent = value || 'MM/AA';
+  };
+
+  cardCvv.oninput = (e) => {
+    preCvv.textContent = e.target.value || '•••';
+  };
+
+  cardCvv.onfocus = () => {
+    cardPreview.classList.add('flip');
+  };
+  cardCvv.onblur = () => {
+    cardPreview.classList.remove('flip');
+  };
+
+  const btnPayCard = document.getElementById('btn-pay-card');
+  const formCard = document.getElementById('card-form');
+  formCard.onsubmit = async (e) => {
+    e.preventDefault();
+    btnPayCard.setAttribute('disabled', 'true');
+    btnPayCard.innerHTML = `<i data-lucide="loader" class="spin"></i> Autorizando...`;
+    
+    await db.updateOrder(orderId, { status: 'pago', payment_method: 'credit_card' });
+    
+    setTimeout(() => {
+      window.location.hash = `#acompanhamento?orderId=${orderId}`;
+    }, 1500);
+  };
+};
+
+// --- RENDERIZAR TELA DE ACOMPANHAMENTO DO CLIENTE ---
+const renderAcompanhamentoPage = async (mainEl, orderId) => {
+  if (!orderId) {
+    mainEl.innerHTML = `
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+        <h2 class="section-title-serif text-orange">Erro no Acompanhamento</h2>
+        <p class="section-subtitle">Pedido inválido ou ID de pedido não encontrado.</p>
+        <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
+      </div>
+    `;
+    return;
+  }
+
+  mainEl.innerHTML = `
+    <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh; display:flex; align-items:center; justify-content:center;">
+      <div>
+        <div class="preloader-equalizer" style="margin-bottom: 15px;">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+        </div>
+        <p style="color: var(--text-muted);">Carregando status do pedido...</p>
+      </div>
+    </div>
+  `;
+
+  const order = await db.getOrder(orderId);
+  if (!order) {
+    mainEl.innerHTML = `
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+        <h2 class="section-title-serif text-orange">Pedido Não Encontrado</h2>
+        <p class="section-subtitle">O pedido especificado não pôde ser encontrado no banco.</p>
+        <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
+      </div>
+    `;
+    return;
+  }
+
+  const planNames = {
+    especial: 'Plano Especial (7 dias)',
+    memoravel: 'Plano Memorável (72h)',
+    inesquecivel: 'Plano Inesquecível VIP (24h)'
+  };
+
+  const statusMap = {
+    pendente: { step: 1, label: 'Aguardando Pagamento' },
+    pago: { step: 2, label: 'Pagamento Aprovado' },
+    em_producao: { step: 3, label: 'Composição & Produção' },
+    concluido: { step: 4, label: 'Música Entregue!' }
+  };
+
+  const currentStatus = statusMap[order.status] || { step: 1, label: 'Pendente' };
+
+  mainEl.innerHTML = `
+    <div class="tracking-page bg-black text-white py-large" style="min-height: 80vh;">
+      <div class="container" style="max-width: 750px;">
+        
+        <div class="success-icon-wrap text-center reveal">
+          <div class="success-icon-ring" style="width:70px; height:70px; border-radius:50%; background: rgba(74,222,128,0.1); display:flex; align-items:center; justify-content:center; margin: 0 auto 1.5rem auto;">
+            <i data-lucide="check" style="width: 36px; height: 36px; color: #4ade80;"></i>
+          </div>
+        </div>
+
+        <div class="tracking-header text-center reveal">
+          <h1 class="main-title text-white" style="font-size: 2.2rem; text-align: center; margin-bottom:10px;">Seu pedido foi recebido!</h1>
+          <p class="section-subtitle" style="color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 2.5rem auto; font-size:1rem;">
+            Obrigado por criar sua canção com o AudioGift. Nossa equipe criativa já está analisando sua história e entrará em contato via WhatsApp nas próximas horas.
+          </p>
+        </div>
+
+        <!-- Timeline Visual -->
+        <div class="status-timeline-card reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; margin-bottom: 2rem;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 20px; color:#aaa; font-weight:500;">Status do Pedido: <strong style="color:var(--primary-orange);">${currentStatus.label}</strong></h3>
+          
+          <div class="timeline-steps">
+            <div class="timeline-step completed">
+              <div class="step-bullet"><i data-lucide="check" style="width:14px; height:14px;"></i></div>
+              <div class="step-label">Pedido Criado</div>
+            </div>
+            
+            <div class="timeline-step ${currentStatus.step >= 2 ? 'completed' : 'active'}">
+              <div class="step-bullet">
+                ${currentStatus.step >= 2 ? '<i data-lucide="check" style="width:14px; height:14px;"></i>' : '<i data-lucide="loader" class="spin" style="width:14px; height:14px;"></i>'}
+              </div>
+              <div class="step-label">Pagamento</div>
+            </div>
+
+            <div class="timeline-step ${currentStatus.step >= 3 ? 'completed' : (currentStatus.step === 2 ? 'active' : '')}">
+              <div class="step-bullet">
+                ${currentStatus.step >= 3 ? '<i data-lucide="check" style="width:14px; height:14px;"></i>' : '<i data-lucide="music" style="width:14px; height:14px;"></i>'}
+              </div>
+              <div class="step-label">Produção</div>
+            </div>
+
+            <div class="timeline-step ${currentStatus.step >= 4 ? 'completed' : ''}">
+              <div class="step-bullet"><i data-lucide="gift" style="width:14px; height:14px;"></i></div>
+              <div class="step-label">Entrega</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ficha de Detalhes -->
+        <div class="tracking-details-card reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; margin-bottom: 2rem; text-align: left;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 15px; color:#fff;">Resumo das Configurações</h3>
+          <div style="height:1px; background:rgba(255,255,255,0.08); margin-bottom:15px;"></div>
+          
+          <div class="details-grid-box">
+            <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;">
+              <span style="color:#aaa;">Código do Pedido:</span>
+              <span style="font-family:monospace; color:#ccc;">${order.id}</span>
+            </div>
+            <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;">
+              <span style="color:#aaa;">Plano:</span>
+              <span>${planNames[order.plan] || order.plan}</span>
+            </div>
+            <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;">
+              <span style="color:#aaa;">Para quem é:</span>
+              <span>${order.for_who || 'N/A'}</span>
+            </div>
+            <div class="detail-row" style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem;">
+              <span style="color:#aaa;">Estilo Escolhido:</span>
+              <span>${order.genre || 'Pop Acústico'} (${order.voice || 'Feminina'})</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card de WhatsApp e Próximos Passos -->
+        <div class="next-steps-card reveal" style="background: rgba(37, 211, 102, 0.05); border: 1px solid rgba(37, 211, 102, 0.15); border-radius: 20px; padding: 25px; text-align: center;">
+          <div style="display:flex; align-items:center; justify-content:center; gap: 15px; text-align:left; margin-bottom: 20px;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #25d366; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="message-square" style="color:white; width:22px; height:22px;"></i>
+            </div>
+            <div>
+              <h4 style="font-size:1.05rem; margin-bottom:3px; color:#fff;">Contato via WhatsApp</h4>
+              <p style="font-size:0.9rem; color: rgba(255,255,255,0.7); margin:0;">Você receberá um contato direto no seu número <strong>${order.customer_phone || ''}</strong> para acompanhamento da letra e envio do áudio.</p>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px; max-width: 320px; margin: 0 auto;">
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20fiz%20o%20pedido%20de%20m%C3%BAsica%20customizada%20ID%20${order.id}.%20Gostaria%20de%20acompanhar%20a%20produ%C3%A7%C3%A3o!" target="_blank" class="btn-primary-new" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); border-color: #25D366; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.15); padding: 0.9rem 1.8rem; font-size:0.95rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block; vertical-align:middle; margin-right:8px;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.324 5.328 0 11.859 0c3.161.001 6.132 1.233 8.37 3.474 2.237 2.24 3.468 5.211 3.468 8.377-.003 6.537-5.329 11.86-11.859 11.86-2.004-.001-3.972-.51-5.729-1.482L0 24zm6.59-4.846c1.6.95 3.1 1.45 4.8 1.45 5.5 0 10-4.5 10-10S16.9.75 11.4.75C5.9.75 1.4 5.25 1.4 10.75c0 1.9.5 3.7 1.5 5.3l-1 3.7 3.8-1zm11.2-5.45c-.2-.1-1.3-.7-1.5-.7-.2-.1-.4-.1-.5.1-.2.3-.7.9-.9 1.1-.1.2-.3.2-.5.1-.9-.4-1.6-.7-2.3-1.3-.5-.4-.9-.9-1.2-1.4-.2-.3-.02-.5.08-.6l.3-.4c.1-.1.1-.2.2-.3.1-.1.1-.2.1-.3-.1-.2-.5-1.2-.7-1.6-.2-.4-.3-.4-.5-.4h-.4c-.2 0-.5.1-.7.3-.6.6-.9 1.5-.9 2.5 0 2 1.5 3.9 1.7 4.2.2.3 3 4.6 7.3 6.3 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.7.2.8-.1 2.6-1.1 3-2.1.4-1 .4-1.9.3-2.1-.1-.2-.3-.3-.5-.4z"/></svg>
+              Iniciar Chat de Acompanhamento
+            </a>
+            
+            <a href="#" class="btn-outline" style="border-color: rgba(255,255,255,0.1); color: white; padding: 0.8rem 1.8rem; font-size:0.9rem;">
+              Voltar ao Site
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  if (window.lucide) lucide.createIcons();
+  
+  document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+    el.classList.add('visible');
+  });
+};
+
+// --- RENDERIZAR TELA DE LOGIN DO ADMIN ---
+const renderAdminLogin = (mainEl) => {
+  mainEl.innerHTML = `
+    <div class="admin-login-page py-large bg-black text-white" style="min-height: 80vh; display:flex; align-items:center;">
+      <div class="container" style="max-width: 400px;">
+        <div class="login-card-glass text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; backdrop-filter: blur(20px);">
+          <div class="login-logo-wrap" style="margin-bottom: 2rem; width:120px; margin: 0 auto 1.5rem auto;">
+            ${Logo('white', '#FC7301')}
+          </div>
+          
+          <h2 class="section-title-serif text-white" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Área Restrita</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Entre com a senha administrativa.</p>
+          
+          <form id="admin-login-form" onsubmit="return false;" style="text-align:left;">
+            <div class="form-row" style="margin-bottom: 1.5rem;">
+              <label style="font-size:0.85rem; font-weight:700; color:#aaa; margin-bottom:8px; display:block;">Senha de Acesso</label>
+              <input type="password" id="admin-password-input" placeholder="Senha do .env" class="quiz-input" style="background: rgba(255,255,255,0.05); color:white; border-color: rgba(255,255,255,0.1);" required>
+              <p class="error-msg" id="login-error" style="color: #ff4d6d; font-size: 0.85rem; margin-top: 8px; display: none;"></p>
+            </div>
+            
+            <button type="submit" class="btn-primary-new w-full">
+              <i data-lucide="lock"></i> Acessar Painel
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+
+  if (window.lucide) lucide.createIcons();
+
+  const form = document.getElementById('admin-login-form');
+  const pwdInput = document.getElementById('admin-password-input');
+  const errorMsg = document.getElementById('login-error');
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const typedPassword = pwdInput.value;
+    
+    if (typedPassword === adminPassword) {
+      sessionStorage.setItem('audiogift_admin_auth', 'true');
+      renderRoute();
+    } else {
+      errorMsg.textContent = 'Senha incorreta. Verifique e tente novamente.';
+      errorMsg.style.display = 'block';
+      pwdInput.value = '';
+      pwdInput.focus();
+    }
+  };
+};
+
+// --- RENDERIZAR PAINEL DE CONTROLE DO ADMIN ---
+const renderAdminDashboard = (mainEl, orders) => {
+  const totalOrders = orders.length;
+  
+  const statusCounts = {
+    pendente: 0,
+    pago: 0,
+    em_producao: 0,
+    concluido: 0
+  };
+  
+  let totalRevenue = 0;
+  
+  orders.forEach(o => {
+    if (statusCounts[o.status] !== undefined) {
+      statusCounts[o.status]++;
+    }
+    if (o.status !== 'pendente') {
+      const planPrices = { especial: 89.90, memoravel: 149.90, inesquecivel: 199.90 };
+      totalRevenue += planPrices[o.plan] || 149.90;
+    }
+  });
+
+  const revenueStr = totalRevenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+  const statusBadges = {
+    pendente: '<span class="badge badge-pending">Pendente</span>',
+    pago: '<span class="badge badge-paid">Pago</span>',
+    em_producao: '<span class="badge badge-production">Em Produção</span>',
+    concluido: '<span class="badge badge-completed">Entregue</span>'
+  };
+
+  mainEl.innerHTML = `
+    <div class="admin-dashboard-page bg-dark text-white py-large" style="min-height: 80vh;">
+      <div class="container-full" style="padding: 0 2rem;">
+        
+        <div class="admin-header-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+          <div>
+            <h1 class="section-title-serif text-white text-left" style="font-size: 2.2rem; margin-bottom: 5px;">Painel de <em>Controle</em></h1>
+            <p style="color: var(--text-muted); font-size:0.95rem; margin:0;">Gerencie pedidos, clientes e acione o Agente de IA para escrever as letras das canções.</p>
+          </div>
+          <div class="admin-actions" style="display:flex; gap:10px;">
+            <button class="btn-primary-new" id="btn-admin-export" style="padding:0.6rem 1.4rem; font-size:0.85rem; display:flex; align-items:center; gap:6px;"><i data-lucide="download" style="width:16px; height:16px;"></i> Exportar CSV</button>
+            <button class="btn-outline" id="btn-admin-logout" style="border-color: rgba(255,255,255,0.1); color: #ff4d6d; padding:0.6rem 1.4rem; font-size:0.85rem;"><i data-lucide="log-out"></i> Sair</button>
+          </div>
+        </div>
+
+        <div class="admin-metrics-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+          <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(252,115,1,0.1); color: var(--primary-orange);"><i data-lucide="dollar-sign"></i></div>
+            <div class="metric-info">
+              <span class="metric-lbl">Faturamento</span>
+              <h2 class="metric-val">${revenueStr}</h2>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(255,255,255,0.05); color: #fff;"><i data-lucide="shopping-bag"></i></div>
+            <div class="metric-info">
+              <span class="metric-lbl">Pedidos Totais</span>
+              <h2 class="metric-val">${totalOrders}</h2>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(255,184,0,0.1); color: #ffb800;"><i data-lucide="clock"></i></div>
+            <div class="metric-info">
+              <span class="metric-lbl">Pendentes</span>
+              <h2 class="metric-val">${statusCounts.pendente}</h2>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(59,130,246,0.1); color: #3b82f6;"><i data-lucide="music"></i></div>
+            <div class="metric-info">
+              <span class="metric-lbl">Em Produção</span>
+              <h2 class="metric-val">${statusCounts.pago + statusCounts.em_producao}</h2>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background: rgba(74,222,128,0.1); color: #4ade80;"><i data-lucide="check-circle"></i></div>
+            <div class="metric-info">
+              <span class="metric-lbl">Entregues</span>
+              <h2 class="metric-val">${statusCounts.concluido}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-main-section">
+          <div class="admin-orders-list-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius:24px; padding:25px;">
+            <div class="list-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;">
+              <h3 style="font-size:1.2rem; font-weight:600;">Listagem de Pedidos</h3>
+              <div class="list-card-search" style="display:flex; gap:10px; flex-wrap:wrap;">
+                <input type="text" id="admin-search-input" placeholder="Buscar por cliente, email..." class="quiz-input search-box" style="max-width:250px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem;">
+                <select id="admin-filter-status" class="quiz-input select-box" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem;">
+                  <option value="all">Todos os Status</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="pago">Pago</option>
+                  <option value="em_producao">Em Produção</option>
+                  <option value="concluido">Entregue</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-container" style="overflow-x:auto;">
+              <table class="admin-table" style="width:100%; border-collapse:collapse; text-align:left;">
+                <thead>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.08); color:#aaa; font-size:0.85rem; text-transform:uppercase;">
+                    <th style="padding: 12px 10px;">Cliente</th>
+                    <th style="padding: 12px 10px;">Homenageado</th>
+                    <th style="padding: 12px 10px;">Ocasião</th>
+                    <th style="padding: 12px 10px;">Estilo</th>
+                    <th style="padding: 12px 10px;">Plano</th>
+                    <th style="padding: 12px 10px;">Data</th>
+                    <th style="padding: 12px 10px;">Status</th>
+                    <th style="padding: 12px 10px; text-align:right;">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-table-body" style="font-size:0.9rem;">
+                  ${orders.length === 0 ? `
+                    <tr>
+                      <td colspan="8" class="text-center" style="padding: 3rem; color: var(--text-muted);">Nenhum pedido no banco de dados.</td>
+                    </tr>
+                  ` : orders.map(o => {
+                    const formattedDate = new Date(o.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                    return `
+                      <tr class="order-row" data-order-id="${o.id}" style="border-bottom:1px solid rgba(255,255,255,0.04); cursor:pointer; transition: background 0.2s;">
+                        <td style="padding: 14px 10px;">
+                          <div style="font-weight:600; color:#fff;">${o.customer_name || o.customer_email.split('@')[0]}</div>
+                          <div style="font-size:0.75rem; color:#888;">${o.customer_email}</div>
+                        </td>
+                        <td style="padding: 14px 10px;"><strong>${o.recipient_name || 'N/A'}</strong></td>
+                        <td style="padding: 14px 10px; color:#ccc;">${o.occasion || 'Outra'}</td>
+                        <td style="padding: 14px 10px; color:#ccc;">${o.genre || 'N/A'} (${o.voice || 'Feminina'})</td>
+                        <td style="padding: 14px 10px;"><span class="plan-badge">${o.plan.toUpperCase()}</span></td>
+                        <td style="padding: 14px 10px; color:#aaa; font-size:0.8rem;">${formattedDate}</td>
+                        <td style="padding: 14px 10px;">${statusBadges[o.status] || o.status}</td>
+                        <td style="padding: 14px 10px; text-align:right;">
+                          <button class="btn-manage-order" data-order-id="${o.id}" style="background: rgba(252,115,1,0.1); color: var(--primary-orange); padding:6px 12px; border-radius:8px; font-size:0.8rem; font-weight:600;">
+                            <i data-lucide="edit-2" style="width:14px; height:14px; margin-right:4px;"></i> Abrir
+                          </button>
+                        </td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Drawer para Detalhes do Pedido -->
+          <div class="admin-order-drawer-overlay" id="order-drawer-overlay">
+            <div class="admin-order-drawer" id="order-drawer">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  if (window.lucide) lucide.createIcons();
+
+  document.getElementById('btn-admin-logout').onclick = () => {
+    sessionStorage.removeItem('audiogift_admin_auth');
+    renderRoute();
+  };
+
+  const searchInput = document.getElementById('admin-search-input');
+  const filterSelect = document.getElementById('admin-filter-status');
+
+  const filterTable = () => {
+    const q = searchInput.value.toLowerCase().trim();
+    const status = filterSelect.value;
+    
+    document.querySelectorAll('.admin-table tbody .order-row').forEach(row => {
+      const id = row.dataset.orderId;
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      
+      const matchSearch = 
+        order.customer_email.toLowerCase().includes(q) ||
+        (order.customer_name && order.customer_name.toLowerCase().includes(q)) ||
+        (order.recipient_name && order.recipient_name.toLowerCase().includes(q)) ||
+        (order.customer_phone && order.customer_phone.includes(q)) ||
+        (order.occasion && order.occasion.toLowerCase().includes(q));
+      
+      const matchStatus = status === 'all' || order.status === status;
+      
+      row.style.display = (matchSearch && matchStatus) ? 'table-row' : 'none';
+    });
+  };
+
+  if (searchInput) searchInput.oninput = filterTable;
+  if (filterSelect) filterSelect.onchange = filterTable;
+
+  // Lógica do botão Exportar CSV
+  const btnExport = document.getElementById('btn-admin-export');
+  if (btnExport) {
+    btnExport.onclick = () => {
+      const q = searchInput.value.toLowerCase().trim();
+      const status = filterSelect.value;
+      
+      const filtered = orders.filter(order => {
+        const matchSearch = 
+          order.customer_email.toLowerCase().includes(q) ||
+          (order.customer_name && order.customer_name.toLowerCase().includes(q)) ||
+          (order.recipient_name && order.recipient_name.toLowerCase().includes(q)) ||
+          (order.customer_phone && order.customer_phone.includes(q)) ||
+          (order.occasion && order.occasion.toLowerCase().includes(q));
+        
+        const matchStatus = status === 'all' || order.status === status;
+        return matchSearch && matchStatus;
+      });
+
+      if (filtered.length === 0) {
+        alert('Nenhum pedido filtrado para exportar.');
+        return;
+      }
+
+      const headers = [
+        'ID', 'Criado Em', 'Cliente Nome', 'Cliente Email', 'Cliente WhatsApp', 
+        'Plano', 'Status', 'Homenageado', 'Falar Nome', 'Relacao', 'Ocasiao', 
+        'Genero', 'Voz', 'Vibe', 'Bebê Nome', 'Sentimentos', 'Historias', 
+        'Mensagem Final', 'Letra Gerada', 'Prompt Gerado', 'Audio URL'
+      ];
+      
+      const csvRows = [];
+      csvRows.push(headers.join(';'));
+      
+      filtered.forEach(o => {
+        const row = [
+          o.id,
+          o.created_at,
+          o.customer_name || '',
+          o.customer_email || '',
+          o.customer_phone || '',
+          o.plan || '',
+          o.status || '',
+          o.recipient_name || '',
+          o.speak_name || '',
+          o.for_who || '',
+          o.occasion || '',
+          o.genre || '',
+          o.voice || '',
+          o.vibes || '',
+          o.baby_name || '',
+          (o.feelings || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
+          (o.story || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
+          (o.message || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
+          (o.generated_lyrics || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
+          (o.generated_prompt || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
+          o.audio_url || ''
+        ];
+        const escapedRow = row.map(val => {
+          const str = String(val).replace(/"/g, '""');
+          return `"${str}"`;
+        });
+        csvRows.push(escapedRow.join(';'));
+      });
+      
+      const csvContent = '\uFEFF' + csvRows.join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `relatorio_pedidos_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+  }
+
+  document.querySelectorAll('.btn-manage-order, .order-row').forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const orderId = btn.dataset.orderId || btn.closest('.order-row').dataset.orderId;
+      openOrderDrawer(orderId, orders);
+    };
+  });
+};
+
+// --- ABRIR MODAL/DETALHES DO PEDIDO NO ADMIN ---
+const openOrderDrawer = async (orderId, orders) => {
+  const order = orders.find(o => o.id === orderId);
+  if (!order) return;
+
+  const overlay = document.getElementById('order-drawer-overlay');
+  const drawer = document.getElementById('order-drawer');
+
+  drawer.innerHTML = `
+    <div class="drawer-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:15px; margin-bottom:20px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h2 style="font-size:1.3rem; font-weight:700; color:#fff; margin:0;">Ficha Criativa & Agente IA</h2>
+          <button class="btn-outline" id="btn-copy-tracking-link" style="padding: 4px 8px; font-size: 0.75rem; border-color: rgba(255,255,255,0.15); color: #ccc; border-radius: 6px; display:flex; align-items:center; gap: 4px; cursor:pointer;">
+            <i data-lucide="link" style="width:12px; height:12px;"></i> Copiar Link do Cliente
+          </button>
+        </div>
+        <span class="drawer-order-id" style="font-size:0.75rem; color:#888; font-family:monospace;">ID: ${order.id}</span>
+      </div>
+      <button class="btn-drawer-close" id="btn-close-drawer" style="font-size:1.8rem; color:#aaa; line-height:1; cursor:pointer;">&times;</button>
+    </div>
+    
+    <div class="drawer-body" style="max-height: calc(100vh - 120px); overflow-y:auto; padding-right:5px; max-width: 1200px; margin: 0 auto;">
+      <div class="drawer-cols-grid">
+        
+        <!-- Coluna Esquerda: Dados do Cliente & Respostas do Quiz -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- Seção 1: Cliente -->
+          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
+            <h3 style="font-size:0.95rem; font-weight:600; color:var(--primary-orange); margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="user" style="width:16px; height:16px;"></i> Contato do Cliente</h3>
+            <div class="drawer-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:0.85rem;">
+              <div style="grid-column: span 2;">
+                <span style="color:#888; display:block; margin-bottom:4px;">Nome do Cliente:</span>
+                <input type="text" id="drawer-customer-name" value="${order.customer_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+              </div>
+              <div>
+                <span style="color:#888; display:block; margin-bottom:4px;">Email:</span>
+                <input type="email" id="drawer-customer-email" value="${order.customer_email || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+              </div>
+              <div>
+                <span style="color:#888; display:block; margin-bottom:4px;">WhatsApp:</span>
+                <div style="display:flex; gap:8px;">
+                  <input type="text" id="drawer-customer-phone" value="${order.customer_phone || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                  <button class="btn-outline" id="btn-drawer-whatsapp" style="padding:6px 10px; border-color:#25d366; color:#25d366; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Chamar no WhatsApp">
+                    <i data-lucide="message-square" style="width:16px; height:16px;"></i>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <span style="color:#888; display:block; margin-bottom:4px;">Plano Adquirido:</span>
+                <strong style="color:#4ade80; display:block; padding: 6px 0;">${order.plan.toUpperCase()}</strong>
+              </div>
+              <div>
+                <span style="color:#888; display:block; margin-bottom:4px;">Opt-in Acompanhamento:</span>
+                <select id="drawer-whatsapp-followup" class="quiz-input select-box" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                  <option value="true" ${order.whatsapp_followup ? 'selected' : ''}>Sim (Enviar Whats)</option>
+                  <option value="false" ${!order.whatsapp_followup ? 'selected' : ''}>Não</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção 2: Quiz -->
+          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
+            <h3 style="font-size:0.95rem; font-weight:600; color:var(--primary-orange); margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="file-text" style="width:16px; height:16px;"></i> Respostas do Questionário</h3>
+            <div class="quiz-answers-box" style="font-size:0.85rem; color:#ddd; display:flex; flex-direction:column; gap:12px;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div>
+                  <label style="color:#888; display:block; margin-bottom:4px;">Homenageado(a):</label>
+                  <input type="text" id="drawer-recipient-name" value="${order.recipient_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div>
+                  <label style="color:#888; display:block; margin-bottom:4px;">Falar Nome na Música:</label>
+                  <input type="text" id="drawer-speak-name" value="${order.speak_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div>
+                  <label style="color:#888; display:block; margin-bottom:4px;">Relação:</label>
+                  <input type="text" id="drawer-for-who" value="${order.for_who || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div>
+                  <label style="color:#888; display:block; margin-bottom:4px;">Ocasião:</label>
+                  <input type="text" id="drawer-occasion" value="${order.occasion || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div>
+                  <label style="color:#888; display:block; margin-bottom:4px;">Gênero Musical:</label>
+                  <input type="text" id="drawer-genre" value="${order.genre || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div>
+                  <label style="color:#888; display:block; margin-bottom:4px;">Estilo de Voz:</label>
+                  <input type="text" id="drawer-voice" value="${order.voice || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label style="color:#888; display:block; margin-bottom:4px;">Vibe/Clima:</label>
+                  <input type="text" id="drawer-vibes" value="${order.vibes || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label style="color:#888; display:block; margin-bottom:4px;">Nomes Bebê (Caso Revelação):</label>
+                  <input type="text" id="drawer-baby-name" value="${order.baby_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
+                </div>
+              </div>
+              
+              <div style="margin-top:10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top:10px;">
+                <strong style="color:#fff; display:block; margin-bottom:5px;">O que faz especial / Sentimentos:</strong>
+                <textarea id="drawer-feelings" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.feelings || ''}</textarea>
+              </div>
+              
+              <div style="margin-top:10px;">
+                <strong style="color:#fff; display:block; margin-bottom:5px;">Histórias & Memórias:</strong>
+                <textarea id="drawer-story" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.story || ''}</textarea>
+              </div>
+              
+              <div style="margin-top:10px;">
+                <strong style="color:#fff; display:block; margin-bottom:5px;">Mensagem final importante:</strong>
+                <textarea id="drawer-message" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.message || ''}</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Agente IA & Controles do Pedido -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- Seção 3: IA Agent -->
+          <div class="drawer-section" style="background: rgba(252,115,1,0.03); border: 1px solid rgba(252,115,1,0.15); padding:18px; border-radius:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h3 style="font-size:0.95rem; font-weight:700; color:var(--primary-orange); display:flex; align-items:center; gap:8px; margin:0;"><i data-lucide="cpu" style="width:16px; height:16px;"></i> Agente de Composição IA</h3>
+              <span style="background:rgba(252,115,1,0.15); color:var(--primary-orange); font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:20px; text-transform:uppercase;">Agente Ativo</span>
+            </div>
+            
+            <div id="agent-workspace-container">
+              ${(!order.generated_lyrics) ? `
+                <div style="text-align:center; padding:15px 0;">
+                  <p style="font-size:0.85rem; color:#aaa; margin-bottom:12px;">Nenhuma letra foi gerada ainda. Clique no botão abaixo para analisar o quiz e compor.</p>
+                  <button class="btn-primary-new w-full" id="btn-run-agent" style="font-size:0.9rem; padding:0.8rem 1.5rem;">
+                    <i data-lucide="sparkles"></i> Executar Agente de IA
+                  </button>
+                </div>
+              ` : `
+                <div>
+                  <!-- Letra -->
+                  <div style="margin-bottom:15px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <span style="font-size:0.85rem; font-weight:600; color:#fff;">Letra Proposta</span>
+                      <div style="display:flex; gap: 8px;">
+                        <button class="btn-text-action" id="btn-copy-lyrics" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Letra</button>
+                        <button class="btn-text-action" id="btn-regenerate-lyrics" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="rotate-cw" style="width:12px; height:12px; margin-right:3px;"></i> Regerar</button>
+                      </div>
+                    </div>
+                    <textarea class="agent-textarea" id="agent-lyrics-input" style="width:100%; height:260px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#fff; font-family:monospace; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.generated_lyrics}</textarea>
+                  </div>
+
+                  <!-- Prompt Suno/Udio -->
+                  <div style="margin-bottom:15px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <span style="font-size:0.85rem; font-weight:600; color:#fff;">Prompt para Suno/Udio</span>
+                      <button class="btn-text-action" id="btn-copy-prompt" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar</button>
+                    </div>
+                    <textarea class="agent-textarea" id="agent-prompt-input" style="width:100%; height:80px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-family:monospace; font-size:0.8rem; padding:10px; line-height:1.3; resize:none;" readonly>${order.generated_prompt}</textarea>
+                  </div>
+
+                  <!-- Prompt ChatGPT/Claude de Letra -->
+                  <div style="margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <span style="font-size:0.85rem; font-weight:600; color:#fff;">Prompt de Letra (ChatGPT/Claude)</span>
+                      <button class="btn-text-action" id="btn-copy-chatgpt-prompt" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Prompt LLM</button>
+                    </div>
+                    <textarea class="agent-textarea" id="agent-chatgpt-prompt-input" style="width:100%; height:120px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#aaa; font-family:monospace; font-size:0.78rem; padding:10px; line-height:1.3; resize:vertical;" readonly>${buildChatgptPrompt(order)}</textarea>
+                  </div>
+                </div>
+              `}
+            </div>
+          </div>
+
+          <!-- Seção 4: Configurações do Pedido -->
+          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
+            <h3 style="font-size:0.95rem; font-weight:600; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="settings" style="width:16px; height:16px;"></i> Controles do Pedido</h3>
+            
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div class="form-row" style="text-align:left;">
+                <label style="font-size:0.8rem; color:#aaa; display:block; margin-bottom:6px;">Status da Produção</label>
+                <select id="drawer-order-status" class="quiz-input select-box" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%;">
+                  <option value="pendente" ${order.status === 'pendente' ? 'selected' : ''}>Aguardando Pagamento</option>
+                  <option value="pago" ${order.status === 'pago' ? 'selected' : ''}>Pagamento Aprovado</option>
+                  <option value="em_producao" ${order.status === 'em_producao' ? 'selected' : ''}>Em Produção</option>
+                  <option value="concluido" ${order.status === 'concluido' ? 'selected' : ''}>Entregue (Concluído)</option>
+                </select>
+              </div>
+              
+              <div class="form-row" style="text-align:left;">
+                <label style="font-size:0.8rem; color:#aaa; display:block; margin-bottom:6px;">Link do Áudio Finalizado (MP3/WAV)</label>
+                <input type="text" id="drawer-audio-url" placeholder="Cole a URL do áudio final..." value="${order.audio_url || ''}" class="quiz-input" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%;">
+              </div>
+
+              <!-- Player Demo -->
+              <div style="margin-top:5px; background:rgba(0,0,0,0.2); padding:12px; border-radius:10px;">
+                <span style="font-size:0.8rem; color:#aaa; display:block; margin-bottom:6px;">Playlist de Referência (${order.genre || 'Pop Acústico'}):</span>
+                <audio controls src="${getDemoSong(order.genre)}" style="width:100%; height:32px;"></audio>
+              </div>
+              
+              <button class="btn-primary-new w-full mt-2" id="btn-save-drawer-changes" style="font-size:0.9rem; padding:0.8rem 1.5rem;">
+                <i data-lucide="save"></i> Salvar Pedido
+              </button>
+              
+              <button class="btn-outline w-full" id="btn-delete-order" style="border-color: rgba(255,77,109,0.2); color: #ff4d6d; font-size:0.85rem; padding:0.6rem 1rem;">
+                <i data-lucide="trash-2"></i> Excluir Pedido Permanentemente
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  if (window.lucide) lucide.createIcons();
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  const closeDrawer = () => {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  document.getElementById('btn-close-drawer').onclick = closeDrawer;
+  overlay.onclick = (e) => {
+    if (e.target === overlay) closeDrawer();
+  };
+
+  // Copiar Link de Acompanhamento
+  const btnCopyTracking = document.getElementById('btn-copy-tracking-link');
+  if (btnCopyTracking) {
+    btnCopyTracking.onclick = () => {
+      const url = `${window.location.origin}/acompanhamento?orderId=${order.id}`;
+      navigator.clipboard.writeText(url);
+      btnCopyTracking.innerHTML = `<i data-lucide="check" style="width:12px; height:12px;"></i> Copiado!`;
+      if (window.lucide) lucide.createIcons();
+      setTimeout(() => {
+        btnCopyTracking.innerHTML = `<i data-lucide="link" style="width:12px; height:12px;"></i> Copiar Link do Cliente`;
+        if (window.lucide) lucide.createIcons();
+      }, 2000);
+    };
+  }
+
+  // Chamar no WhatsApp
+  const btnWhats = document.getElementById('btn-drawer-whatsapp');
+  if (btnWhats) {
+    btnWhats.onclick = () => {
+      const rawPhone = document.getElementById('drawer-customer-phone').value.trim();
+      let cleanPhone = rawPhone.replace(/\D/g, '');
+      if (cleanPhone.length > 0) {
+        if (cleanPhone.length === 10 || cleanPhone.length === 11) {
+          cleanPhone = '55' + cleanPhone;
+        }
+        const clientName = document.getElementById('drawer-customer-name').value.trim() || 'Cliente';
+        const recName = document.getElementById('drawer-recipient-name').value.trim() || 'alguém especial';
+        const rawStatus = document.getElementById('drawer-order-status').value;
+        
+        const statusLabels = {
+          pendente: 'Aguardando Pagamento',
+          pago: 'Pagamento Aprovado',
+          em_producao: 'Em Produção',
+          concluido: 'Entregue'
+        };
+        const statusText = statusLabels[rawStatus] || rawStatus;
+        
+        const msg = `Olá, ${clientName}! Tudo bem? Aqui é da equipe AudioGift. Vi que você fez o pedido de uma música personalizada para ${recName}! Seu pedido está com o status: *${statusText}*. Qualquer dúvida estou à disposição! 🎁🎶`;
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+      } else {
+        alert('Número de WhatsApp inválido ou em branco.');
+      }
+    };
+  }
+
+  // Botão Executar Agente de IA
+  const btnRunAgent = document.getElementById('btn-run-agent');
+  if (btnRunAgent) {
+    btnRunAgent.onclick = async () => {
+      btnRunAgent.setAttribute('disabled', 'true');
+      btnRunAgent.innerHTML = `<i data-lucide="loader" class="spin"></i> Executando Agente...`;
+      
+      const currentOrderData = {
+        ...order,
+        customer_name: document.getElementById('drawer-customer-name').value.trim(),
+        customer_email: document.getElementById('drawer-customer-email').value.trim(),
+        customer_phone: document.getElementById('drawer-customer-phone').value.trim(),
+        whatsapp_followup: document.getElementById('drawer-whatsapp-followup').value === 'true',
+        recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
+        speak_name: document.getElementById('drawer-speak-name').value.trim(),
+        for_who: document.getElementById('drawer-for-who').value.trim(),
+        occasion: document.getElementById('drawer-occasion').value.trim(),
+        genre: document.getElementById('drawer-genre').value.trim(),
+        voice: document.getElementById('drawer-voice').value.trim(),
+        vibes: document.getElementById('drawer-vibes').value.trim(),
+        baby_name: document.getElementById('drawer-baby-name').value.trim(),
+        feelings: document.getElementById('drawer-feelings').value.trim(),
+        story: document.getElementById('drawer-story').value.trim(),
+        message: document.getElementById('drawer-message').value.trim()
+      };
+
+      const result = runAiAgent(currentOrderData);
+      
+      const updated = await db.updateOrder(orderId, {
+        ...currentOrderData,
+        generated_lyrics: result.generated_lyrics,
+        generated_prompt: result.generated_prompt,
+        status: 'em_producao'
+      });
+      
+      const idx = orders.findIndex(o => o.id === orderId);
+      if (idx !== -1) orders[idx] = updated;
+
+      closeDrawer();
+      setTimeout(() => {
+        openOrderDrawer(orderId, orders);
+        renderAdminDashboard(document.querySelector('main'), orders);
+      }, 300);
+    };
+  }
+
+  // Copiar Letras Propostas
+  const btnCopyLyrics = document.getElementById('btn-copy-lyrics');
+  if (btnCopyLyrics) {
+    btnCopyLyrics.onclick = () => {
+      const lyricsArea = document.getElementById('agent-lyrics-input');
+      lyricsArea.select();
+      document.execCommand('copy');
+      btnCopyLyrics.innerHTML = `<i data-lucide="check" style="width:12px; height:12px; margin-right:3px;"></i> Copiado!`;
+      if (window.lucide) lucide.createIcons();
+      setTimeout(() => {
+        btnCopyLyrics.innerHTML = `<i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Letra`;
+        if (window.lucide) lucide.createIcons();
+      }, 2000);
+    };
+  }
+
+  // Copiar Prompt Suno/Udio
+  const btnCopyPrompt = document.getElementById('btn-copy-prompt');
+  if (btnCopyPrompt) {
+    btnCopyPrompt.onclick = () => {
+      const promptArea = document.getElementById('agent-prompt-input');
+      promptArea.select();
+      document.execCommand('copy');
+      btnCopyPrompt.innerHTML = `<i data-lucide="check" style="width:12px; height:12px; margin-right:3px;"></i> Copiado!`;
+      if (window.lucide) lucide.createIcons();
+      setTimeout(() => {
+        btnCopyPrompt.innerHTML = `<i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar`;
+        if (window.lucide) lucide.createIcons();
+      }, 2000);
+    };
+  }
+
+  // Copiar Prompt ChatGPT/Claude
+  const btnCopyGptPrompt = document.getElementById('btn-copy-chatgpt-prompt');
+  if (btnCopyGptPrompt) {
+    btnCopyGptPrompt.onclick = () => {
+      const promptArea = document.getElementById('agent-chatgpt-prompt-input');
+      promptArea.select();
+      document.execCommand('copy');
+      btnCopyGptPrompt.innerHTML = `<i data-lucide="check" style="width:12px; height:12px; margin-right:3px;"></i> Copiado!`;
+      if (window.lucide) lucide.createIcons();
+      setTimeout(() => {
+        btnCopyGptPrompt.innerHTML = `<i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Prompt LLM`;
+        if (window.lucide) lucide.createIcons();
+      }, 2000);
+    };
+  }
+
+  // Regerar Letras
+  const btnRegenLyrics = document.getElementById('btn-regenerate-lyrics');
+  if (btnRegenLyrics) {
+    btnRegenLyrics.onclick = () => {
+      const confirm = window.confirm('Deseja regerar a letra? Edições manuais não salvas serão perdidas.');
+      if (!confirm) return;
+      
+      const currentOrderData = {
+        ...order,
+        recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
+        speak_name: document.getElementById('drawer-speak-name').value.trim(),
+        for_who: document.getElementById('drawer-for-who').value.trim(),
+        occasion: document.getElementById('drawer-occasion').value.trim(),
+        genre: document.getElementById('drawer-genre').value.trim(),
+        voice: document.getElementById('drawer-voice').value.trim(),
+        vibes: document.getElementById('drawer-vibes').value.trim(),
+        baby_name: document.getElementById('drawer-baby-name').value.trim(),
+        feelings: document.getElementById('drawer-feelings').value.trim(),
+        story: document.getElementById('drawer-story').value.trim(),
+        message: document.getElementById('drawer-message').value.trim()
+      };
+      
+      const newLyrics = generateLyrics(currentOrderData);
+      document.getElementById('agent-lyrics-input').value = newLyrics;
+    };
+  }
+
+  // Deletar
+  const btnDeleteOrder = document.getElementById('btn-delete-order');
+  if (btnDeleteOrder) {
+    btnDeleteOrder.onclick = async () => {
+      const confirm = window.confirm('Excluir este pedido do banco permanentemente?');
+      if (!confirm) return;
+      
+      await db.deleteOrder(orderId);
+      const filtered = orders.filter(o => o.id !== orderId);
+      closeDrawer();
+      setTimeout(() => {
+        renderAdminDashboard(document.querySelector('main'), filtered);
+      }, 200);
+    };
+  }
+
+  // Salvar
+  const btnSaveChanges = document.getElementById('btn-save-drawer-changes');
+  if (btnSaveChanges) {
+    btnSaveChanges.onclick = async () => {
+      btnSaveChanges.setAttribute('disabled', 'true');
+      btnSaveChanges.innerHTML = `<i data-lucide="loader" class="spin"></i> Gravando...`;
+      
+      const newStatus = document.getElementById('drawer-order-status').value;
+      const newAudioUrl = document.getElementById('drawer-audio-url').value.trim();
+      const lyricsInp = document.getElementById('agent-lyrics-input');
+      
+      const updates = {
+        customer_name: document.getElementById('drawer-customer-name').value.trim(),
+        customer_email: document.getElementById('drawer-customer-email').value.trim(),
+        customer_phone: document.getElementById('drawer-customer-phone').value.trim(),
+        whatsapp_followup: document.getElementById('drawer-whatsapp-followup').value === 'true',
+        
+        recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
+        speak_name: document.getElementById('drawer-speak-name').value.trim(),
+        for_who: document.getElementById('drawer-for-who').value.trim(),
+        occasion: document.getElementById('drawer-occasion').value.trim(),
+        genre: document.getElementById('drawer-genre').value.trim(),
+        voice: document.getElementById('drawer-voice').value.trim(),
+        vibes: document.getElementById('drawer-vibes').value.trim(),
+        baby_name: document.getElementById('drawer-baby-name').value.trim(),
+        feelings: document.getElementById('drawer-feelings').value.trim(),
+        story: document.getElementById('drawer-story').value.trim(),
+        message: document.getElementById('drawer-message').value.trim(),
+        
+        status: newStatus,
+        audio_url: newAudioUrl
+      };
+      
+      if (lyricsInp) {
+        updates.generated_lyrics = lyricsInp.value;
+      }
+      
+      const updated = await db.updateOrder(orderId, updates);
+      const idx = orders.findIndex(o => o.id === orderId);
+      if (idx !== -1) orders[idx] = updated;
+      
+      closeDrawer();
+      setTimeout(() => {
+        renderAdminDashboard(document.querySelector('main'), orders);
+        alert('Pedido salvo com sucesso!');
+      }, 200);
+    };
+  }
+};
+
+// Roteador SPA (Revisado)
+const renderRoute = async () => {
+  const path = window.location.pathname;
   const hash = window.location.hash;
+  
+  // Suporta tanto /admin quanto #admin
+  const isAdmin = path === '/admin' || hash.split('?')[0] === '#admin';
+  const isCheckout = path === '/checkout' || hash.split('?')[0] === '#checkout';
+  const isAcompanhamento = path === '/acompanhamento' || hash.split('?')[0] === '#acompanhamento';
+  const isPlanos = path === '/planos' || hash.split('?')[0] === '#planos';
+  const isQuiz = path === '/quiz' || hash.split('?')[0] === '#quiz';
+
+  // Obter o orderId ou plan da query string da URL (?...) ou da hash
+  const queryPart = (path === '/admin' || path === '/checkout' || path === '/acompanhamento' || path === '/planos' || path === '/quiz')
+    ? window.location.search.substring(1)
+    : hash.split('?')[1] || '';
+  const urlParams = new URLSearchParams(queryPart);
+  const orderId = urlParams.get('orderId');
+  const plan = urlParams.get('plan') || 'memoravel';
+
   const mainEl = document.querySelector('main');
   if (!mainEl) return;
+
+  // Ocultar elementos da Landing Page no painel admin e quiz para manter tela limpa
+  const annBar = document.querySelector('.announcement-bar');
+  const header = document.querySelector('.header');
+  const footer = document.querySelector('.footer');
+  const floatActions = document.querySelector('.floating-actions');
+
+  const isHome = !isAdmin && !isCheckout && !isAcompanhamento && !isPlanos && !isQuiz;
+
+  if (isHome) {
+    document.body.classList.remove('admin-mode');
+    if (annBar) annBar.style.display = '';
+    if (header) header.style.display = '';
+    if (footer) footer.style.display = '';
+    if (floatActions) floatActions.style.display = '';
+    document.body.style.backgroundColor = '';
+  } else {
+    // Para todas as outras rotas (Checkout, Acompanhamento, Admin, Planos, Quiz)
+    if (isAdmin) {
+      document.body.classList.add('admin-mode');
+      document.body.style.backgroundColor = '#000000'; // Fundo preto puro para o admin
+    } else if (isQuiz) {
+      document.body.classList.remove('admin-mode');
+      document.body.style.backgroundColor = '#0A0A0A'; // Fundo escuro para o quiz
+    } else {
+      document.body.classList.remove('admin-mode');
+      document.body.style.backgroundColor = '';
+    }
+    if (annBar) annBar.style.display = 'none';
+    if (header) header.style.display = 'none';
+    if (footer) footer.style.display = 'none';
+    if (floatActions) floatActions.style.display = 'none';
+  }
 
   if (window.GlobalAudio) {
     window.GlobalAudio.pause();
     window.GlobalAudio.resetActiveBtnVisuals();
   }
 
-  if (hash === '#planos') {
+  // Seletor de Rotas SPA
+  if (isCheckout) {
+    await renderCheckoutPage(mainEl, orderId);
+  } else if (isAcompanhamento) {
+    await renderAcompanhamentoPage(mainEl, orderId);
+  } else if (isAdmin) {
+    await renderAdminPage(mainEl);
+  } else if (isQuiz) {
+    mainEl.innerHTML = `
+      <div class="quiz-page bg-dark" style="min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; padding: 0;">
+        <div id="quiz-container" style="width: 100%;"></div>
+        <button class="quiz-close" onclick="window.location.hash = '#'">&times;</button>
+      </div>
+    `;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    QuizEngine(plan);
+  } else if (isPlanos) {
     mainEl.innerHTML = `
       ${Pricing()}
       ${Warranty()}
     `;
     window.scrollTo({ top: 0, behavior: 'instant' });
+    initMagneticButtons();
   } else {
+    // Rota Padrão (Home)
     mainEl.innerHTML = `
       ${Hero()}
       ${HowItWorks()}
@@ -2921,13 +4580,45 @@ const renderRoute = () => {
   }
 };
 
+const renderAdminPage = async (mainEl) => {
+  const isAuth = sessionStorage.getItem('audiogift_admin_auth') === 'true';
+  
+  if (!isAuth) {
+    renderAdminLogin(mainEl);
+    return;
+  }
+
+  mainEl.innerHTML = `
+    <div class="admin-dashboard-loading text-center py-large bg-dark text-white" style="min-height: 80vh; display:flex; align-items:center; justify-content:center;">
+      <div>
+        <div class="preloader-equalizer" style="margin-bottom:15px;">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+        </div>
+        <p style="color: var(--text-muted);">Carregando Painel Administrativo...</p>
+      </div>
+    </div>
+  `;
+
+  let orders = [];
+  try {
+    orders = await db.getOrders();
+  } catch (err) {
+    console.error('Erro ao carregar pedidos no admin:', err);
+  }
+
+  renderAdminDashboard(mainEl, orders);
+};
+
 // Initialize static components once
 initMobileMenu();
 
-// Listen to hash change for routing
+// Listen to hash change and history navigation for routing
 window.addEventListener('hashchange', renderRoute);
+window.addEventListener('popstate', renderRoute);
 
-// --- CUSTOM CURSOR LOGIC WITH VALENTINE'S DAY EFFECTS ---
+// --- CUSTOM CURSOR LOGIC WITH VALENTINE'S DAY EFFECTS (OPTIMIZED) ---
 if (window.matchMedia('(pointer: fine)').matches) {
   const cursorDot = document.createElement('div');
   cursorDot.className = 'cursor-dot';
@@ -2946,7 +4637,12 @@ if (window.matchMedia('(pointer: fine)').matches) {
   let lastY = 0;
   const minDistance = 50; // distância mínima em pixels para spawnar o próximo coração
 
-  const spawnHeart = (x, y) => {
+  // Pool de corações para evitar criação/destruição constante no DOM
+  const POOL_SIZE = 15;
+  const heartPool = [];
+  let poolIndex = 0;
+
+  for (let i = 0; i < POOL_SIZE; i++) {
     const heart = document.createElement('div');
     heart.className = 'heart-trail';
     const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#FC7301', '#ffb3c1'];
@@ -2954,70 +4650,101 @@ if (window.matchMedia('(pointer: fine)').matches) {
     
     heart.innerHTML = `<svg viewBox="0 0 24 24" fill="${randomColor}" width="100%" height="100%"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
     
-    heart.style.left = `${x}px`;
-    heart.style.top = `${y}px`;
-    
+    // Configurações iniciais de escuta para auto-ocultação ao final da animação
+    heart.addEventListener('animationend', () => {
+      heart.style.display = 'none';
+      heart.classList.remove('active');
+    });
+
+    document.body.appendChild(heart);
+    heartPool.push(heart);
+  }
+
+  const spawnHeart = (x, y) => {
+    const heart = heartPool[poolIndex];
+    poolIndex = (poolIndex + 1) % POOL_SIZE;
+
     const size = Math.random() * 8 + 8; // 8px a 16px
-    heart.style.width = `${size}px`;
-    heart.style.height = `${size}px`;
-    
     const driftY = -50 - Math.random() * 50; // flutuar para cima
     const driftX = (Math.random() - 0.5) * 60; // balanço horizontal
     const rotate = (Math.random() - 0.5) * 60; // rotação leve
+
+    // Atualiza propriedades e posiciona
+    heart.style.display = 'block';
+    heart.style.left = `${x}px`;
+    heart.style.top = `${y}px`;
+    heart.style.width = `${size}px`;
+    heart.style.height = `${size}px`;
     
     heart.style.setProperty('--drift-x', `${driftX}px`);
     heart.style.setProperty('--drift-y', `${driftY}px`);
     heart.style.setProperty('--rotate', `${rotate}deg`);
     
-    document.body.appendChild(heart);
-    
-    setTimeout(() => {
-      heart.remove();
-    }, 1000);
+    // Reinicia a animação CSS com hack de reflow super rápido
+    heart.classList.remove('active');
+    void heart.offsetWidth; // Força recálculo leve local
+    heart.classList.add('active');
   };
 
+  // O listener de mouse apenas grava a posição do mouse.
+  // Extremamente leve, não faz cálculo ou alteração visual síncrona.
   window.addEventListener('mousemove', (e) => {
+    if (document.body.classList.contains('admin-mode')) {
+      return;
+    }
     mouseX = e.clientX;
     mouseY = e.clientY;
+  });
+
+  const animate = () => {
+    if (document.body.classList.contains('admin-mode')) {
+      cursorDot.style.display = 'none';
+      cursorOutline.style.display = 'none';
+      requestAnimationFrame(animate);
+      return;
+    } else {
+      cursorDot.style.display = '';
+      cursorOutline.style.display = '';
+    }
+
+    // Interpolação de movimento do outline suave (atenuada para 0.22)
+    let distX = mouseX - outlineX;
+    let distY = mouseY - outlineY;
     
-    // Calcula a distância percorrida desde o último coração gerado
+    outlineX = outlineX + distX * 0.22;
+    outlineY = outlineY + distY * 0.22;
+    
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+    
+    // Calcula distância percorrida e gera o coração no frame de renderização
     const dist = Math.hypot(mouseX - lastX, mouseY - lastY);
     if (dist > minDistance) {
       spawnHeart(mouseX, mouseY);
       lastX = mouseX;
       lastY = mouseY;
     }
-  });
-
-  const animate = () => {
-    let distX = mouseX - outlineX;
-    let distY = mouseY - outlineY;
-    
-    outlineX = outlineX + distX * 0.32;
-    outlineY = outlineY + distY * 0.32;
-    
-    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-    cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
     
     requestAnimationFrame(animate);
   };
   animate();
 
-  // Re-bind de eventos de hover periodicamente
-  setInterval(() => {
-    const interactables = document.querySelectorAll('a, button, .btn-primary-new, .btn-nav-gold, .pill-option, .faq-question, .song-pill');
-    interactables.forEach(el => {
-      if(!el.dataset.cursorBound) {
-        el.dataset.cursorBound = 'true';
-        el.addEventListener('mouseenter', () => {
-          cursorOutline.classList.add('cursor-hover');
-          cursorDot.classList.add('cursor-hover');
-        });
-        el.addEventListener('mouseleave', () => {
-          cursorOutline.classList.remove('cursor-hover');
-          cursorDot.classList.remove('cursor-hover');
-        });
-      }
-    });
-  }, 1000);
+  // Delegação de eventos otimizada para hover do cursor em vez de loops setInterval
+  document.body.addEventListener('mouseover', (e) => {
+    if (document.body.classList.contains('admin-mode')) return;
+    const target = e.target.closest('a, button, .btn-primary-new, .btn-nav-gold, .pill-option, .faq-question, .song-pill');
+    if (target) {
+      cursorOutline.classList.add('cursor-hover');
+      cursorDot.classList.add('cursor-hover');
+    }
+  });
+
+  document.body.addEventListener('mouseout', (e) => {
+    if (document.body.classList.contains('admin-mode')) return;
+    const target = e.target.closest('a, button, .btn-primary-new, .btn-nav-gold, .pill-option, .faq-question, .song-pill');
+    if (target) {
+      cursorOutline.classList.remove('cursor-hover');
+      cursorDot.classList.remove('cursor-hover');
+    }
+  });
 }

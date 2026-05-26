@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/(assets|songs|images|videos|genres|favicon|icons|src)/:path*",
+      "destination": "/$1/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
