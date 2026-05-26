@@ -426,11 +426,35 @@
         var loader = document.getElementById('preloader');
         if (loader && !loader.classList.contains('fade-out')) {
           loader.classList.add('fade-out');
-          document.body.classList.add('app-ready');
-          document.body.style.backgroundColor = '';
-          setTimeout(function() { loader.remove(); }, 800);
+          
+          var path = window.location.pathname;
+          var hash = window.location.hash;
+          var isHome = !path.includes('/admin') && !hash.includes('#admin') &&
+                       !path.includes('/checkout') && !hash.includes('#checkout') &&
+                       !path.includes('/acompanhamento') && !hash.includes('#acompanhamento') &&
+                       !path.includes('/planos') && !hash.includes('#planos') &&
+                       !path.includes('/quiz') && !hash.includes('#quiz');
+
+          if (isHome) {
+            document.body.classList.add('preloader-done');
+            setTimeout(function() {
+              document.body.classList.add('video-ready');
+              setTimeout(function() {
+                document.body.classList.add('content-ready');
+                document.body.classList.add('app-ready');
+                document.body.style.backgroundColor = '';
+                setTimeout(function() {
+                  loader.remove();
+                }, 800);
+              }, 600);
+            }, 350);
+          } else {
+            document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
+            document.body.style.backgroundColor = '';
+            loader.remove();
+          }
         }
-      }, 2000);
+      }, 3000);
     </script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
     <script type="module" src="/src/main.js"></script>

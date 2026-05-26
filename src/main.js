@@ -2761,18 +2761,49 @@ script.onload = () => {
   if (window.lucide) lucide.createIcons();
   renderRoute();
 
-  // Desativa o preloader e exibe a página principal
+  // Desativa o preloader e exibe a página principal com transição escalonada (staggered)
   setTimeout(() => {
     const preloader = document.getElementById('preloader');
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+    const isAdmin = path === '/admin' || hash.split('?')[0] === '#admin';
+    const isCheckout = path === '/checkout' || hash.split('?')[0] === '#checkout';
+    const isAcompanhamento = path === '/acompanhamento' || hash.split('?')[0] === '#acompanhamento';
+    const isPlanos = path === '/planos' || hash.split('?')[0] === '#planos';
+    const isQuiz = path === '/quiz' || hash.split('?')[0] === '#quiz';
+    const isHome = !isAdmin && !isCheckout && !isAcompanhamento && !isPlanos && !isQuiz;
+
     if (preloader) {
       preloader.classList.add('fade-out');
-      document.body.classList.add('app-ready');
-      document.body.style.backgroundColor = '';
-      setTimeout(() => {
+      
+      if (isHome) {
+        // Fase 1: Preloader sumindo
+        document.body.classList.add('preloader-done');
+        
+        // Fase 2: Revela o banner do vídeo após 350ms
+        setTimeout(() => {
+          document.body.classList.add('video-ready');
+          
+          // Fase 3: Revela o menu de navegação e o conteúdo do site após mais 600ms
+          setTimeout(() => {
+            document.body.classList.add('content-ready');
+            document.body.classList.add('app-ready'); // Retrocompatibilidade
+            document.body.style.backgroundColor = '';
+            
+            // Remove o preloader do DOM após todas as animações
+            setTimeout(() => {
+              preloader.remove();
+            }, 800);
+          }, 600);
+        }, 350);
+      } else {
+        // Se for subpágina, ativa tudo instantaneamente
+        document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
+        document.body.style.backgroundColor = '';
         preloader.remove();
-      }, 800);
+      }
     } else {
-      document.body.classList.add('app-ready');
+      document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
       document.body.style.backgroundColor = '';
     }
   }, 100);
@@ -4481,6 +4512,7 @@ const renderRoute = async () => {
 
   if (isHome) {
     document.body.classList.remove('admin-mode');
+    document.body.classList.add('is-home-route');
     if (annBar) annBar.style.display = '';
     if (header) header.style.display = '';
     if (footer) footer.style.display = '';
@@ -4488,6 +4520,7 @@ const renderRoute = async () => {
     document.body.style.backgroundColor = '';
   } else {
     // Para todas as outras rotas (Checkout, Acompanhamento, Admin, Planos, Quiz)
+    document.body.classList.remove('is-home-route');
     if (isAdmin) {
       document.body.classList.add('admin-mode');
       document.body.style.backgroundColor = '#000000'; // Fundo preto puro para o admin

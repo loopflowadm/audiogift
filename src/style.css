@@ -7690,21 +7690,94 @@ button {
   100% { left: 100%; }
 }
 
-/* App Initial State for Fade In */
+/* App Initial State for Fade In - Reset App Container to render instantly */
 #app {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+
+/* Staggered Transition System for Premium Fluid Reveal */
+
+/* Phase 1: Video Announcement Bar (Top) Initial State */
+.announcement-bar {
   opacity: 0;
-  transform: translateY(30px) scale(0.98);
-  filter: blur(10px);
+  transform: translateY(-50px);
+  filter: blur(8px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+/* Phase 2: Navigation Bar (Header) Initial State */
+.header {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Phase 3: Main Page Content & Footer Initial State */
+main {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(12px);
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
               transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
               filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 
-body.app-ready #app {
+.footer, .floating-actions {
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+/* --- Trigger States --- */
+
+/* Video Bar Reveal */
+body.video-ready .announcement-bar {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
   filter: blur(0);
+}
+
+/* Header & Content Reveal */
+body.content-ready .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.content-ready main {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+body.content-ready .footer,
+body.content-ready .floating-actions {
+  opacity: 1;
+}
+
+/* --- Bypass / Resets for Admin Panel and Subpages --- */
+body.admin-mode #app,
+body.admin-mode main,
+body.admin-mode .header,
+body.admin-mode .footer,
+body.admin-mode .floating-actions,
+body:not(.is-home-route) #app,
+body:not(.is-home-route) main,
+body:not(.is-home-route) .header,
+body:not(.is-home-route) .footer,
+body:not(.is-home-route) .floating-actions {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
 }
 
 /* ==========================================================================
