@@ -1,26 +1,31 @@
-import { createClient } from '@supabase/supabase-js';
-
-// Obter variáveis de ambiente do Vite
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
 // Senha padrão se não configurada
 export const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
 
 let supabase = null;
 let isMock = true;
+let isInitialized = false;
 
-if (supabaseUrl && supabaseUrl !== 'https://seu-projeto.supabase.co' && supabaseAnonKey) {
-  try {
-    supabase = createClient(supabaseUrl, supabaseAnonKey);
-    isMock = false;
-    console.log('AudioGift: Supabase inicializado com sucesso.');
-  } catch (error) {
-    console.error('AudioGift: Falha ao inicializar o Supabase, usando fallback local:', error);
+// Inicialização dinâmica do Supabase para otimizar o carregamento inicial (Lazy Import)
+const initSupabase = async () => {
+  if (isInitialized) return;
+  
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+  if (supabaseUrl && supabaseUrl !== 'https://seu-projeto.supabase.co' && supabaseAnonKey) {
+    try {
+      const { createClient } = await import('@supabase/supabase-js');
+      supabase = createClient(supabaseUrl, supabaseAnonKey);
+      isMock = false;
+      console.log('AudioGift: Supabase inicializado dinamicamente com sucesso.');
+    } catch (error) {
+      console.error('AudioGift: Falha ao inicializar o Supabase dinamicamente:', error);
+    }
+  } else {
+    console.warn('AudioGift: Supabase não configurado. Utilizando localStorage como banco de dados local para desenvolvimento.');
   }
-} else {
-  console.warn('AudioGift: Supabase não configurado. Utilizando localStorage como banco de dados local para desenvolvimento.');
-}
+  isInitialized = true;
+};
 
 // Fallback do Banco de Dados usando LocalStorage
 const mockDatabase = {
@@ -37,6 +42,7 @@ const mockDatabase = {
 export const db = {
   // Inserir um novo pedido
   createOrder: async (orderData) => {
+    await initSupabase();
     const id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15);
     const newOrder = {
       id,
@@ -71,6 +77,7 @@ export const db = {
 
   // Buscar um pedido pelo ID
   getOrder: async (id) => {
+    await initSupabase();
     if (!isMock && supabase) {
       try {
         const { data, error } = await supabase
@@ -93,6 +100,7 @@ export const db = {
 
   // Listar todos os pedidos
   getOrders: async () => {
+    await initSupabase();
     if (!isMock && supabase) {
       try {
         const { data, error } = await supabase
@@ -115,6 +123,7 @@ export const db = {
 
   // Atualizar informações de um pedido (Ex: status, letra, prompt, audio_url)
   updateOrder: async (id, updates) => {
+    await initSupabase();
     if (!isMock && supabase) {
       try {
         const { data, error } = await supabase
@@ -143,6 +152,7 @@ export const db = {
 
   // Deletar um pedido (útil para limpeza no admin)
   deleteOrder: async (id) => {
+    await initSupabase();
     if (!isMock && supabase) {
       try {
         const { error } = await supabase
@@ -165,5 +175,9 @@ export const db = {
   },
 
   // Retorna se o banco atual é mockado ou real
-  isMocked: () => isMock
+  isMocked: () => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    return !(supabaseUrl && supabaseUrl !== 'https://seu-projeto.supabase.co' && supabaseAnonKey);
+  }
 };

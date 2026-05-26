@@ -2,6 +2,10 @@ import './style.css'
 import { db, adminPassword } from './supabaseClient.js'
 import { runAiAgent, generateLyrics, generatePrompt, buildChatgptPrompt } from './agentEngine.js'
 
+// Utilitário de segurança: escapa HTML para evitar XSS ao exibir dados de usuário
+const escapeHtml = (str) => String(str ?? '').replace(/[&<>"']/g, (c) =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 const Logo = (baseColor = 'white', giftColor = '#FC7301') => `
 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 1507040 421800" style="width: 100%; height: auto; display: block;" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
  xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -114,7 +118,7 @@ const Header = () => `
         <a href="#planos">Planos</a>
       </nav>
       <div class="nav-actions">
-        <a href="#" class="btn-nav-outline">Acompanhar pedido</a>
+        <button id="btn-track-order" class="btn-nav-outline">Acompanhar pedido</button>
         <a href="#create" class="btn-nav-gold">Criar sua canção</a>
         <button class="mobile-toggle" id="mobileToggle"><i data-lucide="menu"></i></button>
       </div>
@@ -124,7 +128,8 @@ const Header = () => `
       <a href="#styles">Estilos</a>
       <a href="#reviews">Depoimentos</a>
       <a href="#planos">Planos</a>
-      <a href="#" class="btn-primary-new w-full mt-4">Criar sua canção</a>
+      <button id="btn-track-order-mobile" class="btn-nav-outline w-full mt-2" style="width:100%; text-align:center;">Acompanhar pedido</button>
+      <a href="#create" class="btn-primary-new w-full mt-4">Criar sua canção</a>
     </div>
   </header>
 `
@@ -235,16 +240,19 @@ const Hero = () => `
           <div class="smartphone-mockup proof-video-card" data-video-url="https://player.vimeo.com/video/1195075467?badge=0&autopause=0&player_id=0&app_id=58479" data-aspect="vertical">
             <!-- iPhone SVG Frame Overlay -->
             <svg class="phone-svg-overlay" viewBox="0 0 152670 307380" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill="black" fill-rule="nonzero" d="M24880 0l102460 0c6450,0 12300,2630 16550,6880 4240,4240 6870,10100 6870,16540l0 54820 1910 0 0 40170 -1910 0 0 165550c0,6450 -2630,12300 -6870,16550 -4250,4240 -10100,6870 -16550,6870l-102460 0c-6440,0 -12300,-2630 -16540,-6870 -4240,-4250 -6880,-10100 -6880,-16550l0 -160060 -1460 0 0 -23420 1460 0 0 -6730 -1460 0 0 -23420 1460 0 0 -10320 -1460 0 0 -12810 1460 0 0 -23780c0,-6440 2640,-12300 6880,-16540 4240,-4250 10100,-6880 16540,-6880zm39450 11490l24010 0c2330,0 4240,1910 4240,4240l0 0c0,2340 -1910,4250 -4240,4250l-24010 0c-2330,0 -4240,-1910 -4240,-4250l0 0c0,-2330 1910,-4240 4240,-4240zm63010 -5630l-102460 0c-4820,0 -9210,1970 -12400,5160 -3180,3180 -5160,7570 -5160,12400l0 260540c0,4830 1980,9220 5160,12410 3190,3180 7580,5160 12400,5160l102460 0c4830,0 9220,-1980 12410,-5160 3180,-3190 5160,-7580 5160,-12410l0 -260540c0,-4830 -1980,-9220 -5160,-12400 -3190,-3190 -7580,-5160 -12410,-5160z"/>
+              <path fill="black" fill-rule="nonzero" d="M24880 0l102460 0c6450,0 12300,2630 16550,6880 4240,4240 6870,10100 6870,16540l0 54820 1910 0 0 40170 -1910 0 0 165550c0,6450 -2630,12300 -6870,16550 -4250,4240 -10100,6870 -16550,6870l-102460 0c-6440,0 -12300,-2630 -16550,-6870 -4240,-4250 -6880,-10100 -6880,-16550l0 -160060 -1460 0 0 -23420 1460 0 0 -6730 -1460 0 0 -23420 1460 0 0 -10320 -1460 0 0 -12810 1460 0 0 -23780c0,-6440 2640,-12300 6880,-16540 4240,-4250 10100,-6880 16540,-6880zm39450 11490l24010 0c2330,0 4240,1910 4240,4240l0 0c0,2340 -1910,4250 -4240,4250l-24010 0c-2330,0 -4240,-1910 -4240,-4250l0 0c0,-2330 1910,-4240 4240,-4240zm63010 -5630l-102460 0c-4820,0 -9210,1970 -12400,5160 -3180,3180 -5160,7570 -5160,12400l0 260540c0,4830 1980,9220 5160,12410 3190,3180 7580,5160 12400,5160l102460 0c4830,0 9220,-1980 12410,-5160 3180,-3190 5160,-7580 5160,-12410l0 -260540c0,-4830 -1980,-9220 -5160,-12400 -3190,-3190 -7580,-5160 -12410,-5160z"/>
             </svg>
             <div class="smartphone-screen">
+              <img src="/images/hero.webp" fetchpriority="high" loading="eager" width="800" height="600" alt="Homenagem Musical AudioGift" style="width: 100%; height: 100%; object-fit: cover;">
               <iframe 
                 class="hero-video" 
                 src="https://player.vimeo.com/video/1195075467?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
                 frameborder="0" 
                 allow="autoplay; fullscreen; picture-in-picture" 
                 loading="lazy"
-                style="width: 100%; height: 100%; object-fit: cover; border: none; background: #000; pointer-events: none;"
+                title="Vídeo demonstrativo AudioGift"
+                style="width: 100%; height: 100%; object-fit: cover; border: none; background: #000; pointer-events: none; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.5s ease;"
+                onload="this.style.opacity = '1';"
                 allowfullscreen>
               </iframe>
             </div>
@@ -416,12 +424,6 @@ const SocialProofSection = () => {
           <div class="tag-badge reveal"><i data-lucide="heart"></i> EMOÇÃO QUE TRANSFORMA</div>
           <h2 class="section-title-serif reveal" data-delay="1">Por que milhares de famílias se emocionam com o <em>Audiogift</em></h2>
           <p class="section-subtitle reveal" data-delay="2">Assista às reações em vídeo e veja os feedbacks reais de quem eternizou momentos inesquecíveis em música.</p>
-          
-          <div class="proof-tabs reveal" data-delay="3">
-            <button class="proof-tab-btn active" data-tab="all">Mostrar Tudo</button>
-            <button class="proof-tab-btn" data-tab="videos"><i data-lucide="video"></i> Reações em Vídeo</button>
-            <button class="proof-tab-btn" data-tab="comments"><i data-lucide="image"></i> Prints e Depoimentos</button>
-          </div>
         </div>
 
         <!-- Bento Grid -->
@@ -431,7 +433,7 @@ const SocialProofSection = () => {
               return `
                 <div class="proof-video-card bento-item reveal ${item.aspect === 'vertical' ? 'bento-portrait' : 'bento-square'}" data-delay="${(idx % 4) + 1}" data-video-url="${item.videoUrl}" data-aspect="${item.aspect}">
                   <div class="video-cover-wrap">
-                    <img class="cover-img" src="${item.img}" alt="${item.title}" loading="lazy">
+                    <img class="cover-img" src="${item.img}" alt="${item.title}" loading="lazy" width="300" height="300">
                     <div class="video-overlay-gradient"></div>
                     <div class="video-duration"><i data-lucide="clock"></i> ${item.duration}</div>
                     <span class="video-tag">${item.tag}</span>
@@ -449,7 +451,7 @@ const SocialProofSection = () => {
             } else {
               return `
                 <div class="comment-img-card bento-item bento-square reveal" data-delay="${(idx % 4) + 1}" data-img-url="${item.imgUrl}">
-                  <img src="${item.imgUrl}" alt="Feedback Cliente AudioGift" loading="lazy">
+                  <img src="${item.imgUrl}" alt="Feedback Cliente AudioGift" loading="lazy" width="300" height="300">
                   <div class="img-card-overlay">
                     <i data-lucide="zoom-in"></i>
                   </div>
@@ -460,37 +462,14 @@ const SocialProofSection = () => {
         </div>
       </div>
 
-      <!-- Video Player Modal -->
-      <div class="video-modal-overlay" id="videoModalOverlay">
-        <div class="video-modal-wrapper">
-          <button class="video-modal-close" id="videoModalClose" aria-label="Fechar vídeo">&times;</button>
-          <div class="video-modal-content" id="videoModalContent">
-            <div class="video-player-container" id="modalVideoContainer" style="width:100%; height:100%;">
-              <!-- Dynamic video player or iframe will be inserted here -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Image Lightbox Modal -->
-      <div class="image-modal-overlay" id="imageModalOverlay">
-        <div class="image-modal-wrapper">
-          <button class="image-modal-close" id="imageModalCloseBtn" aria-label="Fechar imagem">&times;</button>
-          <div class="image-modal-content-lightbox">
-            <img id="lightboxImage" src="" alt="Feedback Ampliado">
-          </div>
-        </div>
-      </div>
+      <!-- Lightbox and Video player modals have been moved to the global app shell to prevent layout stacking context issues -->
     </section>
   `;
 };
 
 const initSocialProof = () => {
-  const tabs = document.querySelectorAll('.proof-tab-btn');
   const videoCards = document.querySelectorAll('.proof-video-card');
   const commentImgCards = document.querySelectorAll('.comment-img-card');
-
-  if (!tabs.length) return;
 
   // Carregar as thumbnails reais (primeiro frame) dos vídeos do Vimeo
   videoCards.forEach(card => {
@@ -523,118 +502,124 @@ const initSocialProof = () => {
     }
   });
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      const filter = tab.dataset.tab;
-
-      if (filter === 'all') {
-        videoCards.forEach(c => c.style.display = 'block');
-        commentImgCards.forEach(c => c.style.display = 'block');
-      } else if (filter === 'videos') {
-        videoCards.forEach(c => c.style.display = 'block');
-        commentImgCards.forEach(c => c.style.display = 'none');
-      } else if (filter === 'comments') {
-        videoCards.forEach(c => c.style.display = 'none');
-        commentImgCards.forEach(c => c.style.display = 'block');
-      }
-      
-      // Re-trigger layout/reveal check
-      if (window.observer) {
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-      }
-    });
-  });
-
   // Modal Video Player logic
   const videoModal = document.getElementById('videoModalOverlay');
   const videoContent = document.getElementById('videoModalContent');
   const videoContainer = document.getElementById('modalVideoContainer');
   const videoCloseBtn = document.getElementById('videoModalClose');
+  const prevBtn = document.getElementById('videoModalPrev');
+  const nextBtn = document.getElementById('videoModalNext');
+
+  let currentVideoIdx = 0;
+
+  const loadVideo = (idx) => {
+    const card = videoCards[idx];
+    if (!card) return;
+    currentVideoIdx = idx;
+
+    const videoSrc = card.dataset.videoUrl;
+    const isIframe = videoSrc.includes('vimeo.com') || videoSrc.includes('youtube.com') || videoSrc.includes('youtube-nocookie.com');
+    const aspect = card.dataset.aspect || 'vertical';
+
+    // Adjust modal content style for aspect ratio dynamically
+    if (videoContent) {
+      videoContent.style.height = 'auto'; // Reset height to let aspect-ratio dictate it
+      if (aspect === 'square') {
+        videoContent.style.aspectRatio = '1/1';
+        videoContent.style.maxWidth = window.innerWidth < 480 ? '92%' : '550px';
+      } else {
+        videoContent.style.aspectRatio = '9/16';
+        videoContent.style.maxWidth = window.innerWidth < 480 ? '85%' : '420px';
+      }
+    }
+
+    if (isIframe) {
+      let finalUrl = videoSrc;
+      try {
+        if (videoSrc.includes('vimeo.com')) {
+          const urlObj = new URL(videoSrc);
+          urlObj.searchParams.set('autoplay', '1');
+          urlObj.searchParams.set('badge', '0');
+          urlObj.searchParams.set('autopause', '0');
+          finalUrl = urlObj.toString();
+        } else if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be') || videoSrc.includes('youtube-nocookie.com')) {
+          const urlObj = new URL(videoSrc);
+          urlObj.searchParams.set('autoplay', '1');
+          finalUrl = urlObj.toString();
+        }
+      } catch (e) {
+        if (videoSrc.includes('vimeo.com')) {
+          finalUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1&badge=0&autopause=0';
+        } else {
+          finalUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1';
+        }
+      }
+      
+      videoContainer.innerHTML = `
+        <iframe 
+          src="${finalUrl}" 
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+          title="Depoimento em vídeo do cliente"
+          style="width:100%; height:100%; border:0; outline:none; display:block; background:#000;" 
+          allowfullscreen>
+        </iframe>
+      `;
+    } else {
+      videoContainer.innerHTML = `
+        <video id="modalVideoPlayer" controls autoplay playsinline style="width:100%; height:100%; object-fit:cover; background:#000;">
+          <source src="${videoSrc}" type="video/mp4">
+          Seu navegador não suporta a tag de vídeo.
+        </video>
+      `;
+    }
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  };
 
   if (videoModal && videoContainer && videoCloseBtn) {
-    videoCards.forEach(card => {
-      card.addEventListener('click', () => {
+    videoCards.forEach((card, idx) => {
+      card.onclick = () => {
         // Stop any background site audio that might be playing
         if (window.GlobalAudio) {
           window.GlobalAudio.pause();
         }
         
-        const videoSrc = card.dataset.videoUrl;
-        const isIframe = videoSrc.includes('vimeo.com') || videoSrc.includes('youtube.com') || videoSrc.includes('youtube-nocookie.com');
-        const aspect = card.dataset.aspect || 'vertical';
-
-        // Adjust modal content style for aspect ratio dynamically
-        if (videoContent) {
-          if (aspect === 'square') {
-            videoContent.style.aspectRatio = '1/1';
-            videoContent.style.maxWidth = window.innerWidth < 480 ? '92%' : '550px';
-          } else {
-            videoContent.style.aspectRatio = '9/16';
-            videoContent.style.maxWidth = window.innerWidth < 480 ? '85%' : '420px';
-          }
-        }
-
-        if (isIframe) {
-          let finalUrl = videoSrc;
-          try {
-            if (videoSrc.includes('vimeo.com')) {
-              const urlObj = new URL(videoSrc);
-              urlObj.searchParams.set('autoplay', '1');
-              urlObj.searchParams.set('badge', '0');
-              urlObj.searchParams.set('autopause', '0');
-              finalUrl = urlObj.toString();
-            } else if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be') || videoSrc.includes('youtube-nocookie.com')) {
-              const urlObj = new URL(videoSrc);
-              urlObj.searchParams.set('autoplay', '1');
-              finalUrl = urlObj.toString();
-            }
-          } catch (e) {
-            if (videoSrc.includes('vimeo.com')) {
-              finalUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1&badge=0&autopause=0';
-            } else {
-              finalUrl = videoSrc + (videoSrc.includes('?') ? '&' : '?') + 'autoplay=1';
-            }
-          }
-          
-          videoContainer.innerHTML = `
-            <iframe 
-              src="${finalUrl}" 
-              frameborder="0" 
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-              style="width:100%; height:100%; object-fit:cover; background:#000;" 
-              allowfullscreen>
-            </iframe>
-          `;
-        } else {
-          videoContainer.innerHTML = `
-            <video id="modalVideoPlayer" controls autoplay playsinline style="width:100%; height:100%; object-fit:cover; background:#000;">
-              <source src="${videoSrc}" type="video/mp4">
-              Seu navegador não suporta a tag de vídeo.
-            </video>
-          `;
-        }
-
+        loadVideo(idx);
+        
         videoModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-      });
+      };
     });
 
-    const closeVideoModal = () => {
+    if (prevBtn && nextBtn) {
+      prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        const prevIdx = (currentVideoIdx - 1 + videoCards.length) % videoCards.length;
+        loadVideo(prevIdx);
+      };
+
+      nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        const nextIdx = (currentVideoIdx + 1) % videoCards.length;
+        loadVideo(nextIdx);
+      };
+    }
+
+    window.closeVideoModal = () => {
       // Clear container to stop playback/destruct iframe or video
       videoContainer.innerHTML = '';
       videoModal.classList.remove('active');
       document.body.style.overflow = '';
     };
 
-    videoCloseBtn.addEventListener('click', closeVideoModal);
-    videoModal.addEventListener('click', (e) => {
-      if (!e.target.closest('.video-modal-content') && !e.target.closest('.video-modal-close')) {
-        closeVideoModal();
+    videoCloseBtn.onclick = window.closeVideoModal;
+    videoModal.onclick = (e) => {
+      if (!e.target.closest('.video-modal-content') && !e.target.closest('.video-modal-close') && !e.target.closest('.video-modal-nav')) {
+        window.closeVideoModal();
       }
-    });
+    };
   }
 
   // Lightbox Image Logic
@@ -644,36 +629,37 @@ const initSocialProof = () => {
 
   if (imageModal && lightboxImg && imageCloseBtn) {
     commentImgCards.forEach(card => {
-      card.addEventListener('click', () => {
+      card.onclick = () => {
         const imgSrc = card.dataset.imgUrl;
         lightboxImg.src = imgSrc;
         imageModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-      });
+      };
     });
 
-    const closeImageModal = () => {
+    window.closeImageModal = () => {
       imageModal.classList.remove('active');
       lightboxImg.src = '';
       document.body.style.overflow = '';
     };
 
-    imageCloseBtn.addEventListener('click', closeImageModal);
-    imageModal.addEventListener('click', (e) => {
+    imageCloseBtn.onclick = window.closeImageModal;
+    imageModal.onclick = (e) => {
       if (!e.target.closest('.image-modal-content-lightbox') && !e.target.closest('#imageModalCloseBtn')) {
-        closeImageModal();
+        window.closeImageModal();
       }
-    });
+    };
     
-    // Close on ESC
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeImageModal();
-        if (videoModal && videoModal.classList.contains('active')) {
-          closeVideoModal();
+    // Close on ESC (bound only once globally)
+    if (!window.socialProofEscHandlerBound) {
+      window.socialProofEscHandlerBound = true;
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (typeof window.closeImageModal === 'function') window.closeImageModal();
+          if (typeof window.closeVideoModal === 'function') window.closeVideoModal();
         }
-      }
-    });
+      });
+    }
   }
 };
 
@@ -703,7 +689,7 @@ const Categories = () => {
           <div class="cat-track">
             ${[...cats, ...cats].map((cat, i) => `
               <div class="cat-story-card">
-                <img src="${cat.img}" alt="${cat.title}" loading="lazy">
+                <img src="${cat.img}" alt="${cat.title}" loading="lazy" width="220" height="280">
                 <div class="cat-story-overlay">
                   <h4>${cat.title}</h4>
                 </div>
@@ -734,7 +720,7 @@ const Experience = () => {
           <div class="spotify-card player-scene">
             <!-- Capa do Álbum grande e quadrada -->
             <div class="spotify-art-wrap">
-              <img id="spotifyAlbumImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Capa do Álbum" onerror="this.style.display='none';">
+              <img id="spotifyAlbumImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Capa do Álbum" onerror="this.style.display='none';" width="400" height="400">
             </div>
 
             <!-- Informações da Música -->
@@ -747,7 +733,7 @@ const Experience = () => {
                 <div id="playerTags" style="display: none;"></div>
               </div>
               <div class="spotify-info-right">
-                <button class="spotify-heart-btn" title="Salvar na sua Biblioteca"><i data-lucide="heart"></i></button>
+                <button class="spotify-heart-btn" title="Salvar na sua Biblioteca" aria-label="Salvar na Biblioteca"><i data-lucide="heart"></i></button>
               </div>
             </div>
 
@@ -764,19 +750,19 @@ const Experience = () => {
 
             <!-- Controles de Mídia -->
             <div class="spotify-controls-row">
-              <button class="ctrl-btn" id="shuffleBtn" title="Ordem aleatória"><i data-lucide="shuffle"></i></button>
-              <button class="ctrl-btn" id="prevBtn" title="Voltar"><i data-lucide="skip-back"></i></button>
-              <button class="spotify-play-btn" id="playBtn" title="Tocar / Pausar">
+              <button class="ctrl-btn" id="shuffleBtn" title="Ordem aleatória" aria-label="Tocar em ordem aleatória"><i data-lucide="shuffle"></i></button>
+              <button class="ctrl-btn" id="prevBtn" title="Voltar" aria-label="Música anterior"><i data-lucide="skip-back"></i></button>
+              <button class="spotify-play-btn" id="playBtn" title="Tocar / Pausar" aria-label="Tocar ou pausar música">
                 <i data-lucide="play" id="playIcon"></i>
               </button>
-              <button class="ctrl-btn" id="nextBtn" title="Avançar"><i data-lucide="skip-forward"></i></button>
-              <button class="ctrl-btn" id="repeatBtn" title="Repetir"><i data-lucide="repeat"></i></button>
+              <button class="ctrl-btn" id="nextBtn" title="Avançar" aria-label="Próxima música"><i data-lucide="skip-forward"></i></button>
+              <button class="ctrl-btn" id="repeatBtn" title="Repetir" aria-label="Repetir música"><i data-lucide="repeat"></i></button>
             </div>
 
             <!-- Volume e Rodapé -->
             <div class="spotify-bottom-row">
               <div class="vol-control">
-                <button class="ctrl-btn volume-icon-btn" id="volumeMuteBtn"><i data-lucide="volume-2" class="vol-icon"></i></button>
+                <button class="ctrl-btn volume-icon-btn" id="volumeMuteBtn" title="Mutar" aria-label="Mutar/desmutar volume"><i data-lucide="volume-2" class="vol-icon"></i></button>
                 <div class="vol-bar-container" id="volBar">
                   <div class="vol-fill" id="volFill"></div>
                 </div>
@@ -2659,6 +2645,30 @@ app.innerHTML = `
   ${Footer()}
   ${FloatingButtons()}
 
+  <!-- Video Player Modal -->
+  <div class="video-modal-overlay" id="videoModalOverlay">
+    <button class="video-modal-close" id="videoModalClose" aria-label="Fechar vídeo">&times;</button>
+    <button class="video-modal-nav prev-btn" id="videoModalPrev" aria-label="Vídeo anterior"><i data-lucide="chevron-left"></i></button>
+    <button class="video-modal-nav next-btn" id="videoModalNext" aria-label="Próximo vídeo"><i data-lucide="chevron-right"></i></button>
+    <div class="video-modal-wrapper">
+      <div class="video-modal-content" id="videoModalContent">
+        <div class="video-player-container" id="modalVideoContainer" style="width:100%; height:100%;">
+          <!-- Dynamic video player or iframe will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div class="image-modal-overlay" id="imageModalOverlay">
+    <div class="image-modal-wrapper">
+      <button class="image-modal-close" id="imageModalCloseBtn" aria-label="Fechar imagem">&times;</button>
+      <div class="image-modal-content-lightbox">
+        <img id="lightboxImage" src="" alt="Feedback Ampliado">
+      </div>
+    </div>
+  </div>
+
   <div id="terms-overlay" class="modal-overlay">
     <div class="modal-container">
       <button class="modal-close" onclick="document.getElementById('terms-overlay').classList.remove('active')">&times;</button>
@@ -2754,61 +2764,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Initialize Lucide Icons via dynamic script injection
-const script = document.createElement('script');
-script.src = 'https://unpkg.com/lucide@latest';
-script.onload = () => {
-  if (window.lucide) lucide.createIcons();
-  renderRoute();
 
-  // Desativa o preloader e exibe a página principal com transição escalonada (staggered)
-  setTimeout(() => {
-    const preloader = document.getElementById('preloader');
-    const path = window.location.pathname;
-    const hash = window.location.hash;
-    const isAdmin = path === '/admin' || hash.split('?')[0] === '#admin';
-    const isCheckout = path === '/checkout' || hash.split('?')[0] === '#checkout';
-    const isAcompanhamento = path === '/acompanhamento' || hash.split('?')[0] === '#acompanhamento';
-    const isPlanos = path === '/planos' || hash.split('?')[0] === '#planos';
-    const isQuiz = path === '/quiz' || hash.split('?')[0] === '#quiz';
-    const isHome = !isAdmin && !isCheckout && !isAcompanhamento && !isPlanos && !isQuiz;
-
-    if (preloader) {
-      preloader.classList.add('fade-out');
-      
-      if (isHome) {
-        // Fase 1: Preloader sumindo
-        document.body.classList.add('preloader-done');
-        
-        // Fase 2: Revela o banner do vídeo após 350ms
-        setTimeout(() => {
-          document.body.classList.add('video-ready');
-          
-          // Fase 3: Revela o menu de navegação e o conteúdo do site após mais 600ms
-          setTimeout(() => {
-            document.body.classList.add('content-ready');
-            document.body.classList.add('app-ready'); // Retrocompatibilidade
-            document.body.style.backgroundColor = '';
-            
-            // Remove o preloader do DOM após todas as animações
-            setTimeout(() => {
-              preloader.remove();
-            }, 800);
-          }, 600);
-        }, 350);
-      } else {
-        // Se for subpágina, ativa tudo instantaneamente
-        document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
-        document.body.style.backgroundColor = '';
-        preloader.remove();
-      }
-    } else {
-      document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
-      document.body.style.backgroundColor = '';
-    }
-  }, 100);
-};
-document.head.appendChild(script);
 
 // Magnetic Button Effect
 const initMagneticButtons = () => {
@@ -3145,6 +3101,201 @@ const initMusicStylesFilter = () => {
   filterCards();
 };
 
+// --- MODAL: ACOMPANHAR PEDIDO ---
+const initTrackOrderModal = () => {
+  // Injeta o modal no body apenas uma vez
+  if (document.getElementById('track-order-modal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'track-order-modal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-labelledby', 'track-modal-title');
+  modal.innerHTML = `
+    <div class="track-modal-backdrop" id="track-modal-backdrop"></div>
+    <div class="track-modal-box">
+      <button class="track-modal-close" id="track-modal-close" aria-label="Fechar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="track-modal-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FC7301" stroke-width="2" stroke-linecap="round">
+          <path d="M9 11l3 3L22 4"/>
+          <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+      </div>
+
+      <h2 id="track-modal-title" class="track-modal-title">Acompanhar meu pedido</h2>
+      <p class="track-modal-subtitle">Digite seu e-mail ou o código do pedido para localizar sua canção.</p>
+
+      <div class="track-modal-tabs" id="track-modal-tabs">
+        <button class="track-tab active" data-tab="email" id="tab-email">Por e-mail</button>
+        <button class="track-tab" data-tab="code" id="tab-code">Por código</button>
+      </div>
+
+      <!-- Busca por e-mail -->
+      <div id="track-panel-email" class="track-panel active">
+        <label class="track-label" for="track-email-input">E-mail do pedido</label>
+        <input
+          id="track-email-input"
+          type="email"
+          class="track-input"
+          placeholder="seuemail@exemplo.com"
+          autocomplete="email"
+        />
+      </div>
+
+      <!-- Busca por código -->
+      <div id="track-panel-code" class="track-panel">
+        <label class="track-label" for="track-code-input">Código do pedido</label>
+        <input
+          id="track-code-input"
+          type="text"
+          class="track-input"
+          placeholder="Ex: 3f2a1b09-..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+
+      <div id="track-modal-error" class="track-modal-error" style="display:none;"></div>
+
+      <button id="track-modal-submit" class="track-modal-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Buscar pedido
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // --- lógica de abrir/fechar ---
+  const openModal = () => {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('track-email-input')?.focus(), 150);
+  };
+  const closeModal = () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    // Limpa campos e erro
+    const err = document.getElementById('track-modal-error');
+    if (err) { err.style.display = 'none'; err.textContent = ''; }
+    const emailInp = document.getElementById('track-email-input');
+    const codeInp = document.getElementById('track-code-input');
+    if (emailInp) emailInp.value = '';
+    if (codeInp) codeInp.value = '';
+  };
+
+  // Expõe openModal globalmente para uso nos botões
+  window._openTrackModal = openModal;
+
+  document.getElementById('track-modal-close').addEventListener('click', closeModal);
+  document.getElementById('track-modal-backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // --- troca de abas ---
+  document.getElementById('track-modal-tabs').addEventListener('click', (e) => {
+    const tab = e.target.closest('.track-tab');
+    if (!tab) return;
+    const tabId = tab.dataset.tab;
+    document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.track-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(`track-panel-${tabId}`).classList.add('active');
+    // Foca o input da aba ativa
+    setTimeout(() => document.getElementById(`track-${tabId}-input`)?.focus(), 50);
+    // Limpa erro ao trocar aba
+    const err = document.getElementById('track-modal-error');
+    if (err) { err.style.display = 'none'; err.textContent = ''; }
+  });
+
+  // --- lógica de busca ---
+  document.getElementById('track-modal-submit').addEventListener('click', async () => {
+    const btn = document.getElementById('track-modal-submit');
+    const errEl = document.getElementById('track-modal-error');
+    const activeTab = document.querySelector('.track-tab.active')?.dataset.tab || 'email';
+
+    const emailVal = document.getElementById('track-email-input').value.trim().toLowerCase();
+    const codeVal = document.getElementById('track-code-input').value.trim();
+
+    errEl.style.display = 'none';
+    errEl.textContent = '';
+
+    const showError = (msg) => {
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+    };
+
+    if (activeTab === 'email') {
+      if (!emailVal || !emailVal.includes('@')) {
+        showError('Por favor, insira um e-mail válido.');
+        return;
+      }
+    } else {
+      if (!codeVal) {
+        showError('Por favor, insira o código do pedido.');
+        return;
+      }
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+        <path d="M21 12a9 9 0 11-6.219-8.56"/>
+      </svg>
+      Buscando...
+    `;
+
+    try {
+      const allOrders = await db.getOrders();
+      let found = null;
+
+      if (activeTab === 'email') {
+        found = allOrders.find(o => (o.customer_email || '').toLowerCase() === emailVal);
+        if (!found) {
+          showError('Nenhum pedido encontrado com esse e-mail. Verifique o e-mail usado no pedido.');
+        }
+      } else {
+        found = allOrders.find(o => o.id === codeVal || o.id.startsWith(codeVal));
+        if (!found) {
+          showError('Código de pedido não encontrado. Verifique e tente novamente.');
+        }
+      }
+
+      if (found) {
+        closeModal();
+        window.location.hash = `#acompanhamento?orderId=${found.id}`;
+      }
+    } catch (err) {
+      showError('Erro ao buscar o pedido. Tente novamente em instantes.');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Buscar pedido
+      `;
+    }
+  });
+
+  // Suporte a Enter nos inputs
+  ['track-email-input', 'track-code-input'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('track-modal-submit').click();
+    });
+  });
+};
+
 const initMobileMenu = () => {
   const toggle = document.getElementById('mobileToggle');
   const menu = document.getElementById('mobileMenu');
@@ -3166,6 +3317,17 @@ const initMobileMenu = () => {
       menu.classList.remove('active');
       lucide.createIcons();
     });
+  });
+
+  // Botão "Acompanhar pedido" na navbar desktop
+  const btnTrack = document.getElementById('btn-track-order');
+  if (btnTrack) btnTrack.addEventListener('click', () => { if (window._openTrackModal) window._openTrackModal(); });
+
+  // Botão "Acompanhar pedido" no menu mobile
+  const btnTrackMobile = document.getElementById('btn-track-order-mobile');
+  if (btnTrackMobile) btnTrackMobile.addEventListener('click', () => {
+    menu.classList.remove('active');
+    if (window._openTrackModal) window._openTrackModal();
   });
 };
 
@@ -4419,13 +4581,23 @@ const openOrderDrawer = async (orderId, orders) => {
     btnDeleteOrder.onclick = async () => {
       const confirm = window.confirm('Excluir este pedido do banco permanentemente?');
       if (!confirm) return;
-      
-      await db.deleteOrder(orderId);
-      const filtered = orders.filter(o => o.id !== orderId);
-      closeDrawer();
-      setTimeout(() => {
-        renderAdminDashboard(document.querySelector('main'), filtered);
-      }, 200);
+
+      btnDeleteOrder.setAttribute('disabled', 'true');
+      btnDeleteOrder.textContent = 'Excluindo...';
+
+      try {
+        await db.deleteOrder(orderId);
+        const filtered = orders.filter(o => o.id !== orderId);
+        closeDrawer();
+        setTimeout(() => {
+          renderAdminDashboard(document.querySelector('main'), filtered);
+        }, 200);
+      } catch (err) {
+        console.error('Erro ao excluir pedido:', err);
+        alert('❌ Erro ao excluir o pedido. Verifique a conexão e tente novamente.');
+        btnDeleteOrder.removeAttribute('disabled');
+        btnDeleteOrder.textContent = 'Excluir pedido';
+      }
     };
   }
 
@@ -4466,152 +4638,203 @@ const openOrderDrawer = async (orderId, orders) => {
         updates.generated_lyrics = lyricsInp.value;
       }
       
-      const updated = await db.updateOrder(orderId, updates);
-      const idx = orders.findIndex(o => o.id === orderId);
-      if (idx !== -1) orders[idx] = updated;
-      
-      closeDrawer();
-      setTimeout(() => {
-        renderAdminDashboard(document.querySelector('main'), orders);
-        alert('Pedido salvo com sucesso!');
-      }, 200);
+      try {
+        const updated = await db.updateOrder(orderId, updates);
+        const idx = orders.findIndex(o => o.id === orderId);
+        // Null-guard: só atualiza o array se o retorno for válido
+        if (updated && idx !== -1) orders[idx] = updated;
+
+        closeDrawer();
+        setTimeout(() => {
+          renderAdminDashboard(document.querySelector('main'), orders);
+          alert('✅ Pedido salvo com sucesso!');
+        }, 200);
+      } catch (err) {
+        console.error('Erro ao salvar pedido:', err);
+        alert('❌ Erro ao salvar as alterações. Verifique a conexão e tente novamente.');
+        btnSaveChanges.removeAttribute('disabled');
+        btnSaveChanges.innerHTML = 'Salvar alterações';
+      }
     };
   }
 };
 
 // Roteador SPA (Revisado)
 const renderRoute = async () => {
-  const path = window.location.pathname;
-  const hash = window.location.hash;
-  
-  // Suporta tanto /admin quanto #admin
-  const isAdmin = path === '/admin' || hash.split('?')[0] === '#admin';
-  const isCheckout = path === '/checkout' || hash.split('?')[0] === '#checkout';
-  const isAcompanhamento = path === '/acompanhamento' || hash.split('?')[0] === '#acompanhamento';
-  const isPlanos = path === '/planos' || hash.split('?')[0] === '#planos';
-  const isQuiz = path === '/quiz' || hash.split('?')[0] === '#quiz';
-
-  // Obter o orderId ou plan da query string da URL (?...) ou da hash
-  const queryPart = (path === '/admin' || path === '/checkout' || path === '/acompanhamento' || path === '/planos' || path === '/quiz')
-    ? window.location.search.substring(1)
-    : hash.split('?')[1] || '';
-  const urlParams = new URLSearchParams(queryPart);
-  const orderId = urlParams.get('orderId');
-  const plan = urlParams.get('plan') || 'memoravel';
-
   const mainEl = document.querySelector('main');
   if (!mainEl) return;
 
-  // Ocultar elementos da Landing Page no painel admin e quiz para manter tela limpa
-  const annBar = document.querySelector('.announcement-bar');
-  const header = document.querySelector('.header');
-  const footer = document.querySelector('.footer');
-  const floatActions = document.querySelector('.floating-actions');
+  try {
+    const path = window.location.pathname;
+    const hash = window.location.hash;
 
-  const isHome = !isAdmin && !isCheckout && !isAcompanhamento && !isPlanos && !isQuiz;
+    // Suporta tanto /admin quanto #admin
+    const isAdmin = path === '/admin' || hash.split('?')[0] === '#admin';
+    const isCheckout = path === '/checkout' || hash.split('?')[0] === '#checkout';
+    const isAcompanhamento = path === '/acompanhamento' || hash.split('?')[0] === '#acompanhamento';
+    const isPlanos = path === '/planos' || hash.split('?')[0] === '#planos';
+    const isQuiz = path === '/quiz' || hash.split('?')[0] === '#quiz';
 
-  if (isHome) {
-    document.body.classList.remove('admin-mode');
-    document.body.classList.add('is-home-route');
-    if (annBar) annBar.style.display = '';
-    if (header) header.style.display = '';
-    if (footer) footer.style.display = '';
-    if (floatActions) floatActions.style.display = '';
-    document.body.style.backgroundColor = '';
-  } else {
-    // Para todas as outras rotas (Checkout, Acompanhamento, Admin, Planos, Quiz)
-    document.body.classList.remove('is-home-route');
-    if (isAdmin) {
-      document.body.classList.add('admin-mode');
-      document.body.style.backgroundColor = '#000000'; // Fundo preto puro para o admin
-    } else if (isQuiz) {
+    // Obter o orderId ou plan da query string da URL (?...) ou da hash
+    const queryPart = (path === '/admin' || path === '/checkout' || path === '/acompanhamento' || path === '/planos' || path === '/quiz')
+      ? window.location.search.substring(1)
+      : hash.split('?')[1] || '';
+    const urlParams = new URLSearchParams(queryPart);
+    const orderId = urlParams.get('orderId');
+    const plan = urlParams.get('plan') || 'memoravel';
+
+    // Ocultar elementos da Landing Page no painel admin e quiz para manter tela limpa
+    const annBar = document.querySelector('.announcement-bar');
+    const header = document.querySelector('.header');
+    const footer = document.querySelector('.footer');
+    const floatActions = document.querySelector('.floating-actions');
+
+    const isHome = !isAdmin && !isCheckout && !isAcompanhamento && !isPlanos && !isQuiz;
+
+    if (isHome) {
       document.body.classList.remove('admin-mode');
-      document.body.style.backgroundColor = '#0A0A0A'; // Fundo escuro para o quiz
-    } else {
-      document.body.classList.remove('admin-mode');
+      document.body.classList.add('is-home-route');
+      if (annBar) annBar.style.display = '';
+      if (header) header.style.display = '';
+      if (footer) footer.style.display = '';
+      if (floatActions) floatActions.style.display = '';
       document.body.style.backgroundColor = '';
+    } else {
+      // Para todas as outras rotas (Checkout, Acompanhamento, Admin, Planos, Quiz)
+      document.body.classList.remove('is-home-route');
+      if (isAdmin) {
+        document.body.classList.add('admin-mode');
+        document.body.style.backgroundColor = '#000000'; // Fundo preto puro para o admin
+      } else if (isQuiz) {
+        document.body.classList.remove('admin-mode');
+        document.body.style.backgroundColor = '#0A0A0A'; // Fundo escuro para o quiz
+      } else {
+        document.body.classList.remove('admin-mode');
+        document.body.style.backgroundColor = '';
+      }
+      if (annBar) annBar.style.display = 'none';
+      if (header) header.style.display = 'none';
+      if (footer) footer.style.display = 'none';
+      if (floatActions) floatActions.style.display = 'none';
     }
-    if (annBar) annBar.style.display = 'none';
-    if (header) header.style.display = 'none';
-    if (footer) footer.style.display = 'none';
-    if (floatActions) floatActions.style.display = 'none';
-  }
 
-  if (window.GlobalAudio) {
-    window.GlobalAudio.pause();
-    window.GlobalAudio.resetActiveBtnVisuals();
-  }
+    if (window.GlobalAudio) {
+      window.GlobalAudio.pause();
+      window.GlobalAudio.resetActiveBtnVisuals();
+    }
 
-  // Seletor de Rotas SPA
-  if (isCheckout) {
-    await renderCheckoutPage(mainEl, orderId);
-  } else if (isAcompanhamento) {
-    await renderAcompanhamentoPage(mainEl, orderId);
-  } else if (isAdmin) {
-    await renderAdminPage(mainEl);
-  } else if (isQuiz) {
+    // Seletor de Rotas SPA
+    if (isCheckout) {
+      await renderCheckoutPage(mainEl, orderId);
+    } else if (isAcompanhamento) {
+      await renderAcompanhamentoPage(mainEl, orderId);
+    } else if (isAdmin) {
+      await renderAdminPage(mainEl);
+    } else if (isQuiz) {
+      mainEl.innerHTML = `
+        <div class="quiz-page bg-dark" style="min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; padding: 0;">
+          <div id="quiz-container" style="width: 100%;"></div>
+          <button class="quiz-close" onclick="window.location.hash = '#'">&times;</button>
+        </div>
+      `;
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      QuizEngine(plan);
+    } else if (isPlanos) {
+      mainEl.innerHTML = `
+        ${Pricing()}
+        ${Warranty()}
+      `;
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      initMagneticButtons();
+    } else {
+      // Rota Padrão (Home)
+      mainEl.innerHTML = `
+        ${Hero()}
+        ${HowItWorks()}
+        ${MusicStyles()}
+        ${SocialProofSection()}
+        ${Categories()}
+        ${Experience()}
+        ${Warranty()}
+        ${FAQ()}
+        ${FooterCTA()}
+      `;
+
+      if (hash && hash !== '#') {
+        // Usa hash apenas se parecer com uma âncora válida (começa com # + letra)
+        if (/^#[a-zA-Z]/.test(hash)) {
+          setTimeout(() => {
+            try {
+              const target = document.querySelector(hash);
+              if (target) target.scrollIntoView({ behavior: 'smooth' });
+            } catch (_) { /* hash inválida para querySelector */ }
+          }, 150);
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+
+    // Re-observe dynamic .reveal elements
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Re-bind FAQ question toggles
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.onclick = () => {
+        q.parentElement.classList.toggle('active');
+      };
+    });
+
+    // Re-initialize dynamic components on the route
+    initSpotifyPlayer();
+    initAllAudioPlayers();
+    initMusicStylesFilter();
+    initMagneticButtons();
+    initSocialProof();
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  } catch (err) {
+    console.error('[AudioGift] Erro crítico ao renderizar rota:', err);
     mainEl.innerHTML = `
-      <div class="quiz-page bg-dark" style="min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; padding: 0;">
-        <div id="quiz-container" style="width: 100%;"></div>
-        <button class="quiz-close" onclick="window.location.hash = '#'">&times;</button>
+      <div style="
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 2rem;
+        background: #0a0a0a;
+        color: #fff;
+        font-family: Inter, sans-serif;
+        text-align: center;
+      ">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FC7301" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Algo deu errado</h2>
+        <p style="color: #888; margin: 0; max-width: 360px;">Ocorreu um erro inesperado ao carregar a página. Por favor, tente novamente.</p>
+        <button
+          onclick="window.location.reload()"
+          style="
+            background: #FC7301;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 99px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+          "
+        >Recarregar página</button>
       </div>
     `;
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    QuizEngine(plan);
-  } else if (isPlanos) {
-    mainEl.innerHTML = `
-      ${Pricing()}
-      ${Warranty()}
-    `;
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    initMagneticButtons();
-  } else {
-    // Rota Padrão (Home)
-    mainEl.innerHTML = `
-      ${Hero()}
-      ${HowItWorks()}
-      ${MusicStyles()}
-      ${SocialProofSection()}
-      ${Categories()}
-      ${Experience()}
-      ${Warranty()}
-      ${FAQ()}
-      ${FooterCTA()}
-    `;
-
-    if (hash && hash !== '#') {
-      setTimeout(() => {
-        const target = document.querySelector(hash);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  }
-
-  // Re-observe dynamic .reveal elements
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
-
-  // Re-bind FAQ question toggles
-  document.querySelectorAll('.faq-question').forEach(q => {
-    q.onclick = () => {
-      q.parentElement.classList.toggle('active');
-    };
-  });
-
-  // Re-initialize dynamic components on the route
-  initSpotifyPlayer();
-  initAllAudioPlayers();
-  initMusicStylesFilter();
-  initMagneticButtons();
-  initSocialProof();
-
-  if (window.lucide) {
-    lucide.createIcons();
   }
 };
 
@@ -4659,6 +4882,9 @@ if (window.matchMedia('(pointer: fine)').matches) {
   cursorDot.className = 'cursor-dot';
   const cursorOutline = document.createElement('div');
   cursorOutline.className = 'cursor-outline';
+  const cursorOutlineInner = document.createElement('div');
+  cursorOutlineInner.className = 'cursor-outline-inner';
+  cursorOutline.appendChild(cursorOutlineInner);
   
   document.body.appendChild(cursorDot);
   document.body.appendChild(cursorOutline);
@@ -4782,4 +5008,39 @@ if (window.matchMedia('(pointer: fine)').matches) {
       cursorDot.classList.remove('cursor-hover');
     }
   });
+}
+
+// Initialize App and Lucide Icons
+const initApp = () => {
+  if (window.lucide) lucide.createIcons();
+  renderRoute();
+  initTrackOrderModal(); // Modal "Acompanhar pedido" — inicializado uma única vez
+
+  // Desativa o preloader e exibe a página principal imediatamente para melhor performance
+  setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.classList.add('fade-out');
+      document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
+      document.body.style.backgroundColor = '';
+      
+      // Remove o preloader do DOM após a animação de fade-out (400ms)
+      setTimeout(() => {
+        preloader.remove();
+      }, 400);
+    } else {
+      document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
+      document.body.style.backgroundColor = '';
+    }
+  }, 50);
+};
+
+// Check if Lucide is already loaded via index.html script tag
+if (window.lucide) {
+  initApp();
+} else {
+  const script = document.createElement('script');
+  script.src = 'https://unpkg.com/lucide@latest/dist/umd/lucide.min.js';
+  script.onload = initApp;
+  document.head.appendChild(script);
 }

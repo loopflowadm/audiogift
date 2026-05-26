@@ -760,7 +760,8 @@ button {
   color: var(--black);
   margin-bottom: 1rem;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1.25;
+  padding: 0.1rem 0;
   width: 100%;
   display: block;
 }
@@ -1824,10 +1825,12 @@ button {
 
 .eq-bar {
   width: 3px;
-  height: 4px;
+  height: 24px;
   background: var(--primary-orange);
   border-radius: 2px;
-  transition: height 0.2s ease;
+  transform-origin: bottom;
+  transform: scaleY(0.1667);
+  transition: transform 0.2s ease;
 }
 
 /* Animations for active bars */
@@ -1848,10 +1851,10 @@ button {
 
 @keyframes bounce {
   0% {
-    height: 4px;
+    transform: scaleY(0.1667);
   }
   100% {
-    height: 24px;
+    transform: scaleY(1);
   }
 }
 
@@ -2520,6 +2523,9 @@ button {
   font-style: italic;
   font-weight: 400;
   color: var(--primary-orange);
+  display: inline-block;
+  padding-right: 0.05em;
+  padding-left: 0.05em;
 }
 
 /* Fix for any overlapping reveal/magnetic transforms */
@@ -4818,7 +4824,7 @@ button {
     top: 0;
     left: 0;
     border-radius: 50%;
-    z-index: 10000;
+    z-index: 100001;
     pointer-events: none;
     will-change: transform;
   }
@@ -4833,13 +4839,21 @@ button {
   .cursor-outline {
     width: 40px;
     height: 40px;
+    background: transparent;
+    border: none;
+  }
+
+  .cursor-outline-inner {
+    width: 100%;
+    height: 100%;
     border: 1px solid rgba(252, 115, 1, 0.5);
     background-color: rgba(252, 115, 1, 0.05);
-    transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, border-color 0.2s ease, border-radius 0.2s ease;
   }
 
   /* Estado de Hover - Transforma em Coração Pulsante */
-  .cursor-outline.cursor-hover {
+  .cursor-outline.cursor-hover .cursor-outline-inner {
     border: none !important;
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff4d6d'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center/contain !important;
     border-radius: 0 !important;
@@ -4855,7 +4869,7 @@ button {
 .heart-trail {
   position: fixed;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 100000;
   transform: translate3d(-50%, -50%, 0);
   will-change: transform, opacity;
   opacity: 0;
@@ -4869,12 +4883,10 @@ button {
 
 @keyframes cursorHeartbeat {
   0%, 100% {
-    width: 26px;
-    height: 26px;
+    transform: scale(0.65);
   }
   50% {
-    width: 32px;
-    height: 32px;
+    transform: scale(0.8);
   }
 }
 
@@ -6498,7 +6510,6 @@ button {
 /* Playlist Song Pills stylized as flat list items (rows) */
 .spotify-playlist-wrapper .song-pill {
   background: rgba(255, 255, 255, 0.03) !important;
-  color: #b3b3b3 !important;
   border: 1px solid rgba(255, 255, 255, 0.04) !important;
   border-radius: 14px;
   padding: 14px 18px;
@@ -6513,16 +6524,23 @@ button {
   width: 100%;
 }
 
+.spotify-playlist-wrapper .song-pill .pill-text {
+  color: #b3b3b3 !important;
+  transition: color 0.2s ease;
+}
+
 .spotify-playlist-wrapper .song-pill:hover {
   background: rgba(255, 255, 255, 0.08) !important;
-  color: #ffffff !important;
   transform: translateY(-1px);
 }
 
+.spotify-playlist-wrapper .song-pill:hover .pill-text {
+  color: #ffffff !important;
+}
+
 .spotify-playlist-wrapper .song-pill.active {
-  background: rgba(29, 185, 84, 0.1) !important;
-  color: #1DB954 !important;
-  border-color: rgba(29, 185, 84, 0.3) !important;
+  background: rgba(29, 185, 84, 0.15) !important;
+  border-color: #1DB954 !important;
 }
 
 .spotify-playlist-wrapper .song-pill.active .pill-text {
@@ -7168,6 +7186,60 @@ button {
   transform: scale(1.1) rotate(90deg);
 }
 
+/* Setas de navegação do modal de vídeo */
+.video-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10005;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-modal-nav i {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-modal-nav.prev-btn {
+  left: 40px;
+}
+
+.video-modal-nav.next-btn {
+  right: 40px;
+}
+
+.video-modal-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.video-modal-nav:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.video-modal-nav.prev-btn:hover i {
+  transform: translateX(-3px);
+}
+
+.video-modal-nav.next-btn:hover i {
+  transform: translateX(3px);
+}
+
 @media (max-width: 768px) {
   .video-modal-close {
     top: 20px;
@@ -7177,6 +7249,18 @@ button {
     font-size: 20px;
     background: rgba(0, 0, 0, 0.5);
     border-color: rgba(255, 255, 255, 0.15);
+  }
+  .video-modal-nav {
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  .video-modal-nav.prev-btn {
+    left: 20px;
+  }
+  .video-modal-nav.next-btn {
+    right: 20px;
   }
 }
 
@@ -7206,6 +7290,16 @@ button {
   .video-modal-close {
     top: 15px;
     right: 15px;
+  }
+  .video-modal-nav {
+    width: 40px;
+    height: 40px;
+  }
+  .video-modal-nav.prev-btn {
+    left: 10px;
+  }
+  .video-modal-nav.next-btn {
+    right: 10px;
   }
 }
 
@@ -7585,21 +7679,21 @@ button {
   z-index: 999999;
   opacity: 1;
   visibility: visible;
-  transition: opacity 1s cubic-bezier(0.85, 0, 0.15, 1), 
-              visibility 1s cubic-bezier(0.85, 0, 0.15, 1), 
-              transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+              visibility 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+              transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 #preloader.fade-out {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.1) translateY(-20px);
+  transform: scale(1.05) translateY(-10px);
 }
 
 #preloader.fade-out .preloader-content {
-  transform: scale(0.9) translateY(-15px);
+  transform: scale(0.95) translateY(-8px);
   opacity: 0;
-  transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease-in;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-in;
 }
 
 .preloader-content {
@@ -7680,14 +7774,15 @@ button {
   height: 100%;
   background: linear-gradient(90deg, transparent, #ffffff, transparent);
   position: absolute;
-  left: -100%;
+  left: 0;
+  transform: translateX(-100%);
   animation: progressPulse 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
 @keyframes progressPulse {
-  0% { left: -100%; }
-  50% { left: 0%; }
-  100% { left: 100%; }
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
 }
 
 /* App Initial State for Fade In - Reset App Container to render instantly */
@@ -7871,7 +7966,7 @@ body:not(.is-home-route) .floating-actions {
   align-items: center;
   gap: 8px;
   font-size: 0.8rem;
-  color: #888;
+  color: #a6a6a6;
 }
 
 .summary-badges .badge-item i {
@@ -7960,8 +8055,8 @@ body:not(.is-home-route) .floating-actions {
 }
 
 @keyframes scanLine {
-  0%, 100% { top: 0%; }
-  50% { top: 100%; }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(166px); }
 }
 
 .pix-text-details {
@@ -8228,7 +8323,7 @@ body:not(.is-home-route) .floating-actions {
 .timeline-step .step-label {
   font-size: 0.72rem;
   font-weight: 600;
-  color: #777;
+  color: #a0a0a0;
   text-align: center;
   max-width: 110px;
   line-height: 1.3;
@@ -8757,3 +8852,250 @@ body:not(.is-home-route) .floating-actions {
   pointer-events: none !important;
 }
 
+
+/* ============================================================
+   MODAL: ACOMPANHAR PEDIDO
+   ============================================================ */
+
+#track-order-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+}
+
+#track-order-modal.active {
+  display: flex;
+}
+
+.track-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: trackFadeIn 0.2s ease;
+}
+
+.track-modal-box {
+  position: relative;
+  z-index: 1;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2.5rem 2rem 2rem;
+  width: 100%;
+  max-width: 440px;
+  margin: 1rem;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(252, 115, 1, 0.08);
+  animation: trackSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes trackFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes trackSlideUp {
+  from { opacity: 0; transform: translateY(32px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Botão fechar */
+.track-modal-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  background: rgba(255,255,255,0.06);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,0.5);
+  transition: background 0.2s, color 0.2s;
+}
+.track-modal-close:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+/* Ícone topo */
+.track-modal-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(252, 115, 1, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+/* Título e subtítulo */
+.track-modal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 0.4rem;
+  font-family: var(--font-serif, Georgia, serif);
+}
+
+.track-modal-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+/* Abas */
+.track-modal-tabs {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.05);
+  border-radius: 99px;
+  padding: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.track-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 99px;
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.track-tab.active {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.track-tab:hover:not(.active) {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Painéis de aba */
+.track-panel {
+  display: none;
+}
+.track-panel.active {
+  display: block;
+}
+
+/* Label */
+.track-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+/* Input */
+.track-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  color: #fff;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 1.25rem;
+}
+
+.track-input::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+.track-input:focus {
+  border-color: #FC7301;
+  box-shadow: 0 0 0 3px rgba(252, 115, 1, 0.15);
+}
+
+/* Mensagem de erro */
+.track-modal-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.87rem;
+  color: #fca5a5;
+  margin-bottom: 1rem;
+  text-align: center;
+  animation: trackFadeIn 0.2s ease;
+}
+
+/* Botão de busca */
+.track-modal-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #FC7301 0%, #e86200 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px rgba(252, 115, 1, 0.25);
+}
+
+.track-modal-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(252, 115, 1, 0.35);
+}
+
+.track-modal-btn:active {
+  transform: translateY(0);
+}
+
+.track-modal-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Botão "Acompanhar pedido" na navbar vira button com visual igual */
+#btn-track-order,
+#btn-track-order-mobile {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .track-modal-box {
+    padding: 2rem 1.25rem 1.5rem;
+    border-radius: 20px;
+    margin: 0.5rem;
+  }
+  .track-modal-title {
+    font-size: 1.15rem;
+  }
+}

@@ -55,6 +55,8 @@
     <!-- ================================================
          PERFORMANCE: Resource Hints
     ================================================ -->
+    <link rel="preload" as="image" href="/images/hero.webp" fetchpriority="high" />
+    <link rel="preconnect" href="https://viwgnucextiindwsqmgk.supabase.co" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://unpkg.com" />
@@ -65,7 +67,381 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/src/style.css" />
+    <style>
+      :root {
+        --primary-orange: #FC7301;
+        --black: #0d0d0d;
+        --white: #ffffff;
+        --text-muted: #aaa;
+        --font-heading: 'Outfit', sans-serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background-color: #0d0d0d;
+        color: #ffffff;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, #ff8224 0%, #e05e00 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 999999;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                    visibility 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      #preloader.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(1.05) translateY(-10px);
+      }
+      #preloader.fade-out .preloader-content {
+        transform: scale(0.95) translateY(-8px);
+        opacity: 0;
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-in;
+      }
+      .preloader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        padding: 20px;
+        transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease-out;
+      }
+      .preloader-logo {
+        width: 280px;
+        max-width: 85vw;
+        margin-bottom: 0.5rem;
+        animation: floatLogo 4s ease-in-out infinite;
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+        will-change: transform;
+      }
+      @keyframes floatLogo {
+        0%, 100% {
+          transform: translateY(0) rotate(-0.5deg) scale(1);
+          filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+        }
+        50% {
+          transform: translateY(-8px) rotate(0.5deg) scale(1.02);
+          filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+        }
+      }
+      .preloader-equalizer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 4px;
+        height: 24px;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .preloader-equalizer .eq-bar {
+        width: 3.5px;
+        background-color: #ffffff;
+        border-radius: 3px;
+        transform-origin: bottom;
+        animation: eqBounce 0.8s ease-in-out infinite alternate;
+      }
+      .preloader-equalizer .bar-1 { height: 35%; animation-duration: 0.7s; }
+      .preloader-equalizer .bar-2 { height: 75%; animation-duration: 0.5s; animation-delay: 0.15s; }
+      .preloader-equalizer .bar-3 { height: 95%; animation-duration: 0.6s; animation-delay: 0.3s; }
+      .preloader-equalizer .bar-4 { height: 50%; animation-duration: 0.8s; animation-delay: 0.05s; }
+      .preloader-equalizer .bar-5 { height: 80%; animation-duration: 0.55s; animation-delay: 0.2s; }
+      @keyframes eqBounce {
+        0% { transform: scaleY(0.25); }
+        100% { transform: scaleY(1); }
+      }
+      .premium-progress-bar {
+        width: 150px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        margin-top: 0.5rem;
+      }
+      .premium-progress-fill {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, #ffffff, transparent);
+        position: absolute;
+        left: 0;
+        transform: translateX(-100%);
+        animation: progressPulse 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      }
+      @keyframes progressPulse {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+      }
+      .announcement-bar {
+        background-color: #000;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .announcement-bar .announcement-video {
+        width: 100%;
+        border: none;
+        background: #000;
+      }
+      @media (min-width: 769px) {
+        .announcement-bar .video-desktop {
+          display: block;
+          aspect-ratio: 16/9;
+        }
+        .announcement-bar .video-mobile {
+          display: none;
+        }
+      }
+      @media (max-width: 768px) {
+        .announcement-bar .video-desktop {
+          display: none;
+        }
+        .announcement-bar .video-mobile {
+          display: block;
+          aspect-ratio: 9/16;
+        }
+      }
+      .header {
+        background-color: rgba(13, 13, 13, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        height: 80px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .logo {
+        width: 140px;
+        height: auto;
+        display: block;
+      }
+      .nav {
+        display: flex;
+        gap: 32px;
+      }
+      @media (max-width: 768px) {
+        .nav { display: none; }
+      }
+      .nav a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+      .nav a:hover {
+        color: #FC7301;
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .btn-nav-outline {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.25s ease;
+      }
+      .btn-nav-outline:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      .btn-nav-gold {
+        background: linear-gradient(135deg, #FC7301 0%, #e05e00 100%);
+        color: #fff;
+        padding: 11px 24px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(252, 115, 1, 0.2);
+        transition: all 0.25s ease;
+      }
+      .btn-nav-gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(252, 115, 1, 0.35);
+      }
+      .hero {
+        background: radial-gradient(circle at 70% 30%, rgba(252, 115, 1, 0.05) 0%, rgba(13, 13, 13, 0) 60%), #0d0d0d;
+        padding: 100px 0;
+        overflow: hidden;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+      }
+      .hero-new-layout {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 60px;
+        align-items: center;
+      }
+      @media (max-width: 991px) {
+        .hero-new-layout {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          text-align: center;
+        }
+      }
+      .tagline {
+        background: rgba(252, 115, 1, 0.08);
+        border: 1px solid rgba(252, 115, 1, 0.15);
+        color: #FC7301;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 24px;
+      }
+      .main-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+        font-family: 'Outfit', sans-serif;
+      }
+      @media (max-width: 576px) {
+        .main-title { font-size: 2.4rem; }
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #ffffff 30%, #FC7301 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hero-subtitle {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #aaa;
+        margin-bottom: 36px;
+        max-width: 580px;
+      }
+      @media (max-width: 991px) {
+        .hero-subtitle { margin: 0 auto 30px; }
+      }
+      .hero-cta-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+      @media (max-width: 991px) {
+        .hero-cta-wrapper { align-items: center; }
+      }
+      .btn-primary-new {
+        background: linear-gradient(135deg, #FC7301 0%, #e05e00 100%);
+        color: #fff;
+        padding: 16px 36px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 8px 25px rgba(252, 115, 1, 0.25);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .btn-primary-new:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(252, 115, 1, 0.4);
+      }
+      .hero-trust {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 10px;
+      }
+      .stars {
+        color: #FC7301;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+      }
+      .trust-divider {
+        width: 1px;
+        height: 16px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .hero-trust p {
+        font-size: 0.85rem;
+        color: #888;
+      }
+      .hero-visual-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .smartphone-mockup {
+        position: relative;
+        width: 270px;
+        aspect-ratio: 9/18;
+        background: #000;
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+      .phone-svg-overlay {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        z-index: 10;
+        pointer-events: none;
+      }
+      .smartphone-screen {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+        border-radius: 32px;
+        overflow: hidden;
+        z-index: 1;
+        background: #111;
+      }
+    </style>
+    <link rel="stylesheet" href="/src/style.css" media="print" onload="this.media='all'" />
 
     <!-- ================================================
          SCHEMA.ORG JSON-LD (GEO — Generative Engine Optimization)
@@ -426,42 +802,88 @@
       </div>
     </div>
 
-    <div id="app"></div>
+    <div id="app">
+      <!-- Static Skeleton for Instant Paint (FCP / LCP) -->
+      <div class="announcement-bar">
+        <div class="container announcement-content">
+          <div class="announcement-video video-desktop" style="background: #000; height: 100%;"></div>
+          <div class="announcement-video video-mobile" style="background: #000; height: 100%;"></div>
+        </div>
+      </div>
+      <header class="header">
+        <div class="container header-content">
+          <a href="#" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 1507040 421800" fill-rule="evenodd" clip-rule="evenodd" style="width: 100%; height: auto;">
+              <g id="Camada_x0020_1">
+                <path fill="white" fill-rule="nonzero" d="M422810 279480c0,10390 -3190,18540 -9600,24480 -6370,5940 -15170,8910 -26400,8910l-84160 0c-11290,0 -20170,-2970 -26610,-8950 -6450,-5970 -9670,-14120 -9670,-24440l0 -128920 50620 0 0 117980 55410 0 0 -117980 50410 0 0 128920zm69780 -10940l57790 0 0 -74090 -57790 0 0 74090zm-50630 44330l0 -162310 120630 0c12490,0 22270,3840 29330,11520 7060,7640 10610,18400 10610,32160l0 73870c0,14700 -3480,25850 -10390,33420 -6920,7570 -17130,11340 -30640,11340l-119540 0zm179730 0l0 -162310 50620 0 0 162310 -50620 0zm223170 -43670c0,14480 -3290,25380 -9880,32690 -6560,7320 -16410,10980 -29480,10980l-74670 0c-13150,0 -23030,-3660 -29660,-10980 -6620,-7310 -9920,-18210 -9920,-32690l0 -74750c0,-14840 3260,-25850 9780,-33060 6480,-7210 16440,-10830 29800,-10830l74670 0c13430,0 23360,3590 29770,10720 6410,7140 9590,18180 9590,33170l0 74750zm-102770 -660l52150 0 0 -74090 -52150 0 0 74090z"/>
+                <path fill="white" fill-rule="nonzero" d="M48930 323940c730,0 1450,20 2180,50l0 -118250c0,-16880 6430,-25020 19750,-35180l176350 -134470 0 305880c0,27020 -21900,48930 -48920,48930 -27030,0 -48930,-21910 -48930,-48930 0,-27850 23190,-50090 51110,-48880l0 -39760 -102610 0 0 119510c170,26760 -21810,48960 -48930,48960 -27020,0 -48930,-21910 -48930,-48930 0,-27020 21910,-48930 48930,-48930zm151540 -115170l0 -78240 -102610 78240 102610 0z"/>
+                <path fill="white" d="M1162500 105820c-6640,-20240 -21770,-58580 -45370,-75300 -27620,-19570 -55170,-2800 -40590,25660 13350,26070 53710,48350 85960,49640zm-265340 2370c-16010,0 -29100,13090 -29100,29100l0 57410c0,12330 7850,23260 19260,27380l0 90590c0,16010 13090,29110 29100,29110 180750,0 361500,0 542250,0 16020,0 29110,-13100 29110,-29110l0 -90590c11400,-4120 19260,-15050 19260,-27380l0 -57410c0,-16010 -13090,-29100 -29110,-29100l-213120 0c18060,-10940 31850,-27130 34330,-48220 4390,-37200 -34940,-58590 -71940,-32230 -29800,21230 -39040,62780 -41530,78370 -5810,-19160 -23930,-70970 -55830,-93570 -14650,-10380 -29740,-13810 -42680,-12140 -16700,2160 -30490,12890 -35130,29040 -8940,31070 18950,61740 47260,78750 -67370,0 -134750,0 -202130,0zm342840 -62470c-19900,14170 -28130,41390 -31330,56930 26790,-1150 66550,-16950 68670,-46820 1300,-18290 -18400,-23610 -37340,-10110z"/>
+                <path fill="#FC7301" fill-rule="nonzero" d="M1081350 262430c0,14520 -3290,25420 -9920,32730 -6590,7320 -16480,10970 -29620,10970l-79270 0c-13150,0 -23030,-3650 -29660,-10970 -6630,-7310 -9920,-18210 -9920,-32730l0 -74710c0,-15360 3260,-26470 9780,-33460 6480,-6950 16870,-10430 31070,-10430l115800 0 0 43890 -105810 0 0 73870 57580 0 0 -53230 49970 0 0 54070zm18720 43700l0 -162300 50630 0 0 162300 -50630 0zm72180 0l0 -162300 135360 0 0 43890 -84520 0 0 18680 84520 0 0 36720 -84520 0 0 63010 -50840 0zm198330 0l0 -118410 -49760 0 0 -43890 150580 0 0 43890 -47590 0 0 118410 -53230 0z"/>
+              </g>
+            </svg>
+          </a>
+          <nav class="nav">
+            <a href="#how">Como funciona</a>
+            <a href="#styles">Estilos</a>
+            <a href="#reviews">Depoimentos</a>
+            <a href="#planos">Planos</a>
+          </nav>
+          <div class="nav-actions">
+            <a href="#" class="btn-nav-outline">Acompanhar pedido</a>
+            <a href="#create" class="btn-nav-gold">Criar sua canção</a>
+          </div>
+        </div>
+      </header>
+      <main>
+        <section class="hero">
+          <div class="container">
+            <div class="hero-new-layout">
+              <div class="hero-text-content">
+                <span class="tagline"><i style="width: 14px; height: 14px; color: var(--primary-orange); display: inline-block;">★</i> A plataforma #1 de músicas personalizadas</span>
+                <h1 class="main-title">Tudo que você nunca conseguiu dizer... <br><span class="gradient-text">Agora em uma canção.</span></h1>
+                <p class="hero-subtitle">A homenagem definitiva para quem você ama. Uma composição exclusiva, feita sob medida para a sua história.</p>
+                <div class="hero-cta-wrapper">
+                  <a href="#create" class="btn-primary-new">
+                    Pedir minha música personalizada
+                  </a>
+                  <div class="hero-trust">
+                    <div class="stars">★★★★★</div>
+                    <div class="trust-divider"></div>
+                    <p>Mais de <strong>2.000 histórias</strong> já se emocionaram</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-visual-wrapper">
+                <div class="smartphone-mockup">
+                  <svg class="phone-svg-overlay" viewBox="0 0 152670 307380" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="black" fill-rule="nonzero" d="M24880 0l102460 0c6450,0 12300,2630 16550,6880 4240,4240 6870,10100 6870,16540l0 54820 1910 0 0 40170 -1910 0 0 165550c0,6450 -2630,12300 -6870,16550 -4250,4240 -10100,6870 -16550,6870l-102460 0c-6440,0 -12300,-2630 -16540,-6870 -4240,-4250 -6880,-10100 -6880,-16550l0 -160060 -1460 0 0 -23420 1460 0 0 -6730 -1460 0 0 -23420 1460 0 0 -10320 -1460 0 0 -12810 1460 0 0 -23780c0,-6440 2640,-12300 6880,-16540 4240,-4250 10100,-6880 16540,-6880zm39450 11490l24010 0c2330,0 4240,1910 4240,4240l0 0c0,2340 -1910,4250 -4240,4250l-24010 0c-2330,0 -4240,-1910 -4240,-4250l0 0c0,-2330 1910,-4240 4240,-4240zm63010 -5630l-102460 0c-4820,0 -9210,1970 -12400,5160 -3180,3180 -5160,7570 -5160,12400l0 260540c0,4830 1980,9220 5160,12410 3190,3180 7580,5160 12400,5160l102460 0c4830,0 9220,-1980 12410,-5160 3180,-3190 5160,-7580 5160,-12410l0 -260540c0,-4830 -1980,-9220 -5160,-12400 -3190,-3190 -7580,-5160 -12410,-5160z"/>
+                  </svg>
+                  <div class="smartphone-screen">
+                    <img src="/images/hero.webp" fetchpriority="high" loading="eager" width="800" height="600" alt="Homenagem Musical AudioGift" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <div class="smartphone-speaker"></div>
+                  <div class="smartphone-home-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
     <script>
       // Fallback de segurança para garantir que o preloader seja removido se a inicialização do JS falhar ou demorar muito
       setTimeout(function() {
         var loader = document.getElementById('preloader');
         if (loader && !loader.classList.contains('fade-out')) {
           loader.classList.add('fade-out');
-          
-          var path = window.location.pathname;
-          var hash = window.location.hash;
-          var isHome = !path.includes('/admin') && !hash.includes('#admin') &&
-                       !path.includes('/checkout') && !hash.includes('#checkout') &&
-                       !path.includes('/acompanhamento') && !hash.includes('#acompanhamento') &&
-                       !path.includes('/planos') && !hash.includes('#planos') &&
-                       !path.includes('/quiz') && !hash.includes('#quiz');
-
-          if (isHome) {
-            document.body.classList.add('preloader-done');
-            setTimeout(function() {
-              document.body.classList.add('video-ready');
-              setTimeout(function() {
-                document.body.classList.add('content-ready');
-                document.body.classList.add('app-ready');
-                document.body.style.backgroundColor = '';
-                setTimeout(function() {
-                  loader.remove();
-                }, 800);
-              }, 600);
-            }, 350);
-          } else {
-            document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
-            document.body.style.backgroundColor = '';
+          document.body.classList.add('preloader-done', 'video-ready', 'content-ready', 'app-ready');
+          document.body.style.backgroundColor = '';
+          setTimeout(function() {
             loader.remove();
-          }
+          }, 500);
         }
-      }, 3000);
+      }, 1500);
     </script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
     <script type="module" src="/src/main.js"></script>
