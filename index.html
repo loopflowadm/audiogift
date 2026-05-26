@@ -392,6 +392,13 @@
     </script>
   </head>
   <body style="background-color: #0d0d0d;">
+    <script>
+      // Garante scroll no topo imediatamente no carregamento inicial
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    </script>
     <!-- Preloader de Homenagem Premium -->
     <div id="preloader">
       <div class="preloader-content">
