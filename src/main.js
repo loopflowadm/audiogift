@@ -713,8 +713,8 @@ const Experience = () => {
   return `
     <section class="experience-section py-large bg-light">
       <div class="container text-center">
-        <h2 class="section-title-serif reveal">Muito mais que uma música. <br><span class="text-orange">Uma experiência completa.</span></h2>
-        <p class="section-subtitle reveal" data-delay="1">O presente ideal para emocionar e ser lembrado para sempre.</p>
+        <h2 class="section-title-serif reveal">Como entregamos uma <br><span class="text-orange">homenagem profissional</span></h2>
+        <p class="section-subtitle reveal" data-delay="1">Criação artística, gravação em estúdio e lançamento oficial no Spotify.</p>
 
         <div class="experience-grid mt-5">
           <div class="exp-card reveal" data-delay="1">
