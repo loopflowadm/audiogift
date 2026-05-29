@@ -4810,6 +4810,77 @@ initMobileMenu();
 window.addEventListener('hashchange', renderRoute);
 window.addEventListener('popstate', renderRoute);
 
+// --- HEART TRAIL EFFECT ON MOUSEMOVE ---
+if (window.matchMedia('(pointer: fine)').matches) {
+  let lastX = 0;
+  let lastY = 0;
+  const minDistance = 50; // distância mínima em pixels para spawnar o próximo coração
+
+  // Pool de corações para evitar criação/destruição constante no DOM
+  const POOL_SIZE = 15;
+  const heartPool = [];
+  let poolIndex = 0;
+
+  for (let i = 0; i < POOL_SIZE; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart-trail';
+    const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#FC7301', '#ffb3c1'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    heart.innerHTML = `<svg viewBox="0 0 24 24" fill="${randomColor}" width="100%" height="100%"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+    
+    // Configurações iniciais de escuta para auto-ocultação ao final da animação
+    heart.addEventListener('animationend', () => {
+      heart.style.display = 'none';
+      heart.classList.remove('active');
+    });
+
+    document.body.appendChild(heart);
+    heartPool.push(heart);
+  }
+
+  const spawnHeart = (x, y) => {
+    const heart = heartPool[poolIndex];
+    poolIndex = (poolIndex + 1) % POOL_SIZE;
+
+    const size = Math.random() * 8 + 8; // 8px a 16px
+    const driftY = -50 - Math.random() * 50; // flutuar para cima
+    const driftX = (Math.random() - 0.5) * 60; // balanço horizontal
+    const rotate = (Math.random() - 0.5) * 60; // rotação leve
+
+    // Atualiza propriedades e posiciona
+    heart.style.display = 'block';
+    heart.style.left = `${x}px`;
+    heart.style.top = `${y}px`;
+    heart.style.width = `${size}px`;
+    heart.style.height = `${size}px`;
+    
+    heart.style.setProperty('--drift-x', `${driftX}px`);
+    heart.style.setProperty('--drift-y', `${driftY}px`);
+    heart.style.setProperty('--rotate', `${rotate}deg`);
+    
+    // Reinicia a animação CSS com hack de reflow super rápido
+    heart.classList.remove('active');
+    void heart.offsetWidth; // Força recálculo leve local
+    heart.classList.add('active');
+  };
+
+  window.addEventListener('mousemove', (e) => {
+    if (document.body.classList.contains('admin-mode')) {
+      return;
+    }
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const dist = Math.hypot(mouseX - lastX, mouseY - lastY);
+    if (dist > minDistance) {
+      spawnHeart(mouseX, mouseY);
+      lastX = mouseX;
+      lastY = mouseY;
+    }
+  });
+}
+
 // Initialize App and Lucide Icons
 const initApp = () => {
   if (window.lucide) lucide.createIcons();
