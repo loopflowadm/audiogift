@@ -9025,3 +9025,7 @@ body:not(.is-home-route) .floating-actions {
     transform: translate3d(calc(-50% + var(--drift-x)), calc(-50% + var(--drift-y)), 0) scale(1.3) rotate(var(--rotate));
   }
 }
+
+.bento-item-hidden {
+  display: none !important;
+}

@@ -421,17 +421,18 @@ const SocialProofSection = () => {
     <section id="proof" class="social-proof-section py-large bg-soft overflow-hidden">
       <div class="container">
         <div class="text-center mb-12">
-          <div class="tag-badge reveal"><i data-lucide="heart"></i> EMOÇÃO QUE TRANSFORMA</div>
-          <h2 class="section-title-serif reveal" data-delay="1">Por que milhares de famílias se emocionam com o <em>Audiogift</em></h2>
-          <p class="section-subtitle reveal" data-delay="2">Assista às reações em vídeo e veja os feedbacks reais de quem eternizou momentos inesquecíveis em música.</p>
+          <div class="tag-badge reveal"><i data-lucide="heart"></i> DEPOIMENTOS</div>
+          <h2 class="section-title-serif reveal" data-delay="1">Reações de quem já recebeu a música</h2>
+          <p class="section-subtitle reveal" data-delay="2">Vídeos e conversas de clientes que mostram o impacto de dar uma canção exclusiva de presente.</p>
         </div>
 
         <!-- Bento Grid -->
         <div class="proof-bento-grid" id="proofBentoGrid">
           ${bentoItems.map((item, idx) => {
+            const isHiddenClass = idx >= 6 ? 'bento-item-hidden' : '';
             if (item.type === 'video') {
               return `
-                <div class="proof-video-card bento-item reveal ${item.aspect === 'vertical' ? 'bento-portrait' : 'bento-square'}" data-delay="${(idx % 4) + 1}" data-video-url="${item.videoUrl}" data-aspect="${item.aspect}">
+                <div class="proof-video-card bento-item reveal ${item.aspect === 'vertical' ? 'bento-portrait' : 'bento-square'} ${isHiddenClass}" data-delay="${(idx % 4) + 1}" data-video-url="${item.videoUrl}" data-aspect="${item.aspect}">
                   <div class="video-cover-wrap">
                     <img class="cover-img" src="${item.img}" alt="${item.title}" loading="lazy" width="300" height="300">
                     <div class="video-overlay-gradient"></div>
@@ -450,7 +451,7 @@ const SocialProofSection = () => {
               `;
             } else {
               return `
-                <div class="comment-img-card bento-item bento-square reveal" data-delay="${(idx % 4) + 1}" data-img-url="${item.imgUrl}">
+                <div class="comment-img-card bento-item bento-square reveal ${isHiddenClass}" data-delay="${(idx % 4) + 1}" data-img-url="${item.imgUrl}">
                   <img src="${item.imgUrl}" alt="Feedback Cliente AudioGift" loading="lazy" width="300" height="300">
                   <div class="img-card-overlay">
                     <i data-lucide="zoom-in"></i>
@@ -459,6 +460,10 @@ const SocialProofSection = () => {
               `;
             }
           }).join('')}
+        </div>
+
+        <div class="text-center mt-5" id="proofShowMoreContainer" style="margin-top: 3rem; display: flex; justify-content: center;">
+          <button class="btn-outline" id="btnShowMoreProof" style="cursor: pointer; padding: 12px 30px; border-radius: 50px;">Mostrar mais depoimentos</button>
         </div>
       </div>
 
@@ -470,6 +475,21 @@ const SocialProofSection = () => {
 const initSocialProof = () => {
   const videoCards = document.querySelectorAll('.proof-video-card');
   const commentImgCards = document.querySelectorAll('.comment-img-card');
+
+  const btnShowMore = document.getElementById('btnShowMoreProof');
+  const showMoreContainer = document.getElementById('proofShowMoreContainer');
+  if (btnShowMore && showMoreContainer) {
+    btnShowMore.onclick = () => {
+      const hiddenItems = document.querySelectorAll('.proof-bento-grid .bento-item-hidden');
+      hiddenItems.forEach(item => {
+        item.classList.remove('bento-item-hidden');
+        if (typeof observer !== 'undefined') {
+          observer.observe(item);
+        }
+      });
+      showMoreContainer.style.display = 'none';
+    };
+  }
 
   // Carregar as thumbnails reais (primeiro frame) dos vídeos do Vimeo
   videoCards.forEach(card => {
