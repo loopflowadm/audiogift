@@ -9029,3 +9029,7 @@ body:not(.is-home-route) .floating-actions {
 .bento-item-hidden {
   display: none !important;
 }
+
+.genre-card-hidden {
+  display: none !important;
+}

@@ -165,7 +165,7 @@ const MusicStyles = () => {
         
         <div class="genre-grid-players">
           ${featuredGenres.map((genre, i) => `
-            <div class="style-player-card reveal" data-genre="${genre.name}" data-voice="${genre.voice}" data-delay="${(i % 4) + 1}">
+            <div class="style-player-card reveal ${i >= 9 ? 'genre-card-hidden' : ''}" data-genre="${genre.name}" data-voice="${genre.voice}" data-delay="${(i % 4) + 1}">
               <div class="audio-card-left">
                 <button class="wa-play-small player-card-play-btn" data-src="${genre.src}" aria-label="Tocar exemplo">
                   <i data-lucide="play"></i>
@@ -200,8 +200,8 @@ const MusicStyles = () => {
           `).join('')}
         </div>
         
-        <div class="mt-4 reveal" data-delay="1">
-          <button class="btn-outline">VER TODOS OS ESTILOS</button>
+        <div class="mt-4 reveal" data-delay="1" id="showAllGenresContainer">
+          <button class="btn-outline" id="btnShowAllGenres">VER TODOS OS ESTILOS</button>
         </div>
       </div>
     </section>
@@ -3025,19 +3025,35 @@ const initAllAudioPlayers = () => {
 const initMusicStylesFilter = () => {
   const searchInput = document.querySelector('.search-input');
   const styleCards = document.querySelectorAll('.style-player-card');
+  const btnShowAll = document.getElementById('btnShowAllGenres');
+  const showAllContainer = document.getElementById('showAllGenresContainer');
 
   if (!searchInput || !styleCards.length) return;
+
+  if (btnShowAll && showAllContainer) {
+    btnShowAll.onclick = () => {
+      const hiddenCards = document.querySelectorAll('.genre-card-hidden');
+      hiddenCards.forEach(card => {
+        card.classList.remove('genre-card-hidden');
+        if (typeof observer !== 'undefined') {
+          observer.observe(card);
+        }
+      });
+      showAllContainer.style.display = 'none';
+    };
+  }
 
   let searchQuery = '';
 
   const filterCards = () => {
     styleCards.forEach(card => {
+      const hasHiddenClass = card.classList.contains('genre-card-hidden');
       const genreName = card.getAttribute('data-genre').toLowerCase();
       const songTitle = (card.querySelector('.genre-name-label')?.textContent || '').toLowerCase();
 
       const matchesSearch = genreName.includes(searchQuery) || songTitle.includes(searchQuery);
 
-      if (matchesSearch) {
+      if (matchesSearch && (!hasHiddenClass || searchQuery.length > 0)) {
         card.style.display = 'block';
         card.classList.add('visible');
       } else {
