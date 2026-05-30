@@ -31,7 +31,7 @@ const AnnouncementBar = () => `
         loop 
         muted 
         playsinline
-        preload="auto"
+        preload="metadata"
         title="Dia dos Namorados - Desktop"
         style="width: 100%; height: 100%; object-fit: cover;">
         <source src="/videos/valentines-campaign-desktop.mp4" type="video/mp4">
@@ -42,7 +42,7 @@ const AnnouncementBar = () => `
         loop 
         muted 
         playsinline
-        preload="auto"
+        preload="metadata"
         title="Dia dos Namorados - Mobile"
         style="width: 100%; height: 100%; object-fit: cover;">
         <source src="/videos/valentines-campaign-mobile.mp4" type="video/mp4">
