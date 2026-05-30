@@ -1710,6 +1710,16 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
     const planObj = planNames[answers.plan] || planNames['memoravel'];
     const totalPriceStr = planObj.priceStr;
 
+    // Track InitiateCheckout in Facebook Pixel
+    if (window.fbq) {
+      window.fbq('track', 'InitiateCheckout', {
+        value: planObj.price,
+        currency: 'BRL',
+        content_name: planObj.name,
+        content_category: 'Música Personalizada'
+      });
+    }
+
     document.getElementById('quiz-container').innerHTML = `
       <div class="quiz-modal-inner checkout-step-inner">
         <div class="quiz-header checkout-header">
@@ -2339,6 +2349,22 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
         };
 
         const createdOrder = await db.createOrder(orderData);
+
+        // Track Lead in Facebook Pixel
+        if (window.fbq) {
+          const planPrices = {
+            especial: 89.90,
+            memoravel: 149.90,
+            inesquecivel: 199.90
+          };
+          const price = planPrices[answers.plan] || 149.90;
+          window.fbq('track', 'Lead', {
+            value: price,
+            currency: 'BRL',
+            content_name: answers.plan,
+            content_category: 'Música Personalizada'
+          });
+        }
         
         // Remove active class to close overlay quiz if exists
         const overlay = document.getElementById('quiz-overlay');
@@ -3736,6 +3762,29 @@ const renderAcompanhamentoPage = async (mainEl, orderId) => {
     return;
   }
 
+  // Track Purchase in Facebook Pixel if paid and not already tracked
+  if (order.status === 'pago' || order.status === 'em_producao' || order.status === 'concluido') {
+    const trackedKey = `fb_tracked_purchase_${orderId}`;
+    if (!localStorage.getItem(trackedKey)) {
+      if (window.fbq) {
+        const planPrices = {
+          especial: 89.90,
+          memoravel: 149.90,
+          inesquecivel: 199.90
+        };
+        const price = planPrices[order.plan] || 149.90;
+        window.fbq('track', 'Purchase', {
+          value: price,
+          currency: 'BRL',
+          content_name: order.plan,
+          content_type: 'product',
+          content_ids: [order.id]
+        });
+      }
+      localStorage.setItem(trackedKey, 'true');
+    }
+  }
+
   const planNames = {
     especial: 'Plano Especial (7 dias)',
     memoravel: 'Plano Memorável (72h)',
@@ -4002,6 +4051,11 @@ const renderRoute = async () => {
 
     if (window.lucide) {
       lucide.createIcons();
+    }
+
+    // Track PageView on route change for SPA routing
+    if (window.fbq) {
+      window.fbq('track', 'PageView');
     }
   } catch (err) {
     console.error('[AudioGift] Erro crítico ao renderizar rota:', err);
