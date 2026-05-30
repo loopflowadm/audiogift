@@ -1,6 +1,3 @@
-// Senha padrão se não configurada
-export const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
-
 let supabase = null;
 let isMock = true;
 let isInitialized = false;
@@ -40,9 +37,66 @@ const mockDatabase = {
 
 // Funções de CRUD unificadas para a aplicação (Supabase ou LocalStorage)
 export const db = {
+  // Autenticação Administrativa
+  loginAdmin: async (email, password) => {
+    await initSupabase();
+    if (!isMock && supabase) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      if (error) throw error;
+      return data;
+    }
+    
+    // Mock local para desenvolvimento/teste local
+    if (email === 'admin@audiogift.com.br' && password === 'admin123') {
+      sessionStorage.setItem('audiogift_admin_auth', 'true');
+      return { user: { email } };
+    }
+    throw new Error('Credenciais inválidas.');
+  },
+
+  logoutAdmin: async () => {
+    await initSupabase();
+    if (!isMock && supabase) {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    }
+    sessionStorage.removeItem('audiogift_admin_auth');
+  },
+
+  isAdminAuthenticated: async () => {
+    await initSupabase();
+    if (!isMock && supabase) {
+      const { data } = await supabase.auth.getSession();
+      return !!(
+        data.session && 
+        data.session.user && 
+        data.session.user.email && 
+        (data.session.user.email === 'admin@audiogift.com.br' || data.session.user.email.endsWith('@audiogift.com.br'))
+      );
+    }
+    return sessionStorage.getItem('audiogift_admin_auth') === 'true';
+  },
+
   // Inserir um novo pedido
   createOrder: async (orderData) => {
     await initSupabase();
+    
+    // Garantir sessão anônima antes de criar o pedido para associar o user_id no RLS
+    if (!isMock && supabase) {
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (!sessionData.session) {
+          console.log('AudioGift Security: Iniciando sessão anônima...');
+          await supabase.auth.signInAnonymously();
+        }
+      } catch (authErr) {
+        console.error('AudioGift Security: Erro ao iniciar sessão anônima:', authErr);
+      }
+    }
+
     const id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15);
     const newOrder = {
       id,
@@ -75,19 +129,26 @@ export const db = {
     return newOrder;
   },
 
-  // Buscar um pedido pelo ID
+  // Buscar um pedido pelo ID (usa RPC para permitir acesso por ID sem listagem aberta)
   getOrder: async (id) => {
     await initSupabase();
     if (!isMock && supabase) {
       try {
-        const { data, error } = await supabase
+        // Tenta buscar via RPC segura get_order_by_id para evitar vazamento de listagem RLS
+        const { data, error } = await supabase.rpc('get_order_by_id', { order_id: id });
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          return data[0];
+        }
+
+        // Fallback secundário
+        const { data: fallbackData, error: fallbackError } = await supabase
           .from('orders')
           .select('*')
           .eq('id', id)
           .single();
-        
-        if (error) throw error;
-        return data;
+        if (!fallbackError) return fallbackData;
       } catch (err) {
         console.error(`Erro ao buscar no Supabase (${id}), buscando localmente:`, err);
       }
@@ -98,7 +159,7 @@ export const db = {
     return orders.find(o => o.id === id) || null;
   },
 
-  // Listar todos os pedidos
+  // Listar todos os pedidos (Apenas para o Painel Administrativo)
   getOrders: async () => {
     await initSupabase();
     if (!isMock && supabase) {
@@ -117,7 +178,6 @@ export const db = {
 
     // Fallback local
     const orders = mockDatabase.getOrders();
-    // Ordenar por data decrescente
     return orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   },
 
@@ -150,7 +210,7 @@ export const db = {
     return null;
   },
 
-  // Deletar um pedido (útil para limpeza no admin)
+  // Deletar um pedido (Painel Admin)
   deleteOrder: async (id) => {
     await initSupabase();
     if (!isMock && supabase) {

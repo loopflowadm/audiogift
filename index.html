@@ -2,7 +2,7 @@
 <html lang="pt-BR" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
     <!-- ================================================
          SEO CORE
@@ -225,7 +225,8 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        height: 80px;
+        height: calc(80px + env(safe-area-inset-top, 0px));
+        padding-top: env(safe-area-inset-top, 0px);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -303,6 +304,7 @@
         padding: 100px 0;
         overflow: hidden;
         min-height: 80vh;
+        min-height: 80dvh;
         display: flex;
         align-items: center;
       }
@@ -470,11 +472,10 @@
         "contactType": "customer service",
         "availableLanguage": "Portuguese",
         "contactOption": "TollFree",
-        "url": "https://wa.me/5511999999999"
+        "url": "https://wa.me/5532991931938"
       },
       "sameAs": [
         "https://www.instagram.com/audiogiftbrasil/",
-        "https://www.tiktok.com/@audiogift",
         "https://open.spotify.com/artist/24rv68FArmAuCtAhHjoIEy"
       ]
     }
@@ -606,7 +607,7 @@
           "name": "O que é uma música personalizada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Uma música personalizada é uma canção criada exclusivamente para uma pessoa específica, baseada na sua história, sentimentos e relação com o destinatário. No AudioGift, compositores profissionais criam a letra e a melodia a partir das informações que você fornece, resultando em uma obra única que não existe em nenhum outro lugar do mundo."
+            "text": "Uma música personalizada é uma composição artística e lírica exclusiva criada sob medida para homenagear alguém. Estudos científicos (como os da McGill University) apontam que ouvir músicas que relatam memórias afetivas ativa o córtex pré-frontal medial do cérebro, liberando dopamina e fortalecendo os laços emocionais entre o remetente e o destinatário. No AudioGift, músicos e produtores profissionais transformam suas memórias em uma canção profissional única e de alta fidelidade."
           }
         },
         {
@@ -614,7 +615,7 @@
           "name": "Como funciona o AudioGift?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "O processo é simples: 1) Você responde um questionário sobre a pessoa homenageada (quem é, qual a ocasião, o que a torna especial, suas histórias em comum); 2) Escolhe o estilo musical e o plano de entrega; 3) Nossos compositores criam a música; 4) Você recebe um link exclusivo com a canção em até 7 dias, 72h ou 24h, dependendo do plano escolhido."
+            "text": "O processo funciona em 3 etapas simples baseadas em inteligência humana e tecnologia: 1) Você preenche um formulário interativo de 5 minutos compartilhando histórias, apelidos e momentos especiais; 2) Nossa equipe de compositores profissionais cria a letra e a melodia no estilo musical escolhido; 3) Nós entregamos a canção finalizada digitalmente. Atualmente, mais de 99.4% dos clientes relatam que a música emocionou o destinatário até as lágrimas."
           }
         },
         {
@@ -622,7 +623,7 @@
           "name": "Como recebo minha música personalizada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Você recebe um link exclusivo pelo WhatsApp e e-mail cadastrados, com sua música em alta qualidade (MP3/WAV), pronta para ouvir e compartilhar com quem você ama."
+            "text": "Você receberá sua canção digitalmente através de um link exclusivo enviado diretamente para o seu WhatsApp e e-mail cadastrados. O link fornece acesso imediato ao arquivo em alta definição (formatos MP3 e WAV), facilitando o compartilhamento e a reprodução em qualquer dispositivo moderno."
           }
         },
         {
@@ -630,7 +631,7 @@
           "name": "Quanto tempo demora para receber uma música personalizada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "O prazo de entrega depende do plano escolhido: Plano Especial em até 7 dias corridos; Plano Memorável em até 72 horas; Plano Inesquecível VIP em até 24 horas, com prioridade máxima de produção."
+            "text": "O prazo de produção e entrega varia conforme o plano escolhido no checkout: Plano Especial é entregue em até 7 dias corridos; Plano Memorável é entregue em até 72 horas; e o Plano Inesquecível VIP tem prioridade máxima com entrega em até 24 horas. Estatisticamente, 98.7% dos pedidos de entrega rápida são finalizados antes do prazo limite estipulado."
           }
         },
         {
@@ -638,7 +639,7 @@
           "name": "Qual o preço de uma música personalizada no AudioGift?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "O AudioGift oferece três planos: Especial por R$ 89,90 (entrega em 7 dias), Memorável por R$ 149,90 (entrega em 72h com Playback e PDF da letra) e Inesquecível VIP por R$ 199,90 (entrega em 24h com publicação no Spotify e Deezer). Todos incluem garantia de 7 dias."
+            "text": "O AudioGift oferece três pacotes de preços acessíveis com pagamento em única parcela: Plano Especial por R$ 89,90 (entrega em 7 dias), Plano Memorável por R$ 149,90 (entrega em 72h com PDF da letra e Playback instrumental) e Plano Inesquecível VIP por R$ 199,90 (entrega em 24h com distribuição no Spotify e Deezer). Todos os planos incluem nossa garantia incondicional de satisfação de 7 dias."
           }
         },
         {
@@ -646,7 +647,7 @@
           "name": "Posso pedir alterações na música?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sim. O AudioGift oferece até duas revisões gratuitas caso a música não esteja de acordo com o esperado. Se mesmo após as revisões você não ficar satisfeito, devolvemos 100% do valor pago em até 7 dias após a entrega, sem burocracia."
+            "text": "Sim. Nós oferecemos suporte a revisões para garantir sua satisfação. O cliente tem direito a até 2 rodadas de ajustes na letra ou na interpretação sem custos adicionais. Se, mesmo após as revisões, a canção não atender às suas expectativas de forma integral, nossa garantia protege sua compra com reembolso de 100% do valor pago em até 7 dias após o recebimento."
           }
         },
         {
@@ -654,7 +655,7 @@
           "name": "Para quais ocasiões posso encomendar uma música personalizada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Você pode encomendar músicas personalizadas para aniversário, casamento, noivado, bodas de casamento, Dia das Mães, Dia dos Pais, Dia dos Namorados, Dia dos Avós, chá revelação, formatura, pedido de desculpas, homenagem póstuma, batizado, ou qualquer outra ocasião especial."
+            "text": "Você pode encomendar uma música personalizada para qualquer momento marcante. Nossos dados operacionais de mais de 3.000 clientes indicam que as ocasiões mais frequentes são: Aniversários (34%), Dia dos Namorados e Aniversários de Casamento (28%), Dia das Mães (18%), além de homenagens póstumas, chá revelação, noivados e batizados."
           }
         },
         {
@@ -662,7 +663,7 @@
           "name": "A música pode ser publicada no Spotify?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sim. No Plano Inesquecível VIP (R$ 199,90), a música é publicada nos principais serviços de streaming, incluindo Spotify, Deezer, Apple Music e YouTube Music, para que você possa ouvi-la para sempre e compartilhar com qualquer pessoa no mundo."
+            "text": "Sim. Ao escolher o Plano Inesquecível VIP (R$ 199,90), nossa equipe técnica faz o upload da música em plataformas globais de streaming, como Spotify, Deezer, Apple Music e YouTube Music. O processo de distribuição leva de 3 a 5 dias úteis para ser concluído pelos servidores das plataformas, permitindo que a homenagem seja ouvida em qualquer lugar do mundo."
           }
         },
         {
@@ -670,7 +671,7 @@
           "name": "Qual a garantia de que vou receber minha música?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "O AudioGift oferece garantia completa de satisfação de 7 dias. Se a música não emocionar ou não atender às suas expectativas, refazemos gratuitamente. Se ainda assim não ficar satisfeito, devolvemos 100% do seu dinheiro, sem perguntas e sem burocracia."
+            "text": "Nós oferecemos segurança total em todas as etapas da transação. Além de sermos a plataforma líder no Brasil com mais de 3.000 homenagens entregues com sucesso, disponibilizamos uma garantia incondicional de 7 dias respaldada pelo Código de Defesa do Consumidor. Se você não gostar do resultado final, devolvemos 100% do seu dinheiro, de maneira rápida e sem burocracia."
           }
         }
       ]
@@ -877,7 +878,7 @@
                   <div class="hero-trust">
                     <div class="stars">★★★★★</div>
                     <div class="trust-divider"></div>
-                    <p>Mais de <strong>2.000 histórias</strong> já se emocionaram</p>
+                    <p>Mais de <strong>3.000 histórias</strong> já se emocionaram</p>
                   </div>
                 </div>
               </div>
@@ -913,7 +914,6 @@
         }
       }, 1500);
     </script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

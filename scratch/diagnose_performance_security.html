@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico de Desempenho e Segurança — AudioGift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ SYSTEM DESIGN TOKENS ============ */
+  :root {
+    --font-heading: 'Outfit', system-ui, sans-serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'Fira Code', monospace;
+
+    /* Theme: Sleek Slate/Dark with AudioGift Premium Orange */
+    --bg: #09090b;
+    --surface: #18181b;
+    --surface-elevated: #202023;
+    --surface-recessed: #0c0c0e;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-bright: rgba(255, 255, 255, 0.16);
+    --text: #f4f4f5;
+    --text-dim: #a1a1aa;
+    
+    /* Branding & Semantic Accents */
+    --primary: #FC7301;
+    --primary-dim: rgba(252, 115, 1, 0.1);
+    --primary-bright: #ff8824;
+    --green: #10b981;
+    --green-dim: rgba(16, 185, 129, 0.1);
+    --red: #ef4444;
+    --red-dim: rgba(239, 68, 68, 0.1);
+    --orange: #f59e0b;
+    --orange-dim: rgba(245, 158, 11, 0.1);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59, 130, 246, 0.1);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-elevated: #f1f5f9;
+      --surface-recessed: #e2e8f0;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-bright: rgba(15, 23, 42, 0.16);
+      --text: #0f172a;
+      --text-dim: #475569;
+      
+      --primary: #FC7301;
+      --primary-dim: rgba(252, 115, 1, 0.08);
+      --primary-bright: #e05e00;
+      --green: #059669;
+      --green-dim: rgba(5, 150, 105, 0.08);
+      --red: #dc2626;
+      --red-dim: rgba(220, 38, 38, 0.08);
+      --orange: #d97706;
+      --orange-dim: rgba(217, 119, 6, 0.08);
+      --blue: #2563eb;
+      --blue-dim: rgba(37, 99, 235, 0.08);
+    }
+  }
+
+  /* ============ RESET + BASE ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 10% 20%, var(--primary-dim) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, var(--blue-dim) 0%, transparent 45%);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    padding: 60px 20px;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ============ TYPOGRAPHY & HEADER ============ */
+  header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+
+  .header-desc {
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 780px;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 40px 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  h2 .icon-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ============ ANIMATION ============ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate {
+    animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 0.08s);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* ============ KPI SUMMARY DASHBOARD ============ */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-bright);
+  }
+
+  .kpi-card__val {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .kpi-card__lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .kpi-card--danger { border-left: 4px solid var(--red); }
+  .kpi-card--warning { border-left: 4px solid var(--orange); }
+  .kpi-card--success { border-left: 4px solid var(--green); }
+
+  .kpi-card--danger .kpi-card__val { color: var(--red); }
+  .kpi-card--warning .kpi-card__val { color: var(--orange); }
+  .kpi-card--success .kpi-card__val { color: var(--green); }
+
+  /* ============ DENSE TABLE ============ */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  th {
+    background: var(--surface-recessed);
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 20px;
+    border-bottom: 2px solid var(--border-bright);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .col-sec {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge--crit { background: var(--red-dim); color: var(--red); }
+  .badge--warn { background: var(--orange-dim); color: var(--orange); }
+  .badge--low { background: var(--blue-dim); color: var(--blue); }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: var(--surface-recessed);
+    color: #f43f5e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  .loc-link {
+    color: var(--text-dim);
+    text-decoration: underline;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .loc-link:hover {
+    color: var(--text);
+  }
+
+  /* ============ DETAILED PANELS ============ */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .detail-grid { grid-template-columns: 1fr; }
+  }
+
+  .detail-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .detail-card h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .detail-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .code-comparison {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: var(--surface-recessed);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    line-height: 1.5;
+  }
+
+  .code-diff-add { color: #34d399; }
+  .code-diff-del { color: #f87171; }
+
+  /* ============ MERMAID DIAGRAM WRAPPERS ============ */
+  .diagram-shell {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .diagram-shell__hint {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .mermaid-wrap {
+    position: relative;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 480px;
+    cursor: grab;
+  }
+
+  .mermaid-wrap.is-panning { cursor: grabbing; user-select: none; }
+
+  .zoom-controls {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  .zoom-controls button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+  }
+
+  .zoom-controls button:hover {
+    background: var(--border-bright);
+  }
+
+  .zoom-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    padding: 0 8px;
+  }
+
+  .mermaid-viewport {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .mermaid-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* ============ MERMAID SVG OVERRIDES ============ */
+  .mermaid .nodeLabel {
+    font-family: var(--font-body) !important;
+    font-size: 14px !important;
+    fill: var(--text) !important;
+  }
+
+  .mermaid .edgeLabel {
+    font-family: var(--font-mono) !important;
+    font-size: 11px !important;
+    fill: var(--text-dim) !important;
+  }
+
+  .mermaid .edgeLabel rect {
+    fill: var(--bg) !important;
+  }
+
+  .mermaid .node rect,
+  .mermaid .node circle,
+  .mermaid .node polygon {
+    stroke-width: 1.5px !important;
+  }
+
+  /* ============ ACTION CHECKLIST ============ */
+  .checklist {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .checklist-item:last-child {
+    border-bottom: none;
+  }
+
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .checkbox::after {
+    content: '✓';
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--primary);
+    display: none;
+  }
+
+  .checkbox--checked::after {
+    display: block;
+  }
+
+  .checklist-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .checklist-text p {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="eyebrow animate" style="--i:0">Relatório Técnico</div>
+    <h1 class="animate" style="--i:1">Diagnóstico de Desempenho e Segurança</h1>
+    <p class="header-desc animate" style="--i:2">
+      Uma auditoria detalhada da arquitetura front-end e do banco de dados da plataforma <strong>AudioGift</strong>. Identificamos gargalos na velocidade de carregamento para os usuários e vulnerabilidades estruturais no gerenciamento do Supabase que exigem ação imediata.
+    </p>
+  </header>
+
+  <!-- KPI SUMMARY ROW -->
+  <div class="kpi-grid animate" style="--i:3">
+    <div class="kpi-card kpi-card--danger">
+      <div class="kpi-card__val">Crítico</div>
+      <div class="kpi-card__lbl">Grau de Risco de Segurança</div>
+    </div>
+    <div class="kpi-card kpi-card--warning">
+      <div class="kpi-card__val">7.8s</div>
+      <div class="kpi-card__lbl">TBT Estimado (Filtro do Admin)</div>
+    </div>
+    <div class="kpi-card kpi-card--danger">
+      <div class="kpi-card__val">2</div>
+      <div class="kpi-card__lbl">Vulnerabilidades Graves</div>
+    </div>
+    <div class="kpi-card kpi-card--success">
+      <div class="kpi-card__val">Vite/Vanilla</div>
+      <div class="kpi-card__lbl">Base Tecnológica</div>
+    </div>
+  </div>
+
+  <!-- MAIN TABLE: DIAGNOSTICS INDEX -->
+  <h2 class="animate" style="--i:4"><span class="icon-dot"></span> Índice de Descobertas</h2>
+  <div class="table-wrap animate" style="--i:5">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Categoria</th>
+            <th>Problema Diagnosticado</th>
+            <th>Gravidade</th>
+            <th>Arquivo / Componente Afetado</th>
+            <th>Impacto no Negócio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-sec">SEC-01</td>
+            <td>Segurança</td>
+            <td><strong>Senha de Admin Exposta no Bundle</strong></td>
+            <td><span class="badge badge--crit">Crítico</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/src/supabaseClient.js#L2">supabaseClient.js:L2</a></td>
+            <td>Invasores podem ler a senha e forjar autenticação em segundos diretamente no console.</td>
+          </tr>
+          <tr>
+            <td class="col-sec">SEC-02</td>
+            <td>Segurança</td>
+            <td><strong>Row Level Security (RLS) Permissivo</strong></td>
+            <td><span class="badge badge--crit">Crítico</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/supabase_schema.sql#L62">supabase_schema.sql:L62</a></td>
+            <td>Qualquer pessoa na internet pode ler e atualizar TODOS os pedidos de todos os clientes.</td>
+          </tr>
+          <tr>
+            <td class="col-sec">SEC-03</td>
+            <td>Segurança</td>
+            <td><strong>Diretiva CSP Insegura ('unsafe-eval')</strong></td>
+            <td><span class="badge badge--warn">Médio</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/vercel.json#L35">vercel.json:L35</a></td>
+            <td>Aumenta a suscetibilidade a Cross-Site Scripting (XSS) no navegador do usuário.</td>
+          </tr>
+          <tr>
+            <td class="col-sec">PERF-01</td>
+            <td>Desempenho</td>
+            <td><strong>Carregamento Monolítico (Falta de Code Splitting)</strong></td>
+            <td><span class="badge badge--warn">Médio</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/src/main.js">src/main.js (229 KB)</a></td>
+            <td>Clientes normais carregam todo o código do Painel do Admin e do Motor de IA ao visitar a home.</td>
+          </tr>
+          <tr>
+            <td class="col-sec">PERF-02</td>
+            <td>Desempenho</td>
+            <td><strong>CSS Gigante Carregado por Print-Hack (FOUC)</strong></td>
+            <td><span class="badge badge--warn">Médio</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/index.html#L444">index.html:L444</a></td>
+            <td>Causa Flash of Unstyled Content (FOUC) visível enquanto carrega o arquivo CSS de 180 KB.</td>
+          </tr>
+          <tr>
+            <td class="col-sec">PERF-03</td>
+            <td>Desempenho</td>
+            <td><strong>Carregamento de Biblioteca Lucide via CDN Síncrono</strong></td>
+            <td><span class="badge badge--low">Baixo</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/index.html#L916">index.html:L916</a></td>
+            <td>Carrega 100+ ícones não utilizados, bloqueando a renderização na primeira pintura (FCP).</td>
+          </tr>
+          <tr>
+            <td class="col-sec">PERF-04</td>
+            <td>Desempenho</td>
+            <td><strong>Iframes de Vídeo Externos Acima da Dobra</strong></td>
+            <td><span class="badge badge--warn">Médio</span></td>
+            <td><a class="loc-link" href="file:///c:/Users/thaci/.gemini/antigravity/scratch/audiogift/src/main.js#L25">main.js:L25 (Vimeo)</a></td>
+            <td>Iframe do Vimeo atrasa a LCP e prejudica o tempo de interação móvel devido a scripts do player.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DETAIL COMPARISONS: SECURITY & PERFORMANCE -->
+  <h2 class="animate" style="--i:6"><span class="icon-dot"></span> Detalhes dos Problemas e Soluções</h2>
+  <div class="detail-grid animate" style="--i:7">
+    
+    <!-- SEC-01 -->
+    <div class="detail-card">
+      <h3>🔒 SEC-01: Senha de Admin Exposta</h3>
+      <p>
+        O código importa a senha do admin através das variáveis de ambiente com prefixo <code>VITE_</code>. No Vite, variáveis com este prefixo são processadas em tempo de compilação e injetadas de forma literal no bundle público do JavaScript client-side. Qualquer usuário pode abrir as ferramentas do desenvolvedor, procurar por <code>admin123</code> ou <code>VITE_ADMIN_PASSWORD</code> e encontrar a senha em texto claro.
+      </p>
+      <div class="code-comparison">
+<span class="code-diff-del">// Código Atual (Exposto publicamente no browser)</span>
+export const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+if (typedPassword === adminPassword) {
+  sessionStorage.setItem('audiogift_admin_auth', 'true');
+}
+
+<span class="code-diff-add">// Recomendação Segura (Autenticação no Servidor)</span>
+// Utilize Supabase Auth na tela de login administrativo:
+const { data, error } = await supabase.auth.signInWithPassword({
+  email: adminEmail,
+  password: adminPassword
+});
+      </div>
+    </div>
+
+    <!-- SEC-02 -->
+    <div class="detail-card">
+      <h3>🗄️ SEC-02: Supabase RLS Inseguro</h3>
+      <p>
+        As políticas de banco de dados definidas em <code>supabase_schema.sql</code> usam a instrução <code>using (true)</code> tanto para a leitura quanto para a atualização. Isso significa que, conhecendo a URL do Supabase e a Anon Key (que obrigatoriamente ficam expostas no front-end), qualquer usuário da internet pode baixar a tabela completa de pedidos de forma anônima ou editar pedidos (ex. marcar status como pago ou alterar dados confidenciais de outros clientes).
+      </p>
+      <div class="code-comparison">
+<span class="code-diff-del">-- Política Atual (Insegura)</span>
+create policy "Permitir leitura pública por ID" 
+on public.orders for select using (true); -- Libera tudo!
+
+<span class="code-diff-add">-- Recomendação Segura (Uso de Anonymous Auth + user_id)</span>
+-- Adicione a coluna `user_id` vinculada ao auth.uid() do Supabase.
+alter table public.orders add column user_id uuid default auth.uid();
+
+create policy "Permitir leitura individual" 
+on public.orders for select 
+using (auth.uid() = user_id); -- Apenas o dono lê
+      </div>
+    </div>
+
+    <!-- PERF-01 -->
+    <div class="detail-card">
+      <h3>⚡ PERF-01: Pacote Monolítico</h3>
+      <p>
+        Atualmente, <code>main.js</code> consolida todo o código de renderização do Quiz, a barra de carregamento, o sistema de checkout de pagamento por cartão/PIX, o preloader de homenagem, bem como toda a interface administrativa e manipulação de exportação CSV. Como resultado, o tamanho do arquivo inicial atinge mais de 229 KB, sobrecarregando navegadores móveis sob redes móveis lentas (3G/4G).
+      </p>
+      <div class="code-comparison">
+<span class="code-diff-add">// Solução: Separação de Rotas e Dynamic Imports</span>
+// No roteador principal em main.js:
+const renderRoute = async () => {
+  const hash = window.location.hash;
+  if (hash.startsWith('#admin')) {
+    // Importa o dashboard do admin dinamicamente apenas quando acessado
+    const { renderAdmin } = await import('./adminDashboard.js');
+    renderAdmin(app);
+  } else {
+    renderLandingPage(app);
+  }
+};
+      </div>
+    </div>
+
+    <!-- PERF-04 -->
+    <div class="detail-card">
+      <h3>🎥 PERF-04: Video Player Vimeo</h3>
+      <p>
+        A barra de anúncios no topo do site carrega players baseados em iframe incorporados diretamente do Vimeo. O carregamento de players externos síncronos desencadeia o download de múltiplos assets adicionais de rede do Vimeo (analytics, player control stylesheets, tracking SDKs), retardando substancialmente o início do carregamento de imagens essenciais, como a do Hero banner.
+      </p>
+      <div class="code-comparison">
+<span class="code-diff-del">&lt;!-- Iframe Vimeo Pesado --&gt;</span>
+&lt;iframe src="https://player.vimeo.com/video/119522..." ...&gt;
+
+<span class="code-diff-add">&lt;!-- Solução Ultra Leve (Hospedagem Direta) --&gt;</span>
+&lt;video autoplay loop muted playsinline class="video-desktop"&gt;
+  &lt;source src="/videos/campanha-desktop.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INTERACTIVE ARCHITECTURE DIAGRAM -->
+  <h2><span class="icon-dot"></span> Fluxo Recomendado de Arquitetura Segura</h2>
+  
+  <section class="diagram-shell">
+    <p class="diagram-shell__hint">
+      Use Ctrl/Cmd + roda do mouse para dar zoom. Clique e arraste para navegar pelo diagrama. Clique duas vezes para resetar.
+    </p>
+    <div class="mermaid-wrap">
+      <div class="zoom-controls">
+        <button type="button" data-action="zoom-in" title="Aumentar Zoom">+</button>
+        <button type="button" data-action="zoom-out" title="Diminuir Zoom">&minus;</button>
+        <button type="button" data-action="zoom-fit" title="Ajustar à Tela">&#8634;</button>
+        <button type="button" data-action="zoom-one" title="Zoom 1:1">1:1</button>
+        <button type="button" data-action="zoom-expand" title="Abrir em Nova Aba">&#x26F6;</button>
+        <span class="zoom-label">Carregando...</span>
+      </div>
+      <div class="mermaid-viewport">
+        <div class="mermaid mermaid-canvas"></div>
+      </div>
+    </div>
+    <script type="text/plain" class="diagram-source">
+      sequenceDiagram
+        autonumber
+        actor Cliente as Cliente (Browser)
+        actor Admin as Administrador
+        participant App as AudioGift App (JS)
+        participant Auth as Supabase Auth
+        participant DB as Banco de Dados (PostgreSQL)
+
+        rect rgb(28, 38, 28)
+          note right of Cliente: Fluxo do Cliente ao criar pedido
+          Cliente->>App: Acessa página e preenche quiz
+          App->>Auth: Solicita Login Anônimo (signInAnonymously)
+          Auth-->>App: Retorna JWT com user_id temporário
+          App->>DB: Executa INSERT no pedido (com user_id = auth.uid)
+          DB->>DB: RLS valida: user_id do registro = auth.uid()
+          DB-->>App: Confirma gravação com sucesso
+        end
+
+        rect rgb(38, 28, 28)
+          note right of Admin: Fluxo Seguro do Admin
+          Admin->>App: Acessa rota #admin
+          App->>Admin: Exibe formulário de credenciais reais
+          Admin->>App: Digita E-mail e Senha corporativos
+          App->>Auth: Valida com signInWithPassword(email, senha)
+          Auth-->>App: Retorna JWT administrativo
+          App->>DB: Solicita SELECT * FROM orders
+          DB->>DB: RLS valida: Checa papel ou e-mail no JWT (é admin)
+          DB-->>App: Retorna todos os pedidos dos clientes
+        end
+    </script>
+  </section>
+
+  <!-- ACTION CHECKLIST -->
+  <h2><span class="icon-dot"></span> Plano de Ação Recomendado</h2>
+  <div class="checklist">
+    
+    <div class="checklist-item">
+      <div class="checkbox"></div>
+      <div class="checklist-text">
+        <h4>1. Configurar Row Level Security (RLS) no Supabase</h4>
+        <p>Substituir as diretivas permissivas de <code>using (true)</code> por verificações baseadas em ID de usuário (<code>auth.uid() = user_id</code>) para proteger a privacidade dos dados dos clientes.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checkbox"></div>
+      <div class="checklist-text">
+        <h4>2. Migrar Autenticação do Admin para o Supabase Auth</h4>
+        <p>Remover a validação de string de texto exposta no frontend <code>VITE_ADMIN_PASSWORD</code>. Configurar um login administrativo seguro com email e senha gerenciados pelo Supabase.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checkbox"></div>
+      <div class="checklist-text">
+        <h4>3. Divisão de Código (Code-Splitting) no Vite</h4>
+        <p>Refatorar o arquivo <code>src/main.js</code> para que a lógica e templates HTML do painel de administração fiquem em um arquivo separado, carregado sob demanda via dynamic imports.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checkbox"></div>
+      <div class="checklist-text">
+        <h4>4. Substituir Vídeo Vimeo por Tag Video Nativa</h4>
+        <p>Fazer o download dos vídeos de campanha curta e hospedá-los diretamente em formato MP4 compactado, reduzindo em cerca de 400ms o tempo de carregamento da página acima da dobra.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checkbox"></div>
+      <div class="checklist-text">
+        <h4>5. Bundling dos Ícones Lucide</h4>
+        <p>Substituir a biblioteca Lucide carregada síncrona por CDN por importações estáticas via NPM para que apenas os SVGs utilizados no site final sejam compilados pelo Vite.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MERMAID LOADER & ZOOM CONFIG -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  const config = {
+    fitPadding: 24,
+    minHeight: 400,
+    maxHeightPx: 800,
+    maxHeightVh: 0.8,
+    maxInitialZoom: 1.8,
+    minZoom: 0.1,
+    maxZoom: 6,
+    zoomStep: 0.12,
+    readabilityFloor: 0.6
+  };
+
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+  let activeDrag = null;
+
+  addEventListener('mousemove', (e) => activeDrag?.onMove(e));
+  addEventListener('mouseup', () => {
+    activeDrag?.onEnd();
+    activeDrag = null;
+  });
+
+  const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    look: 'classic',
+    themeVariables: {
+      fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+      fontSize: '14px',
+      primaryColor: isDark ? '#27272a' : '#f1f5f9',
+      primaryBorderColor: isDark ? '#FC7301' : '#ff8824',
+      primaryTextColor: isDark ? '#f4f4f5' : '#0f172a',
+      secondaryColor: isDark ? '#18181b' : '#ffffff',
+      secondaryBorderColor: isDark ? '#3b82f6' : '#2563eb',
+      secondaryTextColor: isDark ? '#f4f4f5' : '#0f172a',
+      tertiaryColor: isDark ? '#09090b' : '#f8fafc',
+      tertiaryBorderColor: isDark ? '#10b981' : '#059669',
+      tertiaryTextColor: isDark ? '#f4f4f5' : '#0f172a',
+      lineColor: isDark ? '#a1a1aa' : '#475569',
+      noteBkgColor: isDark ? '#1e1b18' : '#fffbeb',
+      noteTextColor: isDark ? '#f4f4f5' : '#0f172a',
+      noteBorderColor: isDark ? '#FC7301' : '#e05e00',
+    }
+  });
+
+  function initDiagram(shell) {
+    const wrap = shell.querySelector('.mermaid-wrap');
+    const viewport = shell.querySelector('.mermaid-viewport');
+    const canvas = shell.querySelector('.mermaid-canvas');
+    const source = shell.querySelector('.diagram-source');
+    const label = shell.querySelector('.zoom-label');
+
+    if (!wrap || !viewport || !canvas || !source || !label) return;
+
+    let zoom = 1;
+    let fitMode = 'contain';
+    let panX = 0;
+    let panY = 0;
+    let svgW = 0;
+    let svgH = 0;
+
+    let sx = 0, sy = 0, spx = 0, spy = 0;
+    let touchDist = 0;
+    let touchCx = 0, touchCy = 0;
+
+    function constrainPan() {
+      const vpW = viewport.clientWidth;
+      const vpH = viewport.clientHeight;
+      const rW = svgW * zoom;
+      const rH = svgH * zoom;
+      const pad = config.fitPadding;
+
+      panX = (rW + pad * 2 <= vpW) ? (vpW - rW) / 2 : clamp(panX, vpW - rW - pad, pad);
+      panY = (rH + pad * 2 <= vpH) ? (vpH - rH) / 2 : clamp(panY, vpH - rH - pad, pad);
+    }
+
+    function applyTransform() {
+      const svg = canvas.querySelector('svg');
+      if (!svg || !svgW) return;
+
+      constrainPan();
+      svg.style.width = (svgW * zoom) + 'px';
+      svg.style.height = (svgH * zoom) + 'px';
+      canvas.style.transform = `translate(${panX}px, ${panY}px)`;
+      label.textContent = Math.round(zoom * 100) + '%';
+    }
+
+    function canPan() {
+      const rW = svgW * zoom;
+      const rH = svgH * zoom;
+      return rW + config.fitPadding * 2 > viewport.clientWidth || rH + config.fitPadding * 2 > viewport.clientHeight;
+    }
+
+    function fitDiagram() {
+      if (!svgW) return;
+      const vpW = viewport.clientWidth;
+      const vpH = viewport.clientHeight;
+      const aW = Math.max(80, vpW - config.fitPadding * 2);
+      const aH = Math.max(80, vpH - config.fitPadding * 2);
+      const contain = Math.min(aW / svgW, aH / svgH);
+
+      zoom = clamp(contain, config.minZoom, config.maxInitialZoom);
+      fitMode = 'contain';
+      panX = (vpW - svgW * zoom) / 2;
+      panY = (vpH - svgH * zoom) / 2;
+      applyTransform();
+    }
+
+    function zoomAround(factor, cx, cy) {
+      const next = clamp(zoom * factor, config.minZoom, config.maxZoom);
+      const ratio = next / zoom;
+      panX = cx - ratio * (cx - panX);
+      panY = cy - ratio * (cy - panY);
+      zoom = next;
+      applyTransform();
+    }
+
+    function readSvgNaturalSize(svg) {
+      let w = parseFloat(svg.getAttribute('width')) || 0;
+      let h = parseFloat(svg.getAttribute('height')) || 0;
+      if (!w) {
+        const viewBox = svg.getAttribute('viewBox');
+        if (viewBox) {
+          const parts = viewBox.split(' ').map(Number);
+          w = parts[2];
+          h = parts[3];
+        }
+      }
+      return { w: w || 800, h: h || 500 };
+    }
+
+    function openInNewTab() {
+      const svg = canvas.querySelector('svg');
+      if (!svg) return;
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Diagrama</title>
+      <style>body{margin:0;background:${isDark ? '#09090b' : '#f8fafc'};display:flex;align-items:center;justify-content:center;min-height:100vh}svg{max-width:100%;height:auto}</style></head>
+      <body>${svg.outerHTML}</body></html>`;
+      open(URL.createObjectURL(new Blob([html], { type: 'text/html' })), '_blank');
+    }
+
+    async function render() {
+      try {
+        const code = source.textContent.trim();
+        const id = 'mermaid-svg-' + Math.floor(Math.random() * 100000);
+        const { svg } = await mermaid.render(id, code);
+        canvas.innerHTML = svg;
+
+        const svgNode = canvas.querySelector('svg');
+        if (svgNode) {
+          const size = readSvgNaturalSize(svgNode);
+          svgW = size.w;
+          svgH = size.h;
+          svgNode.removeAttribute('width');
+          svgNode.removeAttribute('height');
+          svgNode.style.maxWidth = 'none';
+          svgNode.style.display = 'block';
+          fitDiagram();
+        }
+      } catch (err) {
+        label.textContent = 'Erro ao renderizar';
+        console.error(err);
+      }
+    }
+
+    wrap.querySelector('[data-action="zoom-in"]').addEventListener('click', () => zoomAround(1 + config.zoomStep, viewport.clientWidth/2, viewport.clientHeight/2));
+    wrap.querySelector('[data-action="zoom-out"]').addEventListener('click', () => zoomAround(1 / (1 + config.zoomStep), viewport.clientWidth/2, viewport.clientHeight/2));
+    wrap.querySelector('[data-action="zoom-fit"]').addEventListener('click', fitDiagram);
+    wrap.querySelector('[data-action="zoom-one"]').addEventListener('click', () => { zoom = 1; fitDiagram(); });
+    wrap.querySelector('[data-action="zoom-expand"]').addEventListener('click', openInNewTab);
+
+    viewport.addEventListener('dblclick', fitDiagram);
+    viewport.addEventListener('wheel', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const rect = viewport.getBoundingClientRect();
+        const factor = e.deltaY < 0 ? 1 + config.zoomStep : 1 / (1 + config.zoomStep);
+        zoomAround(factor, e.clientX - rect.left, e.clientY - rect.top);
+      }
+    }, { passive: false });
+
+    viewport.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.zoom-controls')) return;
+      wrap.classList.add('is-panning');
+      sx = e.clientX; sy = e.clientY; spx = panX; spy = panY;
+      activeDrag = {
+        onMove: (ev) => {
+          panX = spx + (ev.clientX - sx);
+          panY = spy + (ev.clientY - sy);
+          applyTransform();
+        },
+        onEnd: () => wrap.classList.remove('is-panning')
+      };
+      e.preventDefault();
+    });
+
+    render();
+  }
+
+  document.querySelectorAll('.diagram-shell').forEach(initDiagram);
+</script>
+</body>
+</html>

@@ -6,6 +6,18 @@
       "sourceType": "github",
       "skillPath": "SKILL.md",
       "computedHash": "2fcfa0999a10aeb22bab889aead686d2aaef76bdaf7cbb6fe73b0c964cace504"
+    },
+    "mobile-ux-optimizer": {
+      "source": "erichowens/some_claude_skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/mobile-ux-optimizer/SKILL.md",
+      "computedHash": "06e7301426d1360ec4986b03537500ca7b787b635c30ad623d59fc583e1c24a6"
+    },
+    "seo-geo": {
+      "source": "resciencelab/opc-skills",
+      "sourceType": "github",
+      "skillPath": "skills/seo-geo/SKILL.md",
+      "computedHash": "1d38520f453282af8712874c360e3e34a379827f737fb536bd45055e2d60d964"
     }
   }
 }

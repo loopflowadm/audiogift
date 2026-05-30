@@ -1,5 +1,5 @@
 import './style.css'
-import { db, adminPassword } from './supabaseClient.js'
+import { db } from './supabaseClient.js'
 import { runAiAgent, generateLyrics, generatePrompt, buildChatgptPrompt } from './agentEngine.js'
 
 // Utilitário de segurança: escapa HTML para evitar XSS ao exibir dados de usuário
@@ -25,22 +25,28 @@ const app = document.querySelector('#app')
 const AnnouncementBar = () => `
   <div class="announcement-bar">
     <div class="container announcement-content">
-      <iframe 
+      <video 
         class="announcement-video video-desktop" 
-        src="https://player.vimeo.com/video/1195222823?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
-        frameborder="0" 
-        allow="autoplay; fullscreen" 
-        loading="lazy"
-        title="Dia dos Namorados - Desktop">
-      </iframe>
-      <iframe 
+        autoplay 
+        loop 
+        muted 
+        playsinline
+        preload="auto"
+        title="Dia dos Namorados - Desktop"
+        style="width: 100%; height: 100%; object-fit: cover;">
+        <source src="/videos/valentines-campaign-desktop.mp4" type="video/mp4">
+      </video>
+      <video 
         class="announcement-video video-mobile" 
-        src="https://player.vimeo.com/video/1195222822?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" 
-        frameborder="0" 
-        allow="autoplay; fullscreen" 
-        loading="lazy"
-        title="Dia dos Namorados - Mobile">
-      </iframe>
+        autoplay 
+        loop 
+        muted 
+        playsinline
+        preload="auto"
+        title="Dia dos Namorados - Mobile"
+        style="width: 100%; height: 100%; object-fit: cover;">
+        <source src="/videos/valentines-campaign-mobile.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 `
@@ -1203,7 +1209,6 @@ const Footer = () => `
           <p><a href="mailto:audiogiftbrasil@gmail.com" style="color: #ccc; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#FC7301'" onmouseout="this.style.color='#ccc'">audiogiftbrasil@gmail.com</a></p>
           <div class="footer-social-buttons">
             <a href="https://www.instagram.com/audiogiftbrasil/" target="_blank" class="btn-social-ig footer-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</a>
-            <a href="https://www.tiktok.com/@audiogift" target="_blank" class="btn-social-tk footer-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.78-1.15 5.54-3.33 7.31-1.92 1.57-4.58 2.22-6.95 1.55-2.61-.75-4.75-2.88-5.46-5.51-.71-2.67-.09-5.61 1.72-7.75 1.77-2.09 4.61-3.1 7.29-2.71v4.06c-1.89-.3-3.83.27-5.06 1.63-1.45 1.63-1.47 4.15-.22 5.8 1.34 1.77 3.95 2.21 5.88 1.05 1.2-.73 1.94-2.03 1.98-3.41.05-4.22.03-8.45.03-12.68.01-2.05-.01-4.09.03-6.14z"/></svg>TikTok</a>
             <a href="https://open.spotify.com/artist/24rv68FArmAuCtAhHjoIEy" target="_blank" class="btn-social-sp footer-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>Spotify</a>
           </div>
         </div>
@@ -1284,7 +1289,7 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
           border-radius: 0 !important;
           box-shadow: none !important;
           background: #ffffff !important;
-          min-height: 100vh !important;
+          min-height: 100vh; min-height: 100dvh; min-height: 100dvh !important;
           width: 100% !important;
         }
       }
@@ -3271,22 +3276,59 @@ const initMobileMenu = () => {
   const menu = document.getElementById('mobileMenu');
   if (!toggle || !menu) return;
 
-  toggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
+  const closeMenu = () => {
+    menu.classList.remove('active');
     const icon = toggle.querySelector('[data-lucide]');
-    if (menu.classList.contains('active')) {
-      icon.setAttribute('data-lucide', 'x');
-    } else {
+    if (icon) {
       icon.setAttribute('data-lucide', 'menu');
     }
-    lucide.createIcons();
+    document.body.style.overflow = '';
+    if (window.lucide) lucide.createIcons();
+  };
+
+  const openMenu = () => {
+    menu.classList.add('active');
+    const icon = toggle.querySelector('[data-lucide]');
+    if (icon) {
+      icon.setAttribute('data-lucide', 'x');
+    }
+    document.body.style.overflow = 'hidden';
+    if (window.lucide) lucide.createIcons();
+  };
+
+  toggle.addEventListener('click', () => {
+    if (menu.classList.contains('active')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
   menu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      menu.classList.remove('active');
-      lucide.createIcons();
+      closeMenu();
     });
+  });
+
+  // Fechar ao clicar em botões no menu mobile
+  menu.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Fechar ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (menu.classList.contains('active') && !menu.contains(e.target) && !toggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Fechar ao apertar Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('active')) {
+      closeMenu();
+    }
   });
 
   // Botão "Acompanhar pedido" na navbar desktop
@@ -3296,12 +3338,11 @@ const initMobileMenu = () => {
   // Botão "Acompanhar pedido" no menu mobile
   const btnTrackMobile = document.getElementById('btn-track-order-mobile');
   if (btnTrackMobile) btnTrackMobile.addEventListener('click', () => {
-    menu.classList.remove('active');
+    closeMenu();
     if (window._openTrackModal) window._openTrackModal();
   });
 };
 
-// --- HELPER PARA OBTER DEMO DE ÁUDIO ---
 const getDemoSong = (genre) => {
   const map = {
     'Sertanejo': '/songs/Sempre Para Sempre.mp3.mpeg',
@@ -3323,7 +3364,7 @@ const getDemoSong = (genre) => {
 const renderCheckoutPage = async (mainEl, orderId) => {
   if (!orderId) {
     mainEl.innerHTML = `
-      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh;">
         <h2 class="section-title-serif text-orange">Erro no Checkout</h2>
         <p class="section-subtitle">Pedido inválido ou ID de pedido não encontrado.</p>
         <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
@@ -3333,7 +3374,7 @@ const renderCheckoutPage = async (mainEl, orderId) => {
   }
 
   mainEl.innerHTML = `
-    <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh; display:flex; align-items:center; justify-content:center;">
+    <div class="checkout-container text-center py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh; display:flex; align-items:center; justify-content:center;">
       <div>
         <div class="preloader-equalizer" style="margin-bottom: 15px;">
           <span class="eq-bar bar-1"></span>
@@ -3348,7 +3389,7 @@ const renderCheckoutPage = async (mainEl, orderId) => {
   const order = await db.getOrder(orderId);
   if (!order) {
     mainEl.innerHTML = `
-      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh;">
         <h2 class="section-title-serif text-orange">Pedido Não Encontrado</h2>
         <p class="section-subtitle">O pedido especificado não pôde ser recuperado do banco de dados.</p>
         <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
@@ -3372,7 +3413,7 @@ const renderCheckoutPage = async (mainEl, orderId) => {
   };
 
   mainEl.innerHTML = `
-    <div class="checkout-page py-large bg-dark text-white" style="min-height: 80vh;">
+    <div class="checkout-page py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh;">
       <div class="container">
         <div class="checkout-grid-container">
           
@@ -3661,7 +3702,7 @@ const renderCheckoutPage = async (mainEl, orderId) => {
 const renderAcompanhamentoPage = async (mainEl, orderId) => {
   if (!orderId) {
     mainEl.innerHTML = `
-      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh;">
         <h2 class="section-title-serif text-orange">Erro no Acompanhamento</h2>
         <p class="section-subtitle">Pedido inválido ou ID de pedido não encontrado.</p>
         <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
@@ -3671,7 +3712,7 @@ const renderAcompanhamentoPage = async (mainEl, orderId) => {
   }
 
   mainEl.innerHTML = `
-    <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh; display:flex; align-items:center; justify-content:center;">
+    <div class="checkout-container text-center py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh; display:flex; align-items:center; justify-content:center;">
       <div>
         <div class="preloader-equalizer" style="margin-bottom: 15px;">
           <span class="eq-bar bar-1"></span>
@@ -3686,7 +3727,7 @@ const renderAcompanhamentoPage = async (mainEl, orderId) => {
   const order = await db.getOrder(orderId);
   if (!order) {
     mainEl.innerHTML = `
-      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height:80vh;">
+      <div class="checkout-container text-center py-large bg-dark text-white" style="min-height: 80vh; min-height: 80dvh;">
         <h2 class="section-title-serif text-orange">Pedido Não Encontrado</h2>
         <p class="section-subtitle">O pedido especificado não pôde ser encontrado no banco.</p>
         <a href="#" class="btn-primary-new">Voltar para a Página Inicial</a>
@@ -3711,7 +3752,7 @@ const renderAcompanhamentoPage = async (mainEl, orderId) => {
   const currentStatus = statusMap[order.status] || { step: 1, label: 'Pendente' };
 
   mainEl.innerHTML = `
-    <div class="tracking-page bg-black text-white py-large" style="min-height: 80vh;">
+    <div class="tracking-page bg-black text-white py-large" style="min-height: 80vh; min-height: 80dvh;">
       <div class="container" style="max-width: 750px;">
         
         <div class="success-icon-wrap text-center reveal">
@@ -3819,816 +3860,6 @@ const renderAcompanhamentoPage = async (mainEl, orderId) => {
   });
 };
 
-// --- RENDERIZAR TELA DE LOGIN DO ADMIN ---
-const renderAdminLogin = (mainEl) => {
-  mainEl.innerHTML = `
-    <div class="admin-login-page py-large bg-black text-white" style="min-height: 80vh; display:flex; align-items:center;">
-      <div class="container" style="max-width: 400px;">
-        <div class="login-card-glass text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; backdrop-filter: blur(20px);">
-          <div class="login-logo-wrap" style="margin-bottom: 2rem; width:120px; margin: 0 auto 1.5rem auto;">
-            ${Logo('white', '#FC7301')}
-          </div>
-          
-          <h2 class="section-title-serif text-white" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Área Restrita</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Entre com a senha administrativa.</p>
-          
-          <form id="admin-login-form" onsubmit="return false;" style="text-align:left;">
-            <div class="form-row" style="margin-bottom: 1.5rem;">
-              <label style="font-size:0.85rem; font-weight:700; color:#aaa; margin-bottom:8px; display:block;">Senha de Acesso</label>
-              <input type="password" id="admin-password-input" placeholder="Senha do .env" class="quiz-input" style="background: rgba(255,255,255,0.05); color:white; border-color: rgba(255,255,255,0.1);" required>
-              <p class="error-msg" id="login-error" style="color: #ff4d6d; font-size: 0.85rem; margin-top: 8px; display: none;"></p>
-            </div>
-            
-            <button type="submit" class="btn-primary-new w-full">
-              <i data-lucide="lock"></i> Acessar Painel
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  `;
-
-  if (window.lucide) lucide.createIcons();
-
-  const form = document.getElementById('admin-login-form');
-  const pwdInput = document.getElementById('admin-password-input');
-  const errorMsg = document.getElementById('login-error');
-
-  form.onsubmit = (e) => {
-    e.preventDefault();
-    const typedPassword = pwdInput.value;
-    
-    if (typedPassword === adminPassword) {
-      sessionStorage.setItem('audiogift_admin_auth', 'true');
-      renderRoute();
-    } else {
-      errorMsg.textContent = 'Senha incorreta. Verifique e tente novamente.';
-      errorMsg.style.display = 'block';
-      pwdInput.value = '';
-      pwdInput.focus();
-    }
-  };
-};
-
-// --- RENDERIZAR PAINEL DE CONTROLE DO ADMIN ---
-const renderAdminDashboard = (mainEl, orders) => {
-  const totalOrders = orders.length;
-  
-  const statusCounts = {
-    pendente: 0,
-    pago: 0,
-    em_producao: 0,
-    concluido: 0
-  };
-  
-  let totalRevenue = 0;
-  
-  orders.forEach(o => {
-    if (statusCounts[o.status] !== undefined) {
-      statusCounts[o.status]++;
-    }
-    if (o.status !== 'pendente') {
-      const planPrices = { especial: 89.90, memoravel: 149.90, inesquecivel: 199.90 };
-      totalRevenue += planPrices[o.plan] || 149.90;
-    }
-  });
-
-  const revenueStr = totalRevenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-  const statusBadges = {
-    pendente: '<span class="badge badge-pending">Pendente</span>',
-    pago: '<span class="badge badge-paid">Pago</span>',
-    em_producao: '<span class="badge badge-production">Em Produção</span>',
-    concluido: '<span class="badge badge-completed">Entregue</span>'
-  };
-
-  mainEl.innerHTML = `
-    <div class="admin-dashboard-page bg-dark text-white py-large" style="min-height: 80vh;">
-      <div class="container-full" style="padding: 0 2rem;">
-        
-        <div class="admin-header-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
-          <div>
-            <h1 class="section-title-serif text-white text-left" style="font-size: 2.2rem; margin-bottom: 5px;">Painel de <em>Controle</em></h1>
-            <p style="color: var(--text-muted); font-size:0.95rem; margin:0;">Gerencie pedidos, clientes e acione o Agente de IA para escrever as letras das canções.</p>
-          </div>
-          <div class="admin-actions" style="display:flex; gap:10px;">
-            <button class="btn-primary-new" id="btn-admin-export" style="padding:0.6rem 1.4rem; font-size:0.85rem; display:flex; align-items:center; gap:6px;"><i data-lucide="download" style="width:16px; height:16px;"></i> Exportar CSV</button>
-            <button class="btn-outline" id="btn-admin-logout" style="border-color: rgba(255,255,255,0.1); color: #ff4d6d; padding:0.6rem 1.4rem; font-size:0.85rem;"><i data-lucide="log-out"></i> Sair</button>
-          </div>
-        </div>
-
-        <div class="admin-metrics-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
-          <div class="metric-card">
-            <div class="metric-icon" style="background: rgba(252,115,1,0.1); color: var(--primary-orange);"><i data-lucide="dollar-sign"></i></div>
-            <div class="metric-info">
-              <span class="metric-lbl">Faturamento</span>
-              <h2 class="metric-val">${revenueStr}</h2>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background: rgba(255,255,255,0.05); color: #fff;"><i data-lucide="shopping-bag"></i></div>
-            <div class="metric-info">
-              <span class="metric-lbl">Pedidos Totais</span>
-              <h2 class="metric-val">${totalOrders}</h2>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background: rgba(255,184,0,0.1); color: #ffb800;"><i data-lucide="clock"></i></div>
-            <div class="metric-info">
-              <span class="metric-lbl">Pendentes</span>
-              <h2 class="metric-val">${statusCounts.pendente}</h2>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background: rgba(59,130,246,0.1); color: #3b82f6;"><i data-lucide="music"></i></div>
-            <div class="metric-info">
-              <span class="metric-lbl">Em Produção</span>
-              <h2 class="metric-val">${statusCounts.pago + statusCounts.em_producao}</h2>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background: rgba(74,222,128,0.1); color: #4ade80;"><i data-lucide="check-circle"></i></div>
-            <div class="metric-info">
-              <span class="metric-lbl">Entregues</span>
-              <h2 class="metric-val">${statusCounts.concluido}</h2>
-            </div>
-          </div>
-        </div>
-
-        <div class="admin-main-section">
-          <div class="admin-orders-list-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius:24px; padding:25px;">
-            <div class="list-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;">
-              <h3 style="font-size:1.2rem; font-weight:600;">Listagem de Pedidos</h3>
-              <div class="list-card-search" style="display:flex; gap:10px; flex-wrap:wrap;">
-                <input type="text" id="admin-search-input" placeholder="Buscar por cliente, email..." class="quiz-input search-box" style="max-width:250px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem;">
-                <select id="admin-filter-status" class="quiz-input select-box" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem;">
-                  <option value="all">Todos os Status</option>
-                  <option value="pendente">Pendente</option>
-                  <option value="pago">Pago</option>
-                  <option value="em_producao">Em Produção</option>
-                  <option value="concluido">Entregue</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="table-container" style="overflow-x:auto;">
-              <table class="admin-table" style="width:100%; border-collapse:collapse; text-align:left;">
-                <thead>
-                  <tr style="border-bottom:1px solid rgba(255,255,255,0.08); color:#aaa; font-size:0.85rem; text-transform:uppercase;">
-                    <th style="padding: 12px 10px;">Cliente</th>
-                    <th style="padding: 12px 10px;">Homenageado</th>
-                    <th style="padding: 12px 10px;">Ocasião</th>
-                    <th style="padding: 12px 10px;">Estilo</th>
-                    <th style="padding: 12px 10px;">Plano</th>
-                    <th style="padding: 12px 10px;">Data</th>
-                    <th style="padding: 12px 10px;">Status</th>
-                    <th style="padding: 12px 10px; text-align:right;">Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="admin-table-body" style="font-size:0.9rem;">
-                  ${orders.length === 0 ? `
-                    <tr>
-                      <td colspan="8" class="text-center" style="padding: 3rem; color: var(--text-muted);">Nenhum pedido no banco de dados.</td>
-                    </tr>
-                  ` : orders.map(o => {
-                    const formattedDate = new Date(o.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-                    return `
-                      <tr class="order-row" data-order-id="${o.id}" style="border-bottom:1px solid rgba(255,255,255,0.04); cursor:pointer; transition: background 0.2s;">
-                        <td style="padding: 14px 10px;">
-                          <div style="font-weight:600; color:#fff;">${o.customer_name || o.customer_email.split('@')[0]}</div>
-                          <div style="font-size:0.75rem; color:#888;">${o.customer_email}</div>
-                        </td>
-                        <td style="padding: 14px 10px;"><strong>${o.recipient_name || 'N/A'}</strong></td>
-                        <td style="padding: 14px 10px; color:#ccc;">${o.occasion || 'Outra'}</td>
-                        <td style="padding: 14px 10px; color:#ccc;">${o.genre || 'N/A'} (${o.voice || 'Feminina'})</td>
-                        <td style="padding: 14px 10px;"><span class="plan-badge">${o.plan.toUpperCase()}</span></td>
-                        <td style="padding: 14px 10px; color:#aaa; font-size:0.8rem;">${formattedDate}</td>
-                        <td style="padding: 14px 10px;">${statusBadges[o.status] || o.status}</td>
-                        <td style="padding: 14px 10px; text-align:right;">
-                          <button class="btn-manage-order" data-order-id="${o.id}" style="background: rgba(252,115,1,0.1); color: var(--primary-orange); padding:6px 12px; border-radius:8px; font-size:0.8rem; font-weight:600;">
-                            <i data-lucide="edit-2" style="width:14px; height:14px; margin-right:4px;"></i> Abrir
-                          </button>
-                        </td>
-                      </tr>
-                    `;
-                  }).join('')}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Drawer para Detalhes do Pedido -->
-          <div class="admin-order-drawer-overlay" id="order-drawer-overlay">
-            <div class="admin-order-drawer" id="order-drawer">
-              <!-- Renderizado dinamicamente -->
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  `;
-
-  if (window.lucide) lucide.createIcons();
-
-  document.getElementById('btn-admin-logout').onclick = () => {
-    sessionStorage.removeItem('audiogift_admin_auth');
-    renderRoute();
-  };
-
-  const searchInput = document.getElementById('admin-search-input');
-  const filterSelect = document.getElementById('admin-filter-status');
-
-  const filterTable = () => {
-    const q = searchInput.value.toLowerCase().trim();
-    const status = filterSelect.value;
-    
-    document.querySelectorAll('.admin-table tbody .order-row').forEach(row => {
-      const id = row.dataset.orderId;
-      const order = orders.find(o => o.id === id);
-      if (!order) return;
-      
-      const matchSearch = 
-        order.customer_email.toLowerCase().includes(q) ||
-        (order.customer_name && order.customer_name.toLowerCase().includes(q)) ||
-        (order.recipient_name && order.recipient_name.toLowerCase().includes(q)) ||
-        (order.customer_phone && order.customer_phone.includes(q)) ||
-        (order.occasion && order.occasion.toLowerCase().includes(q));
-      
-      const matchStatus = status === 'all' || order.status === status;
-      
-      row.style.display = (matchSearch && matchStatus) ? 'table-row' : 'none';
-    });
-  };
-
-  if (searchInput) searchInput.oninput = filterTable;
-  if (filterSelect) filterSelect.onchange = filterTable;
-
-  // Lógica do botão Exportar CSV
-  const btnExport = document.getElementById('btn-admin-export');
-  if (btnExport) {
-    btnExport.onclick = () => {
-      const q = searchInput.value.toLowerCase().trim();
-      const status = filterSelect.value;
-      
-      const filtered = orders.filter(order => {
-        const matchSearch = 
-          order.customer_email.toLowerCase().includes(q) ||
-          (order.customer_name && order.customer_name.toLowerCase().includes(q)) ||
-          (order.recipient_name && order.recipient_name.toLowerCase().includes(q)) ||
-          (order.customer_phone && order.customer_phone.includes(q)) ||
-          (order.occasion && order.occasion.toLowerCase().includes(q));
-        
-        const matchStatus = status === 'all' || order.status === status;
-        return matchSearch && matchStatus;
-      });
-
-      if (filtered.length === 0) {
-        alert('Nenhum pedido filtrado para exportar.');
-        return;
-      }
-
-      const headers = [
-        'ID', 'Criado Em', 'Cliente Nome', 'Cliente Email', 'Cliente WhatsApp', 
-        'Plano', 'Status', 'Homenageado', 'Falar Nome', 'Relacao', 'Ocasiao', 
-        'Genero', 'Voz', 'Vibe', 'Bebê Nome', 'Sentimentos', 'Historias', 
-        'Mensagem Final', 'Letra Gerada', 'Prompt Gerado', 'Audio URL'
-      ];
-      
-      const csvRows = [];
-      csvRows.push(headers.join(';'));
-      
-      filtered.forEach(o => {
-        const row = [
-          o.id,
-          o.created_at,
-          o.customer_name || '',
-          o.customer_email || '',
-          o.customer_phone || '',
-          o.plan || '',
-          o.status || '',
-          o.recipient_name || '',
-          o.speak_name || '',
-          o.for_who || '',
-          o.occasion || '',
-          o.genre || '',
-          o.voice || '',
-          o.vibes || '',
-          o.baby_name || '',
-          (o.feelings || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
-          (o.story || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
-          (o.message || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
-          (o.generated_lyrics || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
-          (o.generated_prompt || '').replace(/\r?\n/g, ' ').replace(/;/g, ','),
-          o.audio_url || ''
-        ];
-        const escapedRow = row.map(val => {
-          const str = String(val).replace(/"/g, '""');
-          return `"${str}"`;
-        });
-        csvRows.push(escapedRow.join(';'));
-      });
-      
-      const csvContent = '\uFEFF' + csvRows.join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `relatorio_pedidos_${new Date().toISOString().slice(0,10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
-  }
-
-  document.querySelectorAll('.btn-manage-order, .order-row').forEach(btn => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const orderId = btn.dataset.orderId || btn.closest('.order-row').dataset.orderId;
-      openOrderDrawer(orderId, orders);
-    };
-  });
-};
-
-// --- ABRIR MODAL/DETALHES DO PEDIDO NO ADMIN ---
-const openOrderDrawer = async (orderId, orders) => {
-  const order = orders.find(o => o.id === orderId);
-  if (!order) return;
-
-  const overlay = document.getElementById('order-drawer-overlay');
-  const drawer = document.getElementById('order-drawer');
-
-  drawer.innerHTML = `
-    <div class="drawer-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:15px; margin-bottom:20px; max-width: 1200px; margin-left: auto; margin-right: auto;">
-      <div>
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-          <h2 style="font-size:1.3rem; font-weight:700; color:#fff; margin:0;">Ficha Criativa & Agente IA</h2>
-          <button class="btn-outline" id="btn-copy-tracking-link" style="padding: 4px 8px; font-size: 0.75rem; border-color: rgba(255,255,255,0.15); color: #ccc; border-radius: 6px; display:flex; align-items:center; gap: 4px; cursor:pointer;">
-            <i data-lucide="link" style="width:12px; height:12px;"></i> Copiar Link do Cliente
-          </button>
-        </div>
-        <span class="drawer-order-id" style="font-size:0.75rem; color:#888; font-family:monospace;">ID: ${order.id}</span>
-      </div>
-      <button class="btn-drawer-close" id="btn-close-drawer" style="font-size:1.8rem; color:#aaa; line-height:1; cursor:pointer;">&times;</button>
-    </div>
-    
-    <div class="drawer-body" style="max-height: calc(100vh - 120px); overflow-y:auto; padding-right:5px; max-width: 1200px; margin: 0 auto;">
-      <div class="drawer-cols-grid">
-        
-        <!-- Coluna Esquerda: Dados do Cliente & Respostas do Quiz -->
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <!-- Seção 1: Cliente -->
-          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
-            <h3 style="font-size:0.95rem; font-weight:600; color:var(--primary-orange); margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="user" style="width:16px; height:16px;"></i> Contato do Cliente</h3>
-            <div class="drawer-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:0.85rem;">
-              <div style="grid-column: span 2;">
-                <span style="color:#888; display:block; margin-bottom:4px;">Nome do Cliente:</span>
-                <input type="text" id="drawer-customer-name" value="${order.customer_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-              </div>
-              <div>
-                <span style="color:#888; display:block; margin-bottom:4px;">Email:</span>
-                <input type="email" id="drawer-customer-email" value="${order.customer_email || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-              </div>
-              <div>
-                <span style="color:#888; display:block; margin-bottom:4px;">WhatsApp:</span>
-                <div style="display:flex; gap:8px;">
-                  <input type="text" id="drawer-customer-phone" value="${order.customer_phone || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                  <button class="btn-outline" id="btn-drawer-whatsapp" style="padding:6px 10px; border-color:#25d366; color:#25d366; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Chamar no WhatsApp">
-                    <i data-lucide="message-square" style="width:16px; height:16px;"></i>
-                  </button>
-                </div>
-              </div>
-              <div>
-                <span style="color:#888; display:block; margin-bottom:4px;">Plano Adquirido:</span>
-                <strong style="color:#4ade80; display:block; padding: 6px 0;">${order.plan.toUpperCase()}</strong>
-              </div>
-              <div>
-                <span style="color:#888; display:block; margin-bottom:4px;">Opt-in Acompanhamento:</span>
-                <select id="drawer-whatsapp-followup" class="quiz-input select-box" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                  <option value="true" ${order.whatsapp_followup ? 'selected' : ''}>Sim (Enviar Whats)</option>
-                  <option value="false" ${!order.whatsapp_followup ? 'selected' : ''}>Não</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Seção 2: Quiz -->
-          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
-            <h3 style="font-size:0.95rem; font-weight:600; color:var(--primary-orange); margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="file-text" style="width:16px; height:16px;"></i> Respostas do Questionário</h3>
-            <div class="quiz-answers-box" style="font-size:0.85rem; color:#ddd; display:flex; flex-direction:column; gap:12px;">
-              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-                <div>
-                  <label style="color:#888; display:block; margin-bottom:4px;">Homenageado(a):</label>
-                  <input type="text" id="drawer-recipient-name" value="${order.recipient_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div>
-                  <label style="color:#888; display:block; margin-bottom:4px;">Falar Nome na Música:</label>
-                  <input type="text" id="drawer-speak-name" value="${order.speak_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div>
-                  <label style="color:#888; display:block; margin-bottom:4px;">Relação:</label>
-                  <input type="text" id="drawer-for-who" value="${order.for_who || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div>
-                  <label style="color:#888; display:block; margin-bottom:4px;">Ocasião:</label>
-                  <input type="text" id="drawer-occasion" value="${order.occasion || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div>
-                  <label style="color:#888; display:block; margin-bottom:4px;">Gênero Musical:</label>
-                  <input type="text" id="drawer-genre" value="${order.genre || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div>
-                  <label style="color:#888; display:block; margin-bottom:4px;">Estilo de Voz:</label>
-                  <input type="text" id="drawer-voice" value="${order.voice || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div style="grid-column: span 2;">
-                  <label style="color:#888; display:block; margin-bottom:4px;">Vibe/Clima:</label>
-                  <input type="text" id="drawer-vibes" value="${order.vibes || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-                <div style="grid-column: span 2;">
-                  <label style="color:#888; display:block; margin-bottom:4px;">Nomes Bebê (Caso Revelação):</label>
-                  <input type="text" id="drawer-baby-name" value="${order.baby_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
-                </div>
-              </div>
-              
-              <div style="margin-top:10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top:10px;">
-                <strong style="color:#fff; display:block; margin-bottom:5px;">O que faz especial / Sentimentos:</strong>
-                <textarea id="drawer-feelings" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.feelings || ''}</textarea>
-              </div>
-              
-              <div style="margin-top:10px;">
-                <strong style="color:#fff; display:block; margin-bottom:5px;">Histórias & Memórias:</strong>
-                <textarea id="drawer-story" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.story || ''}</textarea>
-              </div>
-              
-              <div style="margin-top:10px;">
-                <strong style="color:#fff; display:block; margin-bottom:5px;">Mensagem final importante:</strong>
-                <textarea id="drawer-message" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.message || ''}</textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Coluna Direita: Agente IA & Controles do Pedido -->
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <!-- Seção 3: IA Agent -->
-          <div class="drawer-section" style="background: rgba(252,115,1,0.03); border: 1px solid rgba(252,115,1,0.15); padding:18px; border-radius:16px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <h3 style="font-size:0.95rem; font-weight:700; color:var(--primary-orange); display:flex; align-items:center; gap:8px; margin:0;"><i data-lucide="cpu" style="width:16px; height:16px;"></i> Agente de Composição IA</h3>
-              <span style="background:rgba(252,115,1,0.15); color:var(--primary-orange); font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:20px; text-transform:uppercase;">Agente Ativo</span>
-            </div>
-            
-            <div id="agent-workspace-container">
-              ${(!order.generated_lyrics) ? `
-                <div style="text-align:center; padding:15px 0;">
-                  <p style="font-size:0.85rem; color:#aaa; margin-bottom:12px;">Nenhuma letra foi gerada ainda. Clique no botão abaixo para analisar o quiz e compor.</p>
-                  <button class="btn-primary-new w-full" id="btn-run-agent" style="font-size:0.9rem; padding:0.8rem 1.5rem;">
-                    <i data-lucide="sparkles"></i> Executar Agente de IA
-                  </button>
-                </div>
-              ` : `
-                <div>
-                  <!-- Letra -->
-                  <div style="margin-bottom:15px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                      <span style="font-size:0.85rem; font-weight:600; color:#fff;">Letra Proposta</span>
-                      <div style="display:flex; gap: 8px;">
-                        <button class="btn-text-action" id="btn-copy-lyrics" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Letra</button>
-                        <button class="btn-text-action" id="btn-regenerate-lyrics" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="rotate-cw" style="width:12px; height:12px; margin-right:3px;"></i> Regerar</button>
-                      </div>
-                    </div>
-                    <textarea class="agent-textarea" id="agent-lyrics-input" style="width:100%; height:260px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#fff; font-family:monospace; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.generated_lyrics}</textarea>
-                  </div>
-
-                  <!-- Prompt Suno/Udio -->
-                  <div style="margin-bottom:15px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                      <span style="font-size:0.85rem; font-weight:600; color:#fff;">Prompt para Suno/Udio</span>
-                      <button class="btn-text-action" id="btn-copy-prompt" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar</button>
-                    </div>
-                    <textarea class="agent-textarea" id="agent-prompt-input" style="width:100%; height:80px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-family:monospace; font-size:0.8rem; padding:10px; line-height:1.3; resize:none;" readonly>${order.generated_prompt}</textarea>
-                  </div>
-
-                  <!-- Prompt ChatGPT/Claude de Letra -->
-                  <div style="margin-bottom:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                      <span style="font-size:0.85rem; font-weight:600; color:#fff;">Prompt de Letra (ChatGPT/Claude)</span>
-                      <button class="btn-text-action" id="btn-copy-chatgpt-prompt" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Prompt LLM</button>
-                    </div>
-                    <textarea class="agent-textarea" id="agent-chatgpt-prompt-input" style="width:100%; height:120px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#aaa; font-family:monospace; font-size:0.78rem; padding:10px; line-height:1.3; resize:vertical;" readonly>${buildChatgptPrompt(order)}</textarea>
-                  </div>
-                </div>
-              `}
-            </div>
-          </div>
-
-          <!-- Seção 4: Configurações do Pedido -->
-          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
-            <h3 style="font-size:0.95rem; font-weight:600; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="settings" style="width:16px; height:16px;"></i> Controles do Pedido</h3>
-            
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <div class="form-row" style="text-align:left;">
-                <label style="font-size:0.8rem; color:#aaa; display:block; margin-bottom:6px;">Status da Produção</label>
-                <select id="drawer-order-status" class="quiz-input select-box" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%;">
-                  <option value="pendente" ${order.status === 'pendente' ? 'selected' : ''}>Aguardando Pagamento</option>
-                  <option value="pago" ${order.status === 'pago' ? 'selected' : ''}>Pagamento Aprovado</option>
-                  <option value="em_producao" ${order.status === 'em_producao' ? 'selected' : ''}>Em Produção</option>
-                  <option value="concluido" ${order.status === 'concluido' ? 'selected' : ''}>Entregue (Concluído)</option>
-                </select>
-              </div>
-              
-              <div class="form-row" style="text-align:left;">
-                <label style="font-size:0.8rem; color:#aaa; display:block; margin-bottom:6px;">Link do Áudio Finalizado (MP3/WAV)</label>
-                <input type="text" id="drawer-audio-url" placeholder="Cole a URL do áudio final..." value="${order.audio_url || ''}" class="quiz-input" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%;">
-              </div>
-
-              <!-- Player Demo -->
-              <div style="margin-top:5px; background:rgba(0,0,0,0.2); padding:12px; border-radius:10px;">
-                <span style="font-size:0.8rem; color:#aaa; display:block; margin-bottom:6px;">Playlist de Referência (${order.genre || 'Pop Acústico'}):</span>
-                <audio controls src="${getDemoSong(order.genre)}" style="width:100%; height:32px;"></audio>
-              </div>
-              
-              <button class="btn-primary-new w-full mt-2" id="btn-save-drawer-changes" style="font-size:0.9rem; padding:0.8rem 1.5rem;">
-                <i data-lucide="save"></i> Salvar Pedido
-              </button>
-              
-              <button class="btn-outline w-full" id="btn-delete-order" style="border-color: rgba(255,77,109,0.2); color: #ff4d6d; font-size:0.85rem; padding:0.6rem 1rem;">
-                <i data-lucide="trash-2"></i> Excluir Pedido Permanentemente
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `;
-
-  if (window.lucide) lucide.createIcons();
-
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-
-  const closeDrawer = () => {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  };
-
-  document.getElementById('btn-close-drawer').onclick = closeDrawer;
-  overlay.onclick = (e) => {
-    if (e.target === overlay) closeDrawer();
-  };
-
-  // Copiar Link de Acompanhamento
-  const btnCopyTracking = document.getElementById('btn-copy-tracking-link');
-  if (btnCopyTracking) {
-    btnCopyTracking.onclick = () => {
-      const url = `${window.location.origin}/acompanhamento?orderId=${order.id}`;
-      navigator.clipboard.writeText(url);
-      btnCopyTracking.innerHTML = `<i data-lucide="check" style="width:12px; height:12px;"></i> Copiado!`;
-      if (window.lucide) lucide.createIcons();
-      setTimeout(() => {
-        btnCopyTracking.innerHTML = `<i data-lucide="link" style="width:12px; height:12px;"></i> Copiar Link do Cliente`;
-        if (window.lucide) lucide.createIcons();
-      }, 2000);
-    };
-  }
-
-  // Chamar no WhatsApp
-  const btnWhats = document.getElementById('btn-drawer-whatsapp');
-  if (btnWhats) {
-    btnWhats.onclick = () => {
-      const rawPhone = document.getElementById('drawer-customer-phone').value.trim();
-      let cleanPhone = rawPhone.replace(/\D/g, '');
-      if (cleanPhone.length > 0) {
-        if (cleanPhone.length === 10 || cleanPhone.length === 11) {
-          cleanPhone = '55' + cleanPhone;
-        }
-        const clientName = document.getElementById('drawer-customer-name').value.trim() || 'Cliente';
-        const recName = document.getElementById('drawer-recipient-name').value.trim() || 'alguém especial';
-        const rawStatus = document.getElementById('drawer-order-status').value;
-        
-        const statusLabels = {
-          pendente: 'Aguardando Pagamento',
-          pago: 'Pagamento Aprovado',
-          em_producao: 'Em Produção',
-          concluido: 'Entregue'
-        };
-        const statusText = statusLabels[rawStatus] || rawStatus;
-        
-        const msg = `Olá, ${clientName}! Tudo bem? Aqui é da equipe AudioGift. Vi que você fez o pedido de uma música personalizada para ${recName}! Seu pedido está com o status: *${statusText}*. Qualquer dúvida estou à disposição! 🎁🎶`;
-        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
-      } else {
-        alert('Número de WhatsApp inválido ou em branco.');
-      }
-    };
-  }
-
-  // Botão Executar Agente de IA
-  const btnRunAgent = document.getElementById('btn-run-agent');
-  if (btnRunAgent) {
-    btnRunAgent.onclick = async () => {
-      btnRunAgent.setAttribute('disabled', 'true');
-      btnRunAgent.innerHTML = `<i data-lucide="loader" class="spin"></i> Executando Agente...`;
-      
-      const currentOrderData = {
-        ...order,
-        customer_name: document.getElementById('drawer-customer-name').value.trim(),
-        customer_email: document.getElementById('drawer-customer-email').value.trim(),
-        customer_phone: document.getElementById('drawer-customer-phone').value.trim(),
-        whatsapp_followup: document.getElementById('drawer-whatsapp-followup').value === 'true',
-        recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
-        speak_name: document.getElementById('drawer-speak-name').value.trim(),
-        for_who: document.getElementById('drawer-for-who').value.trim(),
-        occasion: document.getElementById('drawer-occasion').value.trim(),
-        genre: document.getElementById('drawer-genre').value.trim(),
-        voice: document.getElementById('drawer-voice').value.trim(),
-        vibes: document.getElementById('drawer-vibes').value.trim(),
-        baby_name: document.getElementById('drawer-baby-name').value.trim(),
-        feelings: document.getElementById('drawer-feelings').value.trim(),
-        story: document.getElementById('drawer-story').value.trim(),
-        message: document.getElementById('drawer-message').value.trim()
-      };
-
-      const result = runAiAgent(currentOrderData);
-      
-      const updated = await db.updateOrder(orderId, {
-        ...currentOrderData,
-        generated_lyrics: result.generated_lyrics,
-        generated_prompt: result.generated_prompt,
-        status: 'em_producao'
-      });
-      
-      const idx = orders.findIndex(o => o.id === orderId);
-      if (idx !== -1) orders[idx] = updated;
-
-      closeDrawer();
-      setTimeout(() => {
-        openOrderDrawer(orderId, orders);
-        renderAdminDashboard(document.querySelector('main'), orders);
-      }, 300);
-    };
-  }
-
-  // Copiar Letras Propostas
-  const btnCopyLyrics = document.getElementById('btn-copy-lyrics');
-  if (btnCopyLyrics) {
-    btnCopyLyrics.onclick = () => {
-      const lyricsArea = document.getElementById('agent-lyrics-input');
-      lyricsArea.select();
-      document.execCommand('copy');
-      btnCopyLyrics.innerHTML = `<i data-lucide="check" style="width:12px; height:12px; margin-right:3px;"></i> Copiado!`;
-      if (window.lucide) lucide.createIcons();
-      setTimeout(() => {
-        btnCopyLyrics.innerHTML = `<i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Letra`;
-        if (window.lucide) lucide.createIcons();
-      }, 2000);
-    };
-  }
-
-  // Copiar Prompt Suno/Udio
-  const btnCopyPrompt = document.getElementById('btn-copy-prompt');
-  if (btnCopyPrompt) {
-    btnCopyPrompt.onclick = () => {
-      const promptArea = document.getElementById('agent-prompt-input');
-      promptArea.select();
-      document.execCommand('copy');
-      btnCopyPrompt.innerHTML = `<i data-lucide="check" style="width:12px; height:12px; margin-right:3px;"></i> Copiado!`;
-      if (window.lucide) lucide.createIcons();
-      setTimeout(() => {
-        btnCopyPrompt.innerHTML = `<i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar`;
-        if (window.lucide) lucide.createIcons();
-      }, 2000);
-    };
-  }
-
-  // Copiar Prompt ChatGPT/Claude
-  const btnCopyGptPrompt = document.getElementById('btn-copy-chatgpt-prompt');
-  if (btnCopyGptPrompt) {
-    btnCopyGptPrompt.onclick = () => {
-      const promptArea = document.getElementById('agent-chatgpt-prompt-input');
-      promptArea.select();
-      document.execCommand('copy');
-      btnCopyGptPrompt.innerHTML = `<i data-lucide="check" style="width:12px; height:12px; margin-right:3px;"></i> Copiado!`;
-      if (window.lucide) lucide.createIcons();
-      setTimeout(() => {
-        btnCopyGptPrompt.innerHTML = `<i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Prompt LLM`;
-        if (window.lucide) lucide.createIcons();
-      }, 2000);
-    };
-  }
-
-  // Regerar Letras
-  const btnRegenLyrics = document.getElementById('btn-regenerate-lyrics');
-  if (btnRegenLyrics) {
-    btnRegenLyrics.onclick = () => {
-      const confirm = window.confirm('Deseja regerar a letra? Edições manuais não salvas serão perdidas.');
-      if (!confirm) return;
-      
-      const currentOrderData = {
-        ...order,
-        recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
-        speak_name: document.getElementById('drawer-speak-name').value.trim(),
-        for_who: document.getElementById('drawer-for-who').value.trim(),
-        occasion: document.getElementById('drawer-occasion').value.trim(),
-        genre: document.getElementById('drawer-genre').value.trim(),
-        voice: document.getElementById('drawer-voice').value.trim(),
-        vibes: document.getElementById('drawer-vibes').value.trim(),
-        baby_name: document.getElementById('drawer-baby-name').value.trim(),
-        feelings: document.getElementById('drawer-feelings').value.trim(),
-        story: document.getElementById('drawer-story').value.trim(),
-        message: document.getElementById('drawer-message').value.trim()
-      };
-      
-      const newLyrics = generateLyrics(currentOrderData);
-      document.getElementById('agent-lyrics-input').value = newLyrics;
-    };
-  }
-
-  // Deletar
-  const btnDeleteOrder = document.getElementById('btn-delete-order');
-  if (btnDeleteOrder) {
-    btnDeleteOrder.onclick = async () => {
-      const confirm = window.confirm('Excluir este pedido do banco permanentemente?');
-      if (!confirm) return;
-
-      btnDeleteOrder.setAttribute('disabled', 'true');
-      btnDeleteOrder.textContent = 'Excluindo...';
-
-      try {
-        await db.deleteOrder(orderId);
-        const filtered = orders.filter(o => o.id !== orderId);
-        closeDrawer();
-        setTimeout(() => {
-          renderAdminDashboard(document.querySelector('main'), filtered);
-        }, 200);
-      } catch (err) {
-        console.error('Erro ao excluir pedido:', err);
-        alert('❌ Erro ao excluir o pedido. Verifique a conexão e tente novamente.');
-        btnDeleteOrder.removeAttribute('disabled');
-        btnDeleteOrder.textContent = 'Excluir pedido';
-      }
-    };
-  }
-
-  // Salvar
-  const btnSaveChanges = document.getElementById('btn-save-drawer-changes');
-  if (btnSaveChanges) {
-    btnSaveChanges.onclick = async () => {
-      btnSaveChanges.setAttribute('disabled', 'true');
-      btnSaveChanges.innerHTML = `<i data-lucide="loader" class="spin"></i> Gravando...`;
-      
-      const newStatus = document.getElementById('drawer-order-status').value;
-      const newAudioUrl = document.getElementById('drawer-audio-url').value.trim();
-      const lyricsInp = document.getElementById('agent-lyrics-input');
-      
-      const updates = {
-        customer_name: document.getElementById('drawer-customer-name').value.trim(),
-        customer_email: document.getElementById('drawer-customer-email').value.trim(),
-        customer_phone: document.getElementById('drawer-customer-phone').value.trim(),
-        whatsapp_followup: document.getElementById('drawer-whatsapp-followup').value === 'true',
-        
-        recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
-        speak_name: document.getElementById('drawer-speak-name').value.trim(),
-        for_who: document.getElementById('drawer-for-who').value.trim(),
-        occasion: document.getElementById('drawer-occasion').value.trim(),
-        genre: document.getElementById('drawer-genre').value.trim(),
-        voice: document.getElementById('drawer-voice').value.trim(),
-        vibes: document.getElementById('drawer-vibes').value.trim(),
-        baby_name: document.getElementById('drawer-baby-name').value.trim(),
-        feelings: document.getElementById('drawer-feelings').value.trim(),
-        story: document.getElementById('drawer-story').value.trim(),
-        message: document.getElementById('drawer-message').value.trim(),
-        
-        status: newStatus,
-        audio_url: newAudioUrl
-      };
-      
-      if (lyricsInp) {
-        updates.generated_lyrics = lyricsInp.value;
-      }
-      
-      try {
-        const updated = await db.updateOrder(orderId, updates);
-        const idx = orders.findIndex(o => o.id === orderId);
-        // Null-guard: só atualiza o array se o retorno for válido
-        if (updated && idx !== -1) orders[idx] = updated;
-
-        closeDrawer();
-        setTimeout(() => {
-          renderAdminDashboard(document.querySelector('main'), orders);
-          alert('✅ Pedido salvo com sucesso!');
-        }, 200);
-      } catch (err) {
-        console.error('Erro ao salvar pedido:', err);
-        alert('❌ Erro ao salvar as alterações. Verifique a conexão e tente novamente.');
-        btnSaveChanges.removeAttribute('disabled');
-        btnSaveChanges.innerHTML = 'Salvar alterações';
-      }
-    };
-  }
-};
-
 // Roteador SPA (Revisado)
 const renderRoute = async () => {
   const mainEl = document.querySelector('main');
@@ -4699,10 +3930,15 @@ const renderRoute = async () => {
     } else if (isAcompanhamento) {
       await renderAcompanhamentoPage(mainEl, orderId);
     } else if (isAdmin) {
-      await renderAdminPage(mainEl);
+      // Importa dinamicamente a view administrativa para otimização de bundle
+      const { renderAdminPage } = await import('./adminDashboard.js');
+      await renderAdminPage(mainEl, () => {
+        window.location.hash = '#admin';
+        renderRoute();
+      });
     } else if (isQuiz) {
       mainEl.innerHTML = `
-        <div class="quiz-page bg-dark" style="min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; padding: 0;">
+        <div class="quiz-page bg-dark" style="min-height: 100vh; min-height: 100dvh; min-height: 100dvh; position: relative; display: flex; align-items: center; justify-content: center; padding: 0;">
           <div id="quiz-container" style="width: 100%;"></div>
           <button class="quiz-close" onclick="window.location.hash = '#'">&times;</button>
         </div>
@@ -4771,7 +4007,7 @@ const renderRoute = async () => {
     console.error('[AudioGift] Erro crítico ao renderizar rota:', err);
     mainEl.innerHTML = `
       <div style="
-        min-height: 100vh;
+        min-height: 100vh; min-height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -4806,37 +4042,6 @@ const renderRoute = async () => {
       </div>
     `;
   }
-};
-
-const renderAdminPage = async (mainEl) => {
-  const isAuth = sessionStorage.getItem('audiogift_admin_auth') === 'true';
-  
-  if (!isAuth) {
-    renderAdminLogin(mainEl);
-    return;
-  }
-
-  mainEl.innerHTML = `
-    <div class="admin-dashboard-loading text-center py-large bg-dark text-white" style="min-height: 80vh; display:flex; align-items:center; justify-content:center;">
-      <div>
-        <div class="preloader-equalizer" style="margin-bottom:15px;">
-          <span class="eq-bar bar-1"></span>
-          <span class="eq-bar bar-2"></span>
-          <span class="eq-bar bar-3"></span>
-        </div>
-        <p style="color: var(--text-muted);">Carregando Painel Administrativo...</p>
-      </div>
-    </div>
-  `;
-
-  let orders = [];
-  try {
-    orders = await db.getOrders();
-  } catch (err) {
-    console.error('Erro ao carregar pedidos no admin:', err);
-  }
-
-  renderAdminDashboard(mainEl, orders);
 };
 
 // Initialize static components once
