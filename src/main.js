@@ -613,6 +613,17 @@ const initSocialProof = () => {
         }
         
         loadVideo(idx);
+
+        // Track Video Watch in Facebook Pixel
+        if (window.fbq) {
+          const videoSrc = card.dataset.videoUrl || '';
+          const aspect = card.dataset.aspect || 'vertical';
+          window.fbq('trackCustom', 'WatchVideo', {
+            video_index: idx,
+            video_url: videoSrc,
+            aspect_ratio: aspect
+          });
+        }
         
         videoModal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -2418,6 +2429,15 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
       renderCheckoutStep(progress);
       return;
     }
+
+    // Track CustomizeProduct at each quiz step
+    if (window.fbq) {
+      window.fbq('track', 'CustomizeProduct', {
+        content_name: `Quiz - Passo ${currentStep + 1}: ${step.title}`,
+        content_category: 'Quiz',
+        content_ids: ['quiz_musica_personalizada']
+      });
+    }
     
     document.getElementById('quiz-container').innerHTML = `
       <div class="quiz-modal-inner">
@@ -2588,6 +2608,33 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
         return;
       }
 
+      // Track step completion on Facebook Pixel
+      if (window.fbq) {
+        const stepNameMap = {
+          0: 'Básico',
+          1: 'Gênero e Vibe',
+          2: 'Sentimentos',
+          3: 'História',
+          4: 'Declaração e Chá Revelação',
+          5: 'Plano'
+        };
+        const params = {
+          step: currentStep + 1,
+          step_name: stepNameMap[currentStep] || `Passo ${currentStep + 1}`
+        };
+        if (currentStep === 0) {
+          params.for_who = answers.forWho;
+          params.occasion = answers.occasion;
+        } else if (currentStep === 1) {
+          params.genre = answers.genre;
+          params.voice = answers.voice;
+          params.vibes = answers.vibes.join(', ');
+        } else if (currentStep === 5) {
+          params.plan = answers.plan;
+        }
+        window.fbq('trackCustom', 'QuizStepComplete', params);
+      }
+
       if (currentStep < steps.length - 1) {
         currentStep++;
         renderStep();
@@ -2732,6 +2779,24 @@ document.addEventListener('click', (e) => {
         return;
       }
       e.preventDefault();
+
+      // Track Start Quiz click in Facebook Pixel
+      if (window.fbq) {
+        let originName = 'Botão Geral';
+        if (btn.closest('.pricing-card')) {
+          originName = 'Tabela de Preços';
+        } else if (btn.classList.contains('btn-nav-gold')) {
+          originName = 'Menu Superior (Header)';
+        } else if (btn.classList.contains('btn-primary-new')) {
+          originName = 'Hero Banner (Principal)';
+        } else if (btn.classList.contains('btn-primary-pill')) {
+          originName = 'Botão Flutuante / Callout';
+        }
+        window.fbq('trackCustom', 'ClickStartQuiz', {
+          origin: originName
+        });
+      }
+
       Quiz();
     }
   }
@@ -2815,6 +2880,14 @@ window.GlobalAudio = {
 
     audioEl.play().then(() => {
       this.setBtnIcon(btn, 'pause');
+
+      // Track play sample in Facebook Pixel
+      if (window.fbq) {
+        window.fbq('trackCustom', 'PlayAudioSample', {
+          sample_type: type,
+          sample_src: audioEl.src ? audioEl.src.split('/').pop() : 'unknown'
+        });
+      }
       
       if (onTimeUpdate) {
         this.activeProgressInterval = setInterval(() => {
