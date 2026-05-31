@@ -1165,7 +1165,7 @@ const FAQ = () => `
         `).join('')}
       </div>
       <div class="text-center mt-4 mb-4">
-        <a href="https://wa.me/5511999999999" class="btn-primary-new btn-magnetic">
+        <a href="https://wa.me/5532991931938" class="btn-primary-new btn-magnetic">
           <i data-lucide="message-circle"></i> Falar com especialista agora
         </a>
       </div>
@@ -1924,18 +1924,8 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
               <li><i data-lucide="check"></i> <span>100% garantia de satisfação</span></li>
               <li><i data-lucide="check"></i> <span>Pagamento seguro</span></li>
               <li><i data-lucide="check"></i> <span>Entregue em até ${planObj.deliveryHours}</span></li>
-              <li><i data-lucide="check"></i> <span>Suporte exclusivo via WhatsApp: +55 (11) 99999-9999</span></li>
+              <li><i data-lucide="check"></i> <span>Suporte exclusivo via WhatsApp: +55 (32) 99193-1938</span></li>
             </ul>
-          </div>
-
-          <div class="checkout-testimonial-card mt-4">
-            <h3>💬 O Que Nossos Clientes Dizem</h3>
-            <div id="checkout-testimonial-container"></div>
-            <div class="testimonial-nav">
-              <button class="testi-arrow prev" id="testi-checkout-prev"><i data-lucide="chevron-left"></i></button>
-              <div class="testi-dots" id="testi-checkout-dots"></div>
-              <button class="testi-arrow next" id="testi-checkout-next"><i data-lucide="chevron-right"></i></button>
-            </div>
           </div>
 
         </div>
@@ -1981,79 +1971,7 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
 
     lucide.createIcons();
 
-    const testimonials = [
-      {
-        img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150',
-        quote: '"Minha mãe chorou quando ouviu a música. Ela disse que foi o presente mais especial que já recebeu em 70 anos de vida. Valeu cada centavo!"',
-        name: 'Maria Silva',
-        city: 'São Paulo, SP'
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
-        quote: '"Fiz para o aniversário de namoro com a Thaís. A voz ficou linda demais e a letra pegou cada detalhe que escrevi. Ficou perfeito!"',
-        name: 'Thiago M.',
-        city: 'Rio de Janeiro, RJ'
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
-        quote: '"O plano VIP de 24h foi a salvação! Entregaram super rápido e ficou simplesmente emocionante. Toda a família chorou reunida."',
-        name: 'Ana Laura G.',
-        city: 'Belo Horizonte, MG'
-      }
-    ];
-
-    let currentTestiIdx = 0;
-    const renderTesti = () => {
-      const t = testimonials[currentTestiIdx];
-      const container = document.getElementById('checkout-testimonial-container');
-      if (!container) return;
-
-      container.innerHTML = `
-        <div class="checkout-testimonial-slide active">
-          <img src="${t.img}" alt="${t.name}" class="testimonial-avatar" loading="lazy">
-          <blockquote class="testimonial-quote">
-            ${t.quote}
-          </blockquote>
-          <cite class="testimonial-author">
-            <strong>${t.name}</strong>
-            <span>${t.city}</span>
-          </cite>
-        </div>
-      `;
-
-      const dotsContainer = document.getElementById('testi-checkout-dots');
-      if (dotsContainer) {
-        dotsContainer.innerHTML = testimonials.map((_, idx) => `
-          <span class="dot ${idx === currentTestiIdx ? 'active' : ''}" data-idx="${idx}"></span>
-        `).join('');
-
-        dotsContainer.querySelectorAll('.dot').forEach(dot => {
-          dot.onclick = () => {
-            currentTestiIdx = parseInt(dot.dataset.idx);
-            renderTesti();
-          };
-        });
-      }
-      lucide.createIcons();
-    };
-
-    renderTesti();
-
-    const btnTestiPrev = document.getElementById('testi-checkout-prev');
-    const btnTestiNext = document.getElementById('testi-checkout-next');
-
-    if (btnTestiPrev) {
-      btnTestiPrev.onclick = () => {
-        currentTestiIdx = currentTestiIdx === 0 ? testimonials.length - 1 : currentTestiIdx - 1;
-        renderTesti();
-      };
-    }
-    if (btnTestiNext) {
-      btnTestiNext.onclick = () => {
-        currentTestiIdx = currentTestiIdx === testimonials.length - 1 ? 0 : currentTestiIdx + 1;
-        renderTesti();
-      };
-    }
+    // Testimonials logic removed from checkout step
 
     const nameInput = document.querySelector('.checkout-name-input');
     const emailInput = document.querySelector('.checkout-email-input');
@@ -3959,7 +3877,7 @@ const renderAcompanhamentoPage = async (mainEl, orderId) => {
           </div>
 
           <div style="display:flex; flex-direction:column; gap:10px; max-width: 320px; margin: 0 auto;">
-            <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20fiz%20o%20pedido%20de%20m%C3%BAsica%20customizada%20ID%20${order.id}.%20Gostaria%20de%20acompanhar%20a%20produ%C3%A7%C3%A3o!" target="_blank" class="btn-primary-new" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); border-color: #25D366; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.15); padding: 0.9rem 1.8rem; font-size:0.95rem;">
+            <a href="https://wa.me/5532991931938?text=Ol%C3%A1%2C%20fiz%20o%20pedido%20de%20m%C3%BAsica%20customizada%20ID%20${order.id}.%20Gostaria%20de%20acompanhar%20a%20produ%C3%A7%C3%A3o!" target="_blank" class="btn-primary-new" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); border-color: #25D366; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.15); padding: 0.9rem 1.8rem; font-size:0.95rem;">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block; vertical-align:middle; margin-right:8px;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.324 5.328 0 11.859 0c3.161.001 6.132 1.233 8.37 3.474 2.237 2.24 3.468 5.211 3.468 8.377-.003 6.537-5.329 11.86-11.859 11.86-2.004-.001-3.972-.51-5.729-1.482L0 24zm6.59-4.846c1.6.95 3.1 1.45 4.8 1.45 5.5 0 10-4.5 10-10S16.9.75 11.4.75C5.9.75 1.4 5.25 1.4 10.75c0 1.9.5 3.7 1.5 5.3l-1 3.7 3.8-1zm11.2-5.45c-.2-.1-1.3-.7-1.5-.7-.2-.1-.4-.1-.5.1-.2.3-.7.9-.9 1.1-.1.2-.3.2-.5.1-.9-.4-1.6-.7-2.3-1.3-.5-.4-.9-.9-1.2-1.4-.2-.3-.02-.5.08-.6l.3-.4c.1-.1.1-.2.2-.3.1-.1.1-.2.1-.3-.1-.2-.5-1.2-.7-1.6-.2-.4-.3-.4-.5-.4h-.4c-.2 0-.5.1-.7.3-.6.6-.9 1.5-.9 2.5 0 2 1.5 3.9 1.7 4.2.2.3 3 4.6 7.3 6.3 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.7.2.8-.1 2.6-1.1 3-2.1.4-1 .4-1.9.3-2.1-.1-.2-.3-.3-.5-.4z"/></svg>
               Iniciar Chat de Acompanhamento
             </a>
