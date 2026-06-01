@@ -1529,10 +1529,8 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
     if (!nextBtn) return;
     const isValid = checkStepValidity();
     if (isValid) {
-      nextBtn.removeAttribute('disabled');
       nextBtn.classList.remove('disabled');
     } else {
-      nextBtn.setAttribute('disabled', 'true');
       nextBtn.classList.add('disabled');
     }
   };
@@ -2010,10 +2008,8 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
       btns.forEach(btn => {
         if (!btn) return;
         if (isValid) {
-          btn.removeAttribute('disabled');
           btn.classList.remove('disabled');
         } else {
-          btn.setAttribute('disabled', 'true');
           btn.classList.add('disabled');
         }
       });
@@ -2450,23 +2446,34 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
       let errorMsg = '';
 
       if (currentStep === 0) {
-        if (!answers.forWho || !answers.occasion || !answers.name || answers.name.trim().length < 1 || !answers.speakName) {
+        const missing = [];
+        if (!answers.forWho) missing.push('para quem é a canção');
+        if (!answers.occasion) missing.push('a ocasião da homenagem');
+        if (!answers.name || answers.name.trim().length < 1) missing.push('o nome do homenageado(a)');
+        if (!answers.speakName) missing.push('se deseja que o nome seja falado na música');
+        
+        if (missing.length > 0) {
           isValid = false;
-          errorMsg = 'Por favor, selecione para quem é a canção, qual a ocasião, preencha o nome do homenageado(a) e se deseja falar o nome.';
+          errorMsg = 'Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): ' + missing.join(', ') + '.';
         }
       } else if (currentStep === 1) {
-        if (!answers.genre || !answers.vibes || answers.vibes.length < 1) {
+        const missing = [];
+        if (!answers.genre) missing.push('o gênero musical preferido');
+        if (!answers.vibes || answers.vibes.length < 1) missing.push('a vibe/clima da música (de 1 a 2 vibes)');
+        
+        if (missing.length > 0) {
           isValid = false;
-          errorMsg = 'Por favor, selecione o gênero musical preferido e de 1 a 2 vibes/climas para a música.';
+          errorMsg = 'Por favor, selecione: ' + missing.join(', ') + '.';
         }
-      } else if (currentStep === 2 || currentStep === 3) {
-        if (currentStep === 2 && answers.feelings.length < 5) {
+      } else if (currentStep === 2) {
+        if (!answers.feelings || answers.feelings.trim().length < 5) {
           isValid = false;
-          errorMsg = 'Por favor, descreva com suas palavras para prosseguir.';
+          errorMsg = 'Por favor, descreva como ele(a) faz você se sentir (mínimo de 5 caracteres).';
         }
-        if (currentStep === 3 && answers.story.length < 5) {
+      } else if (currentStep === 3) {
+        if (!answers.story || answers.story.trim().length < 5) {
           isValid = false;
-          errorMsg = 'Por favor, descreva com suas palavras para prosseguir.';
+          errorMsg = 'Por favor, conte os momentos e memórias especiais de vocês (mínimo de 5 caracteres).';
         }
       } else if (currentStep === 5) {
         if (!answers.plan) {
@@ -2482,15 +2489,14 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
         const isPhoneValid = !isWhatsappChecked || (digitsOnly.length >= 10);
         const isNameValid = !!(answers.customerName && answers.customerName.trim().length >= 2);
         
-        if (!isNameValid) {
+        const missing = [];
+        if (!isNameValid) missing.push('seu nome completo');
+        if (!isEmailValid) missing.push('um e-mail válido');
+        if (isWhatsappChecked && !isPhoneValid) missing.push('seu WhatsApp com DDD');
+
+        if (missing.length > 0) {
           isValid = false;
-          errorMsg = 'Por favor, preencha o seu nome completo.';
-        } else if (!isEmailValid) {
-          isValid = false;
-          errorMsg = 'Por favor, insira um endereço de e-mail válido.';
-        } else if (isWhatsappChecked && !isPhoneValid) {
-          isValid = false;
-          errorMsg = 'Por favor, preencha o WhatsApp com DDD para receber o acompanhamento da música.';
+          errorMsg = 'Por favor, preencha: ' + missing.join(', ') + '.';
         }
       }
 
