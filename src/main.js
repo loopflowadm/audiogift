@@ -6,6 +6,86 @@ import { runAiAgent, generateLyrics, generatePrompt, buildChatgptPrompt } from '
 const escapeHtml = (str) => String(str ?? '').replace(/[&<>"']/g, (c) =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+// Sistema de Toasts Personalizado para substituir window.alert (Premium Mobile-friendly UX)
+const showToast = (message, type = 'warning') => {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = `custom-toast toast-${type}`;
+  
+  let accentColor = '#FC7301';
+  let iconName = 'alert-circle';
+  if (type === 'error') {
+    accentColor = '#ff4d6d';
+    iconName = 'x-circle';
+  } else if (type === 'success') {
+    accentColor = '#4ade80';
+    iconName = 'check-circle';
+  } else if (type === 'info') {
+    accentColor = '#60a5fa';
+    iconName = 'info';
+  }
+
+  toast.innerHTML = `
+    <div class="toast-icon-wrap">
+      <i data-lucide="${iconName}"></i>
+    </div>
+    <div class="toast-content-wrap">
+      <p>${message}</p>
+    </div>
+    <button class="toast-close-btn" aria-label="Fechar aviso">
+      <i data-lucide="x"></i>
+    </button>
+  `;
+
+  container.appendChild(toast);
+
+  if (window.lucide) {
+    lucide.createIcons({
+      attrs: { 'stroke-width': '2.5' },
+      nameAttr: 'data-lucide',
+      root: toast
+    });
+  }
+
+  // Forçar reflow para animar a entrada
+  void toast.offsetWidth;
+  toast.classList.add('active');
+
+  const dismissToast = () => {
+    toast.classList.remove('active');
+    setTimeout(() => {
+      toast.remove();
+      if (container.children.length === 0) {
+        container.remove();
+      }
+    }, 400);
+  };
+
+  toast.querySelector('.toast-close-btn').onclick = (e) => {
+    e.stopPropagation();
+    dismissToast();
+  };
+
+  setTimeout(dismissToast, 4500);
+};
+
+window.alert = (message) => {
+  let type = 'warning';
+  const msgLower = message.toLowerCase();
+  if (msgLower.includes('sucesso') || msgLower.includes('certo') || msgLower.includes('confirmado') || msgLower.includes('aprovado')) {
+    type = 'success';
+  } else if (msgLower.includes('erro') || msgLower.includes('falha') || msgLower.includes('inválido') || msgLower.includes('obrigatório')) {
+    type = 'error';
+  }
+  showToast(message, type);
+};
+
 const Logo = (baseColor = 'white', giftColor = '#FC7301') => `
 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 1507040 421800" style="width: 100%; height: auto; display: block;" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
  xmlns:xlink="http://www.w3.org/1999/xlink"
