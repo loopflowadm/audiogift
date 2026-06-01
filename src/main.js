@@ -22,34 +22,7 @@ const Logo = (baseColor = 'white', giftColor = '#FC7301') => `
 
 const app = document.querySelector('#app')
 
-const AnnouncementBar = () => `
-  <div class="announcement-bar">
-    <div class="container announcement-content">
-      <video 
-        class="announcement-video video-desktop" 
-        autoplay 
-        loop 
-        muted 
-        playsinline
-        preload="metadata"
-        title="Dia dos Namorados - Desktop"
-        style="width: 100%; height: 100%; object-fit: cover;">
-        <source src="/videos/valentines-campaign-desktop.mp4" type="video/mp4">
-      </video>
-      <video 
-        class="announcement-video video-mobile" 
-        autoplay 
-        loop 
-        muted 
-        playsinline
-        preload="metadata"
-        title="Dia dos Namorados - Mobile"
-        style="width: 100%; height: 100%; object-fit: cover;">
-        <source src="/videos/valentines-campaign-mobile.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
-`
+
 
 const Pricing = () => `
   <section id="pricing" class="pricing-section py-large bg-white">
@@ -2589,7 +2562,6 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
 // O overlay estático foi removido para que o quiz seja renderizado como página SPA na rota #quiz
 
 app.innerHTML = `
-  ${AnnouncementBar()}
   ${Header()}
   <main></main>
   ${Footer()}

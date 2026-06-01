@@ -189,37 +189,7 @@
         50% { transform: translateX(0%); }
         100% { transform: translateX(100%); }
       }
-      .announcement-bar {
-        background-color: #000;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      }
-      .announcement-bar .announcement-video {
-        width: 100%;
-        border: none;
-        background: #000;
-      }
-      @media (min-width: 769px) {
-        .announcement-bar .video-desktop {
-          display: block;
-          aspect-ratio: 16/9;
-        }
-        .announcement-bar .video-mobile {
-          display: none;
-        }
-      }
-      @media (max-width: 768px) {
-        .announcement-bar .video-desktop {
-          display: none;
-        }
-        .announcement-bar .video-mobile {
-          display: block;
-          aspect-ratio: 9/16;
-        }
-      }
+
       .header {
         background-color: rgba(13, 13, 13, 0.8);
         backdrop-filter: blur(10px);
@@ -832,13 +802,7 @@
     </div>
 
     <div id="app">
-      <!-- Static Skeleton for Instant Paint (FCP / LCP) -->
-      <div class="announcement-bar">
-        <div class="container announcement-content">
-          <div class="announcement-video video-desktop" style="background: #000; height: 100%;"></div>
-          <div class="announcement-video video-mobile" style="background: #000; height: 100%;"></div>
-        </div>
-      </div>
+
       <header class="header">
         <div class="container header-content">
           <a href="#" class="logo">
