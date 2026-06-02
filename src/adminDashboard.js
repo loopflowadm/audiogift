@@ -34,9 +34,9 @@ const Logo = (baseColor = 'white', giftColor = '#FC7301') => `
 // --- RENDERIZAR TELA DE LOGIN DO ADMIN ---
 const renderAdminLogin = (mainEl, onLoginSuccess) => {
   mainEl.innerHTML = `
-    <div class="admin-login-page py-large bg-black text-white" style="min-height: 80vh; min-height: 80dvh; display:flex; align-items:center;">
-      <div class="container" style="max-width: 400px;">
-        <div class="login-card-glass text-center" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; backdrop-filter: blur(20px);">
+    <div class="admin-login-page py-large bg-black text-white">
+      <div class="container" style="max-width: 400px; width: 100%;">
+        <div class="login-card-glass text-center">
           <div class="login-logo-wrap" style="margin-bottom: 2rem; width:120px; margin: 0 auto 1.5rem auto;">
             ${Logo('white', '#FC7301')}
           </div>
@@ -127,21 +127,21 @@ const renderAdminDashboard = (mainEl, orders, onLogout) => {
   };
 
   mainEl.innerHTML = `
-    <div class="admin-dashboard-page bg-dark text-white py-large" style="min-height: 80vh; min-height: 80dvh;">
+    <div class="admin-dashboard-page bg-dark text-white py-large">
       <div class="container-full" style="padding: 0 2rem;">
         
-        <div class="admin-header-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+        <div class="admin-header-row">
           <div>
-            <h1 class="section-title-serif text-white text-left" style="font-size: 2.2rem; margin-bottom: 5px;">Painel de <em>Controle</em></h1>
-            <p style="color: var(--text-muted); font-size:0.95rem; margin:0;">Gerencie pedidos, clientes e acione o Agente de IA para escrever as letras das canções.</p>
+            <h1>Painel de <em>Controle</em></h1>
+            <p>Gerencie pedidos, clientes e acione o Agente de IA para escrever as letras das canções.</p>
           </div>
-          <div class="admin-actions" style="display:flex; gap:10px;">
+          <div class="admin-actions">
             <button class="btn-primary-new" id="btn-admin-export" style="padding:0.6rem 1.4rem; font-size:0.85rem; display:flex; align-items:center; gap:6px;"><i data-lucide="download" style="width:16px; height:16px;"></i> Exportar CSV</button>
             <button class="btn-outline" id="btn-admin-logout" style="border-color: rgba(255,255,255,0.1); color: #ff4d6d; padding:0.6rem 1.4rem; font-size:0.85rem;"><i data-lucide="log-out"></i> Sair</button>
           </div>
         </div>
 
-        <div class="admin-metrics-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+        <div class="admin-metrics-grid">
           <div class="metric-card">
             <div class="metric-icon" style="background: rgba(252,115,1,0.1); color: var(--primary-orange);"><i data-lucide="dollar-sign"></i></div>
             <div class="metric-info">
@@ -180,10 +180,10 @@ const renderAdminDashboard = (mainEl, orders, onLogout) => {
         </div>
 
         <div class="admin-main-section">
-          <div class="admin-orders-list-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius:24px; padding:25px;">
-            <div class="list-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;">
-              <h3 style="font-size:1.2rem; font-weight:600;">Listagem de Pedidos</h3>
-              <div class="list-card-search" style="display:flex; gap:10px; flex-wrap:wrap;">
+          <div class="admin-orders-list-card">
+            <div class="list-card-header">
+              <h3>Listagem de Pedidos</h3>
+              <div class="list-card-search">
                 <input type="text" id="admin-search-input" placeholder="Buscar por cliente, email..." class="quiz-input search-box" style="max-width:250px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem;">
                 <select id="admin-filter-status" class="quiz-input select-box" style="background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem;">
                   <option value="all">Todos os Status</option>
@@ -196,17 +196,17 @@ const renderAdminDashboard = (mainEl, orders, onLogout) => {
             </div>
 
             <div class="table-container" style="overflow-x:auto;">
-              <table class="admin-table" style="width:100%; border-collapse:collapse; text-align:left;">
+              <table class="admin-table">
                 <thead>
-                  <tr style="border-bottom:1px solid rgba(255,255,255,0.08); color:#aaa; font-size:0.85rem; text-transform:uppercase;">
-                    <th style="padding: 12px 10px;">Cliente</th>
-                    <th style="padding: 12px 10px;">Homenageado</th>
-                    <th style="padding: 12px 10px;">Ocasião</th>
-                    <th style="padding: 12px 10px;">Estilo</th>
-                    <th style="padding: 12px 10px;">Plano</th>
-                    <th style="padding: 12px 10px;">Data</th>
-                    <th style="padding: 12px 10px;">Status</th>
-                    <th style="padding: 12px 10px; text-align:right;">Ações</th>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Homenageado</th>
+                    <th>Ocasião</th>
+                    <th>Estilo</th>
+                    <th>Plano</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th style="text-align:right;">Ações</th>
                   </tr>
                 </thead>
                 <tbody id="admin-table-body" style="font-size:0.9rem;">
@@ -398,15 +398,15 @@ const openOrderDrawer = async (orderId, orders) => {
     </div>
     
     <div class="drawer-body" style="max-height: calc(100vh - 120px); max-height: calc(100dvh - 120px); overflow-y:auto; padding-right:5px; max-width: 1200px; margin: 0 auto;">
-      <div class="drawer-cols-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="drawer-cols-grid">
         
         <!-- Coluna Esquerda: Dados do Cliente & Respostas do Quiz -->
         <div style="display:flex; flex-direction:column; gap:20px;">
           <!-- Seção 1: Cliente -->
-          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
+          <div class="drawer-section">
             <h3 style="font-size:0.95rem; font-weight:600; color:var(--primary-orange); margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="user" style="width:16px; height:16px;"></i> Contato do Cliente</h3>
-            <div class="drawer-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:0.85rem;">
-              <div style="grid-column: span 2;">
+            <div class="drawer-grid">
+              <div class="grid-span-2">
                 <span style="color:#888; display:block; margin-bottom:4px;">Nome do Cliente:</span>
                 <input type="text" id="drawer-customer-name" value="${order.customer_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
               </div>
@@ -438,10 +438,10 @@ const openOrderDrawer = async (orderId, orders) => {
           </div>
 
           <!-- Seção 2: Quiz -->
-          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
+          <div class="drawer-section">
             <h3 style="font-size:0.95rem; font-weight:600; color:var(--primary-orange); margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="file-text" style="width:16px; height:16px;"></i> Respostas do Questionário</h3>
             <div class="quiz-answers-box" style="font-size:0.85rem; color:#ddd; display:flex; flex-direction:column; gap:12px;">
-              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+              <div class="drawer-grid">
                 <div>
                   <label style="color:#888; display:block; margin-bottom:4px;">Homenageado(a):</label>
                   <input type="text" id="drawer-recipient-name" value="${order.recipient_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
@@ -466,11 +466,11 @@ const openOrderDrawer = async (orderId, orders) => {
                   <label style="color:#888; display:block; margin-bottom:4px;">Estilo de Voz:</label>
                   <input type="text" id="drawer-voice" value="${order.voice || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
                 </div>
-                <div style="grid-column: span 2;">
+                <div class="grid-span-2">
                   <label style="color:#888; display:block; margin-bottom:4px;">Vibe/Clima:</label>
                   <input type="text" id="drawer-vibes" value="${order.vibes || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
                 </div>
-                <div style="grid-column: span 2;">
+                <div class="grid-span-2">
                   <label style="color:#888; display:block; margin-bottom:4px;">Nomes Bebê (Caso Revelação):</label>
                   <input type="text" id="drawer-baby-name" value="${order.baby_name || ''}" class="quiz-input" style="padding:6px 12px; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-size:0.85rem; width:100%; border-radius:8px;">
                 </div>
@@ -478,17 +478,17 @@ const openOrderDrawer = async (orderId, orders) => {
               
               <div style="margin-top:10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top:10px;">
                 <strong style="color:#fff; display:block; margin-bottom:5px;">O que faz especial / Sentimentos:</strong>
-                <textarea id="drawer-feelings" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.feelings || ''}</textarea>
+                <textarea id="drawer-feelings" class="agent-textarea" style="height:80px;">${order.feelings || ''}</textarea>
               </div>
               
               <div style="margin-top:10px;">
                 <strong style="color:#fff; display:block; margin-bottom:5px;">Histórias & Memórias:</strong>
-                <textarea id="drawer-story" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.story || ''}</textarea>
+                <textarea id="drawer-story" class="agent-textarea" style="height:80px;">${order.story || ''}</textarea>
               </div>
               
               <div style="margin-top:10px;">
                 <strong style="color:#fff; display:block; margin-bottom:5px;">Mensagem final importante:</strong>
-                <textarea id="drawer-message" class="quiz-input" style="width:100%; height:80px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.message || ''}</textarea>
+                <textarea id="drawer-message" class="agent-textarea" style="height:80px;">${order.message || ''}</textarea>
               </div>
             </div>
           </div>
@@ -497,7 +497,7 @@ const openOrderDrawer = async (orderId, orders) => {
         <!-- Coluna Direita: Agente IA & Controles do Pedido -->
         <div style="display:flex; flex-direction:column; gap:20px;">
           <!-- Seção 3: IA Agent -->
-          <div class="drawer-section" style="background: rgba(252,115,1,0.03); border: 1px solid rgba(252,115,1,0.15); padding:18px; border-radius:16px;">
+          <div class="drawer-section drawer-section-highlight">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <h3 style="font-size:0.95rem; font-weight:700; color:var(--primary-orange); display:flex; align-items:center; gap:8px; margin:0;"><i data-lucide="cpu" style="width:16px; height:16px;"></i> Agente de Composição IA</h3>
               <span style="background:rgba(252,115,1,0.15); color:var(--primary-orange); font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:20px; text-transform:uppercase;">Agente Ativo</span>
@@ -522,7 +522,7 @@ const openOrderDrawer = async (orderId, orders) => {
                         <button class="btn-text-action" id="btn-regenerate-lyrics" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="rotate-cw" style="width:12px; height:12px; margin-right:3px;"></i> Regerar</button>
                       </div>
                     </div>
-                    <textarea class="agent-textarea" id="agent-lyrics-input" style="width:100%; height:260px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#fff; font-family:monospace; font-size:0.85rem; padding:10px; line-height:1.4; resize:vertical;">${order.generated_lyrics}</textarea>
+                    <textarea class="agent-textarea" id="agent-lyrics-input" style="height:260px;">${order.generated_lyrics}</textarea>
                   </div>
 
                   <!-- Prompt Suno/Udio -->
@@ -531,7 +531,7 @@ const openOrderDrawer = async (orderId, orders) => {
                       <span style="font-size:0.85rem; font-weight:600; color:#fff;">Prompt para Suno/Udio</span>
                       <button class="btn-text-action" id="btn-copy-prompt" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar</button>
                     </div>
-                    <textarea class="agent-textarea" id="agent-prompt-input" style="width:100%; height:80px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#ccc; font-family:monospace; font-size:0.8rem; padding:10px; line-height:1.3; resize:none;" readonly>${order.generated_prompt}</textarea>
+                    <textarea class="agent-textarea" id="agent-prompt-input" style="height:80px; resize:none;" readonly>${order.generated_prompt}</textarea>
                   </div>
 
                   <!-- Prompt ChatGPT/Claude de Letra -->
@@ -540,7 +540,7 @@ const openOrderDrawer = async (orderId, orders) => {
                       <span style="font-size:0.85rem; font-weight:600; color:#fff;">Prompt de Letra (ChatGPT/Claude)</span>
                       <button class="btn-text-action" id="btn-copy-chatgpt-prompt" style="color:var(--primary-orange); font-size:0.75rem; font-weight:600;"><i data-lucide="copy" style="width:12px; height:12px; margin-right:3px;"></i> Copiar Prompt LLM</button>
                     </div>
-                    <textarea class="agent-textarea" id="agent-chatgpt-prompt-input" style="width:100%; height:120px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#aaa; font-family:monospace; font-size:0.78rem; padding:10px; line-height:1.3; resize:vertical;" readonly>${buildChatgptPrompt(order)}</textarea>
+                    <textarea class="agent-textarea" id="agent-chatgpt-prompt-input" style="height:120px;" readonly>${buildChatgptPrompt(order)}</textarea>
                   </div>
                 </div>
               `}
@@ -548,7 +548,7 @@ const openOrderDrawer = async (orderId, orders) => {
           </div>
 
           <!-- Seção 4: Configurações do Pedido -->
-          <div class="drawer-section" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding:15px; border-radius:16px;">
+          <div class="drawer-section">
             <h3 style="font-size:0.95rem; font-weight:600; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i data-lucide="settings" style="width:16px; height:16px;"></i> Controles do Pedido</h3>
             
             <div style="display:flex; flex-direction:column; gap:12px;">

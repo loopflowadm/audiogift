@@ -210,21 +210,21 @@ export function buildChatgptPrompt(answers) {
   const genre = answers.genre || 'Pop Acústico';
   const voice = answers.voice || 'Feminina';
   const vibes = answers.vibes || 'Não informada';
-  const baby = answers.baby_name ? `\n- Nomes Bebê (Caso Revelação): ${answers.baby_name}` : '';
+  const baby = answers.baby_name ? ` (Nomes Bebê: ${answers.baby_name})` : '';
   const feelings = answers.feelings || 'Não informado';
   const story = answers.story || 'Não informado';
   const message = answers.message || 'Não informado';
 
   return `Escreva uma letra de música personalizada, emocionante e poética com base nas seguintes respostas do quiz:
-- Homenageado: ${name} (Falar nome na música: ${speak})
-- Relação: ${relation}
-- Ocasião: ${occasion}
-- Gênero Musical: ${genre} (Estilo de Voz: ${voice})
-- Vibes/Clima: ${vibes}${baby}
-- Sentimentos/O que torna especial: ${feelings}
-- Histórias/Memórias marcantes: ${story}
-- Mensagem Final: ${message}
+Homenageado: ${name} ((Falar nome na música: ${speak}))
+Relação: ${relation}
+Ocasião: ${occasion}
+Gênero Musical: ${genre} (Estilo de Voz: ${voice})
+Vibes/Clima: ${vibes}${baby}
+Sentimentos/O que torna especial: ${feelings}
+Histórias/Memórias marcantes: ${story}
+Mensagem Final: ${message}
 
-Estruture a letra com as tags [Verso 1], [Pré-Refrão], [Refrão], [Verso 2], [Ponte], [Refrão Final] e [Outro]. Evite rimas clichês, crie versos fluidos e profundos em português brasileiro.`;
+Estruture a letra com as tags [Verso 1] [Verso 2] , [Pré-Refrão], [Refrão], [Verso 1] [Verso 2], [Ponte], [Refrão Final] e [Outro]. Evite rimas clichês, crie versos fluidos e profundos em português brasileiro. Seja criativo e fiel ás informações preenchidas.`;
 }
 
