@@ -193,9 +193,13 @@ export const db = {
           .select();
         
         if (error) throw error;
+        if (!data || data.length === 0) {
+          throw new Error('Permissão de atualização negada ou pedido não encontrado no banco.');
+        }
         return data[0];
       } catch (err) {
-        console.error(`Erro ao atualizar no Supabase (${id}), atualizando localmente:`, err);
+        console.error(`Erro ao atualizar no Supabase (${id}):`, err);
+        throw err;
       }
     }
 
@@ -215,15 +219,20 @@ export const db = {
     await initSupabase();
     if (!isMock && supabase) {
       try {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('orders')
           .delete()
-          .eq('id', id);
+          .eq('id', id)
+          .select();
         
         if (error) throw error;
+        if (!data || data.length === 0) {
+          throw new Error('Permissão de exclusão negada ou pedido não encontrado no banco.');
+        }
         return true;
       } catch (err) {
-        console.error(`Erro ao deletar no Supabase (${id}), deletando localmente:`, err);
+        console.error(`Erro ao deletar no Supabase (${id}):`, err);
+        throw err;
       }
     }
 
