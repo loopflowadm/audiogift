@@ -215,10 +215,15 @@ export function buildChatgptPrompt(answers) {
   const story = answers.story || 'Não informado';
   const message = answers.message || 'Não informado';
 
+  const planPrices = { especial: 'R$ 89,90', memoravel: 'R$ 149,90', inesquecivel: 'R$ 199,90' };
+  const planName = answers.plan ? answers.plan.toLowerCase() : 'memoravel';
+  const planValue = planPrices[planName] || 'R$ 149,90';
+
   return `Escreva uma letra de música personalizada, emocionante e poética com base nas seguintes respostas do quiz:
 Homenageado: ${name} ((Falar nome na música: ${speak}))
 Relação: ${relation}
 Ocasião: ${occasion}
+Valor do Plano: ${planValue} (${planName.toUpperCase()})
 Gênero Musical: ${genre} (Estilo de Voz: ${voice})
 Vibes/Clima: ${vibes}${baby}
 Sentimentos/O que torna especial: ${feelings}

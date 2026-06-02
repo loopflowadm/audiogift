@@ -380,6 +380,10 @@ const openOrderDrawer = async (orderId, orders) => {
   const order = orders.find(o => o.id === orderId);
   if (!order) return;
 
+  const planPrices = { especial: 'R$ 89,90', memoravel: 'R$ 149,90', inesquecivel: 'R$ 199,90' };
+  const planName = (order.plan || 'memoravel').toLowerCase();
+  const planValue = planPrices[planName] || 'R$ 149,90';
+
   const overlay = document.getElementById('order-drawer-overlay');
   const drawer = document.getElementById('order-drawer');
 
@@ -425,7 +429,7 @@ const openOrderDrawer = async (orderId, orders) => {
               </div>
               <div>
                 <span style="color:#888; display:block; margin-bottom:4px;">Plano Adquirido:</span>
-                <strong style="color:#4ade80; display:block; padding: 6px 0;">${order.plan.toUpperCase()}</strong>
+                <strong style="color:#4ade80; display:block; padding: 6px 0;">${order.plan.toUpperCase()} (${planValue})</strong>
               </div>
               <div>
                 <span style="color:#888; display:block; margin-bottom:4px;">Opt-in Acompanhamento:</span>
