@@ -142,6 +142,7 @@ button {
   height: 20px;
   stroke-width: 2px;
   vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .stars [data-lucide] {
@@ -154,6 +155,7 @@ button {
 .btn-primary-new [data-lucide], .btn-primary-pill [data-lucide] {
   width: 22px;
   height: 22px;
+  flex-shrink: 0;
 }
 
 
@@ -245,6 +247,19 @@ button {
     width: 100%;
     max-width: 100% !important;
     aspect-ratio: 9/16;
+  }
+
+  /* CTA Buttons mobile touch optimization */
+  .btn-primary-new, .btn-primary-pill, .btn-primary {
+    padding: 0.95rem 1.6rem;
+    font-size: 1rem;
+    gap: 0.7rem;
+  }
+
+  .btn-primary-new [data-lucide], .btn-primary-pill [data-lucide], .btn-primary [data-lucide] {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.2px;
   }
 }
 
@@ -591,18 +606,17 @@ button {
   background: transparent;
   border: none;
   border-radius: 40px;
-  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.35));
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  /* NOTE: transform-style: preserve-3d was removed because it prevents overflow:hidden
+     from clipping child elements, causing the video iframe to bleed outside the phone frame. */
 }
 
 .smartphone-mockup:hover {
   transform: translateY(-8px) rotateY(-4px) rotateX(2px);
-  box-shadow: 
-    0 35px 70px rgba(252, 115, 1, 0.25),
-    0 15px 30px rgba(0, 0, 0, 0.2);
+  filter: drop-shadow(0 30px 60px rgba(252, 115, 1, 0.25)) drop-shadow(0 12px 20px rgba(0, 0, 0, 0.15));
 }
 
 .phone-svg-overlay {
@@ -617,14 +631,41 @@ button {
 
 .smartphone-screen {
   position: absolute;
-  top: 1.5%; /* Expandido para se estender sob o bezel do SVG, eliminando frestas claras */
-  bottom: 1.5%;
-  left: 2%;
-  right: 2%;
-  border-radius: 40px; /* Cantos curvos aumentados para cobertura sob a borda */
+  /* Offsets EXATOS calculados do SVG path (viewBox 152670×307380).
+     Buraco da tela (3° subpath, sentido anti-horário = hole):
+     Left edge x=7320 → 4.795%, Right edge x=144910 → right inset 5.083%,
+     Top edge y=5860 → 1.906%, Bottom edge y=301530 → bottom inset 1.903%.
+     Corner radius: 17560 SVG units → 34.5px at 300px mockup width. */
+  top: 1.906%;
+  bottom: 1.903%;
+  left: 4.795%;
+  right: 5.083%;
+  border-radius: 34.5px;
   overflow: hidden;
   background: #000;
   z-index: 1;
+}
+
+/* Vimeo iframe base positioning — JavaScript will adjust dimensions dynamically */
+.smartphone-screen iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+}
+
+/* Static placeholder image — simple cover */
+.smartphone-screen img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
 }
 
 .smartphone-speaker {
@@ -761,18 +802,23 @@ button {
     font-size: 2.2rem;
   }
   .smartphone-mockup {
-    width: 260px;
-    height: 523px; /* Proporção do SVG exata no mobile */
+    width: 250px;
+    height: 503px; /* Proporção 152670x307380 para 250px de largura */
     border: none;
     border-radius: 34px;
   }
   .smartphone-screen {
-    border-radius: 32px; /* Aumentado no mobile para cobrir as curvas perfeitamente */
+    /* 17560/152670 × 250px = 28.8px */
+    border-radius: 29px;
   }
   .smartphone-speaker {
     top: 6px;
     width: 35px;
     height: 2.5px;
+  }
+  .btn-primary-new, .btn-primary-pill, .btn-primary {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -6889,17 +6935,20 @@ button {
   margin-top: 3rem;
 }
 
-.proof-video-card {
+.proof-video-card:not(.smartphone-mockup) {
   background: #ffffff;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
   border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.proof-video-card {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.proof-video-card:hover {
+.proof-video-card:not(.smartphone-mockup):hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
 }

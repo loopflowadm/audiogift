@@ -317,9 +317,9 @@ const Hero = () => `
             </div>
             <div class="smartphone-speaker"></div>
             <div class="smartphone-home-bar"></div>
-            <button class="btn-play-example" aria-label="Ouvir Exemplo em Tela Cheia">
-              <i data-lucide="volume-2"></i>
-              Ouvir Exemplo
+            <button class="btn-play-example" aria-label="Veja como emociona">
+              <i data-lucide="play-circle"></i>
+              Veja como emociona
             </button>
           </div>
         </div>
@@ -4230,6 +4230,51 @@ const initApp = () => {
   if (window.lucide) lucide.createIcons();
   renderRoute();
   initTrackOrderModal(); // Modal "Acompanhar pedido" — inicializado uma única vez
+
+  // Fix Vimeo letterbox: measure the .smartphone-screen in real pixels and
+  // set the iframe width to container_height × (9/16) so Vimeo sees a perfect
+  // 9:16 container and renders the video without black bars.
+  // The overflow is clipped by overflow:hidden on .smartphone-screen.
+  function fixHeroVideoFill() {
+    const screen = document.querySelector('.smartphone-screen');
+    const iframe = screen ? screen.querySelector('iframe') : null;
+    if (!screen || !iframe) return;
+
+    const h = screen.offsetHeight;
+    const w = screen.offsetWidth;
+    // Video ratio is 9:16 = 0.5625
+    const videoRatio = 9 / 16;
+    // Width needed to fill the height with no letterbox
+    const neededW = h * videoRatio;
+
+    if (neededW > w) {
+      // Container is narrower than 9:16: make iframe wider to fill height
+      iframe.style.width = neededW + 'px';
+      iframe.style.height = '100%';
+      iframe.style.top = '0';
+      iframe.style.left = '50%';
+      iframe.style.transform = 'translateX(-50%)';
+    } else {
+      // Container is wider than 9:16 (landscape-ish): make iframe taller to fill width
+      const neededH = w / videoRatio;
+      iframe.style.width = '100%';
+      iframe.style.height = neededH + 'px';
+      iframe.style.left = '0';
+      iframe.style.top = '50%';
+      iframe.style.transform = 'translateY(-50%)';
+    }
+  }
+
+  // Run after paint so offsetHeight is correct
+  requestAnimationFrame(() => {
+    fixHeroVideoFill();
+    // Also rerun on resize
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(fixHeroVideoFill);
+      const screen = document.querySelector('.smartphone-screen');
+      if (screen) ro.observe(screen);
+    }
+  });
 
   // Desativa o preloader e exibe a página principal imediatamente para melhor performance
   setTimeout(() => {
