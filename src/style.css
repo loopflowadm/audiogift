@@ -4672,15 +4672,29 @@ button {
 }
 
 @media (max-width: 768px) {
+  .header-content {
+    position: relative;
+    justify-content: flex-start;
+  }
+  .header .logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+  }
   .nav {
     display: none;
   }
-  .nav-actions .btn-nav-outline,
-  .nav-actions .btn-nav-gold {
+  .nav-actions {
     display: none;
   }
   .mobile-toggle {
     display: flex;
+    margin-left: -12px; /* Aligns the button icon with the container edge */
+    z-index: 11;
   }
   .mobile-menu {
     display: flex;

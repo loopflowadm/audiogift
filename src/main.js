@@ -169,6 +169,7 @@ const Pricing = () => `
 const Header = () => `
   <header class="header">
     <div class="container header-content">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><i data-lucide="menu"></i></button>
       <a href="#" class="logo">${Logo('white')}</a>
       <nav class="nav">
         <a href="#how">Como funciona</a>
@@ -179,7 +180,6 @@ const Header = () => `
       <div class="nav-actions">
         <button id="btn-track-order" class="btn-nav-outline">Acompanhar pedido</button>
         <a href="#create" class="btn-nav-gold">Criar sua canção</a>
-        <button class="mobile-toggle" id="mobileToggle"><i data-lucide="menu"></i></button>
       </div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
@@ -3371,7 +3371,8 @@ const initMobileMenu = () => {
     if (window.lucide) lucide.createIcons();
   };
 
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (menu.classList.contains('active')) {
       closeMenu();
     } else {
