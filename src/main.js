@@ -1763,6 +1763,7 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
   };
 
   const renderCheckoutStep = (progress) => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     const planNames = {
       especial: { name: 'Audio Gift Especial', nameFull: 'Audio Gift Especial • entrega em 7 dias', price: 89.90, priceStr: 'R$ 89,90', delivery: '7 dias', deliveryHours: '7 dias', icon: 'clock' },
       memoravel: { name: 'Audio Gift Memorável', nameFull: 'Audio Gift Memorável • entrega em até 72h', price: 149.90, priceStr: 'R$ 149,90', delivery: 'até 72h', deliveryHours: '72 horas', icon: 'rocket' },
@@ -2389,6 +2390,7 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
   };
 
   const renderStep = () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     const step = steps[currentStep];
     const progress = Math.round(((currentStep + 1) / steps.length) * 100);
     
