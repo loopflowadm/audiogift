@@ -2307,10 +2307,15 @@ const QuizEngine = (defaultPlan = 'memoravel') => {
       if (btnBottom) { btnBottom.setAttribute('disabled', 'true'); btnBottom.innerHTML = loadHtml; }
 
       try {
+        let cleanPhone = (answers.phone || '').replace(/\D/g, '');
+        if (cleanPhone.length === 10 || cleanPhone.length === 11) {
+          cleanPhone = '55' + cleanPhone;
+        }
+
         const orderData = {
           customer_name: answers.customerName,
           customer_email: answers.email,
-          customer_phone: answers.phone,
+          customer_phone: cleanPhone || answers.phone,
           whatsapp_followup: isWhatsappChecked,
           for_who: answers.forWho,
           occasion: answers.occasion,

@@ -659,11 +659,17 @@ const openOrderDrawer = async (orderId, orders) => {
       btnRunAgent.setAttribute('disabled', 'true');
       btnRunAgent.innerHTML = `<i data-lucide="loader" class="spin"></i> Executando Agente...`;
       
+      const rawPhoneAgent = document.getElementById('drawer-customer-phone').value.trim();
+      let cleanPhoneAgent = rawPhoneAgent.replace(/\D/g, '');
+      if (cleanPhoneAgent.length === 10 || cleanPhoneAgent.length === 11) {
+        cleanPhoneAgent = '55' + cleanPhoneAgent;
+      }
+
       const currentOrderData = {
         ...order,
         customer_name: document.getElementById('drawer-customer-name').value.trim(),
         customer_email: document.getElementById('drawer-customer-email').value.trim(),
-        customer_phone: document.getElementById('drawer-customer-phone').value.trim(),
+        customer_phone: cleanPhoneAgent || rawPhoneAgent,
         whatsapp_followup: document.getElementById('drawer-whatsapp-followup').value === 'true',
         recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
         speak_name: document.getElementById('drawer-speak-name').value.trim(),
@@ -810,10 +816,16 @@ const openOrderDrawer = async (orderId, orders) => {
       const newAudioUrl = document.getElementById('drawer-audio-url').value.trim();
       const lyricsInp = document.getElementById('agent-lyrics-input');
       
+      const rawPhoneSave = document.getElementById('drawer-customer-phone').value.trim();
+      let cleanPhoneSave = rawPhoneSave.replace(/\D/g, '');
+      if (cleanPhoneSave.length === 10 || cleanPhoneSave.length === 11) {
+        cleanPhoneSave = '55' + cleanPhoneSave;
+      }
+
       const updates = {
         customer_name: document.getElementById('drawer-customer-name').value.trim(),
         customer_email: document.getElementById('drawer-customer-email').value.trim(),
-        customer_phone: document.getElementById('drawer-customer-phone').value.trim(),
+        customer_phone: cleanPhoneSave || rawPhoneSave,
         whatsapp_followup: document.getElementById('drawer-whatsapp-followup').value === 'true',
         
         recipient_name: document.getElementById('drawer-recipient-name').value.trim(),
